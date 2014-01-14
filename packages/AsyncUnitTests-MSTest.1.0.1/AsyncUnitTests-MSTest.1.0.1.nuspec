@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>AsyncUnitTests-MSTest</id>
+    <version>1.0.1</version>
+    <title>Asynchronous unit test support for Visual Studio</title>
+    <authors>Stephen Cleary</authors>
+    <owners>Stephen Cleary</owners>
+    <projectUrl>http://asyncunittests.codeplex.com/</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>"[TestMethod] async void MyTest()" actually works correctly.</description>
+    <summary>"[TestMethod] async void MyTest()" actually works correctly.</summary>
+    <releaseNotes>[1.0.1] Fixed leak in AsyncContext.WinForms.</releaseNotes>
+    <copyright />
+    <language />
+    <tags>nito async unit test asynchronous async-ctp await async-await net40 net45 netcore45 unit-test mstest</tags>
+    <references>
+      <reference file="Nito.AsyncEx.UnitTests.MSTest.dll" />
+    </references>
+  </metadata>
+</package>

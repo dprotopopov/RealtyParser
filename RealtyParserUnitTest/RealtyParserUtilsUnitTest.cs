@@ -1,0 +1,42 @@
+﻿using System;
+using HtmlAgilityPack;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using RealtyParser;
+
+namespace RealtyParserUnitTest
+{
+    [TestClass]
+    public class RealtyParserUtilsUnitTest
+    {
+        [TestMethod]
+        public void TestInvokeNodeProperty()
+        {
+            HtmlDocument document = new HtmlDocument();
+            document.Load("TestInvokeNodeProperty.html");
+            HtmlNode node = document.DocumentNode.SelectSingleNode("//a");
+            string innerText = RealtyParserUtils.InvokeNodeProperty(node, "InnerText");
+            Assert.AreEqual(innerText,"Hello");
+        }
+
+        [TestMethod]
+        public void TestParseTemplate()
+        {
+            string template = "RegionId={{RegionId}}&RubricId={{RubricId}}&ActionId={{ActionId}}";
+            Arguments args = new Arguments
+            {
+                {"RegionId", "1"},
+                {"RubricId", "2"}
+            };
+            Assert.AreEqual(RealtyParserUtils.ParseTemplate(template,args),"RegionId=1&RubricId=2&ActionId=");
+        }
+
+        [TestMethod]
+        public async void TestWebRequestHtmlDocument()
+        {
+            Uri uri = new Uri("http://rbc.ru");
+            HtmlDocument document = await RealtyParserUtils.WebRequestHtmlDocument(uri, "GET");
+            Assert.IsNotNull(document);
+            Assert.IsFalse(String.IsNullOrEmpty(document.DocumentNode.InnerText));
+        }
+    }
+}
