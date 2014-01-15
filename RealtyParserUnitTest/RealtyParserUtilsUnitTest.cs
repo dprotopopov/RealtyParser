@@ -15,17 +15,27 @@ namespace RealtyParserUnitTest
             document.Load("TestInvokeNodeProperty.html");
             HtmlNode node = document.DocumentNode.SelectSingleNode("//a");
             string innerText = RealtyParserUtils.InvokeNodeProperty(node, "InnerText");
-            Assert.AreEqual(innerText,"Hello");
+            Assert.AreEqual(innerText, "Hello");
+        }
+
+        [TestMethod]
+        public void TestHrefValue()
+        {
+            HtmlDocument document = new HtmlDocument();
+            document.Load("TestInvokeNodeProperty.html");
+            HtmlNode node = document.DocumentNode.SelectSingleNode("//a[@href]");
+            string hrefValue = RealtyParserUtils.HrefValue(node);
+            Assert.AreEqual(hrefValue, "http://protopopov.ru");
         }
 
         [TestMethod]
         public void TestParseTemplate()
         {
-            string template = "RegionId={{RegionId}}&RubricId={{RubricId}}&ActionId={{ActionId}}";
+            string template = "RegionId={{RegionId}}&RubricId={{RubricId[1]}}&ActionId={{ActionId}}";
             Arguments args = new Arguments
             {
-                {"RegionId", "1"},
-                {"RubricId", "2"}
+                {@"\{\{RegionId\}\}", "1"},
+                {@"\{\{RubricId\[1\]\}\}", "2"}
             };
             Assert.AreEqual(RealtyParserUtils.ParseTemplate(template,args),"RegionId=1&RubricId=2&ActionId=");
         }
@@ -34,7 +44,7 @@ namespace RealtyParserUnitTest
         public async void TestWebRequestHtmlDocument()
         {
             Uri uri = new Uri("http://rbc.ru");
-            HtmlDocument document = await RealtyParserUtils.WebRequestHtmlDocument(uri, "GET");
+            HtmlDocument document = await RealtyParserUtils.WebRequestHtmlDocument(uri, "GET","utf-8");
             Assert.IsNotNull(document);
             Assert.IsFalse(String.IsNullOrEmpty(document.DocumentNode.InnerText));
         }

@@ -58,13 +58,21 @@
   </Choose>
   <ItemGroup>
     <Compile Include="DatabaseDataTest.cs" />
+    <Compile Include="LevenshteinDistanceUnitTest.cs" />
+    <Compile Include="RealtyParserParsingModuleUnitTest.cs" />
     <Compile Include="RealtyParserUtilsUnitTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RegexUnitTest.cs" />
+    <Compile Include="RosrealtUnitTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\RealtyParser\RealtyParser.csproj">
       <Project>{8ac9f758-9ce0-4203-854e-2b17cdc65c01}</Project>
       <Name>RealtyParser</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RT.ParsingLibs\RT.ParsingLibs.csproj">
+      <Project>{27CC5B61-3729-4F39-AD0C-D8CE99120FD4}</Project>
+      <Name>RT.ParsingLibs</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

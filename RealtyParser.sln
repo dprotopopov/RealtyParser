@@ -20,6 +20,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RealtyParserEditor", "Realt
 		{8AC9F758-9CE0-4203-854E-2B17CDC65C01} = {8AC9F758-9CE0-4203-854E-2B17CDC65C01}
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RosrealtPrepare", "RosrealtPrepare\RosrealtPrepare.csproj", "{3925808F-202B-4558-A8D8-619221DF1E52}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -54,6 +56,10 @@ Global
 		{6EDFBE49-6876-4156-A209-306CB7E3EFEC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6EDFBE49-6876-4156-A209-306CB7E3EFEC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6EDFBE49-6876-4156-A209-306CB7E3EFEC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3925808F-202B-4558-A8D8-619221DF1E52}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3925808F-202B-4558-A8D8-619221DF1E52}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3925808F-202B-4558-A8D8-619221DF1E52}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3925808F-202B-4558-A8D8-619221DF1E52}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

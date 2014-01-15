@@ -5,6 +5,8 @@ namespace RealtyParser
 {
     public class SiteProperties : Dictionary<string, string>
     {
+        public List<ReturnFieldInfo> ReturnFieldInfos { get; set; }
+        public Mapping Mapping { get; set; }
         public string SiteId
         {
             get
@@ -117,7 +119,7 @@ namespace RealtyParser
                     Add(propertyName, value);
             }
         }
-        public string LastPublicationIdSearchXpathTemplate
+        public string LastPublicationIdXpathTemplate
         {
             get
             {
@@ -133,7 +135,7 @@ namespace RealtyParser
                     Add(propertyName, value);
             }
         }
-        public string ExtSearchXpathTemplate
+        public string ExtXpathTemplate
         {
             get
             {
@@ -149,7 +151,7 @@ namespace RealtyParser
                     Add(propertyName, value);
             }
         }
-        public string UnoSearchXpathTemplate
+        public string UnoXpathTemplate
         {
             get
             {
@@ -229,7 +231,7 @@ namespace RealtyParser
                     Add(propertyName, value);
             }
         }
-        public string LastPublicationIdSearchNodePropertyName
+        public string LastPublicationIdResultTemplate
         {
             get
             {
@@ -245,7 +247,87 @@ namespace RealtyParser
                     Add(propertyName, value);
             }
         }
-        public string ExtSearchNodePropertyName
+        public string ExtResultTemplate
+        {
+            get
+            {
+                string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
+                return ContainsKey(propertyName) ? this[propertyName] : null;
+            }
+            set
+            {
+                string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
+                if (ContainsKey(propertyName))
+                    this[propertyName] = value;
+                else
+                    Add(propertyName, value);
+            }
+        }
+        public string LastPublicationIdRegexPattern
+        {
+            get
+            {
+                string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
+                return ContainsKey(propertyName) ? this[propertyName] : null;
+            }
+            set
+            {
+                string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
+                if (ContainsKey(propertyName))
+                    this[propertyName] = value;
+                else
+                    Add(propertyName, value);
+            }
+        }
+        public string LastPublicationIdRegexReplacement
+        {
+            get
+            {
+                string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
+                return ContainsKey(propertyName) ? this[propertyName] : null;
+            }
+            set
+            {
+                string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
+                if (ContainsKey(propertyName))
+                    this[propertyName] = value;
+                else
+                    Add(propertyName, value);
+            }
+        }
+        public string ExtRegexPattern
+        {
+            get
+            {
+                string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
+                return ContainsKey(propertyName) ? this[propertyName] : null;
+            }
+            set
+            {
+                string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
+                if (ContainsKey(propertyName))
+                    this[propertyName] = value;
+                else
+                    Add(propertyName, value);
+            }
+        }
+        public string ExtRegexReplacement
+        {
+            get
+            {
+                string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
+                return ContainsKey(propertyName) ? this[propertyName] : null;
+            }
+            set
+            {
+                string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
+                if (ContainsKey(propertyName))
+                    this[propertyName] = value;
+                else
+                    Add(propertyName, value);
+            }
+        }
+        public string Encoding
         {
             get
             {

@@ -1,0 +1,127 @@
+﻿rosrealt.ru
+http://rosrealt.ru
+GET
+/poisk.php?Sdelka={{ActionId}}&Type_realty={{RubricId[1]}}&Kind_realty={{RubricId[2]}}&Region={{RegionId[1]}}&City={{RegionId[2]}}&Sort=0
+/poisk.php?Sdelka={{ActionId}}&Type_realty={{RubricId[1]}}&Kind_realty={{RubricId[2]}}&Region={{RegionId[1]}}&City={{RegionId[2]}}&Sort=0
+{{PublicationId}}
+//*[@id="frm"]/table[2]/tbody/tr/td/h3/a {{HrefValue}} .*
+//*[@id="frm"]/table/tbody/tr/td/h3/a {{HrefValue}} .*
+/html/body/table/tbody/tr/td/table[3]/tbody/tr[1]/td[2]/table
+OnlyDigitsDecimalComparer
+
+{{HrefValue}} .*
+{{HrefValue}} .*
+
+WebPublicationActionId /html/body/table/tbody/tr/td/table[3]/tbody/tr[1]/td[2]/table/tbody/tr/td[2]/table[2]/tbody/tr/td[7]/p[3] {{InnerText}} .*
+WebPublicationAdditionalInfoRealtyAdditionalInfoAddress /html/body/table/tbody/tr/td/table[3]/tbody/tr[1]/td[2]/table/tbody/tr/td[2]/table[2]/tbody/tr/td[1] {{InnerText}} .*
+WebPublicationAdditionalInfoRealtyAdditionalInfoAppointmentOfRoom /html/body/table/tbody/tr/td/table[3]/tbody/tr[1]/td[2]/table/tbody/tr/td[2]/table[2]/tbody/tr/td[4] {{InnerText}} .*
+WebPublicationAdditionalInfoRealtyAdditionalInfoCostAll /html/body/table/tbody/tr/td/table[3]/tbody/tr[1]/td[2]/table/tbody/tr/td[2]/table[2]/tbody/tr/td[7] {{InnerText}} .*
+WebPublicationContactAuthor /html/body/table/tbody/tr/td/table[3]/tbody/tr[1]/td[2]/table/tbody/tr/td[2]/table[2]/tbody/tr/td[10]/p[2] {{InnerText}} .*
+WebPublicationContactAuthorUrl /html/body/table/tbody/tr/td/table[3]/tbody/tr[1]/td[2]/table/tbody/tr/td[2]/table[2]/tbody/tr/td[10]/p[2]/a http://rosrealt.ru{{HrefValue}} .*
+WebPublicationContactContactName /html/body/table/tbody/tr/td/table[3]/tbody/tr[1]/td[2]/table/tbody/tr/td[2]/table[2]/tbody/tr/td[10]/p[3]/b {{InnerText}} w+( \w+)*
+WebPublicationContactEmail /html/body/table/tbody/tr/td/table[3]/tbody/tr[1]/td[2]/table/tbody/tr/td[2]/table[2]/tbody/tr/td[10]/p[4]/noindex/a http://rosrealt.ru{{HrefValue}} .*
+WebPublicationContactIcq
+WebPublicationContactPhone /html/body/table/tbody/tr/td/table[3]/tbody/tr[1]/td[2]/table/tbody/tr/td[2]/table[2]/tbody/tr/td[10]/p[3]/b {{InnerText}} (\+)?\d+([()+- ]+\d+)*
+WebPublication.ContactSkype 
+WebPublicationDescription /html/body/table/tbody/tr/td/table[3]/tbody/tr[1]/td[2]/table/tbody/tr/td[2]/table[3]/tbody/tr/td/p[1] {{InnerText}} .*
+WebPublicationModifyDate /html/body/table/tbody/tr/td/table[3]/tbody/tr[1]/td[2]/table/tbody/tr/td[2]/table[1]/tbody/tr/td[2]/p[3]/text() {{InnerText}} .*
+WebPublicationPhotos /html/body/table/tbody/tr/td/table[3]/tbody/tr[1]/td[2]/table/tbody/tr/td[2]/table[1]/tbody/tr/td[1]/a {{HrefValue}} .*
+WebPublicationPublicationId /html/body/table/tbody/tr/td/table[3]/tbody/tr[1]/td[2]/table/tbody/tr/td[2]/table[1]/tbody/tr/td[2]/p[2]/text() {{InnerText}} \d+
+WebPublicationRegionId
+
+
+<select name="Kind_realty" id="Kind_realty" class="forma2" style="width:155px" onchange="document.getElementById('frm').submit()"><option value="0"> - Любой тип -</option><option value="1">Новостройка</option><option value="2" selected="">Вторичка</option><option value="5">Комната</option></select>
+http://rosrealt.ru/poisk.php?Sdelka=1&Type_realty=1&Region=18&City=&Sort=0
+
+<select name="Sort" id="Sort" class="forma2" style="width:155px" onchange="document.getElementById('frm').submit()"><option value="0">по дате добавления</option><option value="Room">по числу комнат</option></select>
+<form action="/poisk.php" method="post">
+
+<select id="Region" name="Region" style="width:155px" class="forma2" onchange="document.getElementById('frm').submit()"><option value="null"> - Любой регион -</option><option selected="" value="93">Абхазия</option>
+<option value="18">Адыгея</option>
+<option value="38">Алтайский край</option>
+<option value="41">Амурская область</option>
+<option value="42">Архангельская область</option>
+<option value="43">Астраханская область</option>
+<option value="19">Башкортостан</option>
+<option value="44">Белгородская область</option>
+<option value="45">Брянская область</option>
+<option value="20">Бурятия</option>
+<option value="46">Владимирская область</option>
+<option value="47">Волгоградская область</option>
+<option value="48">Вологодская область</option>
+<option value="49">Воронежская область</option>
+<option value="22">Дагестан</option>
+<option value="82">Еврейская автономная область</option>
+<option value="80">Забайкальский край</option>
+<option value="50">Ивановская область</option>
+<option value="23">Ингушетия</option>
+<option value="51">Иркутская область</option>
+<option value="24">Кабардино-Балкария</option>
+<option value="52">Калиниградская область</option>
+<option value="25">Калмыкия</option>
+<option value="53">Калужская область</option>
+<option value="54">Камчатский край</option>
+<option value="26">Карачаево-Черкессия</option>
+<option value="27">Карелия</option>
+<option value="55">Кемеровская область</option>
+<option value="56">Кировская область</option>
+<option value="57">Костромская область</option>
+<option value="3">Краснодарский край</option>
+<option value="16">Красноярский край</option>
+<option value="58">Курганская область</option>
+<option value="59">Курская область</option>
+<option value="60">Липецкая область</option>
+<option value="61">Магаданская область</option>
+<option value="30">Мордовия</option>
+<option value="96">Москва</option>
+<option value="8">Московская область</option>
+<option value="62">Мурманская область</option>
+<option value="94">Недвижимость за рубежом</option>
+<option value="63">Нижегородская область</option>
+<option value="13">Новгородская область</option>
+<option value="9">Новосибирская область</option>
+<option value="64">Омская область</option>
+<option value="65">Оренбургская область</option>
+<option value="66">Орловская область</option>
+<option value="67">Пензенская область</option>
+<option value="68">Пермский край</option>
+<option value="39">Приморский край</option>
+<option value="69">Псковская область</option>
+<option value="21">Республика Алтай</option>
+<option value="28">Республика Коми</option>
+<option value="29">Республика Марий Эл</option>
+<option value="34">Республика Тыва</option>
+<option value="11">Ростовская область</option>
+<option value="70">Рязанская область</option>
+<option value="71">Самарская область</option>
+<option value="6">Санкт-Петербург и Ленинградская область</option>
+<option value="72">Саратовская область</option>
+<option value="73">Сахалинская область</option>
+<option value="74">Свердловская область</option>
+<option value="32">Северная Осетия - Алания</option>
+<option value="75">Смоленская область</option>
+<option value="12">Ставропольский край</option>
+<option value="76">Тамбовская область</option>
+<option value="33">Татарстан</option>
+<option value="10">Тверская область</option>
+<option value="15">Томская область</option>
+<option value="77">Тульская область</option>
+<option value="17">Тюменская область</option>
+<option value="35">Удмуртия</option>
+<option value="78">Ульяновская область</option>
+<option value="40">Хабаровский край</option>
+<option value="36">Хакасия</option>
+<option value="99">Ханты-Мансийский АО - Югра</option>
+<option value="79">Челябинская область</option>
+<option value="92">Чеченская Республика</option>
+<option value="37">Чувашия</option>
+<option value="98">Чукотский АО</option>
+<option value="31">Якутия</option>
+<option value="100">Ямало-Ненецкий АО</option>
+<option value="81">Ярославская область</option>
+</select>
+<select name="Sdelka" style="width:150px" class="forma1"><option value="0"> - Сделка - </option><option value="1">продажа</option><option value="2">покупка</option><option value="3">аренда</option><option value="4">сниму</option><option value="5">посуточная аренда</option><option value="6">обмен</option></select>
+
+<select name="Type_realty" style="width:150px" class="forma1"><option value="0"> - Недвижимость - </option><option value="1">квартира</option><option value="2">дом / дача</option><option value="3">земельный участок</option><option value="4">коммерческая недвижимость</option></select>
+
+<form action="/poisk.php" method="post"><p class="leftp"><b>По параметрам</b><br></p><p class="leftp"><select name="City" id="City" style="width:150px" class="forma1"><option value="0"> - Город / Район - </option><option value="1919">Брасовский район</option><option value="110">Брянск</option><option value="2730">Брянский район</option><option value="1930">Выгоничский район</option><option value="2731">Гордеевский район</option><option value="1923">Дубровский район</option><option value="1914">Дятьковский район</option><option value="2732">Жирятинский район</option><option value="111">Жуковский район</option><option value="112">Злынковский район</option><option value="113">Карачевский район</option><option value="114">Клетнянский район</option><option value="1918">Климово</option><option value="2733">Климовский район</option><option value="2734">Клинцовский район</option><option value="115">Клинцы</option><option value="1925">Комаричский район</option><option value="116">Красногорский район</option><option value="1924">Мглинский район</option><option value="117">Навлинский район</option><option value="1913">Новозыбков</option><option value="2735">Новозыбковский район</option><option value="118">Погарский район</option><option value="119">Почепский район</option><option value="2736">Рогнединский район</option><option value="1926">Севский район</option><option value="1916">Сельцо</option><option value="120">Стародуб</option><option value="2737">Стародубский район</option><option value="1921">Суземский район</option><option value="121">Суражский район</option><option value="122">Трубчевский район</option><option value="123">Унечский район</option><option value="1917">Фокино</option></select><input type="hidden" name="Region" value="45"></p><p class="leftp"><select name="Type_realty" style="width:150px" class="forma1"><option value="0"> - Недвижимость - </option><option value="1">квартира</option><option value="2">дом / дача</option><option value="3">земельный участок</option><option value="4">коммерческая недвижимость</option></select></p><p class="leftp"><select name="Sdelka" style="width:150px" class="forma1"><option value="0"> - Сделка - </option><option value="1">продажа</option><option value="2">покупка</option><option value="3">аренда</option><option value="4">сниму</option><option value="5">посуточная аренда</option><option value="6">обмен</option></select></p><center><input type="submit" value="Искать" class="form"></center></form>

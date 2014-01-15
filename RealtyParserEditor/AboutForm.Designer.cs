@@ -1,6 +1,6 @@
 ﻿namespace RealtyParserEditor
 {
-    partial class ReturnFieldForm
+    partial class AboutForm
     {
         /// <summary>
         /// Required designer variable.
@@ -28,19 +28,34 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.propertyGridControl1 = new DevExpress.XtraVerticalGrid.PropertyGridControl();
+            ((System.ComponentModel.ISupportInitialize)(this.propertyGridControl1)).BeginInit();
             this.SuspendLayout();
             // 
-            // ReturnFieldForm
+            // propertyGridControl1
+            // 
+            this.propertyGridControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.propertyGridControl1.Location = new System.Drawing.Point(0, 0);
+            this.propertyGridControl1.Name = "propertyGridControl1";
+            this.propertyGridControl1.Size = new System.Drawing.Size(282, 253);
+            this.propertyGridControl1.TabIndex = 0;
+            // 
+            // AboutForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(566, 494);
-            this.Name = "ReturnFieldForm";
-            this.Text = "ReturnFieldForm";
+            this.ClientSize = new System.Drawing.Size(282, 253);
+            this.Controls.Add(this.propertyGridControl1);
+            this.Name = "AboutForm";
+            this.Text = "AboutForm";
+            ((System.ComponentModel.ISupportInitialize)(this.propertyGridControl1)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
+
+        private DevExpress.XtraVerticalGrid.PropertyGridControl propertyGridControl1;
+
     }
 }

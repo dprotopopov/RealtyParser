@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using HtmlAgilityPack;
 using RT.ParsingLibs;
 using RT.ParsingLibs.Models;
 using RT.ParsingLibs.Requests;
@@ -23,14 +25,14 @@ namespace RealtyParser
         /// <returns>Ответ от парсера</returns>
         public async Task<ParseResponse> Result(ParseRequest request)
         {
-            const long siteId = 1;
+            const long siteId = 2;
             long regionId = request.RegionId;
             long rubricId = request.RubricId;
             long actionId = request.ActionId;
             string lastPublicationId = request.LastPublicationId;
 
-            SiteProperties properties = _database.GetProperties(siteId);
-            Arguments args = RealtyParserUtils.BuildArgs(_database, regionId, rubricId, actionId, lastPublicationId, siteId);
+            SiteProperties properties = _database.GetSiteProperties(siteId);
+            Arguments args = RealtyParserUtils.BuildArgs(_database, regionId, rubricId, actionId, lastPublicationId, properties.Mapping);
 
 
             List<string> publishedIds;
@@ -44,12 +46,15 @@ namespace RealtyParser
                     UserName = properties.UserName,
                     Password = properties.Password
                 };
-                HtmlAgilityPack.HtmlDocument document = await RealtyParserUtils.WebRequestHtmlDocument(builder.Uri, properties.Method);
+                HtmlDocument document = await RealtyParserUtils.WebRequestHtmlDocument(builder.Uri, properties.Method, properties.Encoding);
+                HtmlNode node =
+                    document.DocumentNode.SelectSingleNode(
+                        RealtyParserUtils.ParseTemplate(properties.LastPublicationIdXpathTemplate, args));
+
+                Regex regex = new Regex(properties.LastPublicationIdRegexPattern, RegexOptions.IgnoreCase);
                 publishedIds = new List<string>
                 {
-                    RealtyParserUtils.InvokeNodeProperty(
-                        document.DocumentNode.SelectSingleNode(RealtyParserUtils.ParseTemplate(properties.LastPublicationIdSearchXpathTemplate, args)),
-                        properties.LastPublicationIdSearchNodePropertyName)
+                    regex.Replace(RealtyParserUtils.ParseTemplate(properties.LastPublicationIdResultTemplate,RealtyParserUtils.BuildArgs(node)),properties.LastPublicationIdRegexReplacement)
                 };
             }
             else
@@ -59,11 +64,12 @@ namespace RealtyParser
                     UserName = properties.UserName,
                     Password = properties.Password
                 };
-                HtmlAgilityPack.HtmlDocument document = await RealtyParserUtils.WebRequestHtmlDocument(builder.Uri, properties.Method);
-                string propertyName = properties.ExtSearchNodePropertyName;
+                HtmlDocument document = await RealtyParserUtils.WebRequestHtmlDocument(builder.Uri, properties.Method, properties.Encoding);
                 IComparer<string> comparer =
                     RealtyParserUtils.CreatePublicationIdComparer(properties.PublicationIdComparerClassName);
-                publishedIds = document.DocumentNode.SelectNodes(RealtyParserUtils.ParseTemplate(properties.ExtSearchXpathTemplate, args)).Select(node => RealtyParserUtils.InvokeNodeProperty(node, propertyName)).ToList();
+                Regex regex = new Regex(properties.ExtRegexPattern, RegexOptions.IgnoreCase);
+                publishedIds = document.DocumentNode.SelectNodes(RealtyParserUtils.ParseTemplate(properties.ExtXpathTemplate, args)).Select(node => regex.Replace(RealtyParserUtils.ParseTemplate(properties.ExtResultTemplate,
+                    RealtyParserUtils.BuildArgs(node)), properties.ExtRegexReplacement)).ToList();
                 publishedIds.Sort(comparer);
                 int index = publishedIds.BinarySearch(0, publishedIds.Count, lastPublicationId, comparer);
                 try
@@ -96,15 +102,17 @@ namespace RealtyParser
             List<WebPublication> publications = new List<WebPublication>();
             foreach (var publishedId in publishedIds)
             {
-                Arguments unoArgs = RealtyParserUtils.BuildArgs(_database, regionId, rubricId, actionId, publishedId, siteId);
+                Arguments unoArgs = RealtyParserUtils.BuildArgs(_database, regionId, rubricId, actionId, publishedId, properties.Mapping);
                 UriBuilder unoBuilder = new UriBuilder(properties.Url + RealtyParserUtils.ParseTemplate(properties.UnoSearchTemplate, unoArgs))
                 {
                     UserName = properties.UserName,
                     Password = properties.Password
                 };
-                HtmlAgilityPack.HtmlDocument unoDocument = await RealtyParserUtils.WebRequestHtmlDocument(unoBuilder.Uri, properties.Method);
+                HtmlDocument unoDocument = await RealtyParserUtils.WebRequestHtmlDocument(unoBuilder.Uri, properties.Method, properties.Encoding);
                 ReturnFields unoReturnFields = RealtyParserUtils.BuildReturnFields(_database,
-                    unoDocument.DocumentNode.SelectSingleNode(RealtyParserUtils.ParseTemplate(properties.UnoSearchXpathTemplate, unoArgs)), unoArgs, siteId);
+                    unoDocument.DocumentNode.SelectSingleNode(RealtyParserUtils.ParseTemplate(properties.UnoXpathTemplate, unoArgs)),
+                    unoArgs,
+                    properties.ReturnFieldInfos);
                 publications.Add(RealtyParserUtils.CreateWebPublication(unoReturnFields, regionId, rubricId, actionId, unoBuilder));
                 lastPublicationId = publishedId;
             }
@@ -125,12 +133,15 @@ namespace RealtyParser
         /// <returns> Коллекция названий ресурсов (сайтов)</returns>
         public IList<string> Sources(Bind bind)
         {
-            Dictionary<long, string> sites = _database.GetTable("Site");
-            foreach (var site in sites.Where(site => String.IsNullOrEmpty(_database.Mapping(site.Key, bind.RegionId, "Region")) || String.IsNullOrEmpty(_database.Mapping(site.Key, bind.RubricId, "Rubric")) || String.IsNullOrEmpty(_database.Mapping(site.Key, bind.ActionId, "Action"))))
+            try
             {
-                sites.Remove(site.Key);
+                Dictionary<long, string> sites = _database.GetDictionary<long>("Site");
+                return (from site in sites let properties = _database.GetSiteProperties(site.Key) where !String.IsNullOrEmpty(properties.Mapping["Region"][bind.RegionId]) && !String.IsNullOrEmpty(properties.Mapping["Rubric"][bind.RubricId]) && !String.IsNullOrEmpty(properties.Mapping["Action"][bind.ActionId]) select site.Value).ToList();
             }
-            return sites.Values.ToList();
+            catch (Exception)
+            {
+                return new List<string>();
+            }
         }
 
         /// <summary>
@@ -153,9 +164,9 @@ namespace RealtyParser
         /// <returns>Коллекция биндов</returns>
         public IList<Bind> Keys()
         {
-            List<long> regions = _database.GetTable("Region").Keys.ToList();
-            List<long> rubrics = _database.GetTable("Rubric").Keys.ToList();
-            List<long> actions = _database.GetTable("Action").Keys.ToList();
+            List<long> regions = _database.GetDictionary<long>("Region").Keys.ToList();
+            List<long> rubrics = _database.GetDictionary<long>("Rubric").Keys.ToList();
+            List<long> actions = _database.GetDictionary<long>("Action").Keys.ToList();
             List<Bind> keys = new List<Bind>();
             foreach (var region in regions)
                 foreach (var rubric in rubrics)

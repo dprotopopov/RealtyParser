@@ -4,22 +4,28 @@ namespace RealtyParserEditor
 {
     public partial class MainForm : DevExpress.XtraBars.Ribbon.RibbonForm
     {
-        private readonly SiteForm _siteForm;
-        private readonly MappingForm _mappingForm;
-        private readonly ReturnFieldForm _returnFieldForm;
+        private readonly SitePropertiesForm _siteForm;
+        private readonly AboutForm _aboutForm;
+        private readonly SourcesForm _sourcesForm;
+        private readonly KeysForm _keysForm;
+        private readonly ResultForm _resultForm;
         public MainForm()
         {
             InitializeComponent();
-            _siteForm = new SiteForm { MdiParent = this };
-            _mappingForm = new MappingForm { MdiParent = this };
-            _returnFieldForm = new ReturnFieldForm { MdiParent = this };
+            _siteForm = new SitePropertiesForm { MdiParent = this };
+            _aboutForm = new AboutForm { MdiParent = this };
+            _sourcesForm = new SourcesForm { MdiParent = this };
+            _keysForm = new KeysForm { MdiParent = this };
+            _resultForm = new ResultForm { MdiParent = this };
         }
 
         private void MainForm_Load(object sender, EventArgs e)
         {
             _siteForm.Show();
-            _mappingForm.Show();
-            _returnFieldForm.Show();
+            _sourcesForm.Show();
+            _keysForm.Show();
+            _resultForm.Show();
+            _aboutForm.Show();
         }
 
         private void barButtonItem2_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)

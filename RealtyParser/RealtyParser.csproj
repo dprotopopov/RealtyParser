@@ -65,12 +65,20 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Arguments.cs" />
+    <Compile Include="HierarhialItem.cs" />
+    <Compile Include="HierarhialItemCollection.cs" />
+    <Compile Include="LevenshteinDistance.cs" />
+    <Compile Include="LinksCollection.cs" />
+    <Compile Include="Mapping.cs" />
+    <Compile Include="OptionsCollection.cs" />
+    <Compile Include="PublicationIdComparer\OnlyDigitsDecimalComparer.cs" />
     <Compile Include="RealtyParserDatabase.cs" />
     <Compile Include="RealtyParserParsingModule.cs" />
     <Compile Include="PublicationIdComparer\AscComparer.cs" />
     <Compile Include="PublicationIdComparer\DescComparer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RealtyParserUtils.cs" />
+    <Compile Include="ReturnFieldInfo.cs" />
     <Compile Include="ReturnFields.cs" />
     <Compile Include="SiteProperties.cs" />
   </ItemGroup>

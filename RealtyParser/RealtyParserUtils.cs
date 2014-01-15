@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.SQLite;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -22,7 +21,7 @@ namespace RealtyParser
         {
             return Database;
         }
-        public static async Task<HtmlDocument> WebRequestHtmlDocument(Uri uri, string method)
+        public static async Task<HtmlDocument> WebRequestHtmlDocument(Uri uri, string method, string encoding)
         {
             ICrawler crawler = new WebCrawler();
             var requestWeb = (HttpWebRequest)WebRequest.Create(uri);
@@ -30,7 +29,8 @@ namespace RealtyParser
             var responce = await crawler.GetResponse(requestWeb);
             if (responce != null)
             {
-                var reader = new StreamReader(responce.GetResponseStream());
+                Encoding encoder = Encoding.GetEncoding(encoding);
+                var reader = new StreamReader(responce.GetResponseStream(), encoder);
                 var output = new StringBuilder(reader.ReadToEnd());
                 HtmlDocument document = new HtmlDocument();
                 document.LoadHtml(output.ToString());
@@ -114,10 +114,10 @@ namespace RealtyParser
         {
             foreach (KeyValuePair<string, string> pair in args)
             {
-                Regex regex = new Regex(@"\{\{" + pair.Key + @"\}\}", RegexOptions.IgnoreCase);
+                Regex regex = new Regex(pair.Key, RegexOptions.IgnoreCase);
                 htmlTemplate = regex.Replace(htmlTemplate, pair.Value);
             }
-            Regex rgx = new Regex(@"\{\{\w+\}\}", RegexOptions.IgnoreCase);
+            Regex rgx = new Regex(@"\{\{[^\}]*\}\}", RegexOptions.IgnoreCase);
             return rgx.Replace(htmlTemplate, @"");
         }
 
@@ -125,29 +125,19 @@ namespace RealtyParser
             RealtyParserDatabase database,
             HtmlNode unoNode,
             Arguments args,
-            long siteId)
+            List<ReturnFieldInfo> returnFieldInfos)
         {
             ReturnFields returnFields = new ReturnFields();
-            database.Connection.Open();
-            using (SQLiteCommand command = database.Connection.CreateCommand())
+            Parallel.ForEach(returnFieldInfos, returnFieldInfo =>
             {
-                command.CommandText = @"SELECT * FROM SiteReturnFieldMapping JOIN ReturnFields USING (SiteId) WHERE SiteReturnFieldMapping.SiteId=@SiteId";
-                SQLiteParameter p = new SQLiteParameter("@SiteId", System.Data.DbType.Int32) { Value = siteId };
-                command.Parameters.Add(p);
-                SQLiteDataReader reader = command.ExecuteReader();
-                while (reader.Read())
-                {
-                    string key = (string)reader["ReturnFieldId"];
-                    string xpathTemplate = (string)reader["UnoSearchReturnFieldXpathTemplate"];
-                    string nodePropertyName = (string)reader["UnoSearchReturnFieldNodePropertyName"];
-                    returnFields.Add(key, new List<string>());
-                    foreach (string value in unoNode.SelectNodes(ParseTemplate(xpathTemplate, args)).Select(node => InvokeNodeProperty(node, nodePropertyName)))
-                    {
-                        returnFields[key].Add(value);
-                    }
-                }
-                database.Connection.Close();
-            }
+                Regex regex = new Regex(returnFieldInfo.UnoReturnFieldRegexPattern, RegexOptions.IgnoreCase);
+                returnFields.Add(returnFieldInfo.ReturnFieldId,
+                    unoNode.SelectNodes(ParseTemplate(returnFieldInfo.UnoReturnFieldXpathTemplate, args))
+                        .Select(node => regex.Replace(ParseTemplate(returnFieldInfo.UnoReturnFieldResultTemplate,
+                            BuildArgs(node)), returnFieldInfo.UnoReturnFieldRegexReplacement))
+                        .ToList());
+
+            });
             return returnFields;
         }
 
@@ -157,16 +147,142 @@ namespace RealtyParser
             long rubricId,
             long actionId,
             string publicationId,
-            long siteId)
+            Mapping mapping)
         {
             Arguments args = new Arguments
             {
-                {"RegionId", database.Mapping(siteId,regionId,"Region")},
-                {"RubricId", database.Mapping(siteId,rubricId,"Rubric")},
-                {"ActionId", database.Mapping(siteId,actionId,"Action")},
-                {"PublicationId", publicationId}
+                {@"\{\{RegionId\}\}", mapping.Region[regionId]},
+                {@"\{\{RubricId\}\}", mapping.Rubric[rubricId]},
+                {@"\{\{ActionId\}\}", mapping.Action[actionId]},
+                {@"\{\{PublicationId\}\}", publicationId},
+                {@"\{\{AntiActionId\}\}", mapping.Action[database.GetScalar<long>(actionId,"AntiActionId","Action")]}
+            };
+            for (long level = database.GetScalar<long>(regionId, "Level", "Region"); regionId > 0; )
+            {
+                args.Add(@"\{\{RegionId\[" + level + @"\]\}\}", mapping.Region[regionId]);
+                regionId = database.GetScalar<long>(regionId, "ParentId", "Region");
+                level = database.GetScalar<long>(regionId, "Level", "Region");
+            }
+            for (long level = database.GetScalar<long>(rubricId, "Level", "Rubric"); rubricId > 0; )
+            {
+                args.Add(@"\{\{RubricId\[" + level + @"\]\}\}", mapping.Rubric[rubricId]);
+                rubricId = database.GetScalar<long>(rubricId, "ParentId", "Rubric");
+                level = database.GetScalar<long>(rubricId, "Level", "Rubric");
+            }
+
+            return args;
+        }
+        public static Arguments BuildArgs(HtmlNode node)
+        {
+            Arguments args = new Arguments
+            {
+                {@"\{\{Id\}\}", node.Id},
+                {@"\{\{InnerText\}\}", node.InnerText},
+                {@"\{\{HrefValue\}\}", HrefValue(node)},
+                {@"\{\{Name\}\}", node.Name}
             };
             return args;
+        }
+
+        public static string HrefValue(HtmlNode node)
+        {
+            try
+            {
+                HtmlAttribute href = node.Attributes["href"];
+                return href.Value;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+        public static string OptionValue(HtmlNode node)
+        {
+            try
+            {
+                HtmlAttribute value = node.Attributes["value"];
+                return value.Value;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+        public static async Task<LinksCollection> GetLinks(Uri uri, string xpath, string encoding)
+        {
+            try
+            {
+                HtmlDocument document = await WebRequestHtmlDocument(uri, "GET", encoding);
+                LinksCollection links = new LinksCollection();
+                Debug.Assert(document != null, "document != null");
+                Debug.WriteLine("xpath: " + xpath);
+                Debug.WriteLine("document: " + document.DocumentNode.OuterHtml);
+                HtmlNodeCollection nodes = document.DocumentNode.SelectNodes(xpath);
+                foreach (var node in nodes)
+                {
+                    string link = HrefValue(node);
+                    string value = node.InnerText;
+                    Debug.WriteLine(link + "->" + value);
+                    if (!String.IsNullOrEmpty(link) && !links.ContainsKey(link)) links.Add(link, value);
+                }
+                return links;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+        public static async Task<OptionsCollection> GetOptions(Uri uri, string xpath, string encoding)
+        {
+            try
+            {
+
+                HtmlDocument document = await WebRequestHtmlDocument(uri, "GET", encoding);
+                OptionsCollection options = new OptionsCollection();
+                Debug.Assert(document != null, "document != null");
+                Debug.WriteLine("xpath: " + xpath);
+                Debug.WriteLine("document: " + document.DocumentNode.OuterHtml);
+                HtmlNodeCollection nodes = document.DocumentNode.SelectNodes(xpath);
+                foreach (var node in nodes)
+                {
+                    string option = OptionValue(node);
+                    string value = node.NextSibling.InnerText;
+                    Debug.WriteLine(option + "->" + value);
+                    if (!String.IsNullOrEmpty(option) && !options.ContainsKey(option)) options.Add(option, value);
+                }
+                return options;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+        public static Dictionary<long, string> BuildMapping(Dictionary<long, string> lefts,
+            Dictionary<string, string> rights)
+        {
+            Debug.Assert(rights.Count > 0);
+            Dictionary<long, string> results = new Dictionary<long, string>();
+            Regex regex = new Regex(@"\s+");
+            Parallel.ForEach(lefts, left =>
+            {
+                string a = regex.Replace(left.Value.ToLower(), "");
+                string b = regex.Replace(rights.First().Value.ToLower(), "");
+                string index = rights.First().Key;
+                int distance = LevenshteinDistance.Compute(a, b);
+                foreach (var right in rights.Where(right => index != right.Key))
+                {
+                    b = regex.Replace(right.Value.ToLower(), "");
+                    int current = LevenshteinDistance.Compute(a, b);
+                    if (current < distance)
+                    {
+                        distance = current;
+                        index = right.Key;
+                    }
+                }
+                results.Add(left.Key, index);
+            });
+            return results;
         }
     }
 }

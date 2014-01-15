@@ -1,6 +1,6 @@
 ﻿namespace RealtyParserEditor
 {
-    partial class SiteForm
+    partial class SourcesForm
     {
         /// <summary>
         /// Required designer variable.
@@ -29,13 +29,14 @@
         private void InitializeComponent()
         {
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.propertyGridControl1 = new DevExpress.XtraVerticalGrid.PropertyGridControl();
+            this.propertyGridControl2 = new DevExpress.XtraVerticalGrid.PropertyGridControl();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.propertyGridControl1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.propertyGridControl2)).BeginInit();
             this.SuspendLayout();
             // 
             // splitContainer1
@@ -43,50 +44,48 @@
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitContainer1.Location = new System.Drawing.Point(0, 0);
             this.splitContainer1.Name = "splitContainer1";
-            this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
             // splitContainer1.Panel1
             // 
-            this.splitContainer1.Panel1.Controls.Add(this.comboBox1);
+            this.splitContainer1.Panel1.Controls.Add(this.propertyGridControl1);
             // 
             // splitContainer1.Panel2
             // 
-            this.splitContainer1.Panel2.Controls.Add(this.propertyGridControl1);
-            this.splitContainer1.Size = new System.Drawing.Size(926, 535);
-            this.splitContainer1.SplitterDistance = 26;
+            this.splitContainer1.Panel2.Controls.Add(this.propertyGridControl2);
+            this.splitContainer1.Size = new System.Drawing.Size(803, 555);
+            this.splitContainer1.SplitterDistance = 322;
             this.splitContainer1.TabIndex = 0;
-            // 
-            // comboBox1
-            // 
-            this.comboBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(0, 0);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(926, 24);
-            this.comboBox1.TabIndex = 0;
-            this.comboBox1.SelectedValueChanged += new System.EventHandler(this.comboBox1_SelectedValueChanged);
             // 
             // propertyGridControl1
             // 
             this.propertyGridControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.propertyGridControl1.Location = new System.Drawing.Point(0, 0);
             this.propertyGridControl1.Name = "propertyGridControl1";
-            this.propertyGridControl1.Size = new System.Drawing.Size(926, 505);
+            this.propertyGridControl1.Size = new System.Drawing.Size(322, 555);
             this.propertyGridControl1.TabIndex = 0;
             // 
-            // SiteForm
+            // propertyGridControl2
+            // 
+            this.propertyGridControl2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.propertyGridControl2.Location = new System.Drawing.Point(0, 0);
+            this.propertyGridControl2.Name = "propertyGridControl2";
+            this.propertyGridControl2.Size = new System.Drawing.Size(477, 555);
+            this.propertyGridControl2.TabIndex = 0;
+            // 
+            // SourcesForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(926, 535);
+            this.ClientSize = new System.Drawing.Size(803, 555);
             this.Controls.Add(this.splitContainer1);
-            this.Name = "SiteForm";
-            this.Text = "SiteForm";
+            this.Name = "SourcesForm";
+            this.Text = "SourcesForm";
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.propertyGridControl1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.propertyGridControl2)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -95,7 +94,6 @@
 
         private System.Windows.Forms.SplitContainer splitContainer1;
         private DevExpress.XtraVerticalGrid.PropertyGridControl propertyGridControl1;
-        private System.Windows.Forms.ComboBox comboBox1;
-
+        private DevExpress.XtraVerticalGrid.PropertyGridControl propertyGridControl2;
     }
 }

@@ -10,11 +10,11 @@ D:\Projects\RealtyParser\RealtyParserUnitTest\bin\Debug\RT.ParsingLibs.dll
 D:\Projects\RealtyParser\RealtyParserUnitTest\bin\Debug\System.Data.SQLite.dll
 D:\Projects\RealtyParser\RealtyParserUnitTest\bin\Debug\RT.Crawler.dll
 D:\Projects\RealtyParser\RealtyParserUnitTest\bin\Debug\RealtyParser.pdb
+D:\Projects\RealtyParser\RealtyParserUnitTest\bin\Debug\RT.ParsingLibs.pdb
+D:\Projects\RealtyParser\RealtyParserUnitTest\bin\Debug\RT.ParsingLibs.xml
 D:\Projects\RealtyParser\RealtyParserUnitTest\bin\Debug\HtmlAgilityPack.pdb
 D:\Projects\RealtyParser\RealtyParserUnitTest\bin\Debug\HtmlAgilityPack.xml
 D:\Projects\RealtyParser\RealtyParserUnitTest\bin\Debug\Nito.AsyncEx.UnitTests.MSTest.xml
-D:\Projects\RealtyParser\RealtyParserUnitTest\bin\Debug\RT.ParsingLibs.pdb
-D:\Projects\RealtyParser\RealtyParserUnitTest\bin\Debug\RT.ParsingLibs.xml
 D:\Projects\RealtyParser\RealtyParserUnitTest\bin\Debug\System.Data.SQLite.xml
 D:\Projects\RealtyParser\RealtyParserUnitTest\bin\Debug\RT.Crawler.pdb
 D:\Projects\RealtyParser\RealtyParserUnitTest\obj\Debug\RealtyParserUnitTest.csprojResolveAssemblyReference.cache

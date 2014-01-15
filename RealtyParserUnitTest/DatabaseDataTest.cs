@@ -43,6 +43,19 @@ namespace RealtyParserUnitTest
         #endregion
 
         [TestMethod]
+        public void GetDictionaryTest()
+        {
+            //
+            // TODO: добавьте здесь логику теста
+            //
+            foreach (var tableName in _database.GetList<string>("Mapping", "TableName"))
+            {
+                var table = _database.GetDictionary<long>(tableName);
+                Assert.IsTrue(table.Count > 0);
+            }
+        }
+
+        [TestMethod]
         public void NodePropertyNameTest()
         {
             //
@@ -50,7 +63,7 @@ namespace RealtyParserUnitTest
             //
             Type type = typeof(HtmlAgilityPack.HtmlNode);
             Assert.IsNotNull(type);
-            List<string> propertyNames = _database.GetEnum("NodePropertyName", "NodePropertyName");
+            List<string> propertyNames = _database.GetList<string>("NodePropertyName", "NodePropertyName");
             foreach (string propertyName in propertyNames)
             {
                 PropertyInfo propertyInfo = type.GetProperty(propertyName);
@@ -63,7 +76,7 @@ namespace RealtyParserUnitTest
             //
             // TODO: добавьте здесь логику теста
             //
-            List<string> classNames = _database.GetEnum("PublicationIdComparer", "ClassName");
+            List<string> classNames = _database.GetList<string>("PublicationIdComparer", "ClassName");
             foreach (string className in classNames)
             {
                 Assert.IsNotNull(RealtyParserUtils.CreatePublicationIdComparer(className));
@@ -75,7 +88,7 @@ namespace RealtyParserUnitTest
             //
             // TODO: добавьте здесь логику теста
             //
-            List<string> methodNames = _database.GetEnum("HtmlMethod", "Method");
+            List<string> methodNames = _database.GetList<string>("HtmlMethod", "Method");
             Assert.AreEqual(methodNames.Count,2);
             Assert.IsTrue(methodNames.Contains("GET"));
             Assert.IsTrue(methodNames.Contains("POST"));

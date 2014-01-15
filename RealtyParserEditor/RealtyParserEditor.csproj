@@ -53,38 +53,53 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AboutForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AboutForm.Designer.cs">
+      <DependentUpon>AboutForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="ChildFormInterface.cs" />
+    <Compile Include="KeysForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="KeysForm.Designer.cs">
+      <DependentUpon>KeysForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="MappingForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="MappingForm.Designer.cs">
-      <DependentUpon>MappingForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ReturnFieldForm.cs">
+    <Compile Include="ResultForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ReturnFieldForm.Designer.cs">
-      <DependentUpon>ReturnFieldForm.cs</DependentUpon>
+    <Compile Include="ResultForm.Designer.cs">
+      <DependentUpon>ResultForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="SiteForm.cs">
+    <Compile Include="SitePropertiesForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="SiteForm.Designer.cs">
-      <DependentUpon>SiteForm.cs</DependentUpon>
+    <Compile Include="SitePropertiesForm.Designer.cs">
+      <DependentUpon>SitePropertiesForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="SourcesForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SourcesForm.Designer.cs">
+      <DependentUpon>SourcesForm.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="AboutForm.resx">
+      <DependentUpon>AboutForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="KeysForm.resx">
+      <DependentUpon>KeysForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="MappingForm.resx">
-      <DependentUpon>MappingForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\licenses.licx" />
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -97,11 +112,14 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="ReturnFieldForm.resx">
-      <DependentUpon>ReturnFieldForm.cs</DependentUpon>
+    <EmbeddedResource Include="ResultForm.resx">
+      <DependentUpon>ResultForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="SiteForm.resx">
-      <DependentUpon>SiteForm.cs</DependentUpon>
+    <EmbeddedResource Include="SitePropertiesForm.resx">
+      <DependentUpon>SitePropertiesForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SourcesForm.resx">
+      <DependentUpon>SourcesForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -120,6 +138,10 @@
     <ProjectReference Include="..\RealtyParser\RealtyParser.csproj">
       <Project>{8ac9f758-9ce0-4203-854e-2b17cdc65c01}</Project>
       <Name>RealtyParser</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RT.ParsingLibs\RT.ParsingLibs.csproj">
+      <Project>{27CC5B61-3729-4F39-AD0C-D8CE99120FD4}</Project>
+      <Name>RT.ParsingLibs</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

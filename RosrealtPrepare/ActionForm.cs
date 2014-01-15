@@ -8,23 +8,18 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace RealtyParserEditor
+namespace RosrealtPrepare
 {
-    public partial class ReturnFieldForm : Form, IChildFormInterface
+    public partial class ActionForm : Form
     {
-        public ReturnFieldForm()
+        public ActionForm()
         {
             InitializeComponent();
         }
 
-        public void Save()
+        private async void ActionForm_Load(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
-        }
-
-        public void Reload()
-        {
-            throw new NotImplementedException();
+            textBox1.Text = await RosrealtClass.GetActionSql();
         }
     }
 }
