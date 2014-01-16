@@ -15,14 +15,8 @@ namespace RealtyParserEditor
 
         public async void Save()
         {
-            try
-            {
-                RealtyParserParsingModule parsingModule = new RealtyParserParsingModule();
-                propertyGridControl2.SelectedObject = await parsingModule.Result(propertyGridControl1.SelectedObject as ParseRequest);
-            }
-            catch (Exception)
-            {
-            }
+            RealtyParserParsingModule parsingModule = new RealtyParserParsingModule();
+            propertyGridControl2.SelectedObject = await parsingModule.Result(propertyGridControl1.SelectedObject as ParseRequest);
         }
 
         public void Reload()

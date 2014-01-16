@@ -10,7 +10,8 @@ namespace RealtyParser
             get
             {
                 string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
-                return ContainsKey(propertyName) ? this[propertyName] : null;
+                if (!ContainsKey(propertyName)) Add(propertyName, "");
+                return this[propertyName];
             }
             set
             {
@@ -26,7 +27,8 @@ namespace RealtyParser
             get
             {
                 string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
-                return ContainsKey(propertyName) ? this[propertyName] : null;
+                if (!ContainsKey(propertyName)) Add(propertyName, "");
+                return this[propertyName];
             }
             set
             {
@@ -42,7 +44,8 @@ namespace RealtyParser
             get
             {
                 string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
-                return ContainsKey(propertyName) ? this[propertyName] : null;
+                if (!ContainsKey(propertyName)) Add(propertyName, "");
+                return this[propertyName];
             }
             set
             {
@@ -58,7 +61,8 @@ namespace RealtyParser
             get
             {
                 string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
-                return ContainsKey(propertyName) ? this[propertyName] : null;
+                if (!ContainsKey(propertyName)) Add(propertyName, "");
+                return this[propertyName];
             }
             set
             {
@@ -74,7 +78,8 @@ namespace RealtyParser
             get
             {
                 string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
-                return ContainsKey(propertyName) ? this[propertyName] : null;
+                if (!ContainsKey(propertyName)) Add(propertyName, "");
+                return this[propertyName];
             }
             set
             {
@@ -90,7 +95,8 @@ namespace RealtyParser
             get
             {
                 string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
-                return ContainsKey(propertyName) ? this[propertyName] : null;
+                if (!ContainsKey(propertyName)) Add(propertyName, "");
+                return this[propertyName];
             }
             set
             {

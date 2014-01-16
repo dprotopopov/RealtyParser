@@ -7,12 +7,28 @@ namespace RealtyParser
     {
         public List<ReturnFieldInfo> ReturnFieldInfos { get; set; }
         public Mapping Mapping { get; set; }
+        public Dictionary<long, string> ActionMapping
+        {
+            get { return Mapping.Action; }
+            set { Mapping.Action = value; }
+        }
+        public Dictionary<long, string> RubricMapping
+        {
+            get { return Mapping.Rubric; }
+            set { Mapping.Rubric = value; }
+        }
+        public Dictionary<long, string> RegionMapping
+        {
+            get { return Mapping.Region; }
+            set { Mapping.Region = value; }
+        }
         public string SiteId
         {
             get
             {
                 string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
-                return ContainsKey(propertyName) ? this[propertyName] : null;
+                if (!ContainsKey(propertyName)) Add(propertyName, "");
+                return this[propertyName];
             }
             set
             {
@@ -28,7 +44,8 @@ namespace RealtyParser
             get
             {
                 string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
-                return ContainsKey(propertyName) ? this[propertyName] : null;
+                if (!ContainsKey(propertyName)) Add(propertyName, "");
+                return this[propertyName];
             }
             set
             {
@@ -44,7 +61,8 @@ namespace RealtyParser
             get
             {
                 string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
-                return ContainsKey(propertyName) ? this[propertyName] : null;
+                if (!ContainsKey(propertyName)) Add(propertyName, "");
+                return this[propertyName];
             }
             set
             {
@@ -60,7 +78,8 @@ namespace RealtyParser
             get
             {
                 string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
-                return ContainsKey(propertyName) ? this[propertyName] : null;
+                if (!ContainsKey(propertyName)) Add(propertyName, "");
+                return this[propertyName];
             }
             set
             {
@@ -76,7 +95,8 @@ namespace RealtyParser
             get
             {
                 string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
-                return ContainsKey(propertyName) ? this[propertyName] : null;
+                if (!ContainsKey(propertyName)) Add(propertyName, "");
+                return this[propertyName];
             }
             set
             {
@@ -92,7 +112,8 @@ namespace RealtyParser
             get
             {
                 string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
-                return ContainsKey(propertyName) ? this[propertyName] : null;
+                if (!ContainsKey(propertyName)) Add(propertyName, "");
+                return this[propertyName];
             }
             set
             {
@@ -108,7 +129,8 @@ namespace RealtyParser
             get
             {
                 string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
-                return ContainsKey(propertyName) ? this[propertyName] : null;
+                if (!ContainsKey(propertyName)) Add(propertyName, "");
+                return this[propertyName];
             }
             set
             {
@@ -124,7 +146,8 @@ namespace RealtyParser
             get
             {
                 string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
-                return ContainsKey(propertyName) ? this[propertyName] : null;
+                if (!ContainsKey(propertyName)) Add(propertyName, "");
+                return this[propertyName];
             }
             set
             {
@@ -140,7 +163,8 @@ namespace RealtyParser
             get
             {
                 string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
-                return ContainsKey(propertyName) ? this[propertyName] : null;
+                if (!ContainsKey(propertyName)) Add(propertyName, "");
+                return this[propertyName];
             }
             set
             {
@@ -156,7 +180,8 @@ namespace RealtyParser
             get
             {
                 string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
-                return ContainsKey(propertyName) ? this[propertyName] : null;
+                if (!ContainsKey(propertyName)) Add(propertyName, "");
+                return this[propertyName];
             }
             set
             {
@@ -172,7 +197,8 @@ namespace RealtyParser
             get
             {
                 string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
-                return ContainsKey(propertyName) ? this[propertyName] : null;
+                if (!ContainsKey(propertyName)) Add(propertyName, "");
+                return this[propertyName];
             }
             set
             {
@@ -188,7 +214,8 @@ namespace RealtyParser
             get
             {
                 string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
-                return ContainsKey(propertyName) ? this[propertyName] : null;
+                if (!ContainsKey(propertyName)) Add(propertyName, "");
+                return this[propertyName];
             }
             set
             {
@@ -204,7 +231,8 @@ namespace RealtyParser
             get
             {
                 string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
-                return ContainsKey(propertyName) ? this[propertyName] : null;
+                if (!ContainsKey(propertyName)) Add(propertyName, "");
+                return this[propertyName];
             }
             set
             {
@@ -220,7 +248,8 @@ namespace RealtyParser
             get
             {
                 string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
-                return ContainsKey(propertyName) ? this[propertyName] : null;
+                if (!ContainsKey(propertyName)) Add(propertyName, "");
+                return this[propertyName];
             }
             set
             {
@@ -236,7 +265,8 @@ namespace RealtyParser
             get
             {
                 string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
-                return ContainsKey(propertyName) ? this[propertyName] : null;
+                if (!ContainsKey(propertyName)) Add(propertyName, "");
+                return this[propertyName];
             }
             set
             {
@@ -252,7 +282,8 @@ namespace RealtyParser
             get
             {
                 string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
-                return ContainsKey(propertyName) ? this[propertyName] : null;
+                if (!ContainsKey(propertyName)) Add(propertyName, "");
+                return this[propertyName];
             }
             set
             {
@@ -268,7 +299,8 @@ namespace RealtyParser
             get
             {
                 string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
-                return ContainsKey(propertyName) ? this[propertyName] : null;
+                if (!ContainsKey(propertyName)) Add(propertyName, "");
+                return this[propertyName];
             }
             set
             {
@@ -284,7 +316,8 @@ namespace RealtyParser
             get
             {
                 string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
-                return ContainsKey(propertyName) ? this[propertyName] : null;
+                if (!ContainsKey(propertyName)) Add(propertyName, "");
+                return this[propertyName];
             }
             set
             {
@@ -300,7 +333,8 @@ namespace RealtyParser
             get
             {
                 string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
-                return ContainsKey(propertyName) ? this[propertyName] : null;
+                if (!ContainsKey(propertyName)) Add(propertyName, "");
+                return this[propertyName];
             }
             set
             {
@@ -316,7 +350,8 @@ namespace RealtyParser
             get
             {
                 string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
-                return ContainsKey(propertyName) ? this[propertyName] : null;
+                if (!ContainsKey(propertyName)) Add(propertyName, "");
+                return this[propertyName];
             }
             set
             {
@@ -332,7 +367,8 @@ namespace RealtyParser
             get
             {
                 string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
-                return ContainsKey(propertyName) ? this[propertyName] : null;
+                if (!ContainsKey(propertyName)) Add(propertyName, "");
+                return this[propertyName];
             }
             set
             {

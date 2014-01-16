@@ -1,8 +1,7 @@
-﻿using System;
-using System.Text;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RealtyParser;
+using RT.ParsingLibs.Models;
 using RT.ParsingLibs.Responses;
 
 namespace RealtyParserUnitTest
@@ -15,30 +14,11 @@ namespace RealtyParserUnitTest
     {
         RealtyParserParsingModule module = new RealtyParserParsingModule();
 
-        public RealtyParserParsingModuleUnitTest()
-        {
-            //
-            // TODO: добавьте здесь логику конструктора
-            //
-        }
-
-        private TestContext testContextInstance;
-
         /// <summary>
         ///Получает или устанавливает контекст теста, в котором предоставляются
         ///сведения о текущем тестовом запуске и обеспечивается его функциональность.
         ///</summary>
-        public TestContext TestContext
-        {
-            get
-            {
-                return testContextInstance;
-            }
-            set
-            {
-                testContextInstance = value;
-            }
-        }
+        public TestContext TestContext { get; set; }
 
         #region Дополнительные атрибуты тестирования
         //
@@ -72,6 +52,16 @@ namespace RealtyParserUnitTest
             Assert.AreEqual(response.Info, "Dmitry Protopopov");
             Assert.AreEqual(response.Contacts, "dmitry@protopopov.ru");
             Assert.AreEqual(response.CopyRight, "All reserved");
+        }
+        [TestMethod]
+        public void TestSources()
+        {
+            //
+            // TODO: добавьте здесь логику теста
+            //
+            Bind bind = new Bind { ActionId = 1, RubricId = 1, RegionId = 1 };
+            IList<string> sources = module.Sources(bind);
+            Assert.IsTrue(sources.Count > 0);
         }
     }
 }

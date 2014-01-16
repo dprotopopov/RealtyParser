@@ -54,6 +54,30 @@ namespace RealtyParserUnitTest
                 Assert.IsTrue(table.Count > 0);
             }
         }
+        [TestMethod]
+        public void MappingTest()
+        {
+            //
+            // TODO: добавьте здесь логику теста
+            //
+            const long siteId = 1;
+            foreach (var mappedTableName in _database.GetList<string>("Mapping", "TableName"))
+            {
+                var dictionary = _database.GetDictionary<long>("Site" + mappedTableName + "Mapping", "" + mappedTableName + "Id", "Site" + mappedTableName + "Id", siteId);
+                Assert.IsTrue(dictionary.Count > 0);
+                Assert.IsTrue(!String.IsNullOrEmpty(dictionary[1]));
+            }
+        }
+        [TestMethod]
+        public void PropertiesTest()
+        {
+            //
+            // TODO: добавьте здесь логику теста
+            //
+            const long siteId = 1;
+            SiteProperties properties = _database.GetSiteProperties(siteId);
+            Assert.IsTrue(!String.IsNullOrEmpty(properties.Mapping.Region[1]) && !String.IsNullOrEmpty(properties.Mapping.Rubric[1]) && !String.IsNullOrEmpty(properties.Mapping.Action[1]));
+        }
 
         [TestMethod]
         public void NodePropertyNameTest()
@@ -89,7 +113,7 @@ namespace RealtyParserUnitTest
             // TODO: добавьте здесь логику теста
             //
             List<string> methodNames = _database.GetList<string>("HtmlMethod", "Method");
-            Assert.AreEqual(methodNames.Count,2);
+            Assert.AreEqual(methodNames.Count, 2);
             Assert.IsTrue(methodNames.Contains("GET"));
             Assert.IsTrue(methodNames.Contains("POST"));
         }

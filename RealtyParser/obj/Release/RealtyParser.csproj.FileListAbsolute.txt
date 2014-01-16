@@ -1,0 +1,17 @@
+D:\Projects\RealtyParser\RealtyParser\bin\Release\RealtyParser.db
+D:\Projects\RealtyParser\RealtyParser\bin\Release\RealtyParser.dll
+D:\Projects\RealtyParser\RealtyParser\bin\Release\RealtyParser.pdb
+D:\Projects\RealtyParser\RealtyParser\bin\Release\HtmlAgilityPack.dll
+D:\Projects\RealtyParser\RealtyParser\bin\Release\RT.Crawler.dll
+D:\Projects\RealtyParser\RealtyParser\bin\Release\RT.ParsingLibs.dll
+D:\Projects\RealtyParser\RealtyParser\bin\Release\System.Data.SQLite.dll
+D:\Projects\RealtyParser\RealtyParser\bin\Release\RT.Crawler.pdb
+D:\Projects\RealtyParser\RealtyParser\bin\Release\RT.Crawler.xml
+D:\Projects\RealtyParser\RealtyParser\bin\Release\RT.ParsingLibs.pdb
+D:\Projects\RealtyParser\RealtyParser\bin\Release\RT.ParsingLibs.xml
+D:\Projects\RealtyParser\RealtyParser\bin\Release\HtmlAgilityPack.pdb
+D:\Projects\RealtyParser\RealtyParser\bin\Release\HtmlAgilityPack.xml
+D:\Projects\RealtyParser\RealtyParser\bin\Release\System.Data.SQLite.xml
+D:\Projects\RealtyParser\RealtyParser\obj\Release\RealtyParser.csprojResolveAssemblyReference.cache
+D:\Projects\RealtyParser\RealtyParser\obj\Release\RealtyParser.dll
+D:\Projects\RealtyParser\RealtyParser\obj\Release\RealtyParser.pdb

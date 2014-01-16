@@ -1,5 +1,7 @@
-D:\Projects\RealtyParser\RealtyParserEditor\bin\Debug\RealtyParser.db
 D:\Projects\RealtyParser\RealtyParserEditor\bin\Debug\RealtyParserEditor.exe.config
+D:\Projects\RealtyParser\RealtyParserEditor\bin\Debug\RealtyParser.db
+D:\Projects\RealtyParser\RealtyParserEditor\bin\Debug\RealtyParserEditor.exe.manifest
+D:\Projects\RealtyParser\RealtyParserEditor\bin\Debug\RealtyParserEditor.application
 D:\Projects\RealtyParser\RealtyParserEditor\bin\Debug\RealtyParserEditor.exe
 D:\Projects\RealtyParser\RealtyParserEditor\bin\Debug\RealtyParserEditor.pdb
 D:\Projects\RealtyParser\RealtyParserEditor\bin\Debug\RealtyParser.dll
@@ -24,5 +26,7 @@ D:\Projects\RealtyParser\RealtyParserEditor\obj\Debug\RealtyParserEditor.SitePro
 D:\Projects\RealtyParser\RealtyParserEditor\obj\Debug\RealtyParserEditor.SourcesForm.resources
 D:\Projects\RealtyParser\RealtyParserEditor\obj\Debug\RealtyParserEditor.csproj.GenerateResource.Cache
 D:\Projects\RealtyParser\RealtyParserEditor\obj\Debug\RealtyParserEditor.exe.licenses
+D:\Projects\RealtyParser\RealtyParserEditor\obj\Debug\RealtyParserEditor.exe.manifest
+D:\Projects\RealtyParser\RealtyParserEditor\obj\Debug\RealtyParserEditor.application
 D:\Projects\RealtyParser\RealtyParserEditor\obj\Debug\RealtyParserEditor.exe
 D:\Projects\RealtyParser\RealtyParserEditor\obj\Debug\RealtyParserEditor.pdb

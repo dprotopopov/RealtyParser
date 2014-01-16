@@ -18,6 +18,7 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RealtyParserEditor", "RealtyParserEditor\RealtyParserEditor.csproj", "{6EDFBE49-6876-4156-A209-306CB7E3EFEC}"
 	ProjectSection(ProjectDependencies) = postProject
 		{8AC9F758-9CE0-4203-854E-2B17CDC65C01} = {8AC9F758-9CE0-4203-854E-2B17CDC65C01}
+		{03624A95-B0FA-4115-A498-9E88E140956C} = {03624A95-B0FA-4115-A498-9E88E140956C}
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RosrealtPrepare", "RosrealtPrepare\RosrealtPrepare.csproj", "{3925808F-202B-4558-A8D8-619221DF1E52}"
