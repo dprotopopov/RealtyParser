@@ -29,14 +29,13 @@
         private void InitializeComponent()
         {
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.propertyGridControl1 = new DevExpress.XtraVerticalGrid.PropertyGridControl();
-            this.propertyGridControl2 = new DevExpress.XtraVerticalGrid.PropertyGridControl();
+            this.propertyGridControlBind = new DevExpress.XtraVerticalGrid.PropertyGridControl();
+            this.listBoxSources = new System.Windows.Forms.ListBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.propertyGridControl1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.propertyGridControl2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.propertyGridControlBind)).BeginInit();
             this.SuspendLayout();
             // 
             // splitContainer1
@@ -47,30 +46,32 @@
             // 
             // splitContainer1.Panel1
             // 
-            this.splitContainer1.Panel1.Controls.Add(this.propertyGridControl1);
+            this.splitContainer1.Panel1.Controls.Add(this.propertyGridControlBind);
             // 
             // splitContainer1.Panel2
             // 
-            this.splitContainer1.Panel2.Controls.Add(this.propertyGridControl2);
+            this.splitContainer1.Panel2.Controls.Add(this.listBoxSources);
             this.splitContainer1.Size = new System.Drawing.Size(803, 555);
             this.splitContainer1.SplitterDistance = 322;
             this.splitContainer1.TabIndex = 0;
             // 
-            // propertyGridControl1
+            // propertyGridControlBind
             // 
-            this.propertyGridControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.propertyGridControl1.Location = new System.Drawing.Point(0, 0);
-            this.propertyGridControl1.Name = "propertyGridControl1";
-            this.propertyGridControl1.Size = new System.Drawing.Size(322, 555);
-            this.propertyGridControl1.TabIndex = 0;
+            this.propertyGridControlBind.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.propertyGridControlBind.Location = new System.Drawing.Point(0, 0);
+            this.propertyGridControlBind.Name = "propertyGridControlBind";
+            this.propertyGridControlBind.Size = new System.Drawing.Size(322, 555);
+            this.propertyGridControlBind.TabIndex = 0;
             // 
-            // propertyGridControl2
+            // listBoxSources
             // 
-            this.propertyGridControl2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.propertyGridControl2.Location = new System.Drawing.Point(0, 0);
-            this.propertyGridControl2.Name = "propertyGridControl2";
-            this.propertyGridControl2.Size = new System.Drawing.Size(477, 555);
-            this.propertyGridControl2.TabIndex = 0;
+            this.listBoxSources.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.listBoxSources.FormattingEnabled = true;
+            this.listBoxSources.ItemHeight = 16;
+            this.listBoxSources.Location = new System.Drawing.Point(0, 0);
+            this.listBoxSources.Name = "listBoxSources";
+            this.listBoxSources.Size = new System.Drawing.Size(477, 555);
+            this.listBoxSources.TabIndex = 2;
             // 
             // SourcesForm
             // 
@@ -84,8 +85,7 @@
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.propertyGridControl1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.propertyGridControl2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.propertyGridControlBind)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -93,7 +93,7 @@
         #endregion
 
         private System.Windows.Forms.SplitContainer splitContainer1;
-        private DevExpress.XtraVerticalGrid.PropertyGridControl propertyGridControl1;
-        private DevExpress.XtraVerticalGrid.PropertyGridControl propertyGridControl2;
+        private DevExpress.XtraVerticalGrid.PropertyGridControl propertyGridControlBind;
+        private System.Windows.Forms.ListBox listBoxSources;
     }
 }

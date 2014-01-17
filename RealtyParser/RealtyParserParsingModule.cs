@@ -32,10 +32,16 @@ namespace RealtyParser
             long rubricId = request.RubricId;
             long actionId = request.ActionId;
             string lastPublicationId = request.LastPublicationId;
+            long pageId = 0;
+
+            Debug.WriteLine("Переданы параметры:");
+            Debug.WriteLine(request.ToString());
+            Debug.WriteLine("Пареметр LastPublicationId " + (string.IsNullOrEmpty(lastPublicationId) ? " ПУСТОЙ !!!!!!!" : " НЕ ПУСТОЙ !!!!!!!"));
 
             // Переопределение нулевых значений для тестовых целей
             if (regionId == 0 && rubricId == 0 && actionId == 0)
             {
+                Debug.WriteLine("Переопределение нулевых значений для тестовых целей");
                 siteId = 1;
                 regionId = 1;
                 rubricId = 1;
@@ -54,9 +60,10 @@ namespace RealtyParser
             Debug.Assert(properties.Mapping.Rubric.ContainsKey(rubricId));
             Debug.Assert(properties.Mapping.Region.ContainsKey(regionId));
 
-            Arguments args = RealtyParserUtils.BuildArgs(_database, regionId, rubricId, actionId, lastPublicationId, properties.Mapping, siteId);
+            Arguments args = RealtyParserUtils.BuildArguments(_database, regionId, rubricId, actionId, lastPublicationId, properties.Mapping, siteId);
 
-            List<string> publishedIds = publishedIds = new List<string>();
+            List<string> publishedIds = new List<string>();
+
             if (string.IsNullOrEmpty(lastPublicationId))
             {
                 //При первом вызове метода парсера из DLL не известно о IdRes объявления внутри ресурса, поэтому он
@@ -71,21 +78,33 @@ namespace RealtyParser
                     };
                 HtmlDocument document =
                     await RealtyParserUtils.WebRequestHtmlDocument(builder.Uri, properties.Method, properties.Encoding);
-                HtmlNode node =
-                    document.DocumentNode.SelectSingleNode(
+
+                HtmlNode node = document.DocumentNode;
+                try
+                {
+                    node = document.DocumentNode.SelectSingleNode(
                         RealtyParserUtils.ParseTemplate(properties.LastPublicationIdXpathTemplate, args));
+                }
+                catch (Exception)
+                {
+                }
                 if (node != null)
                 {
                     Regex regex = new Regex(properties.LastPublicationIdRegexPattern, RegexOptions.IgnoreCase);
+
+                    Arguments nodeArgs = new Arguments(args);
+                    nodeArgs.InsertOrReplaceArguments(RealtyParserUtils.BuildArguments(node));
+
                     publishedIds = new List<string>
                     {
                         regex.Replace(
                             RealtyParserUtils.ParseTemplate(properties.LastPublicationIdResultTemplate,
-                                RealtyParserUtils.BuildArgs(node)), properties.LastPublicationIdRegexReplacement)
+                                nodeArgs), properties.LastPublicationIdRegexReplacement)
                     };
                 }
                 else
                 {
+                    Debug.WriteLine("document.DocumentNode.SelectSingleNode: No nodes found");
                     return new ParseResponse
                     {
                         ResponseCode = ParseResponseCode.NotFoundId,
@@ -95,37 +114,133 @@ namespace RealtyParser
                     };
                 }
             }
+            else
+            {
+                Debug.Assert(properties.CountAd != null, "properties.CountAd != null");
+
+                IComparer<string> comparer =
+                   RealtyParserUtils.CreatePublicationIdComparer(properties.PublicationIdComparerClassName);
+
+                while (publishedIds.Count < Convert.ToInt32(properties.CountAd))
+                {
+
+                    UriBuilder builder =
+                        new UriBuilder(properties.Url +
+                                       RealtyParserUtils.ParseTemplate(properties.ExtSearchTemplate,
+                                           (new Arguments(args)).InsertOrReplaceArguments(
+                                               RealtyParserUtils.BuildArguments(++pageId))))
+                        {
+                            UserName = properties.UserName,
+                            Password = properties.Password
+                        };
+                    HtmlDocument document =
+                        await
+                            RealtyParserUtils.WebRequestHtmlDocument(builder.Uri, properties.Method, properties.Encoding);
+                    Regex regex = new Regex(properties.ExtRegexPattern, RegexOptions.IgnoreCase);
+                    List<string> newIds =
+                        document.DocumentNode.SelectNodes(RealtyParserUtils.ParseTemplate(properties.ExtXpathTemplate,
+                            args))
+                            .Select(node => regex.Replace(RealtyParserUtils.ParseTemplate(properties.ExtResultTemplate,
+                                (new Arguments(args)).InsertOrReplaceArguments(RealtyParserUtils.BuildArguments(node))),
+                                properties.ExtRegexReplacement)).ToList();
+
+                    if (!newIds.Any()) break;
+
+                    publishedIds.AddRange(newIds);
+                    publishedIds.Sort(comparer);
+
+                    int index = publishedIds.BinarySearch(0, publishedIds.Count, lastPublicationId, comparer);
+                    try
+                    {
+
+                        if (index < 0)
+                        {
+                            //Если IdRes не найден, то парсер возвращает последнии CountAD
+                            //объявлений (такая ситуация может получится, если размещенное объявление к следующей
+                            //итерации будет удалено на ресурсе)
+                            publishedIds.RemoveRange(0,
+                                (int)(publishedIds.Count - Convert.ToUInt32(properties.CountAd)));
+                        }
+                        else
+                        {
+                            //Одним из условий работы парсера является требование к оптимизации алгоритма
+                            //получения новых объявлений, т.е. необходимо делать минимальное количество запросов
+                            //к ресурсу. Для этого парсер должен использовать форму расширенного поиска, чтобы
+                            //получать выборку нужных объявлений. Затем отсеивать объявления, которые были до
+                            //IdRes и использовать дальнейшие ссылки только для новых объявлений.
+                            publishedIds.RemoveRange(0, index + 1);
+                            break;
+                        }
+                    }
+                    catch (ArgumentException)
+                    {
+                    }
+                }
+            }
+
 
             List<WebPublication> publications = new List<WebPublication>();
 
             foreach (var publishedId in publishedIds)
             {
-                Arguments unoArgs = RealtyParserUtils.BuildArgs(_database, regionId, rubricId, actionId, publishedId, properties.Mapping, siteId);
-                UriBuilder unoBuilder = new UriBuilder(properties.Url + RealtyParserUtils.ParseTemplate(properties.UnoSearchTemplate, unoArgs))
+                Arguments arguments = RealtyParserUtils.BuildArguments(_database, regionId, rubricId, actionId, publishedId,
+                    properties.Mapping, siteId);
+                UriBuilder builder =
+                    new UriBuilder(properties.Url + RealtyParserUtils.ParseTemplate(properties.UnoSearchTemplate, arguments))
+                    {
+                        UserName = properties.UserName,
+                        Password = properties.Password
+                    };
+
+                HtmlDocument document =
+                    await
+                        RealtyParserUtils.WebRequestHtmlDocument(builder.Uri, properties.Method, properties.Encoding);
+                HtmlNode node = document.DocumentNode;
+
+                if (node != null)
                 {
-                    UserName = properties.UserName,
-                    Password = properties.Password
-                };
-                HtmlDocument unoDocument = await RealtyParserUtils.WebRequestHtmlDocument(unoBuilder.Uri, properties.Method, properties.Encoding);
-                ReturnFields unoReturnFields = null;
-                try
-                {
-                    unoReturnFields = RealtyParserUtils.BuildReturnFields(_database,
-                        unoDocument.DocumentNode.SelectSingleNode(RealtyParserUtils.ParseTemplate(properties.UnoXpathTemplate, unoArgs)),
-                        unoArgs,
-                        properties.ReturnFieldInfos);
+                    Arguments nodeArgs = new Arguments(arguments);
+                    nodeArgs.InsertOrReplaceArguments(RealtyParserUtils.BuildArguments(node));
+
+                    ReturnFields returnFields = null;
+                    try
+                    {
+                        returnFields = RealtyParserUtils.BuildReturnFields(_database, node, nodeArgs,
+                            properties.ReturnFieldInfos);
+                    }
+                    catch (Exception)
+                    {
+                        returnFields = new ReturnFields();
+                    }
+
+                    Debug.WriteLine("{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{");
+                    foreach (var field in returnFields)
+                        if (field.Value != null)
+                            foreach (var value in field.Value)
+                                Debug.WriteLine(field.Key + " -> " + value);
+                    Debug.WriteLine("}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}");
+
+                    publications.Add(RealtyParserUtils.CreateWebPublication(returnFields, regionId, rubricId, actionId, builder));
                 }
-                catch (Exception)
+                else
                 {
-                    unoReturnFields = new ReturnFields();
+                    Debug.WriteLine("unoDocument.DocumentNode.SelectSingleNode: No nodes found");
                 }
-                publications.Add(RealtyParserUtils.CreateWebPublication(unoReturnFields, regionId, rubricId, actionId, unoBuilder));
                 lastPublicationId = publishedId;
             }
 
+            Debug.WriteLine("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
+            foreach (var publication in publications)
+            {
+                Debug.WriteLine("{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{");
+                Debug.WriteLine(publication.ToString());
+                Debug.WriteLine("}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}");
+            }
+            Debug.WriteLine(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+
             return new ParseResponse
             {
-                ResponseCode = (publishedIds.Count()>0) ? ParseResponseCode.Success : ParseResponseCode.ContentEmpty,
+                ResponseCode = (publishedIds.Any()) ? ParseResponseCode.Success : ParseResponseCode.ContentEmpty,
                 LastPublicationId = lastPublicationId,
                 ModuleName = GetType().ToString(),
                 Publications = publications
@@ -139,10 +254,14 @@ namespace RealtyParser
         /// <returns> Коллекция названий ресурсов (сайтов)</returns>
         public IList<string> Sources(Bind bind)
         {
+            long regionId = bind.RegionId;
+            long rubricId = bind.RubricId;
+            long actionId = bind.ActionId;
+
             // Переопределение нулевых значений для тестовых целей
-            if (bind.RegionId == 0) bind.RegionId = _database.GetDictionary<int>("Region").Keys.ToList().FirstOrDefault();
-            if (bind.RubricId == 0) bind.RubricId = _database.GetDictionary<int>("Rubric").Keys.ToList().FirstOrDefault();
-            if (bind.ActionId == 0) bind.ActionId = _database.GetDictionary<int>("Action").Keys.ToList().FirstOrDefault();
+            if (regionId == 0) regionId = _database.GetDictionary<int>("Region").Keys.ToList().FirstOrDefault();
+            if (rubricId == 0) rubricId = _database.GetDictionary<int>("Rubric").Keys.ToList().FirstOrDefault();
+            if (actionId == 0) actionId = _database.GetDictionary<int>("Action").Keys.ToList().FirstOrDefault();
 
             Dictionary<long, string> sites = _database.GetDictionary<long>("Site");
             List<string> list = new List<string>();
@@ -151,9 +270,9 @@ namespace RealtyParser
                 SiteProperties properties = _database.GetSiteProperties(site.Key);
                 try
                 {
-                    if (!String.IsNullOrEmpty(properties.Mapping.Region[bind.RegionId]) &&
-                        !String.IsNullOrEmpty(properties.Mapping.Rubric[bind.RubricId]) &&
-                        !String.IsNullOrEmpty(properties.Mapping.Action[bind.ActionId]))
+                    if (!String.IsNullOrEmpty(properties.Mapping.Region[regionId]) &&
+                        !String.IsNullOrEmpty(properties.Mapping.Rubric[rubricId]) &&
+                        !String.IsNullOrEmpty(properties.Mapping.Action[actionId]))
                         list.Add(site.Value);
                 }
                 catch (Exception)
@@ -191,23 +310,36 @@ namespace RealtyParser
             List<long> actions = _database.GetDictionary<long>("Action").Keys.ToList();
             List<Bind> keys = new List<Bind>();
 
-            long total = 0;
-            foreach (var region in regions)
-                foreach (var rubric in rubrics)
-                    keys.AddRange(from action in actions
-                                  where
-                                      sitePropertiesCollection.Any(
-                                          item =>
-                                              item.Mapping.Action.ContainsKey(action) &&
-                                              item.Mapping.Rubric.ContainsKey(rubric) &&
-                                              item.Mapping.Region.ContainsKey(region) &&
-                                              total++ < 1000)
-                                  select new Bind
-                                  {
-                                      RegionId = (int)region,
-                                      RubricId = (int)rubric,
-                                      ActionId = (int)action
-                                  });
+            //////////////////////////////////////////////////////////////
+            /// Полный перебор даёт слишком много бессмысленных результатов
+            //long total = 0;
+            //foreach (var region in regions)
+            //    foreach (var rubric in rubrics)
+            //        keys.AddRange(from action in actions
+            //                      where
+            //                          sitePropertiesCollection.Any(
+            //                              item =>
+            //                                  item.Mapping.Action.ContainsKey(action) &&
+            //                                  item.Mapping.Rubric.ContainsKey(rubric) &&
+            //                                  item.Mapping.Region.ContainsKey(region) &&
+            //                                  total++ < 1000)
+            //                      select new Bind
+            //                      {
+            //                          RegionId = (int)region,
+            //                          RubricId = (int)rubric,
+            //                          ActionId = (int)action
+            //                      });
+
+            //////////////////////////////////////////////////////////////
+            /// Предлагается такой вариант
+
+            regions.Sort();
+            rubrics.Sort();
+            actions.Sort();
+
+            keys.Add(new Bind() { RegionId = (int)regions.First(), RubricId = (int)rubrics.First(), ActionId = (int)actions.First() });
+            keys.Add(new Bind() { RegionId = (int)regions.Last(), RubricId = (int)rubrics.Last(), ActionId = (int)actions.Last() });
+
             return keys;
         }
     }

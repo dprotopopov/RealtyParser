@@ -5,7 +5,6 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Reflection;
-using System.Security.Policy;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -57,69 +56,200 @@ namespace RealtyParser
         }
 
         public static WebPublication CreateWebPublication(
-            ReturnFields unoReturnFields,
+            ReturnFields returnFields,
             long regionId,
             long rubricId,
             long actionId,
-            UriBuilder unoBuilder
+            UriBuilder builder
 )
         {
-            Uri site = null;
-            Uri uri = null;
-            try
-            {
-                site = new Uri(unoBuilder.Host);
-            }
-            catch
-            {
-            }
-            try
-            {
-                uri = unoBuilder.Uri;
-            }
-            catch
-            {
-            }
 
-            return new WebPublication
+            WebPublication webPublication = new WebPublication
             {
                 AdditionalInfo = new AdditionalInfo
                 {
-                    RealtyAdditionalInfo = new RealtyAdditionalInfo
-                    {
-                        Address = unoReturnFields.WebPublicationAdditionalInfoRealtyAdditionalInfoAddress.FirstOrDefault(),
-                        AppointmentOfRoom =
-                            unoReturnFields.WebPublicationAdditionalInfoRealtyAdditionalInfoAppointmentOfRoom
-                                .FirstOrDefault(),
-                        CostAll =
-                            Convert.ToDecimal(
-                                unoReturnFields.WebPublicationAdditionalInfoRealtyAdditionalInfoCostAll.FirstOrDefault())
-                    }
+                    RealtyAdditionalInfo = new RealtyAdditionalInfo()
                 },
-                Contact = new WebPublicationContact
-                {
-                    Author = unoReturnFields.WebPublicationContactAuthor.FirstOrDefault(),
-                    AuthorUrl = ConvertToUris(unoReturnFields.WebPublicationContactAuthorUrl.ToArray()).FirstOrDefault(),
-                    ContactName = unoReturnFields.WebPublicationContactContactName.FirstOrDefault(),
-                    Email = unoReturnFields.WebPublicationContactEmail.ToArray(),
-                    Icq = Convert.ToUInt32(unoReturnFields.WebPublicationContactIcq.FirstOrDefault()),
-                    Phone = unoReturnFields.WebPublicationContactPhone.ToArray(),
-                    Skype = unoReturnFields.WebPublicationContactSkype.FirstOrDefault()
-                },
-                Description = unoReturnFields.WebPublicationDescription.FirstOrDefault(),
-                ModifyDate = string.IsNullOrEmpty(unoReturnFields.WebPublicationModifyDate.FirstOrDefault())?DateTime.Now:DateTime.Parse(unoReturnFields.WebPublicationModifyDate.FirstOrDefault()),
-                Photos = ConvertToUris(unoReturnFields.WebPublicationPhotos.ToArray()),
-                PublicationId = unoReturnFields.WebPublicationPublicationId.FirstOrDefault(),
-                RegionId = regionId,
-                RubricId = rubricId,
-                ActionId = actionId,
-                Site =site,
-                Url = uri
+                Contact = new WebPublicationContact()
             };
+
+            Debug.Assert(webPublication != null);
+            Debug.Assert(webPublication.AdditionalInfo != null);
+            Debug.Assert(webPublication.AdditionalInfo.RealtyAdditionalInfo != null);
+            Debug.Assert(webPublication.Contact != null);
+
+            try
+            {
+                webPublication.AdditionalInfo.RealtyAdditionalInfo.Address =
+                    returnFields.WebPublicationAdditionalInfoRealtyAdditionalInfoAddress
+                        .Aggregate((i, j) => i +  "\t" + j);
+            }
+            catch (Exception)
+            {
+                webPublication.AdditionalInfo.RealtyAdditionalInfo.Address = "";
+            }
+            try
+            {
+                webPublication.AdditionalInfo.RealtyAdditionalInfo.AppointmentOfRoom =
+                     returnFields.WebPublicationAdditionalInfoRealtyAdditionalInfoAppointmentOfRoom
+                         .Aggregate((i, j) => i +  "\t" + j);
+            }
+            catch (Exception)
+            {
+                webPublication.AdditionalInfo.RealtyAdditionalInfo.AppointmentOfRoom = "";
+            }
+            try
+            {
+                webPublication.AdditionalInfo.RealtyAdditionalInfo.CostAll =
+                     Convert.ToDecimal(
+                         returnFields.WebPublicationAdditionalInfoRealtyAdditionalInfoCostAll
+                            .FirstOrDefault());
+
+            }
+            catch (Exception)
+            {
+                webPublication.AdditionalInfo.RealtyAdditionalInfo.CostAll = 0m;
+            }
+            try
+            {
+                webPublication.Contact.Author = returnFields.WebPublicationContactAuthor
+                    .Aggregate((i, j) => i +  "\t" + j);
+            }
+            catch (Exception)
+            {
+                webPublication.Contact.Author = "";
+            }
+            try
+            {
+                webPublication.Contact.AuthorUrl = ConvertToUris(returnFields.WebPublicationContactAuthorUrl)
+                            .FirstOrDefault();
+            }
+            catch (Exception)
+            {
+                webPublication.Contact.AuthorUrl = null;
+            }
+            try
+            {
+                webPublication.Contact.ContactName = returnFields.WebPublicationContactContactName
+                     .Aggregate((i, j) => i +  "\t" + j);
+            }
+            catch (Exception)
+            {
+                webPublication.Contact.ContactName = "";
+            }
+            try
+            {
+                webPublication.Contact.Email = returnFields.WebPublicationContactEmail;
+            }
+            catch (Exception)
+            {
+                webPublication.Contact.Email = new List<string>();
+            }
+            try
+            {
+                webPublication.Contact.Icq = Convert.ToUInt32(
+                    returnFields.WebPublicationContactIcq
+                        .FirstOrDefault());
+            }
+            catch (Exception)
+            {
+            }
+            try
+            {
+                webPublication.Contact.Phone = returnFields.WebPublicationContactPhone;
+            }
+            catch (Exception)
+            {
+                webPublication.Contact.Phone = new List<string>();
+            }
+            try
+            {
+                webPublication.Contact.Skype = returnFields.WebPublicationContactSkype
+                     .FirstOrDefault();
+            }
+            catch (Exception)
+            {
+                webPublication.Contact.Skype = "";
+            }
+            try
+            {
+                webPublication.Description = returnFields.WebPublicationDescription
+                    .Aggregate((i, j) => i +  "\t" + j);
+            }
+            catch (Exception)
+            {
+                webPublication.Description = "";
+            }
+            try
+            {
+                webPublication.ModifyDate = DateTime.Parse(
+                    returnFields.WebPublicationModifyDate
+                        .FirstOrDefault());
+            }
+            catch (Exception)
+            {
+                webPublication.ModifyDate = DateTime.Now;
+            }
+            try
+            {
+                webPublication.Photos = ConvertToUris(returnFields.WebPublicationPhotos);
+            }
+            catch (Exception)
+            {
+                webPublication.Photos = new List<Uri>();
+            }
+            try
+            {
+                webPublication.PublicationId = returnFields.WebPublicationPublicationId
+                    .FirstOrDefault();
+            }
+            catch (Exception)
+            {
+                webPublication.PublicationId = "";
+            }
+            try
+            {
+                webPublication.RegionId = regionId;
+            }
+            catch (Exception)
+            {
+            }
+            try
+            {
+                webPublication.RubricId = rubricId;
+            }
+            catch (Exception)
+            {
+            }
+            try
+            {
+                webPublication.ActionId = actionId;
+            }
+            catch (Exception)
+            {
+            }
+            try
+            {
+                webPublication.Site = new Uri(builder.Scheme + @"://" + builder.Host);
+            }
+            catch (Exception)
+            {
+                webPublication.Site = null;
+            }
+            try
+            {
+                webPublication.Url = builder.Uri;
+            }
+            catch (Exception)
+            {
+                webPublication.Url = null;
+            }
+
+            return webPublication;
         }
-        public static Uri[] ConvertToUris(string[] strings)
+        public static IList<Uri> ConvertToUris(List<string> strings)
         {
-            return strings.Select(s => new Uri(s)).ToArray();
+            return strings.Select(s => new Uri(s)).ToList();
         }
         public static string InvokeNodeProperty(HtmlNode node, string propertyName)
         {
@@ -137,35 +267,52 @@ namespace RealtyParser
                 Debug.Assert(pair.Key != null);
                 Debug.Assert(pair.Value != null);
 
-                Debug.WriteLine("ParseTemplate: " + pair.Key + " , " + template + " , " + pair.Value);
+                //Debug.WriteLine("ParseTemplate: /" + pair.Key + "/ -> /" + pair.Value.Substring(0, Math.Min(30, pair.Value.Length)) + ((pair.Value.Length > 30) ? ".../" : "/"));
                 Regex regex = new Regex(pair.Key, RegexOptions.IgnoreCase);
                 template = regex.Replace(template, pair.Value);
             }
             Regex rgx = new Regex(@"\{\{[^\}]*\}\}", RegexOptions.IgnoreCase);
-            return rgx.Replace(template, @"");
+            template = rgx.Replace(template, @"");
+            Debug.WriteLine("ParseTemplate: " + template);
+            return template;
         }
 
         public static ReturnFields BuildReturnFields(
             RealtyParserDatabase database,
-            HtmlNode unoNode,
-            Arguments args,
+            HtmlNode parentNode,
+            Arguments parentArguments,
             List<ReturnFieldInfo> returnFieldInfos)
         {
             ReturnFields returnFields = new ReturnFields();
             foreach (var returnFieldInfo in returnFieldInfos)
             {
-                Regex regex = new Regex(returnFieldInfo.UnoReturnFieldRegexPattern, RegexOptions.IgnoreCase);
-                var nodes = unoNode.SelectNodes(ParseTemplate(returnFieldInfo.UnoReturnFieldXpathTemplate, args));
+                Regex regex = new Regex(returnFieldInfo.ReturnFieldRegexPattern, RegexOptions.IgnoreCase);
+                var nodes = parentNode.SelectNodes(ParseTemplate(returnFieldInfo.ReturnFieldXpathTemplate, parentArguments));
+                var list = new List<string>();
                 if (nodes != null)
                 {
-                    var list = nodes.Select(node => regex.Replace(ParseTemplate(returnFieldInfo.UnoReturnFieldResultTemplate, BuildArgs(node)), returnFieldInfo.UnoReturnFieldRegexReplacement)).ToList();
-                    returnFields.Add(returnFieldInfo.ReturnFieldId, list);
+                    foreach (var node in nodes)
+                    {
+                        Arguments arguments = new Arguments(parentArguments);
+                        arguments.InsertOrReplaceArguments(BuildArguments(node));
+                        string value = regex.Replace(
+                                ParseTemplate(returnFieldInfo.ReturnFieldResultTemplate, arguments),
+                                        returnFieldInfo.ReturnFieldRegexReplacement);
+
+                        list.Add(value);
+                        Debug.WriteLine("BuildReturnFields: " + returnFieldInfo.ReturnFieldId + " -> " + value);
+                    }
                 }
+                else
+                {
+                    Debug.WriteLine("BuildReturnFields: parentNode.SelectNodes: No nodes found");
+                }
+                returnFields.Add(returnFieldInfo.ReturnFieldId, list);
             }
             return returnFields;
         }
 
-        public static Arguments BuildArgs(
+        public static Arguments BuildArguments(
             RealtyParserDatabase database,
             long regionId,
             long rubricId,
@@ -200,7 +347,13 @@ namespace RealtyParser
             }
             return args;
         }
-        public static Arguments BuildArgs(HtmlNode node)
+        public static Arguments BuildArguments(long pageId)
+        {
+            Arguments arguments = new Arguments();
+            if (pageId > 1) arguments.Add(@"\{\{PageId\}\}", pageId.ToString());
+            return arguments;
+        }
+        public static Arguments BuildArguments(HtmlNode node)
         {
             Debug.Assert(node != null);
             try
@@ -209,7 +362,8 @@ namespace RealtyParser
                 {
                     {@"\{\{Id\}\}", node.Id},
                     {@"\{\{InnerText\}\}", node.InnerText},
-                    {@"\{\{HrefValue\}\}", HrefValue(node)},
+                    {@"\{\{HrefValue\}\}", AttributeValue(node,"href")},
+                    {@"\{\{SrcValue\}\}", AttributeValue(node,"src")},
                     {@"\{\{Name\}\}", node.Name}
                 };
                 return args;
@@ -220,24 +374,12 @@ namespace RealtyParser
             }
         }
 
-        public static string HrefValue(HtmlNode node)
+        public static string AttributeValue(HtmlNode node, string attributeName)
         {
             try
             {
-                HtmlAttribute href = node.Attributes["href"];
-                return href.Value;
-            }
-            catch (Exception)
-            {
-                return "";
-            }
-        }
-        public static string OptionValue(HtmlNode node)
-        {
-            try
-            {
-                HtmlAttribute value = node.Attributes["value"];
-                return value.Value;
+                HtmlAttribute attribute = node.Attributes[attributeName];
+                return attribute.Value;
             }
             catch (Exception)
             {
@@ -256,7 +398,7 @@ namespace RealtyParser
                 HtmlNodeCollection nodes = document.DocumentNode.SelectNodes(xpath);
                 foreach (var node in nodes)
                 {
-                    string link = HrefValue(node);
+                    string link = AttributeValue(node, "href");
                     string value = node.InnerText;
                     Debug.WriteLine(link + "->" + value);
                     if (!String.IsNullOrEmpty(link) && !links.ContainsKey(link)) links.Add(link, value);
@@ -281,7 +423,7 @@ namespace RealtyParser
                 HtmlNodeCollection nodes = document.DocumentNode.SelectNodes(xpath);
                 foreach (var node in nodes)
                 {
-                    string option = OptionValue(node);
+                    string option = AttributeValue(node, "value");
                     string value = node.NextSibling.InnerText;
                     Debug.WriteLine(option + "->" + value);
                     if (!String.IsNullOrEmpty(option) && !options.ContainsKey(option)) options.Add(option, value);

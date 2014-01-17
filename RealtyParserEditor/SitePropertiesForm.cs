@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 using RealtyParser;
@@ -13,33 +14,72 @@ namespace RealtyParserEditor
         {
             InitializeComponent();
             Dictionary<long, string> sites = _database.GetDictionary<long>("Site");
-            foreach (var site in sites)
+            foreach (var item in sites)
             {
-                comboBox1.Items.Add(site);
+                comboBoxSites.Items.Add(item);
             }
-            comboBox1.SelectedItem = sites.FirstOrDefault();
+            comboBoxSites.SelectedItem = sites.FirstOrDefault();
         }
 
         public void Save()
         {
-            _database.SaveSiteProperties(propertyGridControl1.SelectedObject as SiteProperties);
         }
 
         public void Reload()
         {
-            comboBox1.Items.Clear();
-            propertyGridControl1.SelectedObject = null;
+            propertyGridControlMappingItem.SelectedObject = null;
+            propertyGridControlReturnFieldInfo.SelectedObject = null;
+            listBoxMappingItems.Items.Clear();
+            comboBoxMapping.Items.Clear();
+            listBoxReturnFieldInfos.Items.Clear();
+            propertyGridControlReturnFieldInfo.SelectedObject = null;
+            propertyGridControlSiteProperties.SelectedObject = null;
+            comboBoxSites.Items.Clear();
             Dictionary<long, string> sites = _database.GetDictionary<long>("Site");
             foreach (var site in sites)
             {
-                comboBox1.Items.Add(site);
+                comboBoxSites.Items.Add(site);
             }
-            comboBox1.SelectedItem = sites.FirstOrDefault();
+            comboBoxSites.SelectedItem = sites.FirstOrDefault();
         }
 
         private void comboBox1_SelectedValueChanged(object sender, System.EventArgs e)
         {
-            propertyGridControl1.SelectedObject = _database.GetSiteProperties(((KeyValuePair<long, string>)comboBox1.SelectedItem).Key);
+            propertyGridControlMappingItem.SelectedObject = null;
+            propertyGridControlReturnFieldInfo.SelectedObject = null;
+            listBoxMappingItems.Items.Clear();
+            comboBoxMapping.Items.Clear();
+            listBoxReturnFieldInfos.Items.Clear();
+            propertyGridControlReturnFieldInfo.SelectedObject = null;
+            propertyGridControlSiteProperties.SelectedObject = _database.GetSiteProperties(((KeyValuePair<long, string>)comboBoxSites.SelectedItem).Key);
+            foreach (var returnField in  ((SiteProperties) propertyGridControlSiteProperties.SelectedObject).ReturnFieldInfos)
+            {
+                listBoxReturnFieldInfos.Items.Add(returnField);
+            }
+            foreach (var item in ((SiteProperties)propertyGridControlSiteProperties.SelectedObject).Mapping)
+            {
+                comboBoxMapping.Items.Add(item);
+            }
+        }
+
+        private void listBoxReturnFieldInfos_SelectedIndexChanged(object sender, System.EventArgs e)
+        {
+            propertyGridControlReturnFieldInfo.SelectedObject = listBoxReturnFieldInfos.SelectedItem;
+        }
+
+        private void comboBoxMapping_SelectedIndexChanged(object sender, System.EventArgs e)
+        {
+            propertyGridControlMappingItem.SelectedObject = null;
+            listBoxMappingItems.Items.Clear();
+            foreach (var item in ((KeyValuePair<string,Dictionary<long,string>>) comboBoxMapping.SelectedItem).Value)
+            {
+                listBoxMappingItems.Items.Add(item);
+            }
+        }
+
+        private void listBoxMappingItems_SelectedIndexChanged(object sender, System.EventArgs e)
+        {
+            propertyGridControlMappingItem.SelectedObject = listBoxMappingItems.SelectedItem;
         }
     }
 }

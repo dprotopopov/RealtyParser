@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Data.SQLite;
 using System.Diagnostics;
+using System.Linq;
 using System.Text;
 
 namespace RealtyParser
@@ -47,9 +48,8 @@ namespace RealtyParser
             Connection.Open();
             using (SQLiteCommand command = Connection.CreateCommand())
             {
-                SQLiteParameter p = new SQLiteParameter("@SiteId", DbType.Int32) { Value = siteId };
                 command.CommandText = @"SELECT * FROM " + tableName + " WHERE SiteId=@SiteId";
-                command.Parameters.Add(p);
+                command.Parameters.Add(new SQLiteParameter("@SiteId", DbType.Int32) { Value = siteId });
                 SQLiteDataReader reader = command.ExecuteReader();
                 while (reader.Read())
                 {
@@ -62,14 +62,13 @@ namespace RealtyParser
             return dictionary;
         }
 
-        public TR GetScalar<TR,T>(T id, string columnName, string tableName)
+        public TR GetScalar<TR, T>(T id, string columnName, string tableName)
         {
             Connection.Open();
             using (SQLiteCommand command = Connection.CreateCommand())
             {
-                SQLiteParameter p = new SQLiteParameter("@Id", (typeof(T) == typeof(string)) ? DbType.String : DbType.Int32) { Value = id };
                 command.CommandText = @"SELECT " + columnName + " FROM " + tableName + " WHERE " + tableName + "Id=@Id";
-                command.Parameters.Add(p);
+                command.Parameters.Add(new SQLiteParameter("@Id", (typeof(T) == typeof(string)) ? DbType.String : DbType.Int32) { Value = id });
                 SQLiteDataReader reader = command.ExecuteReader();
                 while (reader.Read())
                 {
@@ -86,11 +85,9 @@ namespace RealtyParser
             Connection.Open();
             using (SQLiteCommand command = Connection.CreateCommand())
             {
-                SQLiteParameter p1 = new SQLiteParameter("@SiteId", DbType.Int32) { Value = siteId };
-                SQLiteParameter p2 = new SQLiteParameter("@Id", (typeof(T) == typeof(string)) ? DbType.String : DbType.Int32) { Value = id };
                 command.CommandText = @"SELECT " + columnName + " FROM Site" + tableName + " WHERE Site" + tableName + "Id=@Id AND SiteId=@SiteId";
-                command.Parameters.Add(p1);
-                command.Parameters.Add(p2);
+                command.Parameters.Add(new SQLiteParameter("@SiteId", DbType.Int32) { Value = siteId });
+                command.Parameters.Add(new SQLiteParameter("@Id", (typeof(T) == typeof(string)) ? DbType.String : DbType.Int32) { Value = id });
                 SQLiteDataReader reader = command.ExecuteReader();
                 while (reader.Read())
                 {
@@ -108,9 +105,8 @@ namespace RealtyParser
             Connection.Open();
             using (SQLiteCommand command = Connection.CreateCommand())
             {
-                SQLiteParameter p = new SQLiteParameter("@SiteId", DbType.Int32) { Value = siteId };
                 command.CommandText = @"SELECT * FROM Site WHERE SiteId=@SiteId";
-                command.Parameters.Add(p);
+                command.Parameters.Add(new SQLiteParameter("@SiteId", DbType.Int32) { Value = siteId });
                 SQLiteDataReader reader = command.ExecuteReader();
                 reader.Read();
                 for (int i = 0; i < reader.FieldCount; i++)
@@ -123,32 +119,50 @@ namespace RealtyParser
             }
             properties.ReturnFieldInfos = GetReturnFieldInfos(siteId);
             Mapping dictionary = new Mapping();
-            foreach (var s in GetList<string>("Mapping", "TableName"))
-                dictionary.Add(s, GetDictionary<long>("Site" + s + "Mapping", "" + s + "Id", "Site" + s + "Id", siteId));
+            foreach (var mappedTable in GetList<string>("Mapping", "TableName"))
+                dictionary.Add(mappedTable, GetDictionary<long>("Site" + mappedTable + "Mapping", "" + mappedTable + "Id", "Site" + mappedTable + "Id", siteId));
             properties.Mapping = dictionary;
 
             return properties;
         }
 
-        public int SaveSiteProperties(SiteProperties properties)
+        public void SetSiteProperties(SiteProperties properties)
         {
             Connection.Open();
-            using (SQLiteCommand command = Connection.CreateCommand())
+            using (SQLiteCommand command1 = Connection.CreateCommand())
             {
-                StringBuilder fields = new StringBuilder();
-                StringBuilder values = new StringBuilder();
-                foreach (var property in properties)
+                command1.CommandText = @"SELECT * FROM Site";
+                SQLiteDataReader reader = command1.ExecuteReader();
+                using (SQLiteCommand command2 = Connection.CreateCommand())
                 {
-                    fields.Append("," + property.Key);
-                    values.Append(",@" + property.Key);
-                    SQLiteParameter p = new SQLiteParameter("@" + property.Key, DbType.String) { Value = property.Value };
-                    command.Parameters.Add(p);
+                    command2.CommandText = @"INSERT OR REPLACE Site(" + properties.Keys.Aggregate((i, j) => i + "," + j) +
+                                          ") VALUES (@" + properties.Keys.Aggregate((i, j) => i + ",@" + j) + ")";
+                    for (int i = 0; i < reader.FieldCount; i++)
+                    {
+                        command2.Parameters.Add(new SQLiteParameter("@" + reader.GetName(i), properties[reader.GetName(i)]));
+                    }
+                    reader.Close();
+                    command2.ExecuteNonQuery();
+                    Connection.Close();
                 }
-                command.CommandText = @"REPLACE Site(" + fields.ToString().Substring(1) + ") VALUES (" + values.ToString().Substring(1) + ")";
-                int retval = command.ExecuteNonQuery();
-                Connection.Close();
-                return retval;
             }
+            Mapping dictionary = properties.Mapping;
+            foreach (var item in dictionary)
+                SetDictionary<long>(item.Value, "Site" + item.Key + "Mapping", "" + item.Key + "Id", "Site" + item.Key + "Id", Convert.ToInt64(properties.SiteId));
+        }
+        public void SetDictionary<T>(Dictionary<T, string> dictionary, string tableName, string keyColumnName, string valueColumnName, long siteId)
+        {
+            Connection.Open();
+            foreach (var item in dictionary)
+                using (SQLiteCommand command = Connection.CreateCommand())
+                {
+                    command.CommandText = @"INSERT OR REPLACE " + tableName + "(SiteId," + keyColumnName + "," + valueColumnName + ") VALUES (@SiteId,@" + keyColumnName + ",@" + valueColumnName + ")";
+                    command.Parameters.Add(new SQLiteParameter("@SiteId", siteId));
+                    command.Parameters.Add(new SQLiteParameter("@" + keyColumnName + "", item.Key));
+                    command.Parameters.Add(new SQLiteParameter("@" + valueColumnName + "", item.Value));
+                    command.ExecuteNonQuery();
+                }
+            Connection.Close();
         }
         public List<T> GetList<T>(string tableName, string columnName)
         {
@@ -169,7 +183,7 @@ namespace RealtyParser
         }
         public static string GenerateSql(long siteId, Dictionary<long, string> collection, string mappedTableName)
         {
-            Debug.Assert(collection.Count > 0);
+            Debug.Assert(collection.Any());
             StringBuilder sb = new StringBuilder();
             sb.AppendLine("CREATE TABLE IF NOT EXISTS Site" + mappedTableName + "Mapping(");
             sb.AppendLine("SiteId INTEGER,");
@@ -199,7 +213,7 @@ namespace RealtyParser
         }
         public static string GenerateSql(long siteId, HierarhialItemCollection collection, string mappedTableName)
         {
-            Debug.Assert(collection.Count > 0);
+            Debug.Assert(collection.Any());
             StringBuilder sb = new StringBuilder();
             sb.AppendLine("CREATE TABLE IF NOT EXISTS Site" + mappedTableName + "(");
             sb.AppendLine("SiteId INTEGER,");
@@ -222,20 +236,18 @@ namespace RealtyParser
             using (SQLiteCommand command = Connection.CreateCommand())
             {
                 command.CommandText = @"SELECT * FROM SiteReturnFieldMapping JOIN ReturnField USING (ReturnFieldId) WHERE SiteReturnFieldMapping.SiteId=@SiteId";
-                SQLiteParameter p = new SQLiteParameter("@SiteId", DbType.Int32) { Value = siteId };
-                command.Parameters.Add(p);
+                command.Parameters.Add(new SQLiteParameter("@SiteId", DbType.Int32) { Value = siteId });
                 SQLiteDataReader reader = command.ExecuteReader();
                 while (reader.Read())
                 {
-                    returnFieldInfos.Add(new ReturnFieldInfo
+                    ReturnFieldInfo info = new ReturnFieldInfo();
+                    for (int i = 0; i < reader.FieldCount; i++)
                     {
-                        SiteId = ConvertTo<string>(reader["SiteId"]),
-                        ReturnFieldId = ConvertTo<string>(reader["ReturnFieldId"]),
-                        UnoReturnFieldXpathTemplate = reader["UnoReturnFieldXpathTemplate"].ToString(),
-                        UnoReturnFieldResultTemplate = reader["UnoReturnFieldResultTemplate"].ToString(),
-                        UnoReturnFieldRegexPattern = reader["UnoReturnFieldRegexPattern"].ToString(),
-                        UnoReturnFieldRegexReplacement = reader["UnoReturnFieldRegexReplacement"].ToString()
-                    });
+                        string key = reader.GetName(i);
+                        string value = reader[key].ToString();
+                        info.Add(key, value);
+                    }
+                    returnFieldInfos.Add(info);
                 }
                 Connection.Close();
             }

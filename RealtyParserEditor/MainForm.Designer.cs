@@ -71,7 +71,7 @@
             // 
             // barButtonItem2
             // 
-            this.barButtonItem2.Caption = "Save";
+            this.barButtonItem2.Caption = "Save/Send";
             this.barButtonItem2.Glyph = global::RealtyParserEditor.Properties.Resources.save_16x16;
             this.barButtonItem2.Id = 2;
             this.barButtonItem2.LargeGlyph = global::RealtyParserEditor.Properties.Resources.save_32x32;

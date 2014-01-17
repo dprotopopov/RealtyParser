@@ -64,9 +64,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <EmbeddedResource Include="RealtyParser.db">
+    <Content Include="RealtyParser.db">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
+    </Content>
     <None Include="Структура базы данных.docx" />
     <None Include="Техническое задание на разработку парсера v4.pdf" />
   </ItemGroup>

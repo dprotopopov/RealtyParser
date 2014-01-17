@@ -5,6 +5,11 @@ namespace RealtyParser
 {
     public class ReturnFieldInfo : Dictionary<string, string>
     {
+        public override string ToString()
+        {
+            return ReturnFieldId;
+        }
+
         public string SiteId
         {
             get
@@ -39,7 +44,7 @@ namespace RealtyParser
                     Add(propertyName, value);
             }
         }
-        public string UnoReturnFieldXpathTemplate
+        public string ReturnFieldXpathTemplate
         {
             get
             {
@@ -56,7 +61,7 @@ namespace RealtyParser
                     Add(propertyName, value);
             }
         }
-        public string UnoReturnFieldResultTemplate
+        public string ReturnFieldResultTemplate
         {
             get
             {
@@ -73,7 +78,7 @@ namespace RealtyParser
                     Add(propertyName, value);
             }
         }
-        public string UnoReturnFieldRegexPattern
+        public string ReturnFieldRegexPattern
         {
             get
             {
@@ -90,7 +95,7 @@ namespace RealtyParser
                     Add(propertyName, value);
             }
         }
-        public string UnoReturnFieldRegexReplacement
+        public string ReturnFieldRegexReplacement
         {
             get
             {

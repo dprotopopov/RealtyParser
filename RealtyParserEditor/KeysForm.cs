@@ -10,18 +10,29 @@ namespace RealtyParserEditor
         {
             InitializeComponent();
             RealtyParserParsingModule parsingModule = new RealtyParserParsingModule();
-            propertyGridControl1.SelectedObject = parsingModule.Keys();
+            foreach (var item in parsingModule.Keys())
+            {
+                listBoxKeys.Items.Add(item);
+            }
         }
 
         public void Save()
         {
-            throw new NotImplementedException();
         }
 
         public void Reload()
         {
+            propertyGridControlBind.SelectedObject = null;
             RealtyParserParsingModule parsingModule = new RealtyParserParsingModule();
-            propertyGridControl1.SelectedObject = parsingModule.Keys();
+            foreach (var item in parsingModule.Keys())
+            {
+                listBoxKeys.Items.Add(item);
+            }
+        }
+
+        private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            propertyGridControlBind.SelectedObject = listBoxKeys.SelectedItem;
         }
     }
 }

@@ -24,7 +24,7 @@ namespace RealtyParserUnitTest
             HtmlDocument document = new HtmlDocument();
             document.Load("TestInvokeNodeProperty.html");
             HtmlNode node = document.DocumentNode.SelectSingleNode("//a[@href]");
-            string hrefValue = RealtyParserUtils.HrefValue(node);
+            string hrefValue = RealtyParserUtils.AttributeValue(node,"href");
             Assert.AreEqual(hrefValue, "http://protopopov.ru");
         }
 

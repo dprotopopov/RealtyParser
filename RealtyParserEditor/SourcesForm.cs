@@ -9,19 +9,23 @@ namespace RealtyParserEditor
         public SourcesForm()
         {
             InitializeComponent();
-            propertyGridControl1.SelectedObject = new Bind();
+            propertyGridControlBind.SelectedObject = new Bind();
         }
 
         public void Save()
         {
+            listBoxSources.Items.Clear();
             RealtyParserParsingModule parsingModule = new RealtyParserParsingModule();
-            propertyGridControl2.SelectedObject = parsingModule.Sources(propertyGridControl1.SelectedObject as Bind);
+            foreach (var item in parsingModule.Sources(propertyGridControlBind.SelectedObject as Bind))
+            {
+                listBoxSources.Items.Add(item);
+            }
         }
 
         public void Reload()
         {
-            propertyGridControl1.SelectedObject = new Bind();
-            propertyGridControl2.SelectedObject = null;
+            listBoxSources.Items.Clear();
+            propertyGridControlBind.SelectedObject = new Bind();
         }
     }
 }
