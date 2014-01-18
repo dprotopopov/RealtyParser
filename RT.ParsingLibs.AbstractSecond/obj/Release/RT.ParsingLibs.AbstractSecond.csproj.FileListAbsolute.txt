@@ -84,3 +84,4 @@ D:\Projects\RealtyParser\RT.ParsingLibs.AbstractSecond\bin\Release\System.Data.S
 D:\Projects\RealtyParser\RT.ParsingLibs.AbstractSecond\obj\Release\RT.ParsingLibs.AbstractSecond.csprojResolveAssemblyReference.cache
 D:\Projects\RealtyParser\RT.ParsingLibs.AbstractSecond\obj\Release\RT.ParsingLibs.AbstractSecond.dll
 D:\Projects\RealtyParser\RT.ParsingLibs.AbstractSecond\obj\Release\RT.ParsingLibs.AbstractSecond.pdb
+D:\Projects\RealtyParser\RT.ParsingLibs.AbstractSecond\bin\Release\System.Data.SQLite.Linq.dll
