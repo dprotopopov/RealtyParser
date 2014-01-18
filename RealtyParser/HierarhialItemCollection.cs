@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
-using System.ComponentModel;
 
 namespace RealtyParser
 {
+    /// <summary>
+    /// Не входит в техническое задание
+    /// </summary>
     public class HierarhialItemCollection : Dictionary<string,HierarhialItem>
     {
         public void Add(string key, string value, string parentId, int level)

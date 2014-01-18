@@ -1,11 +1,8 @@
-﻿using System;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.SqlServer.Server;
-
-namespace RealtyParser
+﻿namespace RealtyParser
 {
+    /// <summary>
+    /// Не входит в техническое задание
+    /// </summary>
     public class HierarhialItem
     {
         public string Key { get; set; }

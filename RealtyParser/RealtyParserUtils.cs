@@ -14,13 +14,26 @@ using RT.ParsingLibs.Models;
 
 namespace RealtyParser
 {
+    /// <summary>
+    /// Статический класс вспомогательных алгоритмов
+    /// </summary>
     public static class RealtyParserUtils
     {
+        /// <summary>
+        /// Единый коннектор к классу базы данных
+        /// </summary>
         static readonly RealtyParserDatabase Database = new RealtyParserDatabase();
+        /// <summary>
+        /// Единый коннектор к классу базы данных
+        /// </summary>
         public static RealtyParserDatabase GetDatabase()
         {
             return Database;
         }
+        /// <summary>
+        /// Запрос к сайту с использованием RT.Crawler
+        /// Вынесено сюда только чтобы удалить дублирование кода
+        /// </summary>
         public static async Task<HtmlDocument> WebRequestHtmlDocument(Uri uri, string method, string encoding)
         {
             Debug.WriteLine(uri.ToString());
@@ -41,6 +54,9 @@ namespace RealtyParser
             return new HtmlDocument();
         }
 
+        /// <summary>
+        /// Создание инстанса указанного класса, реализующего IComparer<string>
+        /// </summary>
         public static IComparer<string> CreatePublicationIdComparer(string className)
         {
             try
@@ -55,6 +71,9 @@ namespace RealtyParser
             }
         }
 
+        /// <summary>
+        /// Создание инстанса WebPublication на основе разобранных текстровых полей объявления
+        /// </summary>
         public static WebPublication CreateWebPublication(
             ReturnFields returnFields,
             long regionId,
@@ -247,10 +266,16 @@ namespace RealtyParser
 
             return webPublication;
         }
+        /// <summary>
+        /// Конвертация списка строк в список Uri
+        /// </summary>
         public static IList<Uri> ConvertToUris(List<string> strings)
         {
             return strings.Select(s => new Uri(s)).ToList();
         }
+        /// <summary>
+        /// Не используется
+        /// </summary>        
         public static string InvokeNodeProperty(HtmlNode node, string propertyName)
         {
             Type type = typeof(HtmlNode);
@@ -260,6 +285,9 @@ namespace RealtyParser
             return (string)propertyInfo.GetValue(node, null);
         }
 
+        /// <summary>
+        /// Замена в строке-шаблоне идентификаторов-параметров на их значения
+        /// </summary>        
         public static string ParseTemplate(string template, Arguments args)
         {
             foreach (KeyValuePair<string, string> pair in args)
@@ -277,6 +305,9 @@ namespace RealtyParser
             return template;
         }
 
+        /// <summary>
+        /// Поиск и формирование значений возвращаемых полей загруженного с сайта объявления
+        /// </summary>        
         public static ReturnFields BuildReturnFields(
             RealtyParserDatabase database,
             HtmlNode parentNode,
@@ -312,6 +343,10 @@ namespace RealtyParser
             return returnFields;
         }
 
+        /// <summary>
+        /// Формирование значений идентификаторов-параметров
+        /// для замены в строке-шаблоне
+        /// </summary>        
         public static Arguments BuildArguments(
             RealtyParserDatabase database,
             long regionId,
@@ -347,12 +382,20 @@ namespace RealtyParser
             }
             return args;
         }
+        /// <summary>
+        /// Формирование значений идентификаторов-параметров
+        /// для замены в строке-шаблоне
+        /// </summary>        
         public static Arguments BuildArguments(long pageId)
         {
             Arguments arguments = new Arguments();
             if (pageId > 1) arguments.Add(@"\{\{PageId\}\}", pageId.ToString());
             return arguments;
         }
+        /// <summary>
+        /// Формирование значений идентификаторов-параметров
+        /// для замены в строке-шаблоне
+        /// </summary>        
         public static Arguments BuildArguments(HtmlNode node)
         {
             Debug.Assert(node != null);
@@ -374,6 +417,9 @@ namespace RealtyParser
             }
         }
 
+        /// <summary>
+        /// Получение значения указанного аттрибута указанного нода
+        /// </summary>        
         public static string AttributeValue(HtmlNode node, string attributeName)
         {
             try
@@ -386,6 +432,13 @@ namespace RealtyParser
                 return "";
             }
         }
+        /// <summary>
+        /// Не входит в техническое задание
+        /// </summary>
+        /// <param name="uri"></param>
+        /// <param name="xpath"></param>
+        /// <param name="encoding"></param>
+        /// <returns></returns>
         public static async Task<LinksCollection> GetLinks(Uri uri, string xpath, string encoding)
         {
             try
@@ -410,6 +463,9 @@ namespace RealtyParser
                 return new LinksCollection();
             }
         }
+        /// <summary>
+        /// Не входит в техническое задание
+        /// </summary>
         public static async Task<OptionsCollection> GetOptions(Uri uri, string xpath, string encoding)
         {
             try
@@ -436,6 +492,9 @@ namespace RealtyParser
             }
         }
 
+        /// <summary>
+        /// Не входит в техническое задание
+        /// </summary>
         public static Dictionary<long, string> BuildMapping(Dictionary<long, string> lefts,
             Dictionary<string, string> rights, string tableName, long siteId)
         {

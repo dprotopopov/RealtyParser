@@ -9,10 +9,19 @@ using System.Text;
 
 namespace RealtyParser
 {
+    /// <summary>
+    /// Класс для работы с базой данных
+    /// </summary>
     public class RealtyParserDatabase
     {
+        /// <summary>
+        /// Строка для подключения к базе данных
+        /// </summary>
         private const String ConnectionString = @"data source=RealtyParser.db";
 
+        /// <summary>
+        /// Инициализация
+        /// </summary>
         public RealtyParserDatabase()
         {
             Connection = new SQLiteConnection(ConnectionString);
@@ -22,8 +31,16 @@ namespace RealtyParser
         {
             return (T)TypeDescriptor.GetConverter(obj).ConvertTo(obj, typeof(T));
         }
+        /// <summary>
+        /// Коннектор к базе данных
+        /// </summary>
         public SQLiteConnection Connection { get; set; }
 
+        /// <summary>
+        /// Загрузка всех пар Ключ-Название из таблицы базы данных
+        /// Ключ в поле Название таблицы+"Id"
+        /// Название в поле Название таблицы+"Title"
+        /// </summary>
         public Dictionary<T, string> GetDictionary<T>(string tableName)
         {
             Dictionary<T, string> dictionary = new Dictionary<T, string>();
@@ -42,6 +59,11 @@ namespace RealtyParser
             }
             return dictionary;
         }
+        /// <summary>
+        /// Загрузка всех пар Ключ-Значение из таблицы базы данных для указанного siteId
+        /// Ключ в поле keyColumnName
+        /// Значение в поле valueColumnName
+        /// </summary>
         public Dictionary<T, string> GetDictionary<T>(string tableName, string keyColumnName, string valueColumnName, long siteId)
         {
             Dictionary<T, string> dictionary = new Dictionary<T, string>();
@@ -62,6 +84,11 @@ namespace RealtyParser
             return dictionary;
         }
 
+        /// <summary>
+        /// Выборка скалярного значения из колонки таблицы по ключу == id
+        /// Ключ в поле Название таблицы+"Id"
+        /// Значение в поле columnName
+        /// </summary>
         public TR GetScalar<TR, T>(T id, string columnName, string tableName)
         {
             Connection.Open();
@@ -80,6 +107,11 @@ namespace RealtyParser
                 return ConvertTo<TR>(0);
             }
         }
+        /// <summary>
+        /// Выборка скалярного значения из колонки таблицы по ключу == id для указанного siteId
+        /// Ключ в поле "Site"+Название таблицы+"Id"
+        /// Значение в поле columnName
+        /// </summary>
         public TR GetScalar<TR, T>(T id, string columnName, string tableName, long siteId)
         {
             Connection.Open();
@@ -99,6 +131,9 @@ namespace RealtyParser
                 return ConvertTo<TR>(0);
             }
         }
+        /// <summary>
+        /// Загрузка из базы данных настроек указанного сайта
+        /// </summary>
         public SiteProperties GetSiteProperties(long siteId)
         {
             SiteProperties properties = new SiteProperties();
@@ -126,6 +161,10 @@ namespace RealtyParser
             return properties;
         }
 
+        /// <summary>
+        /// Сохранение из базу данных настроек сайта
+        /// Не используется
+        /// </summary>
         public void SetSiteProperties(SiteProperties properties)
         {
             Connection.Open();
@@ -150,6 +189,10 @@ namespace RealtyParser
             foreach (var item in dictionary)
                 SetDictionary<long>(item.Value, "Site" + item.Key + "Mapping", "" + item.Key + "Id", "Site" + item.Key + "Id", Convert.ToInt64(properties.SiteId));
         }
+        /// <summary>
+        /// Сохранение из базу данных справочника для указанного сайта siteId
+        /// Не используется
+        /// </summary>
         public void SetDictionary<T>(Dictionary<T, string> dictionary, string tableName, string keyColumnName, string valueColumnName, long siteId)
         {
             Connection.Open();
@@ -164,6 +207,9 @@ namespace RealtyParser
                 }
             Connection.Close();
         }
+        /// <summary>
+        /// Загрузка из базы данных всех значений из указанной колонки указанной таблицы
+        /// </summary>
         public List<T> GetList<T>(string tableName, string columnName)
         {
             List<T> values = new List<T>();
@@ -181,6 +227,11 @@ namespace RealtyParser
             }
             return values;
         }
+
+        /// <summary>
+        /// Генератор SQL-кода
+        /// Не входит в техническое задание
+        /// </summary>
         public static string GenerateSql(long siteId, Dictionary<long, string> collection, string mappedTableName)
         {
             Debug.Assert(collection.Any());
@@ -196,6 +247,10 @@ namespace RealtyParser
             }
             return sb.ToString();
         }
+        /// <summary>
+        /// Генератор SQL-кода
+        /// Не входит в техническое задание
+        /// </summary>
         public static string GenerateSql(long siteId, Dictionary<string, string> collection, string mappedTableName)
         {
             Debug.Assert(collection.Count > 0);
@@ -211,6 +266,10 @@ namespace RealtyParser
             }
             return sb.ToString();
         }
+        /// <summary>
+        /// Генератор SQL-кода
+        /// Не входит в техническое задание
+        /// </summary>
         public static string GenerateSql(long siteId, HierarhialItemCollection collection, string mappedTableName)
         {
             Debug.Assert(collection.Any());
@@ -229,6 +288,10 @@ namespace RealtyParser
             return sb.ToString();
         }
 
+        /// <summary>
+        /// Загрузка из базы данных описай возвращаемых полей для указанного сайта
+        /// Используется только при загрузке свойств сайта
+        /// </summary>
         public List<ReturnFieldInfo> GetReturnFieldInfos(long siteId)
         {
             List<ReturnFieldInfo> returnFieldInfos = new List<ReturnFieldInfo>();

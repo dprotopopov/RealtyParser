@@ -3,6 +3,10 @@ using System.Reflection;
 
 namespace RealtyParser
 {
+    /// <summary>
+    /// Вспомогательный класс 
+    /// Используется для доступа к значениям словаря по ключу
+    /// </summary>
     public class ReturnFields : Dictionary<string, List<string>>
     {
         public List<string> WebPublicationAdditionalInfoRealtyAdditionalInfoAddress

@@ -3,25 +3,47 @@ using System.Reflection;
 
 namespace RealtyParser
 {
+    /// <summary>
+    /// Настройки для сайта, хранимые в базе данных
+    /// </summary>
     public class SiteProperties : Dictionary<string, string>
     {
+        /// <summary>
+        /// Парамтры для процедуры возвращающей вычисленные поля при разборе страницы одного объявления
+        /// </summary>
         public List<ReturnFieldInfo> ReturnFieldInfos { get; set; }
+
+        /// <summary>
+        /// Список таблиц мапирования из внутренних справочников действий, рубрик, регионов в справочники сайта
+        /// </summary>
         public Mapping Mapping { get; set; }
+        /// <summary>
+        /// Таблица мапирования из внутреннего справочника действий в справочники сайта
+        /// </summary>
         public Dictionary<long, string> ActionMapping
         {
             get { return Mapping.Action; }
             set { Mapping.Action = value; }
         }
+        /// <summary>
+        /// Таблица мапирования из внутреннего справочника рубрик в справочники сайта
+        /// </summary>
         public Dictionary<long, string> RubricMapping
         {
             get { return Mapping.Rubric; }
             set { Mapping.Rubric = value; }
         }
+        /// <summary>
+        /// Таблица мапирования из внутреннего справочника регионов в справочники сайта
+        /// </summary>
         public Dictionary<long, string> RegionMapping
         {
             get { return Mapping.Region; }
             set { Mapping.Region = value; }
         }
+        /// <summary>
+        /// Идентификатор сайта
+        /// </summary>
         public string SiteId
         {
             get
@@ -39,6 +61,9 @@ namespace RealtyParser
                     Add(propertyName, value);
             }
         }
+        /// <summary>
+        /// Название сайта
+        /// </summary>
         public string SiteTitle
         {
             get
@@ -56,6 +81,9 @@ namespace RealtyParser
                     Add(propertyName, value);
             }
         }
+        /// <summary>
+        /// Url сайта
+        /// </summary>
         public string Url
         {
             get
@@ -73,6 +101,9 @@ namespace RealtyParser
                     Add(propertyName, value);
             }
         }
+        /// <summary>
+        /// Метод отправки запроса GET/POST
+        /// </summary>
         public string Method
         {
             get
@@ -90,6 +121,9 @@ namespace RealtyParser
                     Add(propertyName, value);
             }
         }
+        /// <summary>
+        /// Шаблон формирования запроса определения LastPublicationId
+        /// </summary>
         public string LastPublicationIdSearchTemplate
         {
             get
@@ -107,7 +141,10 @@ namespace RealtyParser
                     Add(propertyName, value);
             }
         }
-        public string ExtSearchTemplate
+        /// <summary>
+        /// Шаблон формирования расширенного запроса
+        /// </summary>
+       public string ExtSearchTemplate
         {
             get
             {
@@ -124,6 +161,9 @@ namespace RealtyParser
                     Add(propertyName, value);
             }
         }
+        /// <summary>
+        /// Шаблон формирования одиночного запроса
+        /// </summary>
         public string UnoSearchTemplate
         {
             get
@@ -141,6 +181,9 @@ namespace RealtyParser
                     Add(propertyName, value);
             }
         }
+        /// <summary>
+        /// Xpath для нахождения LastPublicationId на загруженной странице
+        /// </summary>
         public string LastPublicationIdXpathTemplate
         {
             get
@@ -158,6 +201,9 @@ namespace RealtyParser
                     Add(propertyName, value);
             }
         }
+        /// <summary>
+        /// Xpath для нахождения списка идентификаторов объявлений на загруженной странице
+        /// </summary>
         public string ExtXpathTemplate
         {
             get
@@ -175,6 +221,9 @@ namespace RealtyParser
                     Add(propertyName, value);
             }
         }
+        /// <summary>
+        /// Иля пользователя при отправке запроса к сайту
+        /// </summary>
         public string UserName
         {
             get
@@ -192,6 +241,9 @@ namespace RealtyParser
                     Add(propertyName, value);
             }
         }
+        /// <summary>
+        /// Пароль пользователя при отправке запроса к сайту
+        /// </summary>
         public string Password
         {
             get
@@ -209,6 +261,9 @@ namespace RealtyParser
                     Add(propertyName, value);
             }
         }
+        /// <summary>
+        /// Максимальное число возвращаемых обхявлений
+        /// </summary>
         public string CountAd
         {
             get
@@ -226,6 +281,9 @@ namespace RealtyParser
                     Add(propertyName, value);
             }
         }
+        /// <summary>
+        /// Название класса из данной сборки, реализующего Icomparer<string> для сравнения двух идентификаторов обхявлений
+        /// </summary>
         public string PublicationIdComparerClassName
         {
             get
@@ -243,6 +301,9 @@ namespace RealtyParser
                     Add(propertyName, value);
             }
         }
+        /// <summary>
+        /// Шаблон возвращаемого найденого текста LastPublicationId на загруженной странице
+        /// </summary>
         public string LastPublicationIdResultTemplate
         {
             get
@@ -260,6 +321,9 @@ namespace RealtyParser
                     Add(propertyName, value);
             }
         }
+        /// <summary>
+        /// Шаблон возвращаемого найденого текста номера объявления на загруженной странице
+        /// </summary>
         public string ExtResultTemplate
         {
             get
@@ -277,6 +341,10 @@ namespace RealtyParser
                     Add(propertyName, value);
             }
         }
+        /// <summary>
+        /// Шаблон регулярного выражения, 
+        /// используемого при замене найденого текста с LastPublicationId на загруженной странице
+        /// </summary>
         public string LastPublicationIdRegexPattern
         {
             get
@@ -294,6 +362,10 @@ namespace RealtyParser
                     Add(propertyName, value);
             }
         }
+        /// <summary>
+        /// Шаблон для замены у регулярного выражения, 
+        /// используемого при замене найденого текста с LastPublicationId на загруженной странице
+        /// </summary>
         public string LastPublicationIdRegexReplacement
         {
             get
@@ -311,7 +383,11 @@ namespace RealtyParser
                     Add(propertyName, value);
             }
         }
-        public string ExtRegexPattern
+         /// <summary>
+        /// Шаблон регулярного выражения, 
+        /// используемого при замене найденого текста с идентификатором объявления на загруженной странице
+        /// </summary>
+       public string ExtRegexPattern
         {
             get
             {
@@ -328,6 +404,10 @@ namespace RealtyParser
                     Add(propertyName, value);
             }
         }
+        /// <summary>
+        /// Шаблон для замены у регулярного выражения, 
+        /// используемого при замене найденого текста с идентификатором объявления на загруженной странице
+        /// </summary>
         public string ExtRegexReplacement
         {
             get
@@ -345,7 +425,13 @@ namespace RealtyParser
                     Add(propertyName, value);
             }
         }
-        public string Encoding
+        /// <summary>
+        /// Идентификатор кодировки сайта
+        ///     windows-1351
+        ///     utf-8
+        ///     ...
+        /// </summary>
+       public string Encoding
         {
             get
             {
