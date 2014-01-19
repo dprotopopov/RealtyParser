@@ -12,7 +12,7 @@ namespace RealtyParserEditor
             RealtyParserParsingModule parsingModule = new RealtyParserParsingModule();
             foreach (var item in parsingModule.Keys())
             {
-                listBoxKeys.Items.Add(item);
+                //listBoxKeys.Items.Add(item);
             }
         }
 
@@ -26,7 +26,7 @@ namespace RealtyParserEditor
             RealtyParserParsingModule parsingModule = new RealtyParserParsingModule();
             foreach (var item in parsingModule.Keys())
             {
-                listBoxKeys.Items.Add(item);
+                //listBoxKeys.Items.Add(item);
             }
         }
 

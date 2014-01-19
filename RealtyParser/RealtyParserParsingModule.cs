@@ -32,7 +32,7 @@ namespace RealtyParser
             Debug.WriteLine("request.RegionId -> " + request.RegionId);
             Debug.WriteLine("request.RubricId -> " + request.RubricId);
             Debug.WriteLine("request.ActionId -> " + request.ActionId);
-            Debug.WriteLine("request.LastPublicationId -> '" + request.LastPublicationId+"'");
+            Debug.WriteLine("request.LastPublicationId -> '" + request.LastPublicationId + "'");
             Debug.WriteLine("-------------------------------------------------------------------");
 
             long siteId = 2;
@@ -150,6 +150,7 @@ namespace RealtyParser
                             UserName = properties.UserName,
                             Password = properties.Password
                         };
+                    Debug.WriteLine("Получена страница " + builder.ToString());
                     HtmlDocument document =
                         await
                             RealtyParserUtils.WebRequestHtmlDocument(builder.Uri, properties.Method, properties.Encoding);
@@ -161,7 +162,10 @@ namespace RealtyParser
                                 (new Arguments(args)).InsertOrReplaceArguments(
                                     RealtyParserUtils.BuildArguments(properties.ExtResultTemplate, node))),
                                 properties.ExtRegexReplacement)).ToList();
-
+                    
+                    foreach(var item in newIds)
+                        Debug.WriteLine("Найден идентификатор обхявления " + item);
+                    
                     if (!newIds.Any()) break;
 
                     publishedIds.AddRange(newIds);
@@ -320,48 +324,29 @@ namespace RealtyParser
 
             List<Bind> keys = new List<Bind>();
 
-            //////////////////////////////////////////////////////////////
-            /// Полный перебор даёт слишком много бессмысленных результатов
-            //List<long> sites = _database.GetDictionary<long>("Site").Keys.ToList();
-            //List<SiteProperties> sitePropertiesCollection = sites.Select(site => _database.GetSiteProperties(site)).ToList();
-            //List<long> regions = _database.GetDictionary<long>("Region").Keys.ToList();
-            //List<long> rubrics = _database.GetDictionary<long>("Rubric").Keys.ToList();
-            //List<long> actions = _database.GetDictionary<long>("Action").Keys.ToList();
-            //long total = 0;
-            //foreach (var region in regions)
-            //    foreach (var rubric in rubrics)
-            //        keys.AddRange(from action in actions
-            //                      where
-            //                          sitePropertiesCollection.Any(
-            //                              item =>
-            //                                  item.Mapping.Action.ContainsKey(action) &&
-            //                                  item.Mapping.Rubric.ContainsKey(rubric) &&
-            //                                  item.Mapping.Region.ContainsKey(region) &&
-            //                                  total++ < 1000)
-            //                      select new Bind
-            //                      {
-            //                          RegionId = (int)region,
-            //                          RubricId = (int)rubric,
-            //                          ActionId = (int)action
-            //                      });
-
-            //////////////////////////////////////////////////////////////
-            /// Предлагается такой вариант
-
-            long siteId = 2;
+            const long siteId = 2;
             SiteProperties properties = _database.GetSiteProperties(siteId);
             Mapping mapping = properties.Mapping;
             List<long> regions = mapping.Region.Keys.ToList();
             List<long> rubrics = mapping.Rubric.Keys.ToList();
             List<long> actions = mapping.Action.Keys.ToList();
 
-            regions.Sort();
-            rubrics.Sort();
-            actions.Sort();
+            //regions.Sort();
+            //rubrics.Sort();
+            //actions.Sort();
 
-            keys.Add(new Bind() { RegionId = (int)regions.First(), RubricId = (int)rubrics.First(), ActionId = (int)actions.First() });
-            keys.Add(new Bind() { RegionId = (int)regions.Last(), RubricId = (int)rubrics.Last(), ActionId = (int)actions.Last() });
+            //keys.Add(new Bind() { RegionId = (int)regions.First(), RubricId = (int)rubrics.First(), ActionId = (int)actions.First() });
+            //keys.Add(new Bind() { RegionId = (int)regions.Last(), RubricId = (int)rubrics.Last(), ActionId = (int)actions.Last() });
 
+            foreach (var region in regions)
+                foreach (var rubric in rubrics)
+                    foreach (var action in actions)
+                        keys.Add(new Bind
+                        {
+                            RegionId = (int)region,
+                            RubricId = (int)rubric,
+                            ActionId = (int)action
+                        });
             return keys;
         }
     }
