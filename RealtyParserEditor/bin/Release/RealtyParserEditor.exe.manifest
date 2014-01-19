@@ -714,7 +714,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>aCzrMC+MUjP7KvcuYNYO4fQEZtnYtDl37lFpGG4BW9g=</dsig:DigestValue>
+        <dsig:DigestValue>BUYm9dIv0qxyryKXcevtwDwPaMRZ3jRYqVFN94EDWhs=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -726,7 +726,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>rHkDEJPHrfW9xFhTwfzcxZPR3AI9FHz5D1fXzcuG7CA=</dsig:DigestValue>
+        <dsig:DigestValue>cJPAO2dITWmbaUoIUn+cjj+cDZWguN31o4vEcgh1TOo=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -738,7 +738,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>DegvO4ECY7esROvEFwNeYWz8fvEE7arMkXhwDvJGlQg=</dsig:DigestValue>
+        <dsig:DigestValue>8RDsQ0/qbE0acumamzJFHb/tU+t4J0SCCWHPv338b4E=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -750,7 +750,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>pSvmpkvtTDIvrsLSodgtBL1NAzLCM8m1It/TqfcDnCY=</dsig:DigestValue>
+        <dsig:DigestValue>uQnZ/EjLCrh/DcQXgNYin53RN2pezFmGqQxZjMEsNVY=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -772,7 +772,7 @@
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>piV2OyfvV3MgvPHDhRJL0XoGH7b+8fkxM4FvCfBbatc=</dsig:DigestValue>
+      <dsig:DigestValue>c9Tv7ICnGmQmCBqUNJGlWhBAY0BMpu2kzi0N3vh0MQo=</dsig:DigestValue>
     </hash>
   </file>
   <file name="RealtyParserEditor.exe.config" size="545">

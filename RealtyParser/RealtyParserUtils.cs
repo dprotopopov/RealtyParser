@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -55,7 +56,7 @@ namespace RealtyParser
         }
 
         /// <summary>
-        /// Создание инстанса указанного класса, реализующего IComparer<string>
+        /// Создание экземпляра указанного класса, реализующего интерфейс IComparer<string>
         /// </summary>
         public static IComparer<string> CreatePublicationIdComparer(string className)
         {
@@ -101,7 +102,7 @@ namespace RealtyParser
             {
                 webPublication.AdditionalInfo.RealtyAdditionalInfo.Address =
                     returnFields.WebPublicationAdditionalInfoRealtyAdditionalInfoAddress
-                        .Aggregate((i, j) => i +  "\t" + j);
+                        .Aggregate((i, j) => i + "\t" + j);
             }
             catch (Exception)
             {
@@ -111,7 +112,7 @@ namespace RealtyParser
             {
                 webPublication.AdditionalInfo.RealtyAdditionalInfo.AppointmentOfRoom =
                      returnFields.WebPublicationAdditionalInfoRealtyAdditionalInfoAppointmentOfRoom
-                         .Aggregate((i, j) => i +  "\t" + j);
+                         .Aggregate((i, j) => i + "\t" + j);
             }
             catch (Exception)
             {
@@ -122,7 +123,7 @@ namespace RealtyParser
                 webPublication.AdditionalInfo.RealtyAdditionalInfo.CostAll =
                      Convert.ToDecimal(
                          returnFields.WebPublicationAdditionalInfoRealtyAdditionalInfoCostAll
-                            .FirstOrDefault());
+                            .Aggregate((i, j) => i + j));
 
             }
             catch (Exception)
@@ -132,7 +133,7 @@ namespace RealtyParser
             try
             {
                 webPublication.Contact.Author = returnFields.WebPublicationContactAuthor
-                    .Aggregate((i, j) => i +  "\t" + j);
+                    .Aggregate((i, j) => i + "\t" + j);
             }
             catch (Exception)
             {
@@ -150,7 +151,7 @@ namespace RealtyParser
             try
             {
                 webPublication.Contact.ContactName = returnFields.WebPublicationContactContactName
-                     .Aggregate((i, j) => i +  "\t" + j);
+                     .Aggregate((i, j) => i + "\t" + j);
             }
             catch (Exception)
             {
@@ -193,7 +194,7 @@ namespace RealtyParser
             try
             {
                 webPublication.Description = returnFields.WebPublicationDescription
-                    .Aggregate((i, j) => i +  "\t" + j);
+                    .Aggregate((i, j) => i + "\t" + j);
             }
             catch (Exception)
             {
@@ -273,17 +274,6 @@ namespace RealtyParser
         {
             return strings.Select(s => new Uri(s)).ToList();
         }
-        /// <summary>
-        /// Не используется
-        /// </summary>        
-        public static string InvokeNodeProperty(HtmlNode node, string propertyName)
-        {
-            Type type = typeof(HtmlNode);
-            Debug.Assert(type != null, "type != null");
-            PropertyInfo propertyInfo = type.GetProperty(propertyName);
-            Debug.Assert(propertyInfo != null, "propertyInfo != null");
-            return (string)propertyInfo.GetValue(node, null);
-        }
 
         /// <summary>
         /// Замена в строке-шаблоне идентификаторов-параметров на их значения
@@ -318,17 +308,21 @@ namespace RealtyParser
             foreach (var returnFieldInfo in returnFieldInfos)
             {
                 Regex regex = new Regex(returnFieldInfo.ReturnFieldRegexPattern, RegexOptions.IgnoreCase);
-                var nodes = parentNode.SelectNodes(ParseTemplate(returnFieldInfo.ReturnFieldXpathTemplate, parentArguments));
+
+                var nodes = parentNode.SelectNodes(ParseTemplate(returnFieldInfo.ReturnFieldXpathTemplate,
+                    (new Arguments(parentArguments)).InsertOrReplaceArguments(
+                        BuildArguments(returnFieldInfo.ReturnFieldXpathTemplate, parentNode))));
+
                 var list = new List<string>();
                 if (nodes != null)
                 {
                     foreach (var node in nodes)
                     {
-                        Arguments arguments = new Arguments(parentArguments);
-                        arguments.InsertOrReplaceArguments(BuildArguments(node));
                         string value = regex.Replace(
-                                ParseTemplate(returnFieldInfo.ReturnFieldResultTemplate, arguments),
-                                        returnFieldInfo.ReturnFieldRegexReplacement);
+                                ParseTemplate(returnFieldInfo.ReturnFieldResultTemplate,
+                                    (new Arguments(parentArguments)).InsertOrReplaceArguments(
+                                        BuildArguments(returnFieldInfo.ReturnFieldResultTemplate, node))),
+                                            returnFieldInfo.ReturnFieldRegexReplacement);
 
                         list.Add(value);
                         Debug.WriteLine("BuildReturnFields: " + returnFieldInfo.ReturnFieldId + " -> " + value);
@@ -344,7 +338,7 @@ namespace RealtyParser
         }
 
         /// <summary>
-        /// Формирование значений идентификаторов-параметров
+        /// Формирование пар идентификатор параметра <-> значение параметра
         /// для замены в строке-шаблоне
         /// </summary>        
         public static Arguments BuildArguments(
@@ -359,7 +353,10 @@ namespace RealtyParser
             string mappingRegionId = mapping.Region[regionId];
             string mappingRubricId = mapping.Rubric[rubricId];
             string mappingActionId = mapping.Action[actionId];
-            string mappingAntiActionId = mapping.Action[database.GetScalar<long, long>(actionId, "AntiActionId", "Action")];
+
+            long antiActionId = database.GetScalar<long, long>(actionId, "AntiActionId", "Action");
+            string mappingAntiActionId = mapping.Action[antiActionId];
+
             Arguments args = new Arguments
             {
                 {@"\{\{RegionId\}\}", mappingRegionId},
@@ -368,13 +365,17 @@ namespace RealtyParser
                 {@"\{\{PublicationId\}\}", publicationId},
                 {@"\{\{AntiActionId\}\}", mappingAntiActionId}
             };
-            for (long level = database.GetScalar<long, string>(mappingRegionId, "Level", "Region", siteId); level > 0 && !String.IsNullOrEmpty(mappingRegionId); level = database.GetScalar<long, string>(mappingRegionId, "Level", "Region", siteId))
+            for (long level = database.GetScalar<long, string>(mappingRegionId, "Level", "Region", siteId); 
+                level > 0 && !String.IsNullOrEmpty(mappingRegionId); 
+                level = database.GetScalar<long, string>(mappingRegionId, "Level", "Region", siteId))
             {
                 string key = @"\{\{RegionId\[" + level + @"\]\}\}";
                 if (!args.ContainsKey(key)) args.Add(key, mappingRegionId);
                 mappingRegionId = database.GetScalar<string, string>(mappingRegionId, "ParentId", "Region", siteId);
             }
-            for (long level = database.GetScalar<long, string>(mappingRubricId, "Level", "Rubric", siteId); level > 0 && !String.IsNullOrEmpty(mappingRegionId); level = database.GetScalar<long, string>(mappingRubricId, "Level", "Rubric", siteId))
+            for (long level = database.GetScalar<long, string>(mappingRubricId, "Level", "Rubric", siteId);
+                level > 0 && !String.IsNullOrEmpty(mappingRubricId); 
+                level = database.GetScalar<long, string>(mappingRubricId, "Level", "Rubric", siteId))
             {
                 string key = @"\{\{RubricId\[" + level + @"\]\}\}";
                 if (!args.ContainsKey(key)) args.Add(key, mappingRubricId);
@@ -383,32 +384,50 @@ namespace RealtyParser
             return args;
         }
         /// <summary>
-        /// Формирование значений идентификаторов-параметров
+        /// Формирование пар идентификатор параметра <-> значение параметра
         /// для замены в строке-шаблоне
         /// </summary>        
         public static Arguments BuildArguments(long pageId)
         {
             Arguments arguments = new Arguments();
-            if (pageId > 1) arguments.Add(@"\{\{PageId\}\}", pageId.ToString());
+            if (pageId > 1) arguments.Add(@"\{\{PageId\}\}", pageId.ToString(CultureInfo.InvariantCulture));
             return arguments;
         }
         /// <summary>
-        /// Формирование значений идентификаторов-параметров
+        /// Формирование пар идентификатор параметра <-> значение параметра
         /// для замены в строке-шаблоне
-        /// </summary>        
-        public static Arguments BuildArguments(HtmlNode node)
+        /// </summary>
+        /// <param name="template"></param>
+        /// <param name="node"></param>
+        /// <returns></returns>
+        public static Arguments BuildArguments(string template, HtmlNode node)
         {
             Debug.Assert(node != null);
             try
             {
-                Arguments args = new Arguments
+                Arguments args = new Arguments();
+
+                Regex regex = new Regex(@"\{\{[^\}]+\}\}");
+                foreach (Match match in regex.Matches(template))
                 {
-                    {@"\{\{Id\}\}", node.Id},
-                    {@"\{\{InnerText\}\}", node.InnerText},
-                    {@"\{\{HrefValue\}\}", AttributeValue(node,"href")},
-                    {@"\{\{SrcValue\}\}", AttributeValue(node,"src")},
-                    {@"\{\{Name\}\}", node.Name}
-                };
+                    string name = match.Value.Replace(@"{{", @"").Replace(@"}}", @"");
+                    Debug.WriteLine(template + " <- " + name);
+                    try
+                    {
+                        args.Add(@"\{\{" + name + @"\}\}", InvokeNodeProperty(node, name));
+                    }
+                    catch (Exception)
+                    {
+                    }
+                    try
+                    {
+                        args.Add(@"\{\{" + name + @"\}\}", AttributeValue(node, name));
+                    }
+                    catch (Exception)
+                    {
+                    }
+                }
+
                 return args;
             }
             catch (Exception)
@@ -417,9 +436,14 @@ namespace RealtyParser
             }
         }
 
+        #region Получение значения параметра
+
         /// <summary>
         /// Получение значения указанного аттрибута указанного нода
-        /// </summary>        
+        /// </summary>
+        /// <param name="node"></param>
+        /// <param name="attributeName"></param>
+        /// <returns></returns>
         public static string AttributeValue(HtmlNode node, string attributeName)
         {
             try
@@ -432,6 +456,23 @@ namespace RealtyParser
                 return "";
             }
         }
+
+        /// <summary>
+        /// Получение значения указанного свойства указанного нода
+        /// </summary>
+        /// <param name="node"></param>
+        /// <param name="propertyName"></param>
+        /// <returns></returns>
+        public static string InvokeNodeProperty(HtmlNode node, string propertyName)
+        {
+            Type type = typeof(HtmlNode);
+            Debug.Assert(type != null, "type != null");
+            PropertyInfo propertyInfo = type.GetProperty(propertyName);
+            return (string)propertyInfo.GetValue(node, null);
+        }
+
+        #endregion
+
         /// <summary>
         /// Не входит в техническое задание
         /// </summary>

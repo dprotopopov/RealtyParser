@@ -26,6 +26,15 @@ namespace RealtyParser
         /// <returns>Ответ от парсера</returns>
         public async Task<ParseResponse> Result(ParseRequest request)
         {
+            Debug.WriteLine("-------------------------------------------------------------------");
+            Debug.WriteLine("Переданы параметры:");
+            Debug.WriteLine(request.ToString());
+            Debug.WriteLine("request.RegionId -> " + request.RegionId);
+            Debug.WriteLine("request.RubricId -> " + request.RubricId);
+            Debug.WriteLine("request.ActionId -> " + request.ActionId);
+            Debug.WriteLine("request.LastPublicationId -> '" + request.LastPublicationId+"'");
+            Debug.WriteLine("-------------------------------------------------------------------");
+
             long siteId = 2;
 
             long regionId = request.RegionId;
@@ -34,9 +43,7 @@ namespace RealtyParser
             string lastPublicationId = request.LastPublicationId;
             long pageId = 0;
 
-            Debug.WriteLine("Переданы параметры:");
-            Debug.WriteLine(request.ToString());
-            Debug.WriteLine("Пареметр LastPublicationId " + (string.IsNullOrEmpty(lastPublicationId) ? " ПУСТОЙ !!!!!!!" : " НЕ ПУСТОЙ !!!!!!!"));
+            Debug.WriteLine("Параметр LastPublicationId " + (string.IsNullOrEmpty(lastPublicationId) ? " ПУСТОЙ !!!!!!!" : " НЕ ПУСТОЙ !!!!!!!"));
 
             // Переопределение нулевых значений для тестовых целей
             if (regionId == 0 && rubricId == 0 && actionId == 0)
@@ -55,6 +62,15 @@ namespace RealtyParser
             if (actionId == 0) actionId = properties.Mapping.Action.Keys.FirstOrDefault();
 
             if (string.IsNullOrEmpty(lastPublicationId)) lastPublicationId = "";
+
+            Debug.WriteLine("-------------------------------------------------------------------");
+            Debug.WriteLine("Используются параметры:");
+            Debug.WriteLine("siteId -> " + siteId);
+            Debug.WriteLine("regionId -> " + regionId);
+            Debug.WriteLine("rubricId -> " + rubricId);
+            Debug.WriteLine("actionId -> " + actionId);
+            Debug.WriteLine("lastPublicationId -> '" + lastPublicationId + "'");
+            Debug.WriteLine("-------------------------------------------------------------------");
 
             Debug.Assert(properties.Mapping.Action.ContainsKey(actionId));
             Debug.Assert(properties.Mapping.Rubric.ContainsKey(rubricId));
@@ -93,7 +109,8 @@ namespace RealtyParser
                     Regex regex = new Regex(properties.LastPublicationIdRegexPattern, RegexOptions.IgnoreCase);
 
                     Arguments nodeArgs = new Arguments(args);
-                    nodeArgs.InsertOrReplaceArguments(RealtyParserUtils.BuildArguments(node));
+                    nodeArgs.InsertOrReplaceArguments(
+                        RealtyParserUtils.BuildArguments(properties.LastPublicationIdResultTemplate, node));
 
                     publishedIds = new List<string>
                     {
@@ -141,7 +158,8 @@ namespace RealtyParser
                         document.DocumentNode.SelectNodes(RealtyParserUtils.ParseTemplate(properties.ExtXpathTemplate,
                             args))
                             .Select(node => regex.Replace(RealtyParserUtils.ParseTemplate(properties.ExtResultTemplate,
-                                (new Arguments(args)).InsertOrReplaceArguments(RealtyParserUtils.BuildArguments(node))),
+                                (new Arguments(args)).InsertOrReplaceArguments(
+                                    RealtyParserUtils.BuildArguments(properties.ExtResultTemplate, node))),
                                 properties.ExtRegexReplacement)).ToList();
 
                     if (!newIds.Any()) break;
@@ -199,13 +217,10 @@ namespace RealtyParser
 
                 if (node != null)
                 {
-                    Arguments nodeArgs = new Arguments(arguments);
-                    nodeArgs.InsertOrReplaceArguments(RealtyParserUtils.BuildArguments(node));
-
                     ReturnFields returnFields = null;
                     try
                     {
-                        returnFields = RealtyParserUtils.BuildReturnFields(_database, node, nodeArgs,
+                        returnFields = RealtyParserUtils.BuildReturnFields(_database, node, arguments,
                             properties.ReturnFieldInfos);
                     }
                     catch (Exception)
@@ -302,16 +317,16 @@ namespace RealtyParser
         /// <returns>Коллекция биндов</returns>
         public IList<Bind> Keys()
         {
-            List<long> sites = _database.GetDictionary<long>("Site").Keys.ToList();
-            List<SiteProperties> sitePropertiesCollection = sites.Select(site => _database.GetSiteProperties(site)).ToList();
 
-            List<long> regions = _database.GetDictionary<long>("Region").Keys.ToList();
-            List<long> rubrics = _database.GetDictionary<long>("Rubric").Keys.ToList();
-            List<long> actions = _database.GetDictionary<long>("Action").Keys.ToList();
             List<Bind> keys = new List<Bind>();
 
             //////////////////////////////////////////////////////////////
             /// Полный перебор даёт слишком много бессмысленных результатов
+            //List<long> sites = _database.GetDictionary<long>("Site").Keys.ToList();
+            //List<SiteProperties> sitePropertiesCollection = sites.Select(site => _database.GetSiteProperties(site)).ToList();
+            //List<long> regions = _database.GetDictionary<long>("Region").Keys.ToList();
+            //List<long> rubrics = _database.GetDictionary<long>("Rubric").Keys.ToList();
+            //List<long> actions = _database.GetDictionary<long>("Action").Keys.ToList();
             //long total = 0;
             //foreach (var region in regions)
             //    foreach (var rubric in rubrics)
@@ -332,6 +347,13 @@ namespace RealtyParser
 
             //////////////////////////////////////////////////////////////
             /// Предлагается такой вариант
+
+            long siteId = 2;
+            SiteProperties properties = _database.GetSiteProperties(siteId);
+            Mapping mapping = properties.Mapping;
+            List<long> regions = mapping.Region.Keys.ToList();
+            List<long> rubrics = mapping.Rubric.Keys.ToList();
+            List<long> actions = mapping.Action.Keys.ToList();
 
             regions.Sort();
             rubrics.Sort();

@@ -78,6 +78,6 @@ D:\Projects\RealtyParser\RT.ParsingLibs.AbstractSecond\bin\Debug\ServiceStack.In
 D:\Projects\RealtyParser\RT.ParsingLibs.AbstractSecond\bin\Debug\ServiceStack.OrmLite.xml
 D:\Projects\RealtyParser\RT.ParsingLibs.AbstractSecond\bin\Debug\ServiceStack.Text.xml
 D:\Projects\RealtyParser\RT.ParsingLibs.AbstractSecond\bin\Debug\System.Data.SQLite.xml
-D:\Projects\RealtyParser\RT.ParsingLibs.AbstractSecond\obj\Debug\RT.ParsingLibs.AbstractSecond.csprojResolveAssemblyReference.cache
 D:\Projects\RealtyParser\RT.ParsingLibs.AbstractSecond\obj\Debug\RT.ParsingLibs.AbstractSecond.dll
 D:\Projects\RealtyParser\RT.ParsingLibs.AbstractSecond\obj\Debug\RT.ParsingLibs.AbstractSecond.pdb
+D:\Projects\RealtyParser\RT.ParsingLibs.AbstractSecond\obj\Debug\RT.ParsingLibs.AbstractSecond.csprojResolveAssemblyReference.cache

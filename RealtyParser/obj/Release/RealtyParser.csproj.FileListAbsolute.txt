@@ -20,7 +20,6 @@ D:\Projects\RealtyParser\RealtyParser\bin\Release\ServiceStack.Interfaces.dll
 D:\Projects\RealtyParser\RealtyParser\bin\Release\ServiceStack.OrmLite.dll
 D:\Projects\RealtyParser\RealtyParser\bin\Release\ServiceStack.OrmLite.SqliteNET.dll
 D:\Projects\RealtyParser\RealtyParser\bin\Release\ServiceStack.Text.dll
-D:\Projects\RealtyParser\RealtyParser\bin\Release\System.Data.SQLite.Linq.dll
 D:\Projects\RealtyParser\RealtyParser\bin\Release\ServiceStack.Common.xml
 D:\Projects\RealtyParser\RealtyParser\bin\Release\ServiceStack.Interfaces.xml
 D:\Projects\RealtyParser\RealtyParser\bin\Release\ServiceStack.OrmLite.xml

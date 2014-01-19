@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Reflection;
 using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -91,7 +92,11 @@ namespace RealtyParserUnitTest
             foreach (string propertyName in propertyNames)
             {
                 PropertyInfo propertyInfo = type.GetProperty(propertyName);
-                Assert.IsNotNull(propertyInfo);
+                Assert.IsTrue(propertyInfo != null ||
+                    String.Compare(propertyName, "href", StringComparison.Ordinal) == 0 ||
+                    String.Compare(propertyName, "src", StringComparison.Ordinal) == 0 ||
+                    String.Compare(propertyName, "value", StringComparison.Ordinal) == 0
+                    );
             }
         }
         [TestMethod]
@@ -116,6 +121,122 @@ namespace RealtyParserUnitTest
             Assert.AreEqual(methodNames.Count, 2);
             Assert.IsTrue(methodNames.Contains("GET"));
             Assert.IsTrue(methodNames.Contains("POST"));
+        }
+        [TestMethod]
+        public void FirstOrDefaultTest()
+        {
+            //
+            // TODO: добавьте здесь логику теста
+            //
+
+            long siteId = 2;
+
+            long regionId;
+            long rubricId;
+            long actionId;
+
+            SiteProperties properties = _database.GetSiteProperties(siteId);
+            Mapping mapping = properties.Mapping;
+
+            regionId = properties.Mapping.Region.Keys.FirstOrDefault();
+            rubricId = properties.Mapping.Rubric.Keys.FirstOrDefault();
+            actionId = properties.Mapping.Action.Keys.FirstOrDefault();
+
+            Console.WriteLine("-------------------------------------------------------------------");
+            Console.WriteLine("siteId -> " + siteId);
+            Console.WriteLine("regionId -> " + regionId);
+            Console.WriteLine("rubricId -> " + rubricId);
+            Console.WriteLine("actionId -> " + actionId);
+            Console.WriteLine("-------------------------------------------------------------------");
+
+            Assert.IsTrue(properties.Mapping.Action.ContainsKey(actionId));
+            Assert.IsTrue(properties.Mapping.Rubric.ContainsKey(rubricId));
+            Assert.IsTrue(properties.Mapping.Region.ContainsKey(regionId));
+
+            string mappingRegionId = mapping.Region[regionId];
+            string mappingRubricId = mapping.Rubric[rubricId];
+            string mappingActionId = mapping.Action[actionId];
+
+            long antiActionId = _database.GetScalar<long, long>(actionId, "AntiActionId", "Action");
+            long levelRegion = _database.GetScalar<long, string>(mappingRegionId, "Level", "Region", siteId);
+            long levelRubric = _database.GetScalar<long, string>(mappingRubricId, "Level", "Rubric", siteId);
+            string mappingParentRegionId = _database.GetScalar<string, string>(mappingRegionId, "ParentId", "Region", siteId);
+            string mappingParentRubricd = _database.GetScalar<string, string>(mappingRubricId, "ParentId", "Rubric", siteId);
+            string mappingAntiActionId = mapping.Action[antiActionId];
+
+            Console.WriteLine("-------------------------------------------------------------------");
+            Console.WriteLine("Region[" + regionId + "] -> '" + mappingRegionId + "', Level=" + levelRegion + ", Parent='" + mappingParentRegionId + "'");
+            Console.WriteLine("Rubric[" + rubricId + "] -> '" + mappingRubricId + "', Level=" + levelRubric + ", Parent='" + mappingParentRubricd + "'");
+            Console.WriteLine("Action[" + actionId + "] -> '" + mappingActionId + "', AntiAction[" + antiActionId + "] -> '" + mappingAntiActionId + "'");
+            Console.WriteLine("-------------------------------------------------------------------");
+
+            Arguments args = RealtyParserUtils.BuildArguments(_database, regionId, rubricId, actionId, "lastPublicationId", properties.Mapping, siteId);
+            foreach (var arg in args)
+                Console.WriteLine(arg.Key + " <-> " + arg.Value);
+
+            for (long level = 1; level <= levelRegion; level++)
+                Assert.IsTrue(args.ContainsKey(@"\{\{RegionId\[" + level + @"\]\}\}"));
+
+            for (long level = 1; level <= levelRubric; level++)
+                Assert.IsTrue(args.ContainsKey(@"\{\{RubricId\[" + level + @"\]\}\}"));
+        }
+        [TestMethod]
+        public void LastOrDefaultTest()
+        {
+            //
+            // TODO: добавьте здесь логику теста
+            //
+
+            long siteId = 2;
+
+            long regionId;
+            long rubricId;
+            long actionId;
+
+            SiteProperties properties = _database.GetSiteProperties(siteId);
+            Mapping mapping = properties.Mapping;
+
+            regionId = properties.Mapping.Region.Keys.LastOrDefault();
+            rubricId = properties.Mapping.Rubric.Keys.LastOrDefault();
+            actionId = properties.Mapping.Action.Keys.LastOrDefault();
+
+            Console.WriteLine("-------------------------------------------------------------------");
+            Console.WriteLine("siteId -> " + siteId);
+            Console.WriteLine("regionId -> " + regionId);
+            Console.WriteLine("rubricId -> " + rubricId);
+            Console.WriteLine("actionId -> " + actionId);
+            Console.WriteLine("-------------------------------------------------------------------");
+
+            Assert.IsTrue(properties.Mapping.Action.ContainsKey(actionId));
+            Assert.IsTrue(properties.Mapping.Rubric.ContainsKey(rubricId));
+            Assert.IsTrue(properties.Mapping.Region.ContainsKey(regionId));
+
+            string mappingRegionId = mapping.Region[regionId];
+            string mappingRubricId = mapping.Rubric[rubricId];
+            string mappingActionId = mapping.Action[actionId];
+
+            long antiActionId = _database.GetScalar<long, long>(actionId, "AntiActionId", "Action");
+            long levelRegion = _database.GetScalar<long, string>(mappingRegionId, "Level", "Region", siteId);
+            long levelRubric = _database.GetScalar<long, string>(mappingRubricId, "Level", "Rubric", siteId);
+            string mappingParentRegionId = _database.GetScalar<string, string>(mappingRegionId, "ParentId", "Region", siteId);
+            string mappingParentRubricd = _database.GetScalar<string, string>(mappingRubricId, "ParentId", "Rubric", siteId);
+            string mappingAntiActionId = mapping.Action[antiActionId];
+
+            Console.WriteLine("-------------------------------------------------------------------");
+            Console.WriteLine("Region[" + regionId + "] -> '" + mappingRegionId + "', Level=" + levelRegion + ", Parent='" + mappingParentRegionId + "'");
+            Console.WriteLine("Rubric[" + rubricId + "] -> '" + mappingRubricId + "', Level=" + levelRubric + ", Parent='" + mappingParentRubricd + "'");
+            Console.WriteLine("Action[" + actionId + "] -> '" + mappingActionId + "', AntiAction[" + antiActionId + "] -> '" + mappingAntiActionId + "'");
+            Console.WriteLine("-------------------------------------------------------------------");
+
+            Arguments args = RealtyParserUtils.BuildArguments(_database, regionId, rubricId, actionId, "lastPublicationId", properties.Mapping, siteId);
+            foreach (var arg in args)
+                Console.WriteLine(arg.Key + " <-> " + arg.Value);
+
+            for (long level = 1; level <= levelRegion; level++)
+                Assert.IsTrue(args.ContainsKey(@"\{\{RegionId\[" + level + @"\]\}\}"));
+
+            for (long level = 1; level <= levelRubric; level++)
+                Assert.IsTrue(args.ContainsKey(@"\{\{RubricId\[" + level + @"\]\}\}"));
         }
     }
 }
