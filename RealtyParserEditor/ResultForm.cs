@@ -28,9 +28,15 @@ namespace RealtyParserEditor
             propertyGridControlRealtyAdditionalInfo.SelectedObject = null;
             RealtyParserParsingModule parsingModule = new RealtyParserParsingModule();
             propertyGridControlParseResponse.SelectedObject = await parsingModule.Result(propertyGridControlParseRequest.SelectedObject as ParseRequest);
-            foreach (var item in ((ParseResponse)propertyGridControlParseResponse.SelectedObject).Publications)
+            try
             {
-                listBoxPublications.Items.Add(item);
+                foreach (var item in ((ParseResponse)propertyGridControlParseResponse.SelectedObject).Publications)
+                {
+                    listBoxPublications.Items.Add(item);
+                }
+            }
+            catch (Exception)
+            {
             }
         }
 

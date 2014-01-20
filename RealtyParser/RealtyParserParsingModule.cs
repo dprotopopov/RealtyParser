@@ -35,7 +35,8 @@ namespace RealtyParser
             Debug.WriteLine("request.LastPublicationId -> '" + request.LastPublicationId + "'");
             Debug.WriteLine("-------------------------------------------------------------------");
 
-            long siteId = 2;
+            const long siteId = 2;
+            SiteProperties properties = _database.GetSiteProperties(siteId);
 
             long regionId = request.RegionId;
             long rubricId = request.RubricId;
@@ -43,23 +44,33 @@ namespace RealtyParser
             string lastPublicationId = request.LastPublicationId;
             long pageId = 0;
 
+            if (!properties.Mapping.Action.ContainsKey(actionId) || !properties.Mapping.Rubric.ContainsKey(rubricId) ||
+                !properties.Mapping.Region.ContainsKey(regionId))
+            {
+                return new ParseResponse
+                {
+                    ResponseCode = ParseResponseCode.NotAvailableResource,
+                    LastPublicationId = lastPublicationId,
+                    ModuleName = GetType().ToString(),
+                    Publications = new List<WebPublication>()
+                };
+            }
+
             Debug.WriteLine("Параметр LastPublicationId " + (string.IsNullOrEmpty(lastPublicationId) ? " ПУСТОЙ !!!!!!!" : " НЕ ПУСТОЙ !!!!!!!"));
 
             // Переопределение нулевых значений для тестовых целей
-            if (regionId == 0 && rubricId == 0 && actionId == 0)
-            {
-                Debug.WriteLine("Переопределение нулевых значений для тестовых целей");
-                siteId = 1;
-                regionId = 1;
-                rubricId = 1;
-                actionId = 1;
-            }
+            //if (regionId == 0 && rubricId == 0 && actionId == 0)
+            //{
+            //    Debug.WriteLine("Переопределение нулевых значений для тестовых целей");
+            //    siteId = 1;
+            //    regionId = 1;
+            //    rubricId = 1;
+            //    actionId = 1;
+            //}
 
-            SiteProperties properties = _database.GetSiteProperties(siteId);
-
-            if (regionId == 0) regionId = properties.Mapping.Region.Keys.FirstOrDefault();
-            if (rubricId == 0) rubricId = properties.Mapping.Rubric.Keys.FirstOrDefault();
-            if (actionId == 0) actionId = properties.Mapping.Action.Keys.FirstOrDefault();
+            //if (regionId == 0) regionId = properties.Mapping.Region.Keys.FirstOrDefault();
+            //if (rubricId == 0) rubricId = properties.Mapping.Rubric.Keys.FirstOrDefault();
+            //if (actionId == 0) actionId = properties.Mapping.Action.Keys.FirstOrDefault();
 
             if (string.IsNullOrEmpty(lastPublicationId)) lastPublicationId = "";
 
@@ -72,9 +83,6 @@ namespace RealtyParser
             Debug.WriteLine("lastPublicationId -> '" + lastPublicationId + "'");
             Debug.WriteLine("-------------------------------------------------------------------");
 
-            Debug.Assert(properties.Mapping.Action.ContainsKey(actionId));
-            Debug.Assert(properties.Mapping.Rubric.ContainsKey(rubricId));
-            Debug.Assert(properties.Mapping.Region.ContainsKey(regionId));
 
             Arguments args = RealtyParserUtils.BuildArguments(_database, regionId, rubricId, actionId, lastPublicationId, properties.Mapping, siteId);
 
@@ -125,9 +133,9 @@ namespace RealtyParser
                     return new ParseResponse
                     {
                         ResponseCode = ParseResponseCode.NotFoundId,
-                        LastPublicationId = null,
+                        LastPublicationId = lastPublicationId,
                         ModuleName = GetType().ToString(),
-                        Publications = null
+                        Publications = new List<WebPublication>()
                     };
                 }
             }
@@ -155,17 +163,33 @@ namespace RealtyParser
                         await
                             RealtyParserUtils.WebRequestHtmlDocument(builder.Uri, properties.Method, properties.Encoding);
                     Regex regex = new Regex(properties.ExtRegexPattern, RegexOptions.IgnoreCase);
-                    List<string> newIds =
-                        document.DocumentNode.SelectNodes(RealtyParserUtils.ParseTemplate(properties.ExtXpathTemplate,
-                            args))
-                            .Select(node => regex.Replace(RealtyParserUtils.ParseTemplate(properties.ExtResultTemplate,
-                                (new Arguments(args)).InsertOrReplaceArguments(
-                                    RealtyParserUtils.BuildArguments(properties.ExtResultTemplate, node))),
-                                properties.ExtRegexReplacement)).ToList();
-                    
-                    foreach(var item in newIds)
+                    List<string> newIds = new List<string>();
+                    var nodes = document.DocumentNode.SelectNodes(
+                        RealtyParserUtils.ParseTemplate(properties.ExtXpathTemplate, args));
+                    if (nodes != null)
+                    {
+                        foreach (
+                            HtmlNode node in nodes
+                            )
+                        {
+                            try
+                            {
+                                newIds.Add(
+                                    regex.Replace(
+                                        RealtyParserUtils.ParseTemplate(properties.ExtResultTemplate,
+                                            (new Arguments(args)).InsertOrReplaceArguments(
+                                                RealtyParserUtils.BuildArguments(properties.ExtResultTemplate, node))),
+                                        properties.ExtRegexReplacement));
+                            }
+                            catch (Exception)
+                            {
+
+                            }
+                        }
+                    }
+                    foreach (var item in newIds)
                         Debug.WriteLine("Найден идентификатор обхявления " + item);
-                    
+
                     if (!newIds.Any()) break;
 
                     publishedIds.AddRange(newIds);

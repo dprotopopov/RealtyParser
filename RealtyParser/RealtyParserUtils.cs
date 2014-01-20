@@ -350,36 +350,76 @@ namespace RealtyParser
             Mapping mapping,
             long siteId)
         {
-            string mappingRegionId = mapping.Region[regionId];
-            string mappingRubricId = mapping.Rubric[rubricId];
-            string mappingActionId = mapping.Action[actionId];
-
-            long antiActionId = database.GetScalar<long, long>(actionId, "AntiActionId", "Action");
-            string mappingAntiActionId = mapping.Action[antiActionId];
-
             Arguments args = new Arguments
             {
-                {@"\{\{RegionId\}\}", mappingRegionId},
-                {@"\{\{RubricId\}\}", mappingRubricId},
-                {@"\{\{ActionId\}\}", mappingActionId},
-                {@"\{\{PublicationId\}\}", publicationId},
-                {@"\{\{AntiActionId\}\}", mappingAntiActionId}
+                {@"\{\{PublicationId\}\}", publicationId}
             };
-            for (long level = database.GetScalar<long, string>(mappingRegionId, "Level", "Region", siteId); 
-                level > 0 && !String.IsNullOrEmpty(mappingRegionId); 
-                level = database.GetScalar<long, string>(mappingRegionId, "Level", "Region", siteId))
+            string mappingRegionId = "";
+            string mappingRubricId = "";
+            string mappingActionId = "";
+            string mappingAntiActionId = "";
+            long antiActionId = 0;
+            try
             {
-                string key = @"\{\{RegionId\[" + level + @"\]\}\}";
-                if (!args.ContainsKey(key)) args.Add(key, mappingRegionId);
-                mappingRegionId = database.GetScalar<string, string>(mappingRegionId, "ParentId", "Region", siteId);
+                mappingRegionId = mapping.Region[regionId];
+                args.Add(@"\{\{RegionId\}\}", mappingRegionId);
             }
-            for (long level = database.GetScalar<long, string>(mappingRubricId, "Level", "Rubric", siteId);
-                level > 0 && !String.IsNullOrEmpty(mappingRubricId); 
-                level = database.GetScalar<long, string>(mappingRubricId, "Level", "Rubric", siteId))
+            catch (Exception)
             {
-                string key = @"\{\{RubricId\[" + level + @"\]\}\}";
-                if (!args.ContainsKey(key)) args.Add(key, mappingRubricId);
-                mappingRubricId = database.GetScalar<string, string>(mappingRubricId, "ParentId", "Rubric", siteId);
+            }
+            try
+            {
+                mappingRubricId = mapping.Rubric[rubricId];
+                args.Add(@"\{\{RubricId\}\}", mappingRubricId);
+            }
+            catch (Exception)
+            {
+            }
+            try
+            {
+                mappingActionId = mapping.Action[actionId];
+                args.Add(@"\{\{ActionId\}\}", mappingActionId);
+            }
+            catch (Exception)
+            {
+            }
+            try
+            {
+                antiActionId = database.GetScalar<long, long>(actionId, "AntiActionId", "Action");
+                mappingAntiActionId = mapping.Action[antiActionId];
+                args.Add(@"\{\{AntiActionId\}\}", mappingAntiActionId);
+            }
+            catch (Exception)
+            {
+            }
+
+            try
+            {
+                for (long level = database.GetScalar<long, string>(mappingRegionId, "Level", "Region", siteId);
+                    level > 0 && !String.IsNullOrEmpty(mappingRegionId);
+                    level = database.GetScalar<long, string>(mappingRegionId, "Level", "Region", siteId))
+                {
+                    string key = @"\{\{RegionId\[" + level + @"\]\}\}";
+                    if (!args.ContainsKey(key)) args.Add(key, mappingRegionId);
+                    mappingRegionId = database.GetScalar<string, string>(mappingRegionId, "ParentId", "Region", siteId);
+                }
+            }
+            catch (Exception)
+            {
+            }
+            try
+            {
+                for (long level = database.GetScalar<long, string>(mappingRubricId, "Level", "Rubric", siteId);
+                    level > 0 && !String.IsNullOrEmpty(mappingRubricId);
+                    level = database.GetScalar<long, string>(mappingRubricId, "Level", "Rubric", siteId))
+                {
+                    string key = @"\{\{RubricId\[" + level + @"\]\}\}";
+                    if (!args.ContainsKey(key)) args.Add(key, mappingRubricId);
+                    mappingRubricId = database.GetScalar<string, string>(mappingRubricId, "ParentId", "Rubric", siteId);
+                }
+            }
+            catch (Exception)
+            {
             }
             return args;
         }
