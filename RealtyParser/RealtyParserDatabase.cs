@@ -59,6 +59,73 @@ namespace RealtyParser
             }
             return dictionary;
         }
+        public Dictionary<string, string> GetUserFields(string mappedId, string mappingTable, long siteId)
+        {
+            Dictionary<string, string> dictionary = new Dictionary<string, string>();
+            List<string> internals = new List<string>
+            {
+                "SiteId",
+                mappingTable+"Id",
+                "Site"+mappingTable+"Id",
+                "Parent",
+                "level"
+            };
+            Connection.Open();
+            using (SQLiteCommand command = Connection.CreateCommand())
+            {
+                command.CommandText = @"SELECT * FROM Site" + mappingTable + " WHERE SiteId=@SiteId AND Site"+mappingTable+"Id=@Id";
+                command.Parameters.Add(new SQLiteParameter("@SiteId", DbType.Int32) { Value = siteId });
+                command.Parameters.Add(new SQLiteParameter("@Id", DbType.String) { Value = mappedId });
+                SQLiteDataReader reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    for (int i = 0; i < reader.FieldCount; i++)
+                    {
+                        string key = reader.GetName(i);
+                        if (!internals.Contains(key) && !dictionary.ContainsKey(key))
+                        {
+                            string value = reader[key].ToString();
+                            dictionary.Add(key, value);
+                        }
+                    }
+                }
+                Connection.Close();
+            }
+            return dictionary;
+        }
+        public Dictionary<string, string> GetUserFields(long id, string mappingTable, long siteId)
+        {
+            Dictionary<string, string> dictionary = new Dictionary<string, string>();
+            List<string> internals = new List<string>
+            {
+                "SiteId",
+                mappingTable+"Id",
+                "Site"+mappingTable+"Id"
+            };
+            Connection.Open();
+            using (SQLiteCommand command = Connection.CreateCommand())
+            {
+                command.CommandText = @"SELECT * FROM Site" + mappingTable + "Mapping WHERE SiteId=@SiteId AND " + mappingTable + "Id=@Id";
+                command.Parameters.Add(new SQLiteParameter("@SiteId", DbType.Int32) { Value = siteId });
+                command.Parameters.Add(new SQLiteParameter("@Id", DbType.Int32) { Value = id });
+                SQLiteDataReader reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    for (int i = 0; i < reader.FieldCount; i++)
+                    {
+                        string key = reader.GetName(i);
+                        if (!internals.Contains(key) && !dictionary.ContainsKey(key))
+                        {
+                            string value = reader[key].ToString();
+                            dictionary.Add(key, value);
+                        }
+                    }
+                }
+                Connection.Close();
+            }
+            return dictionary;
+        }
+
         /// <summary>
         /// Загрузка всех пар Ключ-Значение из таблицы базы данных для указанного siteId
         /// Ключ в поле keyColumnName

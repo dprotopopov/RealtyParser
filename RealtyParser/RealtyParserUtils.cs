@@ -285,7 +285,7 @@ namespace RealtyParser
                 Debug.Assert(pair.Key != null);
                 Debug.Assert(pair.Value != null);
 
-                //Debug.WriteLine("ParseTemplate: /" + pair.Key + "/ -> /" + pair.Value.Substring(0, Math.Min(30, pair.Value.Length)) + ((pair.Value.Length > 30) ? ".../" : "/"));
+                Debug.WriteLine("ParseTemplate: /" + pair.Key + "/ -> /" + pair.Value.Substring(0, Math.Min(30, pair.Value.Length)) + ((pair.Value.Length > 30) ? ".../" : "/"));
                 Regex regex = new Regex(pair.Key, RegexOptions.IgnoreCase);
                 template = regex.Replace(template, pair.Value);
             }
@@ -354,72 +354,92 @@ namespace RealtyParser
             {
                 {@"\{\{PublicationId\}\}", publicationId}
             };
-            string mappingRegionId = "";
-            string mappingRubricId = "";
-            string mappingActionId = "";
-            string mappingAntiActionId = "";
-            long antiActionId = 0;
-            try
+            Dictionary<string, long> id = new Dictionary<string, long>
             {
-                mappingRegionId = mapping.Region[regionId];
-                args.Add(@"\{\{RegionId\}\}", mappingRegionId);
-            }
-            catch (Exception)
+                {"Action", actionId},
+                {"Region", regionId},
+                {"Rubric", rubricId}
+            };
+
+            Dictionary<string, string> mappingId = new Dictionary<string, string>();
+
+            foreach (var mappingTable in id.Keys)
             {
-            }
-            try
-            {
-                mappingRubricId = mapping.Rubric[rubricId];
-                args.Add(@"\{\{RubricId\}\}", mappingRubricId);
-            }
-            catch (Exception)
-            {
-            }
-            try
-            {
-                mappingActionId = mapping.Action[actionId];
-                args.Add(@"\{\{ActionId\}\}", mappingActionId);
-            }
-            catch (Exception)
-            {
-            }
-            try
-            {
-                antiActionId = database.GetScalar<long, long>(actionId, "AntiActionId", "Action");
-                mappingAntiActionId = mapping.Action[antiActionId];
-                args.Add(@"\{\{AntiActionId\}\}", mappingAntiActionId);
-            }
-            catch (Exception)
-            {
+                try
+                {
+                    mappingId.Add(mappingTable, mapping[mappingTable][id[mappingTable]]);
+                    args.Add(@"\{\{" + mappingTable + @"Id\}\}", mappingId[mappingTable]);
+                    try
+                    {
+                        Dictionary<string, string> userFields = database.GetUserFields(id[mappingTable], mappingTable, siteId);
+                        foreach (var field in userFields)
+                        {
+                            try
+                            {
+                                string key = @"\{\{" + field.Key + @"\}\}";
+                                if (!args.ContainsKey(key)) args.Add(key, field.Value);
+                            }
+                            catch (Exception)
+                            {
+                            }
+                        }
+                    }
+                    catch (Exception)
+                    {
+                    }
+                    try
+                    {
+                        Dictionary<string, string> userFields = database.GetUserFields(mappingId[mappingTable], mappingTable, siteId);
+                        foreach (var field in userFields)
+                        {
+                            try
+                            {
+                                string key = @"\{\{" + field.Key + @"\}\}";
+                                if (!args.ContainsKey(key)) args.Add(key, field.Value);
+                            }
+                            catch (Exception)
+                            {
+                            }
+                        }
+                    }
+                    catch (Exception)
+                    {
+                    }
+                }
+                catch (Exception)
+                {
+                }
             }
 
-            try
+            foreach (string mappingTable in new List<string>() { "Region", "Rubric" })
             {
-                for (long level = database.GetScalar<long, string>(mappingRegionId, "Level", "Region", siteId);
-                    level > 0 && !String.IsNullOrEmpty(mappingRegionId);
-                    level = database.GetScalar<long, string>(mappingRegionId, "Level", "Region", siteId))
+                try
                 {
-                    string key = @"\{\{RegionId\[" + level + @"\]\}\}";
-                    if (!args.ContainsKey(key)) args.Add(key, mappingRegionId);
-                    mappingRegionId = database.GetScalar<string, string>(mappingRegionId, "ParentId", "Region", siteId);
+                    for (long level = database.GetScalar<long, string>(mappingId[mappingTable], "Level", mappingTable, siteId);
+                        level > 0 && !String.IsNullOrEmpty(mappingId[mappingTable]);
+                        level = database.GetScalar<long, string>(mappingId[mappingTable], "Level", mappingTable, siteId))
+                    {
+                        string key = @"\{\{" + mappingTable + @"Id\[" + level + @"\]\}\}";
+                        if (!args.ContainsKey(key)) args.Add(key, mappingId[mappingTable]);
+
+                        Dictionary<string, string> userFields = database.GetUserFields(mappingId[mappingTable], mappingTable, siteId);
+                        foreach (var field in userFields)
+                        {
+                            try
+                            {
+                                key = @"\{\{" + field.Key + @"\[" + level + @"\]\}\}";
+                                if (!args.ContainsKey(key)) args.Add(key, field.Value);
+                            }
+                            catch (Exception)
+                            {
+                            }
+                        }
+                        mappingId[mappingTable] = database.GetScalar<string, string>(mappingId[mappingTable], "ParentId", mappingTable, siteId);
+                    }
                 }
-            }
-            catch (Exception)
-            {
-            }
-            try
-            {
-                for (long level = database.GetScalar<long, string>(mappingRubricId, "Level", "Rubric", siteId);
-                    level > 0 && !String.IsNullOrEmpty(mappingRubricId);
-                    level = database.GetScalar<long, string>(mappingRubricId, "Level", "Rubric", siteId))
+                catch (Exception)
                 {
-                    string key = @"\{\{RubricId\[" + level + @"\]\}\}";
-                    if (!args.ContainsKey(key)) args.Add(key, mappingRubricId);
-                    mappingRubricId = database.GetScalar<string, string>(mappingRubricId, "ParentId", "Rubric", siteId);
                 }
-            }
-            catch (Exception)
-            {
             }
             return args;
         }

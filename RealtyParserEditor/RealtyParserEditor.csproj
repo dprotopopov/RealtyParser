@@ -27,7 +27,7 @@
     <PublisherName>Dmitry Protopopov</PublisherName>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>10</ApplicationRevision>
+    <ApplicationRevision>11</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -175,9 +175,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="RealtyParser.db">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    <None Include="RealtyParser.db" />
     <None Include="RealtyParserEditor_TemporaryKey.pfx" />
     <None Include="Resources\refresh_32x32.png" />
   </ItemGroup>
