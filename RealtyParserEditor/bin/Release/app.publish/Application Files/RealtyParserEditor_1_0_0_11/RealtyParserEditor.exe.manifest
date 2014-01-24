@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <asmv1:assembly xsi:schemaLocation="urn:schemas-microsoft-com:asm.v1 assembly.adaptive.xsd" manifestVersion="1.0" xmlns:asmv1="urn:schemas-microsoft-com:asm.v1" xmlns="urn:schemas-microsoft-com:asm.v2" xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:co.v1="urn:schemas-microsoft-com:clickonce.v1" xmlns:asmv3="urn:schemas-microsoft-com:asm.v3" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" xmlns:co.v2="urn:schemas-microsoft-com:clickonce.v2">
-  <asmv1:assemblyIdentity name="RealtyParserEditor.exe" version="1.0.0.10" publicKeyToken="44aa651b850cb8a9" language="neutral" processorArchitecture="msil" type="win32" />
+  <asmv1:assemblyIdentity name="RealtyParserEditor.exe" version="1.0.0.11" publicKeyToken="44aa651b850cb8a9" language="neutral" processorArchitecture="msil" type="win32" />
   <application />
   <entryPoint>
     <assemblyIdentity name="RealtyParserEditor" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
@@ -707,14 +707,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="RealtyParser.dll" size="48640">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="RealtyParser.dll" size="49152">
       <assemblyIdentity name="RealtyParser" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>r9taTLB8//yLOwlNSuc6QnmRRXL7KuCcgbNigxHzmhw=</dsig:DigestValue>
+        <dsig:DigestValue>BJmWfqrYN95R1n+RjVQk8lEdmjxqWK71TNgnrh/MeGM=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -726,7 +726,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>d0YzaVBBfyhLokaEhk4KwekLuobldWKGQ9szHzoCKA4=</dsig:DigestValue>
+        <dsig:DigestValue>+eqsrUp/cKzSe7lWQh3AhoQLZg61sJxCvdeZU/veyF4=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -738,7 +738,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>Iv8Net7Yn6uBTXYcLlOkJc5T7YDuMTgZY5oc5ezjWD0=</dsig:DigestValue>
+        <dsig:DigestValue>3iz8ULpSlRWOMIBLSbDRfWpCCOGygfQvBNUIcs3cHNs=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -750,7 +750,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>gd5QI4ouyyH3UYHF2P8CbE/BWUpCUSDpINe3XJ+RKRk=</dsig:DigestValue>
+        <dsig:DigestValue>6+ASGMbkEF3FqgADxL0l5eDxa1Ytp2nfMmXIBK1nwo8=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -775,4 +775,4 @@
       <dsig:DigestValue>ckntpjxKZoqWB0ZJ5owjlB7xem+I1Q0NeXDYzHdyxEU=</dsig:DigestValue>
     </hash>
   </file>
-<publisherIdentity name="CN=OVERNIGHT\User" issuerKeyHash="dd247011af7d15c5021b7278c7f67dd837e1a470" /><Signature Id="StrongNameSignature" xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha256" /><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /><Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" /><DigestValue>6IYTojo5JLJ2JneYdhy2QHGLoPX26ysxDFznUuOjU9g=</DigestValue></Reference></SignedInfo><SignatureValue>TNhCj+itX6lO1DsQnaS3DuJ5Mm8uoRwi4q3mbtOoB7JSbbwaXFGZ0YNfUyR7xSLmKFOFwrFoq1wKz6uXdaNBAFXGkKvmYj0apKO0qYKP93yo7fTo4JYFPO373pc4tjcHSKABW1zatWaOYLvZdRRvJkFlojqdPuAD+6SkkOkSUHs=</SignatureValue><KeyInfo Id="StrongNameKeyInfo"><KeyValue><RSAKeyValue><Modulus>mzv91uOdN+GTqJqsgcP9S8APQsPuf4l+0BIMKR1rYdRCbAqLQygwhq83T0DhvpUdVpGio6qQ8guObKXbWpTQuzLN/EV8VzzsKdkYLCnFd/0X/qFFcY0R/sLfMc3tDLzMGp6qg/yGADa6B/7hGyZ17KLWieT7/LGBvQqJpvmGjBM=</Modulus><Exponent>AQAB</Exponent></RSAKeyValue></KeyValue><msrel:RelData xmlns:msrel="http://schemas.microsoft.com/windows/rel/2005/reldata"><r:license xmlns:r="urn:mpeg:mpeg21:2003:01-REL-R-NS" xmlns:as="http://schemas.microsoft.com/windows/pki/2005/Authenticode"><r:grant><as:ManifestInformation Hash="d853a3e352e75c0c312bebf6f5a08b7140b61c7698772676b224393aa21386e8" Description="" Url=""><as:assemblyIdentity name="RealtyParserEditor.exe" version="1.0.0.10" publicKeyToken="44aa651b850cb8a9" language="neutral" processorArchitecture="msil" type="win32" /></as:ManifestInformation><as:SignedBy /><as:AuthenticodePublisher><as:X509SubjectName>CN=OVERNIGHT\User</as:X509SubjectName></as:AuthenticodePublisher></r:grant><r:issuer><Signature Id="AuthenticodeSignature" xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha256" /><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /><Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" /><DigestValue>EmmYTRNbtkTWqaavxGvfPhcLqJ5UaTbwGOk9VEDVLSM=</DigestValue></Reference></SignedInfo><SignatureValue>glXrPIUc/Uh/SiYPNEZBvjn/2rxCTB/gYa42cv442NbNmXNBKIQeOHD6WAvXDSLOPyNYJgKhIraVgL0BwLEtsQc2jTVgu1+USMlHiHiJUVvEiS8Tfrw/JuC1azn5dzrpTZpkS+mWiGw5A2/cSaUUMwFH3Z7TD5zk4zwlHKJA4K4=</SignatureValue><KeyInfo><KeyValue><RSAKeyValue><Modulus>mzv91uOdN+GTqJqsgcP9S8APQsPuf4l+0BIMKR1rYdRCbAqLQygwhq83T0DhvpUdVpGio6qQ8guObKXbWpTQuzLN/EV8VzzsKdkYLCnFd/0X/qFFcY0R/sLfMc3tDLzMGp6qg/yGADa6B/7hGyZ17KLWieT7/LGBvQqJpvmGjBM=</Modulus><Exponent>AQAB</Exponent></RSAKeyValue></KeyValue><X509Data><X509Certificate>MIIB0TCCATqgAwIBAgIQHzlqwhODIb9DA7eNGPwXVjANBgkqhkiG9w0BAQsFADAnMSUwIwYDVQQDHhwATwBWAEUAUgBOAEkARwBIAFQAXABVAHMAZQByMB4XDTE0MDExNjEwMDM0M1oXDTE1MDExNjE2MDM0M1owJzElMCMGA1UEAx4cAE8AVgBFAFIATgBJAEcASABUAFwAVQBzAGUAcjCBnzANBgkqhkiG9w0BAQEFAAOBjQAwgYkCgYEAmzv91uOdN+GTqJqsgcP9S8APQsPuf4l+0BIMKR1rYdRCbAqLQygwhq83T0DhvpUdVpGio6qQ8guObKXbWpTQuzLN/EV8VzzsKdkYLCnFd/0X/qFFcY0R/sLfMc3tDLzMGp6qg/yGADa6B/7hGyZ17KLWieT7/LGBvQqJpvmGjBMCAwEAATANBgkqhkiG9w0BAQsFAAOBgQB/mYAvJanSzTZN99uhFVjAwarjowzTAh94sEtPuVnCJeedwy0Cz4SFmDQJ+QFzoi0yh5AKPFTgyOXv0m9rXhju+c0LcwRcTethfKyll/9kPw0R0Z4ScJWii1xQyE19a7ncL7MSqiH9Wr8ukMgEZx7K10oFKgZ4oSeOdmTJbWYqAw==</X509Certificate></X509Data></KeyInfo></Signature></r:issuer></r:license></msrel:RelData></KeyInfo></Signature></asmv1:assembly>
+<publisherIdentity name="CN=OVERNIGHT\User" issuerKeyHash="dd247011af7d15c5021b7278c7f67dd837e1a470" /><Signature Id="StrongNameSignature" xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha256" /><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /><Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" /><DigestValue>LZjAQ90sGHnraQx0QorU5bwffHX8zR5aM62gK0+O2Mg=</DigestValue></Reference></SignedInfo><SignatureValue>IX8DVklLIo2UjJhkYET32gjhFHoI4EXEmPKAxw4nR5OkUrkSHIg1Ukm2xC/mrQRP9O77XlfyLYs5S96r2Ib9JPhkcijJj3eX47mK4tzKcmC17cSDpne/ZhSAnSU09cl62WtmOrx8m8XvEAQi7rRdKH9rXm07NWQP7pVgltvHhPw=</SignatureValue><KeyInfo Id="StrongNameKeyInfo"><KeyValue><RSAKeyValue><Modulus>mzv91uOdN+GTqJqsgcP9S8APQsPuf4l+0BIMKR1rYdRCbAqLQygwhq83T0DhvpUdVpGio6qQ8guObKXbWpTQuzLN/EV8VzzsKdkYLCnFd/0X/qFFcY0R/sLfMc3tDLzMGp6qg/yGADa6B/7hGyZ17KLWieT7/LGBvQqJpvmGjBM=</Modulus><Exponent>AQAB</Exponent></RSAKeyValue></KeyValue><msrel:RelData xmlns:msrel="http://schemas.microsoft.com/windows/rel/2005/reldata"><r:license xmlns:r="urn:mpeg:mpeg21:2003:01-REL-R-NS" xmlns:as="http://schemas.microsoft.com/windows/pki/2005/Authenticode"><r:grant><as:ManifestInformation Hash="c8d88e4f2ba0ad335a1ecdfc757c1fbce5d48a42740c69eb79182cdd43c0982d" Description="" Url=""><as:assemblyIdentity name="RealtyParserEditor.exe" version="1.0.0.11" publicKeyToken="44aa651b850cb8a9" language="neutral" processorArchitecture="msil" type="win32" /></as:ManifestInformation><as:SignedBy /><as:AuthenticodePublisher><as:X509SubjectName>CN=OVERNIGHT\User</as:X509SubjectName></as:AuthenticodePublisher></r:grant><r:issuer><Signature Id="AuthenticodeSignature" xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha256" /><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /><Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" /><DigestValue>Je92QHO9atr2r5+rAlPun0WEdBt2sS1y2ruHB0XM31w=</DigestValue></Reference></SignedInfo><SignatureValue>EVVC498ueGk/vvSHv6vKCQ5sOYGY0MyNfhFBz/tXvoRzfODtexH/gWKGsX3N1mjb4O6iA49k1SRLNxBHwsFMpoKUe9vMQF7ONiDPxf+luAnvVZvQK9pKSTjE0GYMX04l0jVK7LqrXzkS5TPCCYuMUqzONMJ2vVF6AKLBINwTAMk=</SignatureValue><KeyInfo><KeyValue><RSAKeyValue><Modulus>mzv91uOdN+GTqJqsgcP9S8APQsPuf4l+0BIMKR1rYdRCbAqLQygwhq83T0DhvpUdVpGio6qQ8guObKXbWpTQuzLN/EV8VzzsKdkYLCnFd/0X/qFFcY0R/sLfMc3tDLzMGp6qg/yGADa6B/7hGyZ17KLWieT7/LGBvQqJpvmGjBM=</Modulus><Exponent>AQAB</Exponent></RSAKeyValue></KeyValue><X509Data><X509Certificate>MIIB0TCCATqgAwIBAgIQHzlqwhODIb9DA7eNGPwXVjANBgkqhkiG9w0BAQsFADAnMSUwIwYDVQQDHhwATwBWAEUAUgBOAEkARwBIAFQAXABVAHMAZQByMB4XDTE0MDExNjEwMDM0M1oXDTE1MDExNjE2MDM0M1owJzElMCMGA1UEAx4cAE8AVgBFAFIATgBJAEcASABUAFwAVQBzAGUAcjCBnzANBgkqhkiG9w0BAQEFAAOBjQAwgYkCgYEAmzv91uOdN+GTqJqsgcP9S8APQsPuf4l+0BIMKR1rYdRCbAqLQygwhq83T0DhvpUdVpGio6qQ8guObKXbWpTQuzLN/EV8VzzsKdkYLCnFd/0X/qFFcY0R/sLfMc3tDLzMGp6qg/yGADa6B/7hGyZ17KLWieT7/LGBvQqJpvmGjBMCAwEAATANBgkqhkiG9w0BAQsFAAOBgQB/mYAvJanSzTZN99uhFVjAwarjowzTAh94sEtPuVnCJeedwy0Cz4SFmDQJ+QFzoi0yh5AKPFTgyOXv0m9rXhju+c0LcwRcTethfKyll/9kPw0R0Z4ScJWii1xQyE19a7ncL7MSqiH9Wr8ukMgEZx7K10oFKgZ4oSeOdmTJbWYqAw==</X509Certificate></X509Data></KeyInfo></Signature></r:issuer></r:license></msrel:RelData></KeyInfo></Signature></asmv1:assembly>

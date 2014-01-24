@@ -132,6 +132,18 @@ namespace RealtyParser
             }
             try
             {
+                webPublication.AdditionalInfo.RealtyAdditionalInfo.TotalSpace =
+                     Convert.ToInt32(
+                         returnFields.WebPublicationAdditionalInfoRealtyAdditionalInfoTotalSpace
+                            .Aggregate((i, j) => i + j));
+
+            }
+            catch (Exception)
+            {
+                webPublication.AdditionalInfo.RealtyAdditionalInfo.TotalSpace = 0;
+            }
+            try
+            {
                 webPublication.Contact.Author = returnFields.WebPublicationContactAuthor
                     .Aggregate((i, j) => i + "\t" + j);
             }

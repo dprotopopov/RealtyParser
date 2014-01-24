@@ -67,7 +67,7 @@ namespace RealtyParser
                 "SiteId",
                 mappingTable+"Id",
                 "Site"+mappingTable+"Id",
-                "Parent",
+                "ParentId",
                 "level"
             };
             Connection.Open();
