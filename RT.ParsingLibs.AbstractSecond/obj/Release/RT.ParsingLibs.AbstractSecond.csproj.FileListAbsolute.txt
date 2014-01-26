@@ -83,4 +83,3 @@ D:\Projects\RealtyParser\RT.ParsingLibs.AbstractSecond\bin\Release\ServiceStack.
 D:\Projects\RealtyParser\RT.ParsingLibs.AbstractSecond\bin\Release\System.Data.SQLite.xml
 D:\Projects\RealtyParser\RT.ParsingLibs.AbstractSecond\obj\Release\RT.ParsingLibs.AbstractSecond.dll
 D:\Projects\RealtyParser\RT.ParsingLibs.AbstractSecond\obj\Release\RT.ParsingLibs.AbstractSecond.pdb
-D:\Projects\RealtyParser\RT.ParsingLibs.AbstractSecond\obj\Release\RT.ParsingLibs.AbstractSecond.csprojResolveAssemblyReference.cache

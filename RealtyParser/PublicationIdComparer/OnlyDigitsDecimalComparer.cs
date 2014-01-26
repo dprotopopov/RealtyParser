@@ -13,7 +13,7 @@ namespace RealtyParser.PublicationIdComparer
             if (string.IsNullOrEmpty(x)) x = "0";
             y = regex.Replace(y, @"");
             if (string.IsNullOrEmpty(y)) y = "0";
-            return (int)(Convert.ToDecimal(y) - Convert.ToDecimal(x));
+            return (int)(Convert.ToDecimal(x) - Convert.ToDecimal(y));
         }
     }
 }

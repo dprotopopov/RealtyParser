@@ -110,6 +110,15 @@ namespace RealtyParser
             }
             try
             {
+                webPublication.AdditionalInfo.RealtyAdditionalInfo.District =
+                    returnFields.WebPublicationAdditionalInfoRealtyAdditionalInfoAddress[2];
+            }
+            catch (Exception)
+            {
+                webPublication.AdditionalInfo.RealtyAdditionalInfo.District = "";
+            }
+            try
+            {
                 webPublication.AdditionalInfo.RealtyAdditionalInfo.AppointmentOfRoom =
                      returnFields.WebPublicationAdditionalInfoRealtyAdditionalInfoAppointmentOfRoom
                          .Aggregate((i, j) => i + "\t" + j);
