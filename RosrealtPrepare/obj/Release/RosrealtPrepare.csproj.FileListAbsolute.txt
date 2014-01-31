@@ -1,3 +1,4 @@
+D:\Projects\RealtyParser\RosrealtPrepare\bin\Release\libtidy.dll
 D:\Projects\RealtyParser\RosrealtPrepare\bin\Release\RealtyParser.db
 D:\Projects\RealtyParser\RosrealtPrepare\bin\Release\RosrealtPrepare.exe.config
 D:\Projects\RealtyParser\RosrealtPrepare\bin\Release\RosrealtPrepare.exe
@@ -7,6 +8,7 @@ D:\Projects\RealtyParser\RosrealtPrepare\bin\Release\RT.ParsingLibs.dll
 D:\Projects\RealtyParser\RosrealtPrepare\bin\Release\System.Data.SQLite.dll
 D:\Projects\RealtyParser\RosrealtPrepare\bin\Release\HtmlAgilityPack.dll
 D:\Projects\RealtyParser\RosrealtPrepare\bin\Release\RT.Crawler.dll
+D:\Projects\RealtyParser\RosrealtPrepare\bin\Release\TidyManaged.dll
 D:\Projects\RealtyParser\RosrealtPrepare\bin\Release\RealtyParser.pdb
 D:\Projects\RealtyParser\RosrealtPrepare\bin\Release\RT.ParsingLibs.pdb
 D:\Projects\RealtyParser\RosrealtPrepare\bin\Release\RT.ParsingLibs.xml
@@ -15,6 +17,7 @@ D:\Projects\RealtyParser\RosrealtPrepare\bin\Release\HtmlAgilityPack.pdb
 D:\Projects\RealtyParser\RosrealtPrepare\bin\Release\HtmlAgilityPack.xml
 D:\Projects\RealtyParser\RosrealtPrepare\bin\Release\RT.Crawler.pdb
 D:\Projects\RealtyParser\RosrealtPrepare\bin\Release\RT.Crawler.xml
+D:\Projects\RealtyParser\RosrealtPrepare\bin\Release\TidyManaged.xml
 D:\Projects\RealtyParser\RosrealtPrepare\obj\Release\RosrealtPrepare.csprojResolveAssemblyReference.cache
 D:\Projects\RealtyParser\RosrealtPrepare\obj\Release\RosrealtPrepare.ActionForm.resources
 D:\Projects\RealtyParser\RosrealtPrepare\obj\Release\RosrealtPrepare.MainForm.resources

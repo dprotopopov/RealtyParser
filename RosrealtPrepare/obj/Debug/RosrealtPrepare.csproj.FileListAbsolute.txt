@@ -26,3 +26,6 @@ D:\Projects\RealtyParser\RosrealtPrepare\obj\Debug\RosrealtPrepare.csproj.Genera
 D:\Projects\RealtyParser\RosrealtPrepare\obj\Debug\RosrealtPrepare.exe.licenses
 D:\Projects\RealtyParser\RosrealtPrepare\obj\Debug\RosrealtPrepare.exe
 D:\Projects\RealtyParser\RosrealtPrepare\obj\Debug\RosrealtPrepare.pdb
+D:\Projects\RealtyParser\RosrealtPrepare\bin\Debug\libtidy.dll
+D:\Projects\RealtyParser\RosrealtPrepare\bin\Debug\TidyManaged.dll
+D:\Projects\RealtyParser\RosrealtPrepare\bin\Debug\TidyManaged.pdb

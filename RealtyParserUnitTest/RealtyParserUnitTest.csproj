@@ -62,6 +62,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RegexUnitTest.cs" />
     <Compile Include="RosrealtUnitTest.cs" />
+    <Compile Include="TidyManagedUnitTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\RealtyParser\RealtyParser.csproj">
@@ -72,6 +73,10 @@
       <Project>{27CC5B61-3729-4F39-AD0C-D8CE99120FD4}</Project>
       <Name>RT.ParsingLibs</Name>
     </ProjectReference>
+    <ProjectReference Include="..\TidyManaged-master\TidyManaged.csproj">
+      <Project>{D799633D-00EF-437C-B158-315557D930FC}</Project>
+      <Name>TidyManaged</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -81,7 +86,7 @@
     <Content Include="TestInvokeNodeProperty.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="xpath1.html">
+    <Content Include="TidyManagedTest.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

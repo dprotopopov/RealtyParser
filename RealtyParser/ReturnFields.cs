@@ -4,8 +4,8 @@ using System.Reflection;
 namespace RealtyParser
 {
     /// <summary>
-    /// Вспомогательный класс 
-    /// Используется для доступа к значениям словаря по ключу
+    ///     Вспомогательный класс
+    ///     Используется для доступа к значениям словаря по ключу
     /// </summary>
     public class ReturnFields : Dictionary<string, List<string>>
     {
@@ -26,6 +26,25 @@ namespace RealtyParser
                     Add(propertyName, value);
             }
         }
+
+        public List<string> WebPublicationAdditionalInfoRealtyAdditionalInfoDistrict
+        {
+            get
+            {
+                string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
+                if (!ContainsKey(propertyName)) Add(propertyName, new List<string>());
+                return this[propertyName];
+            }
+            set
+            {
+                string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
+                if (ContainsKey(propertyName))
+                    this[propertyName] = value;
+                else
+                    Add(propertyName, value);
+            }
+        }
+
         public List<string> WebPublicationAdditionalInfoRealtyAdditionalInfoAppointmentOfRoom
         {
             get
@@ -43,6 +62,7 @@ namespace RealtyParser
                     Add(propertyName, value);
             }
         }
+
         public List<string> WebPublicationAdditionalInfoRealtyAdditionalInfoCostAll
         {
             get
@@ -60,6 +80,7 @@ namespace RealtyParser
                     Add(propertyName, value);
             }
         }
+
         public List<string> WebPublicationAdditionalInfoRealtyAdditionalInfoTotalSpace
         {
             get
@@ -77,6 +98,7 @@ namespace RealtyParser
                     Add(propertyName, value);
             }
         }
+
         public List<string> WebPublicationContactAuthor
         {
             get
@@ -94,6 +116,7 @@ namespace RealtyParser
                     Add(propertyName, value);
             }
         }
+
         public List<string> WebPublicationContactAuthorUrl
         {
             get
@@ -111,6 +134,7 @@ namespace RealtyParser
                     Add(propertyName, value);
             }
         }
+
         public List<string> WebPublicationContactContactName
         {
             get
@@ -128,6 +152,7 @@ namespace RealtyParser
                     Add(propertyName, value);
             }
         }
+
         public List<string> WebPublicationContactEmail
         {
             get
@@ -145,6 +170,7 @@ namespace RealtyParser
                     Add(propertyName, value);
             }
         }
+
         public List<string> WebPublicationContactIcq
         {
             get
@@ -162,6 +188,7 @@ namespace RealtyParser
                     Add(propertyName, value);
             }
         }
+
         public List<string> WebPublicationContactPhone
         {
             get
@@ -179,6 +206,7 @@ namespace RealtyParser
                     Add(propertyName, value);
             }
         }
+
         public List<string> WebPublicationContactSkype
         {
             get
@@ -196,6 +224,7 @@ namespace RealtyParser
                     Add(propertyName, value);
             }
         }
+
         public List<string> WebPublicationDescription
         {
             get
@@ -213,6 +242,7 @@ namespace RealtyParser
                     Add(propertyName, value);
             }
         }
+
         public List<string> WebPublicationModifyDate
         {
             get
@@ -230,6 +260,7 @@ namespace RealtyParser
                     Add(propertyName, value);
             }
         }
+
         public List<string> WebPublicationPhotos
         {
             get
@@ -247,6 +278,7 @@ namespace RealtyParser
                     Add(propertyName, value);
             }
         }
+
         public List<string> WebPublicationPublicationId
         {
             get

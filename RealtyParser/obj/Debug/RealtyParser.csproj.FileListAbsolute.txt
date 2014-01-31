@@ -23,3 +23,6 @@ D:\Projects\RealtyParser\RealtyParser\bin\Debug\ServiceStack.Common.xml
 D:\Projects\RealtyParser\RealtyParser\bin\Debug\ServiceStack.Interfaces.xml
 D:\Projects\RealtyParser\RealtyParser\bin\Debug\ServiceStack.OrmLite.xml
 D:\Projects\RealtyParser\RealtyParser\bin\Debug\ServiceStack.Text.xml
+D:\Projects\RealtyParser\RealtyParser\bin\Debug\TidyManaged.dll
+D:\Projects\RealtyParser\RealtyParser\bin\Debug\TidyManaged.pdb
+D:\Projects\RealtyParser\RealtyParser\bin\Debug\libtidy.dll

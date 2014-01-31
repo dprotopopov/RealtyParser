@@ -12,51 +12,74 @@ using System.Threading.Tasks;
 using HtmlAgilityPack;
 using RT.Crawler;
 using RT.ParsingLibs.Models;
+using TidyManaged;
 
 namespace RealtyParser
 {
     /// <summary>
-    /// Статический класс вспомогательных алгоритмов
+    ///     Статический класс вспомогательных алгоритмов
     /// </summary>
     public static class RealtyParserUtils
     {
         /// <summary>
-        /// Единый коннектор к классу базы данных
+        ///     Единый коннектор к классу базы данных
         /// </summary>
-        static readonly RealtyParserDatabase Database = new RealtyParserDatabase();
+        private static readonly RealtyParserDatabase Database = new RealtyParserDatabase();
+
         /// <summary>
-        /// Единый коннектор к классу базы данных
+        ///     Единый коннектор к классу базы данных
         /// </summary>
         public static RealtyParserDatabase GetDatabase()
         {
             return Database;
         }
+
         /// <summary>
-        /// Запрос к сайту с использованием RT.Crawler
-        /// Вынесено сюда только чтобы удалить дублирование кода
+        ///     Запрос к сайту с использованием RT.Crawler
+        ///     Вынесено сюда только чтобы удалить дублирование кода
         /// </summary>
         public static async Task<HtmlDocument> WebRequestHtmlDocument(Uri uri, string method, string encoding)
         {
             Debug.WriteLine(uri.ToString());
             ICrawler crawler = new WebCrawler();
-            var requestWeb = (HttpWebRequest)WebRequest.Create(uri);
+            var requestWeb = (HttpWebRequest) WebRequest.Create(uri);
             requestWeb.Method = method;
-            var responce = await crawler.GetResponse(requestWeb);
+            WebResponse responce = await crawler.GetResponse(requestWeb);
             if (responce != null)
             {
                 Encoding encoder = Encoding.GetEncoding(encoding);
                 var reader = new StreamReader(responce.GetResponseStream(), encoder);
-                var output = new StringBuilder(reader.ReadToEnd());
-                HtmlDocument document = new HtmlDocument();
-                document.LoadHtml(output.ToString());
-                Debug.WriteLine(output.ToString());
+                var input = new MemoryStream(Encoding.UTF8.GetBytes(reader.ReadToEnd()));
+                var output = new MemoryStream();
+                Debug.WriteLine("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
+                input.Seek(0, SeekOrigin.Begin);
+                Debug.WriteLine(new StreamReader(input).ReadToEnd());
+                Debug.WriteLine("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
+                input.Seek(0, SeekOrigin.Begin);
+                Document tidy = Document.FromStream(input);
+                tidy.ForceOutput = true;
+                tidy.InputCharacterEncoding = EncodingType.Raw;
+                tidy.OutputCharacterEncoding = EncodingType.Raw;
+                tidy.CharacterEncoding = EncodingType.Raw;
+                tidy.ShowWarnings = false;
+                tidy.Quiet = true;
+                tidy.OutputXhtml = true;
+                tidy.CleanAndRepair();
+                tidy.Save(output);
+                Debug.WriteLine(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+                output.Seek(0, SeekOrigin.Begin);
+                Debug.WriteLine(new StreamReader(output, Encoding.UTF8).ReadToEnd());
+                Debug.WriteLine(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+                var document = new HtmlDocument();
+                output.Seek(0, SeekOrigin.Begin);
+                document.LoadHtml(new StreamReader(output, Encoding.UTF8).ReadToEnd());
                 return document;
             }
             return new HtmlDocument();
         }
 
         /// <summary>
-        /// Создание экземпляра указанного класса, реализующего интерфейс IComparer<string>
+        ///     Создание экземпляра указанного класса, реализующего интерфейс IComparer<string>
         /// </summary>
         public static IComparer<string> CreatePublicationIdComparer(string className)
         {
@@ -73,7 +96,7 @@ namespace RealtyParser
         }
 
         /// <summary>
-        /// Создание инстанса WebPublication на основе разобранных текстровых полей объявления
+        ///     Создание инстанса WebPublication на основе разобранных текстровых полей объявления
         /// </summary>
         public static WebPublication CreateWebPublication(
             ReturnFields returnFields,
@@ -81,10 +104,9 @@ namespace RealtyParser
             long rubricId,
             long actionId,
             UriBuilder builder
-)
+            )
         {
-
-            WebPublication webPublication = new WebPublication
+            var webPublication = new WebPublication
             {
                 AdditionalInfo = new AdditionalInfo
                 {
@@ -111,7 +133,8 @@ namespace RealtyParser
             try
             {
                 webPublication.AdditionalInfo.RealtyAdditionalInfo.District =
-                    returnFields.WebPublicationAdditionalInfoRealtyAdditionalInfoAddress[2];
+                    returnFields.WebPublicationAdditionalInfoRealtyAdditionalInfoDistrict
+                        .Aggregate((i, j) => i + "\t" + j);
             }
             catch (Exception)
             {
@@ -120,8 +143,8 @@ namespace RealtyParser
             try
             {
                 webPublication.AdditionalInfo.RealtyAdditionalInfo.AppointmentOfRoom =
-                     returnFields.WebPublicationAdditionalInfoRealtyAdditionalInfoAppointmentOfRoom
-                         .Aggregate((i, j) => i + "\t" + j);
+                    returnFields.WebPublicationAdditionalInfoRealtyAdditionalInfoAppointmentOfRoom
+                        .Aggregate((i, j) => i + "\t" + j);
             }
             catch (Exception)
             {
@@ -130,10 +153,9 @@ namespace RealtyParser
             try
             {
                 webPublication.AdditionalInfo.RealtyAdditionalInfo.CostAll =
-                     Convert.ToDecimal(
-                         returnFields.WebPublicationAdditionalInfoRealtyAdditionalInfoCostAll
+                    Convert.ToDecimal(
+                        returnFields.WebPublicationAdditionalInfoRealtyAdditionalInfoCostAll
                             .Aggregate((i, j) => i + j));
-
             }
             catch (Exception)
             {
@@ -142,10 +164,9 @@ namespace RealtyParser
             try
             {
                 webPublication.AdditionalInfo.RealtyAdditionalInfo.TotalSpace =
-                     Convert.ToInt32(
-                         returnFields.WebPublicationAdditionalInfoRealtyAdditionalInfoTotalSpace
+                    Convert.ToInt32(
+                        returnFields.WebPublicationAdditionalInfoRealtyAdditionalInfoTotalSpace
                             .Aggregate((i, j) => i + j));
-
             }
             catch (Exception)
             {
@@ -163,7 +184,7 @@ namespace RealtyParser
             try
             {
                 webPublication.Contact.AuthorUrl = ConvertToUris(returnFields.WebPublicationContactAuthorUrl)
-                            .FirstOrDefault();
+                    .FirstOrDefault();
             }
             catch (Exception)
             {
@@ -172,7 +193,7 @@ namespace RealtyParser
             try
             {
                 webPublication.Contact.ContactName = returnFields.WebPublicationContactContactName
-                     .Aggregate((i, j) => i + "\t" + j);
+                    .Aggregate((i, j) => i + "\t" + j);
             }
             catch (Exception)
             {
@@ -194,6 +215,7 @@ namespace RealtyParser
             }
             catch (Exception)
             {
+                webPublication.Contact.Icq = 0;
             }
             try
             {
@@ -206,7 +228,7 @@ namespace RealtyParser
             try
             {
                 webPublication.Contact.Skype = returnFields.WebPublicationContactSkype
-                     .FirstOrDefault();
+                    .FirstOrDefault();
             }
             catch (Exception)
             {
@@ -254,6 +276,7 @@ namespace RealtyParser
             }
             catch (Exception)
             {
+                webPublication.RegionId = 0;
             }
             try
             {
@@ -261,6 +284,7 @@ namespace RealtyParser
             }
             catch (Exception)
             {
+                webPublication.RubricId = 0;
             }
             try
             {
@@ -268,6 +292,7 @@ namespace RealtyParser
             }
             catch (Exception)
             {
+                webPublication.ActionId = 0;
             }
             try
             {
@@ -288,8 +313,9 @@ namespace RealtyParser
 
             return webPublication;
         }
+
         /// <summary>
-        /// Конвертация списка строк в список Uri
+        ///     Конвертация списка строк в список Uri
         /// </summary>
         public static IList<Uri> ConvertToUris(List<string> strings)
         {
@@ -297,53 +323,56 @@ namespace RealtyParser
         }
 
         /// <summary>
-        /// Замена в строке-шаблоне идентификаторов-параметров на их значения
-        /// </summary>        
+        ///     Замена в строке-шаблоне идентификаторов-параметров на их значения
+        /// </summary>
         public static string ParseTemplate(string template, Arguments args)
         {
-            foreach (KeyValuePair<string, string> pair in args)
+            foreach (var pair in args)
             {
                 Debug.Assert(pair.Key != null);
                 Debug.Assert(pair.Value != null);
 
-                Debug.WriteLine("ParseTemplate: /" + pair.Key + "/ -> /" + pair.Value.Substring(0, Math.Min(30, pair.Value.Length)) + ((pair.Value.Length > 30) ? ".../" : "/"));
-                Regex regex = new Regex(pair.Key, RegexOptions.IgnoreCase);
+                Debug.WriteLine("ParseTemplate: /" + pair.Key + "/ -> /" +
+                                pair.Value.Substring(0, Math.Min(30, pair.Value.Length)) +
+                                ((pair.Value.Length > 30) ? ".../" : "/"));
+                var regex = new Regex(pair.Key, RegexOptions.IgnoreCase);
                 template = regex.Replace(template, pair.Value);
             }
-            Regex rgx = new Regex(@"\{\{[^\}]*\}\}", RegexOptions.IgnoreCase);
+            var rgx = new Regex(@"\{\{[^\}]*\}\}", RegexOptions.IgnoreCase);
             template = rgx.Replace(template, @"");
             Debug.WriteLine("ParseTemplate: " + template);
             return template;
         }
 
         /// <summary>
-        /// Поиск и формирование значений возвращаемых полей загруженного с сайта объявления
-        /// </summary>        
+        ///     Поиск и формирование значений возвращаемых полей загруженного с сайта объявления
+        /// </summary>
         public static ReturnFields BuildReturnFields(
             RealtyParserDatabase database,
             HtmlNode parentNode,
             Arguments parentArguments,
             List<ReturnFieldInfo> returnFieldInfos)
         {
-            ReturnFields returnFields = new ReturnFields();
-            foreach (var returnFieldInfo in returnFieldInfos)
+            var returnFields = new ReturnFields();
+            foreach (ReturnFieldInfo returnFieldInfo in returnFieldInfos)
             {
-                Regex regex = new Regex(returnFieldInfo.ReturnFieldRegexPattern, RegexOptions.IgnoreCase);
+                var regex = new Regex(returnFieldInfo.ReturnFieldRegexPattern, RegexOptions.IgnoreCase);
 
-                var nodes = parentNode.SelectNodes(ParseTemplate(returnFieldInfo.ReturnFieldXpathTemplate,
-                    (new Arguments(parentArguments)).InsertOrReplaceArguments(
-                        BuildArguments(returnFieldInfo.ReturnFieldXpathTemplate, parentNode))));
+                HtmlNodeCollection nodes =
+                    parentNode.SelectNodes(ParseTemplate(returnFieldInfo.ReturnFieldXpathTemplate,
+                        (new Arguments(parentArguments)).InsertOrReplaceArguments(
+                            BuildArguments(returnFieldInfo.ReturnFieldXpathTemplate, parentNode))));
 
                 var list = new List<string>();
                 if (nodes != null)
                 {
-                    foreach (var node in nodes)
+                    foreach (HtmlNode node in nodes)
                     {
                         string value = regex.Replace(
-                                ParseTemplate(returnFieldInfo.ReturnFieldResultTemplate,
-                                    (new Arguments(parentArguments)).InsertOrReplaceArguments(
-                                        BuildArguments(returnFieldInfo.ReturnFieldResultTemplate, node))),
-                                            returnFieldInfo.ReturnFieldRegexReplacement);
+                            ParseTemplate(returnFieldInfo.ReturnFieldResultTemplate,
+                                (new Arguments(parentArguments)).InsertOrReplaceArguments(
+                                    BuildArguments(returnFieldInfo.ReturnFieldResultTemplate, node))),
+                            returnFieldInfo.ReturnFieldRegexReplacement);
 
                         list.Add(value);
                         Debug.WriteLine("BuildReturnFields: " + returnFieldInfo.ReturnFieldId + " -> " + value);
@@ -359,9 +388,9 @@ namespace RealtyParser
         }
 
         /// <summary>
-        /// Формирование пар идентификатор параметра <-> значение параметра
-        /// для замены в строке-шаблоне
-        /// </summary>        
+        ///     Формирование пар идентификатор параметра <-> значение параметра
+        ///     для замены в строке-шаблоне
+        /// </summary>
         public static Arguments BuildArguments(
             RealtyParserDatabase database,
             long regionId,
@@ -371,20 +400,20 @@ namespace RealtyParser
             Mapping mapping,
             long siteId)
         {
-            Arguments args = new Arguments
+            var args = new Arguments
             {
                 {@"\{\{PublicationId\}\}", publicationId}
             };
-            Dictionary<string, long> id = new Dictionary<string, long>
+            var id = new Dictionary<string, long>
             {
                 {"Action", actionId},
                 {"Region", regionId},
                 {"Rubric", rubricId}
             };
 
-            Dictionary<string, string> mappingId = new Dictionary<string, string>();
+            var mappingId = new Dictionary<string, string>();
 
-            foreach (var mappingTable in id.Keys)
+            foreach (string mappingTable in id.Keys)
             {
                 try
                 {
@@ -392,7 +421,8 @@ namespace RealtyParser
                     args.Add(@"\{\{" + mappingTable + @"Id\}\}", mappingId[mappingTable]);
                     try
                     {
-                        Dictionary<string, string> userFields = database.GetUserFields(id[mappingTable], mappingTable, siteId);
+                        Dictionary<string, string> userFields = database.GetUserFields(id[mappingTable], mappingTable,
+                            siteId);
                         foreach (var field in userFields)
                         {
                             try
@@ -410,7 +440,8 @@ namespace RealtyParser
                     }
                     try
                     {
-                        Dictionary<string, string> userFields = database.GetUserFields(mappingId[mappingTable], mappingTable, siteId);
+                        Dictionary<string, string> userFields = database.GetUserFields(mappingId[mappingTable],
+                            mappingTable, siteId);
                         foreach (var field in userFields)
                         {
                             try
@@ -432,18 +463,21 @@ namespace RealtyParser
                 }
             }
 
-            foreach (string mappingTable in new List<string>() { "Region", "Rubric" })
+            foreach (string mappingTable in new List<string> {"Region", "Rubric"})
             {
                 try
                 {
-                    for (long level = database.GetScalar<long, string>(mappingId[mappingTable], "Level", mappingTable, siteId);
+                    for (
+                        long level = database.GetScalar<long, string>(mappingId[mappingTable], "Level", mappingTable,
+                            siteId);
                         level > 0 && !String.IsNullOrEmpty(mappingId[mappingTable]);
                         level = database.GetScalar<long, string>(mappingId[mappingTable], "Level", mappingTable, siteId))
                     {
                         string key = @"\{\{" + mappingTable + @"Id\[" + level + @"\]\}\}";
                         if (!args.ContainsKey(key)) args.Add(key, mappingId[mappingTable]);
 
-                        Dictionary<string, string> userFields = database.GetUserFields(mappingId[mappingTable], mappingTable, siteId);
+                        Dictionary<string, string> userFields = database.GetUserFields(mappingId[mappingTable],
+                            mappingTable, siteId);
                         foreach (var field in userFields)
                         {
                             try
@@ -455,7 +489,8 @@ namespace RealtyParser
                             {
                             }
                         }
-                        mappingId[mappingTable] = database.GetScalar<string, string>(mappingId[mappingTable], "ParentId", mappingTable, siteId);
+                        mappingId[mappingTable] = database.GetScalar<string, string>(mappingId[mappingTable], "ParentId",
+                            mappingTable, siteId);
                     }
                 }
                 catch (Exception)
@@ -464,19 +499,21 @@ namespace RealtyParser
             }
             return args;
         }
+
         /// <summary>
-        /// Формирование пар идентификатор параметра <-> значение параметра
-        /// для замены в строке-шаблоне
-        /// </summary>        
+        ///     Формирование пар идентификатор параметра <-> значение параметра
+        ///     для замены в строке-шаблоне
+        /// </summary>
         public static Arguments BuildArguments(long pageId)
         {
-            Arguments arguments = new Arguments();
+            var arguments = new Arguments();
             if (pageId > 1) arguments.Add(@"\{\{PageId\}\}", pageId.ToString(CultureInfo.InvariantCulture));
             return arguments;
         }
+
         /// <summary>
-        /// Формирование пар идентификатор параметра <-> значение параметра
-        /// для замены в строке-шаблоне
+        ///     Формирование пар идентификатор параметра <-> значение параметра
+        ///     для замены в строке-шаблоне
         /// </summary>
         /// <param name="template"></param>
         /// <param name="node"></param>
@@ -486,9 +523,9 @@ namespace RealtyParser
             Debug.Assert(node != null);
             try
             {
-                Arguments args = new Arguments();
+                var args = new Arguments();
 
-                Regex regex = new Regex(@"\{\{[^\}]+\}\}");
+                var regex = new Regex(@"\{\{[^\}]+\}\}");
                 foreach (Match match in regex.Matches(template))
                 {
                     string name = match.Value.Replace(@"{{", @"").Replace(@"}}", @"");
@@ -517,10 +554,136 @@ namespace RealtyParser
             }
         }
 
+        /// <summary>
+        ///     Не входит в техническое задание
+        /// </summary>
+        /// <param name="uri"></param>
+        /// <param name="xpath"></param>
+        /// <param name="encoding"></param>
+        /// <returns></returns>
+        public static async Task<LinksCollection> GetLinks(Uri uri, string xpath, string encoding)
+        {
+            try
+            {
+                HtmlDocument document = await WebRequestHtmlDocument(uri, "GET", encoding);
+                var links = new LinksCollection();
+                Debug.Assert(document != null, "document != null");
+                Debug.WriteLine("xpath: " + xpath);
+                Debug.WriteLine("document: " + document.DocumentNode.OuterHtml);
+                HtmlNodeCollection nodes = document.DocumentNode.SelectNodes(xpath);
+                foreach (HtmlNode node in nodes)
+                {
+                    string link = AttributeValue(node, "href");
+                    string value = node.InnerText;
+                    Debug.WriteLine(link + "->" + value);
+                    if (!String.IsNullOrEmpty(link) && !links.ContainsKey(link)) links.Add(link, value);
+                }
+                return links;
+            }
+            catch (Exception)
+            {
+                return new LinksCollection();
+            }
+        }
+
+        /// <summary>
+        ///     Не входит в техническое задание
+        /// </summary>
+        public static async Task<OptionsCollection> GetOptions(Uri uri, string xpath, string encoding)
+        {
+            try
+            {
+                HtmlDocument document = await WebRequestHtmlDocument(uri, "GET", encoding);
+                var options = new OptionsCollection();
+                Debug.Assert(document != null, "document != null");
+                Debug.WriteLine("xpath: " + xpath);
+                Debug.WriteLine("document: " + document.DocumentNode.OuterHtml);
+                HtmlNodeCollection nodes = document.DocumentNode.SelectNodes(xpath);
+                foreach (HtmlNode node in nodes)
+                {
+                    string option = AttributeValue(node, "value");
+                    string value = node.NextSibling.InnerText;
+                    Debug.WriteLine(option + "->" + value);
+                    if (!String.IsNullOrEmpty(option) && !options.ContainsKey(option)) options.Add(option, value);
+                }
+                return options;
+            }
+            catch (Exception)
+            {
+                return new OptionsCollection();
+            }
+        }
+
+        /// <summary>
+        ///     Не входит в техническое задание
+        /// </summary>
+        public static Dictionary<long, string> BuildMapping(Dictionary<long, string> lefts,
+            Dictionary<string, string> rights, string tableName, long siteId)
+        {
+            Debug.Assert(rights.Count > 0);
+            var results = new Dictionary<long, string>();
+            foreach (var left in lefts)
+            {
+                string a = left.Value;
+                var builder = new StringBuilder();
+                do
+                {
+                    builder.AppendLine(a);
+                } while
+                    (
+                    tableName != "Action" &&
+                    Database.GetScalar<long, string>(a, "Level", tableName) > 1 &&
+                    !string.IsNullOrEmpty(a = Database.GetScalar<string, string>(a, "ParentId", tableName))
+                    );
+                a = builder.ToString();
+
+
+                string b = rights.First().Value;
+                builder = new StringBuilder();
+                do
+                {
+                    builder.AppendLine(b);
+                } while
+                    (
+                    tableName != "Action" &&
+                    Database.GetScalar<long, string>(b, "Level", tableName, siteId) > 1 &&
+                    !string.IsNullOrEmpty(b = Database.GetScalar<string, string>(b, "ParentId", tableName, siteId))
+                    );
+                b = builder.ToString();
+
+                string index = rights.First().Key;
+                int distance = LevenshteinDistance.Compute(a, b);
+                foreach (var right in rights.Where(right => index != right.Key))
+                {
+                    b = right.Value;
+                    builder = new StringBuilder();
+                    do
+                    {
+                        builder.AppendLine(b);
+                    } while
+                        (
+                        tableName != "Action" &&
+                        Database.GetScalar<long, string>(b, "Level", tableName, siteId) > 1 &&
+                        !string.IsNullOrEmpty(b = Database.GetScalar<string, string>(b, "ParentId", tableName, siteId))
+                        );
+                    b = builder.ToString();
+
+                    int current = LevenshteinDistance.Compute(a, b);
+                    if (current < distance)
+                    {
+                        distance = current;
+                        index = right.Key;
+                    }
+                }
+                results.Add(left.Key, index);
+            }
+            return results;
+        }
+
         #region Получение значения параметра
 
         /// <summary>
-        /// Получение значения указанного аттрибута указанного нода
+        ///     Получение значения указанного аттрибута указанного нода
         /// </summary>
         /// <param name="node"></param>
         /// <param name="attributeName"></param>
@@ -539,148 +702,19 @@ namespace RealtyParser
         }
 
         /// <summary>
-        /// Получение значения указанного свойства указанного нода
+        ///     Получение значения указанного свойства указанного нода
         /// </summary>
         /// <param name="node"></param>
         /// <param name="propertyName"></param>
         /// <returns></returns>
         public static string InvokeNodeProperty(HtmlNode node, string propertyName)
         {
-            Type type = typeof(HtmlNode);
+            Type type = typeof (HtmlNode);
             Debug.Assert(type != null, "type != null");
             PropertyInfo propertyInfo = type.GetProperty(propertyName);
-            return (string)propertyInfo.GetValue(node, null);
+            return (string) propertyInfo.GetValue(node, null);
         }
 
         #endregion
-
-        /// <summary>
-        /// Не входит в техническое задание
-        /// </summary>
-        /// <param name="uri"></param>
-        /// <param name="xpath"></param>
-        /// <param name="encoding"></param>
-        /// <returns></returns>
-        public static async Task<LinksCollection> GetLinks(Uri uri, string xpath, string encoding)
-        {
-            try
-            {
-                HtmlDocument document = await WebRequestHtmlDocument(uri, "GET", encoding);
-                LinksCollection links = new LinksCollection();
-                Debug.Assert(document != null, "document != null");
-                Debug.WriteLine("xpath: " + xpath);
-                Debug.WriteLine("document: " + document.DocumentNode.OuterHtml);
-                HtmlNodeCollection nodes = document.DocumentNode.SelectNodes(xpath);
-                foreach (var node in nodes)
-                {
-                    string link = AttributeValue(node, "href");
-                    string value = node.InnerText;
-                    Debug.WriteLine(link + "->" + value);
-                    if (!String.IsNullOrEmpty(link) && !links.ContainsKey(link)) links.Add(link, value);
-                }
-                return links;
-            }
-            catch (Exception)
-            {
-                return new LinksCollection();
-            }
-        }
-        /// <summary>
-        /// Не входит в техническое задание
-        /// </summary>
-        public static async Task<OptionsCollection> GetOptions(Uri uri, string xpath, string encoding)
-        {
-            try
-            {
-
-                HtmlDocument document = await WebRequestHtmlDocument(uri, "GET", encoding);
-                OptionsCollection options = new OptionsCollection();
-                Debug.Assert(document != null, "document != null");
-                Debug.WriteLine("xpath: " + xpath);
-                Debug.WriteLine("document: " + document.DocumentNode.OuterHtml);
-                HtmlNodeCollection nodes = document.DocumentNode.SelectNodes(xpath);
-                foreach (var node in nodes)
-                {
-                    string option = AttributeValue(node, "value");
-                    string value = node.NextSibling.InnerText;
-                    Debug.WriteLine(option + "->" + value);
-                    if (!String.IsNullOrEmpty(option) && !options.ContainsKey(option)) options.Add(option, value);
-                }
-                return options;
-            }
-            catch (Exception)
-            {
-                return new OptionsCollection();
-            }
-        }
-
-        /// <summary>
-        /// Не входит в техническое задание
-        /// </summary>
-        public static Dictionary<long, string> BuildMapping(Dictionary<long, string> lefts,
-            Dictionary<string, string> rights, string tableName, long siteId)
-        {
-            Debug.Assert(rights.Count > 0);
-            Dictionary<long, string> results = new Dictionary<long, string>();
-            foreach (var left in lefts)
-            {
-                string a = left.Value;
-                StringBuilder builder = new StringBuilder();
-                do
-                {
-                    builder.AppendLine(a);
-                }
-                while
-                (
-                    tableName != "Action" &&
-                    Database.GetScalar<long, string>(a, "Level", tableName) > 1 &&
-                    !string.IsNullOrEmpty(a = Database.GetScalar<string, string>(a, "ParentId", tableName))
-                );
-                a = builder.ToString();
-
-
-                string b = rights.First().Value;
-                builder = new StringBuilder();
-                do
-                {
-                    builder.AppendLine(b);
-                }
-                while
-                (
-                    tableName != "Action" &&
-                    Database.GetScalar<long, string>(b, "Level", tableName, siteId) > 1 &&
-                    !string.IsNullOrEmpty(b = Database.GetScalar<string, string>(b, "ParentId", tableName, siteId))
-                );
-                b = builder.ToString();
-
-                string index = rights.First().Key;
-                int distance = LevenshteinDistance.Compute(a, b);
-                foreach (var right in rights.Where(right => index != right.Key))
-                {
-                    b = right.Value;
-                    builder = new StringBuilder();
-                    do
-                    {
-                        builder.AppendLine(b);
-                    }
-                    while
-                    (
-                        tableName != "Action" &&
-                        Database.GetScalar<long, string>(b, "Level", tableName, siteId) > 1 &&
-                        !string.IsNullOrEmpty(b = Database.GetScalar<string, string>(b, "ParentId", tableName, siteId))
-                    );
-                    b = builder.ToString();
-
-                    int current = LevenshteinDistance.Compute(a, b);
-                    if (current < distance)
-                    {
-                        distance = current;
-                        index = right.Key;
-                    }
-                }
-                results.Add(left.Key, index);
-            }
-            return results;
-        }
     }
 }

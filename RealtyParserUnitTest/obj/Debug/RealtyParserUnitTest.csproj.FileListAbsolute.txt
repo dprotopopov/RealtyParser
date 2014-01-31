@@ -18,4 +18,7 @@ D:\Projects\RealtyParser\RealtyParserUnitTest\bin\Debug\RT.Crawler.pdb
 D:\Projects\RealtyParser\RealtyParserUnitTest\obj\Debug\RealtyParserUnitTest.csprojResolveAssemblyReference.cache
 D:\Projects\RealtyParser\RealtyParserUnitTest\obj\Debug\RealtyParserUnitTest.dll
 D:\Projects\RealtyParser\RealtyParserUnitTest\obj\Debug\RealtyParserUnitTest.pdb
-D:\Projects\RealtyParser\RealtyParserUnitTest\bin\Debug\xpath1.html
+D:\Projects\RealtyParser\RealtyParserUnitTest\bin\Debug\libtidy.dll
+D:\Projects\RealtyParser\RealtyParserUnitTest\bin\Debug\TidyManaged.dll
+D:\Projects\RealtyParser\RealtyParserUnitTest\bin\Debug\TidyManaged.pdb
+D:\Projects\RealtyParser\RealtyParserUnitTest\bin\Debug\TidyManagedTest.html
