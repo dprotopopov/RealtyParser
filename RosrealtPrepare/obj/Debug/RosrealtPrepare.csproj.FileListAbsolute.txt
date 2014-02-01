@@ -29,3 +29,5 @@ D:\Projects\RealtyParser\RosrealtPrepare\obj\Debug\RosrealtPrepare.pdb
 D:\Projects\RealtyParser\RosrealtPrepare\bin\Debug\libtidy.dll
 D:\Projects\RealtyParser\RosrealtPrepare\bin\Debug\TidyManaged.dll
 D:\Projects\RealtyParser\RosrealtPrepare\bin\Debug\TidyManaged.pdb
+D:\Projects\RealtyParser\RosrealtPrepare\bin\Debug\ServiceStack.Text.dll
+D:\Projects\RealtyParser\RosrealtPrepare\bin\Debug\ServiceStack.Text.xml

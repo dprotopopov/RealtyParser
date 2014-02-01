@@ -63,10 +63,12 @@
     <Reference Include="System.Data.SQLite.Linq">
       <HintPath>..\packages\System.Data.SQLite.x86.1.0.90.0\lib\net45\System.Data.SQLite.Linq.dll</HintPath>
     </Reference>
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Arguments.cs" />
+    <Compile Include="DictionaryOfList.cs" />
     <Compile Include="HierarhialItem.cs" />
     <Compile Include="HierarhialItemCollection.cs" />
     <Compile Include="LevenshteinDistance.cs" />

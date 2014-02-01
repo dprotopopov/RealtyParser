@@ -30,3 +30,5 @@ D:\Projects\RealtyParser\RosrealtPrepare\obj\Release\RosrealtPrepare.csproj.Gene
 D:\Projects\RealtyParser\RosrealtPrepare\obj\Release\RosrealtPrepare.exe.licenses
 D:\Projects\RealtyParser\RosrealtPrepare\obj\Release\RosrealtPrepare.exe
 D:\Projects\RealtyParser\RosrealtPrepare\obj\Release\RosrealtPrepare.pdb
+D:\Projects\RealtyParser\RosrealtPrepare\bin\Release\ServiceStack.Text.dll
+D:\Projects\RealtyParser\RosrealtPrepare\bin\Release\ServiceStack.Text.xml

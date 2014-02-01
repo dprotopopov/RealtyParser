@@ -6,9 +6,28 @@ namespace RealtyParser
     /// <summary>
     ///     Вспомогательный класс
     ///     Используется для доступа к значениям словаря по ключу
+    ///     используется для храниния результатов разбора одной страницы на поля
     /// </summary>
-    public class ReturnFields : Dictionary<string, List<string>>
+    public class ReturnFields : DictionaryOfList
     {
+        public List<string> PublicationId
+        {
+            get
+            {
+                string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
+                if (!ContainsKey(propertyName)) Add(propertyName, new List<string>());
+                return this[propertyName];
+            }
+            set
+            {
+                string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
+                if (ContainsKey(propertyName))
+                    this[propertyName] = value;
+                else
+                    Add(propertyName, value);
+            }
+        }
+
         public List<string> WebPublicationAdditionalInfoRealtyAdditionalInfoAddress
         {
             get

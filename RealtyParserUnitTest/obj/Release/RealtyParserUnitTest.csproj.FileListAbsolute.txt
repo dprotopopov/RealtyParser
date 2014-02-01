@@ -23,3 +23,5 @@ D:\Projects\RealtyParser\RealtyParserUnitTest\bin\Release\RT.Crawler.xml
 D:\Projects\RealtyParser\RealtyParserUnitTest\obj\Release\RealtyParserUnitTest.csprojResolveAssemblyReference.cache
 D:\Projects\RealtyParser\RealtyParserUnitTest\obj\Release\RealtyParserUnitTest.dll
 D:\Projects\RealtyParser\RealtyParserUnitTest\obj\Release\RealtyParserUnitTest.pdb
+D:\Projects\RealtyParser\RealtyParserUnitTest\bin\Release\ServiceStack.Text.dll
+D:\Projects\RealtyParser\RealtyParserUnitTest\bin\Release\ServiceStack.Text.xml

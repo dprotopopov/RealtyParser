@@ -30,6 +30,8 @@ D:\Projects\RealtyParser\RealtyParserEditor\obj\Debug\RealtyParserEditor.exe.man
 D:\Projects\RealtyParser\RealtyParserEditor\obj\Debug\RealtyParserEditor.application
 D:\Projects\RealtyParser\RealtyParserEditor\obj\Debug\RealtyParserEditor.exe
 D:\Projects\RealtyParser\RealtyParserEditor\obj\Debug\RealtyParserEditor.pdb
+D:\Projects\RealtyParser\RealtyParserEditor\bin\Debug\libtidy.dll
+D:\Projects\RealtyParser\RealtyParserEditor\bin\Debug\ServiceStack.Text.dll
+D:\Projects\RealtyParser\RealtyParserEditor\bin\Debug\ServiceStack.Text.xml
 D:\Projects\RealtyParser\RealtyParserEditor\bin\Debug\TidyManaged.dll
 D:\Projects\RealtyParser\RealtyParserEditor\bin\Debug\TidyManaged.pdb
-D:\Projects\RealtyParser\RealtyParserEditor\bin\Debug\libtidy.dll

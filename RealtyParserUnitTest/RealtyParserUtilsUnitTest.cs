@@ -44,9 +44,9 @@ namespace RealtyParserUnitTest
         public async void TestWebRequestHtmlDocument()
         {
             Uri uri = new Uri("http://rbc.ru");
-            HtmlDocument document = await RealtyParserUtils.WebRequestHtmlDocument(uri, "GET","utf-8");
-            Assert.IsNotNull(document);
-            Assert.IsFalse(String.IsNullOrEmpty(document.DocumentNode.InnerText));
+            HtmlDocument[] documents = await RealtyParserUtils.WebRequestHtmlDocument(uri, "GET","utf-8");
+            Assert.IsNotNull(documents);
+            Assert.IsFalse(String.IsNullOrEmpty(documents[0].DocumentNode.InnerText));
         }
     }
 }

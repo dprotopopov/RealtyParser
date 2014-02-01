@@ -17,14 +17,18 @@ using TidyManaged;
 namespace RealtyParser
 {
     /// <summary>
-    ///     Статический класс вспомогательных алгоритмов
+    ///     Статичный класс вспомогательных алгоритмов
     /// </summary>
     public static class RealtyParserUtils
     {
+        public const string FieldPattern = @"\{\{(?<name>[^\}]*)\}\}";
+
         /// <summary>
         ///     Единый коннектор к классу базы данных
         /// </summary>
         private static readonly RealtyParserDatabase Database = new RealtyParserDatabase();
+
+        public static object LastError { get; set; }
 
         /// <summary>
         ///     Единый коннектор к классу базы данных
@@ -36,14 +40,14 @@ namespace RealtyParser
 
         /// <summary>
         ///     Запрос к сайту с использованием RT.Crawler
-        ///     Вынесено сюда только чтобы удалить дублирование кода
         /// </summary>
-        public static async Task<HtmlDocument> WebRequestHtmlDocument(Uri uri, string method, string encoding)
+        public static async Task<HtmlDocument[]> WebRequestHtmlDocument(Uri uri, string method, string encoding)
         {
             Debug.WriteLine(uri.ToString());
             ICrawler crawler = new WebCrawler();
             var requestWeb = (HttpWebRequest) WebRequest.Create(uri);
             requestWeb.Method = method;
+            var collection = new List<HtmlDocument>();
             WebResponse responce = await crawler.GetResponse(requestWeb);
             if (responce != null)
             {
@@ -51,13 +55,21 @@ namespace RealtyParser
                 var reader = new StreamReader(responce.GetResponseStream(), encoder);
                 var input = new MemoryStream(Encoding.UTF8.GetBytes(reader.ReadToEnd()));
                 var output = new MemoryStream();
+
+                input.Seek(0, SeekOrigin.Begin);
+                var firstEdition = new HtmlDocument();
+                firstEdition.LoadHtml(new StreamReader(input, Encoding.UTF8).ReadToEnd());
+                collection.Add(firstEdition);
+
                 Debug.WriteLine("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
                 input.Seek(0, SeekOrigin.Begin);
                 Debug.WriteLine(new StreamReader(input).ReadToEnd());
                 Debug.WriteLine("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
                 input.Seek(0, SeekOrigin.Begin);
+
                 Document tidy = Document.FromStream(input);
                 tidy.ForceOutput = true;
+                tidy.PreserveEntities = true;
                 tidy.InputCharacterEncoding = EncodingType.Raw;
                 tidy.OutputCharacterEncoding = EncodingType.Raw;
                 tidy.CharacterEncoding = EncodingType.Raw;
@@ -66,16 +78,17 @@ namespace RealtyParser
                 tidy.OutputXhtml = true;
                 tidy.CleanAndRepair();
                 tidy.Save(output);
+
                 Debug.WriteLine(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
                 output.Seek(0, SeekOrigin.Begin);
                 Debug.WriteLine(new StreamReader(output, Encoding.UTF8).ReadToEnd());
                 Debug.WriteLine(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-                var document = new HtmlDocument();
+                var secondEdition = new HtmlDocument();
                 output.Seek(0, SeekOrigin.Begin);
-                document.LoadHtml(new StreamReader(output, Encoding.UTF8).ReadToEnd());
-                return document;
+                secondEdition.LoadHtml(new StreamReader(output, Encoding.UTF8).ReadToEnd());
+                collection.Add(secondEdition);
             }
-            return new HtmlDocument();
+            return collection.ToArray();
         }
 
         /// <summary>
@@ -91,7 +104,7 @@ namespace RealtyParser
             }
             catch (ArgumentNullException)
             {
-                return null;
+                throw new NotImplementedException();
             }
         }
 
@@ -183,8 +196,8 @@ namespace RealtyParser
             }
             try
             {
-                webPublication.Contact.AuthorUrl = ConvertToUris(returnFields.WebPublicationContactAuthorUrl)
-                    .FirstOrDefault();
+                webPublication.Contact.AuthorUrl =
+                    ConvertToUris(returnFields.WebPublicationContactAuthorUrl).FirstOrDefault();
             }
             catch (Exception)
             {
@@ -211,7 +224,7 @@ namespace RealtyParser
             {
                 webPublication.Contact.Icq = Convert.ToUInt32(
                     returnFields.WebPublicationContactIcq
-                        .FirstOrDefault());
+                        .Aggregate((i, j) => i + "\t" + j));
             }
             catch (Exception)
             {
@@ -228,7 +241,7 @@ namespace RealtyParser
             try
             {
                 webPublication.Contact.Skype = returnFields.WebPublicationContactSkype
-                    .FirstOrDefault();
+                    .Aggregate((i, j) => i + "\t" + j);
             }
             catch (Exception)
             {
@@ -247,7 +260,7 @@ namespace RealtyParser
             {
                 webPublication.ModifyDate = DateTime.Parse(
                     returnFields.WebPublicationModifyDate
-                        .FirstOrDefault());
+                        .Aggregate((i, j) => i + "\t" + j));
             }
             catch (Exception)
             {
@@ -264,7 +277,7 @@ namespace RealtyParser
             try
             {
                 webPublication.PublicationId = returnFields.WebPublicationPublicationId
-                    .FirstOrDefault();
+                    .Aggregate((i, j) => i + "\t" + j);
             }
             catch (Exception)
             {
@@ -322,65 +335,75 @@ namespace RealtyParser
             return strings.Select(s => new Uri(s)).ToList();
         }
 
+        public static string RegexEscape(string text)
+        {
+            var regex = new Regex(@"(\{|\[|\]|\})");
+            return regex.Replace(text, @"\$&").Trim();
+        }
+
         /// <summary>
         ///     Замена в строке-шаблоне идентификаторов-параметров на их значения
         /// </summary>
-        public static string ParseTemplate(string template, Arguments args)
+        public static List<string> ParseTemplate(string template, Arguments arguments)
         {
-            foreach (var pair in args)
+            Debug.WriteLine("Start ParseTemplate: " + template);
+            Debug.WriteLine(arguments.ToString());
+            var list = new List<string>();
+            int maxCount = arguments.MaxCount;
+            for (int index = 0; index < maxCount; index++)
             {
-                Debug.Assert(pair.Key != null);
-                Debug.Assert(pair.Value != null);
-
-                Debug.WriteLine("ParseTemplate: /" + pair.Key + "/ -> /" +
-                                pair.Value.Substring(0, Math.Min(30, pair.Value.Length)) +
-                                ((pair.Value.Length > 30) ? ".../" : "/"));
-                var regex = new Regex(pair.Key, RegexOptions.IgnoreCase);
-                template = regex.Replace(template, pair.Value);
+                string value = template.Trim();
+                foreach (var pair in arguments.Where(pair => pair.Value != null && pair.Value.Count > index))
+                    try
+                    {
+                        var regex = new Regex(pair.Key, RegexOptions.IgnoreCase);
+                        value = regex.Replace(value, pair.Value[index]).Trim();
+                    }
+                    catch (Exception exception)
+                    {
+                        LastError = exception;
+                        Debug.WriteLine(LastError.ToString());
+                    }
+                var rgx = new Regex(FieldPattern, RegexOptions.IgnoreCase);
+                value = rgx.Replace(value, @"").Trim();
+                if (!String.IsNullOrEmpty(value)) list.Add(value);
+                Debug.WriteLine("ParseTemplate: " + template + " add value " + value);
             }
-            var rgx = new Regex(@"\{\{[^\}]*\}\}", RegexOptions.IgnoreCase);
-            template = rgx.Replace(template, @"");
-            Debug.WriteLine("ParseTemplate: " + template);
-            return template;
+            return list;
         }
 
         /// <summary>
         ///     Поиск и формирование значений возвращаемых полей загруженного с сайта объявления
         /// </summary>
-        public static ReturnFields BuildReturnFields(
-            RealtyParserDatabase database,
-            HtmlNode parentNode,
-            Arguments parentArguments,
-            List<ReturnFieldInfo> returnFieldInfos)
+        public static ReturnFields BuildReturnFields(RealtyParserDatabase database, HtmlNode[] parentNodes,
+            Arguments parentArguments, List<ReturnFieldInfo> returnFieldInfos)
         {
             var returnFields = new ReturnFields();
             foreach (ReturnFieldInfo returnFieldInfo in returnFieldInfos)
             {
-                var regex = new Regex(returnFieldInfo.ReturnFieldRegexPattern, RegexOptions.IgnoreCase);
-
-                HtmlNodeCollection nodes =
-                    parentNode.SelectNodes(ParseTemplate(returnFieldInfo.ReturnFieldXpathTemplate,
-                        (new Arguments(parentArguments)).InsertOrReplaceArguments(
-                            BuildArguments(returnFieldInfo.ReturnFieldXpathTemplate, parentNode))));
-
-                var list = new List<string>();
-                if (nodes != null)
+                var agregated = new Arguments();
+                foreach (HtmlNode parentNode in parentNodes)
                 {
-                    foreach (HtmlNode node in nodes)
+                    var arguments = new Arguments();
+                    List<string> xpaths = ParseTemplate(returnFieldInfo.ReturnFieldXpathTemplate, parentArguments);
+                    foreach (HtmlNode node in xpaths.Select(xpath => parentNode.SelectNodes(xpath)).Where(nodes => nodes != null).SelectMany(nodes => nodes))
                     {
-                        string value = regex.Replace(
-                            ParseTemplate(returnFieldInfo.ReturnFieldResultTemplate,
-                                (new Arguments(parentArguments)).InsertOrReplaceArguments(
-                                    BuildArguments(returnFieldInfo.ReturnFieldResultTemplate, node))),
-                            returnFieldInfo.ReturnFieldRegexReplacement);
-
-                        list.Add(value);
-                        Debug.WriteLine("BuildReturnFields: " + returnFieldInfo.ReturnFieldId + " -> " + value);
+                        arguments.InsertOrAppend(parentArguments);
+                        arguments.InsertOrAppend(BuildArguments(returnFieldInfo.ReturnFieldResultTemplate, node));
                     }
+                    foreach (KeyValuePair<string, List<string>> pair in arguments)
+                        if (!agregated.ContainsKey((pair.Key))) agregated.Add(pair.Key, pair.Value);
+                        else if (agregated[pair.Key].Count < pair.Value.Count)
+                            agregated[pair.Key] = pair.Value;
                 }
-                else
+                var list = new List<string>();
+                var regex = new Regex(returnFieldInfo.ReturnFieldRegexPattern,
+                    RegexOptions.IgnoreCase | RegexOptions.Singleline);
+                foreach (string input in ParseTemplate(returnFieldInfo.ReturnFieldResultTemplate, agregated))
                 {
-                    Debug.WriteLine("BuildReturnFields: parentNode.SelectNodes: No nodes found");
+                    string replace = regex.Replace(input, returnFieldInfo.ReturnFieldRegexReplacement).Trim();
+                    if (!String.IsNullOrEmpty(replace)) list.Add(replace);
+                    Debug.WriteLine("BuildReturnFields: add for " + returnFieldInfo.ReturnFieldId + " value " + input);
                 }
                 returnFields.Add(returnFieldInfo.ReturnFieldId, list);
             }
@@ -396,14 +419,10 @@ namespace RealtyParser
             long regionId,
             long rubricId,
             long actionId,
-            string publicationId,
             Mapping mapping,
             long siteId)
         {
-            var args = new Arguments
-            {
-                {@"\{\{PublicationId\}\}", publicationId}
-            };
+            var arguments = new Arguments();
             var id = new Dictionary<string, long>
             {
                 {"Action", actionId},
@@ -418,52 +437,36 @@ namespace RealtyParser
                 try
                 {
                     mappingId.Add(mappingTable, mapping[mappingTable][id[mappingTable]]);
-                    args.Add(@"\{\{" + mappingTable + @"Id\}\}", mappingId[mappingTable]);
-                    try
+                    arguments.Add(RegexEscape(@"{{" + mappingTable + @"Id}}"), mappingId[mappingTable]);
+                    foreach (object userId in new object[] {id[mappingTable], mappingId[mappingTable]})
                     {
-                        Dictionary<string, string> userFields = database.GetUserFields(id[mappingTable], mappingTable,
-                            siteId);
-                        foreach (var field in userFields)
+                        try
                         {
-                            try
+                            MethodInfo methodInfo = database.GetType()
+                                .GetMethod("GetUserFields", new[] {userId.GetType(), typeof (string), typeof (long)});
+                            var userFields =
+                                (Dictionary<string, string>)
+                                    methodInfo.Invoke(database, new[] {userId, mappingTable, siteId});
+                            foreach (var field in userFields)
                             {
-                                string key = @"\{\{" + field.Key + @"\}\}";
-                                if (!args.ContainsKey(key)) args.Add(key, field.Value);
-                            }
-                            catch (Exception)
-                            {
+                                arguments.Add(RegexEscape(@"{{" + field.Key + @"}}"), field.Value);
                             }
                         }
-                    }
-                    catch (Exception)
-                    {
-                    }
-                    try
-                    {
-                        Dictionary<string, string> userFields = database.GetUserFields(mappingId[mappingTable],
-                            mappingTable, siteId);
-                        foreach (var field in userFields)
+                        catch (Exception exception)
                         {
-                            try
-                            {
-                                string key = @"\{\{" + field.Key + @"\}\}";
-                                if (!args.ContainsKey(key)) args.Add(key, field.Value);
-                            }
-                            catch (Exception)
-                            {
-                            }
+                            LastError = exception;
+                            Debug.WriteLine(LastError.ToString());
                         }
-                    }
-                    catch (Exception)
-                    {
                     }
                 }
-                catch (Exception)
+                catch (Exception exception)
                 {
+                    LastError = exception;
+                    Debug.WriteLine(LastError.ToString());
                 }
             }
 
-            foreach (string mappingTable in new List<string> {"Region", "Rubric"})
+            foreach (string mappingTable in new[] {"Region", "Rubric"})
             {
                 try
                 {
@@ -473,31 +476,26 @@ namespace RealtyParser
                         level > 0 && !String.IsNullOrEmpty(mappingId[mappingTable]);
                         level = database.GetScalar<long, string>(mappingId[mappingTable], "Level", mappingTable, siteId))
                     {
-                        string key = @"\{\{" + mappingTable + @"Id\[" + level + @"\]\}\}";
-                        if (!args.ContainsKey(key)) args.Add(key, mappingId[mappingTable]);
+                        arguments.Add(RegexEscape(@"{{" + mappingTable + @"Id[" + level + @"]}}"),
+                            mappingId[mappingTable]);
 
                         Dictionary<string, string> userFields = database.GetUserFields(mappingId[mappingTable],
                             mappingTable, siteId);
                         foreach (var field in userFields)
                         {
-                            try
-                            {
-                                key = @"\{\{" + field.Key + @"\[" + level + @"\]\}\}";
-                                if (!args.ContainsKey(key)) args.Add(key, field.Value);
-                            }
-                            catch (Exception)
-                            {
-                            }
+                            arguments.Add(RegexEscape(@"{{" + field.Key + @"[" + level + @"]}}"), field.Value);
                         }
                         mappingId[mappingTable] = database.GetScalar<string, string>(mappingId[mappingTable], "ParentId",
                             mappingTable, siteId);
                     }
                 }
-                catch (Exception)
+                catch (Exception exception)
                 {
+                    LastError = exception;
+                    Debug.WriteLine(LastError.ToString());
                 }
             }
-            return args;
+            return arguments;
         }
 
         /// <summary>
@@ -506,8 +504,10 @@ namespace RealtyParser
         /// </summary>
         public static Arguments BuildArguments(long pageId)
         {
-            var arguments = new Arguments();
-            if (pageId > 1) arguments.Add(@"\{\{PageId\}\}", pageId.ToString(CultureInfo.InvariantCulture));
+            var arguments = new Arguments
+            {
+                {RegexEscape(@"{{PageId}}"), (pageId > 1) ? pageId.ToString(CultureInfo.InvariantCulture) : @""}
+            };
             return arguments;
         }
 
@@ -521,37 +521,36 @@ namespace RealtyParser
         public static Arguments BuildArguments(string template, HtmlNode node)
         {
             Debug.Assert(node != null);
-            try
-            {
-                var args = new Arguments();
+            var arguments = new Arguments();
 
-                var regex = new Regex(@"\{\{[^\}]+\}\}");
-                foreach (Match match in regex.Matches(template))
+            foreach (
+                string name in
+                    from Match match in Regex.Matches(template, FieldPattern)
+                    select match.Groups["name"].Value)
+            {
+                Debug.WriteLine(template + " <- " + name);
+                foreach (
+                    MethodInfo methodInfo in
+                        new[]
+                        {
+                            typeof (RealtyParserUtils).GetMethod("InvokeNodeProperty"),
+                            typeof (RealtyParserUtils).GetMethod("AttributeValue")
+                        })
                 {
-                    string name = match.Value.Replace(@"{{", @"").Replace(@"}}", @"");
-                    Debug.WriteLine(template + " <- " + name);
                     try
                     {
-                        args.Add(@"\{\{" + name + @"\}\}", InvokeNodeProperty(node, name));
+                        object value = methodInfo.Invoke(null, new object[] {node, name});
+                        if (value != null) arguments.Add(RegexEscape(@"{{" + name + @"}}"), value.ToString());
                     }
-                    catch (Exception)
+                    catch (Exception exception)
                     {
-                    }
-                    try
-                    {
-                        args.Add(@"\{\{" + name + @"\}\}", AttributeValue(node, name));
-                    }
-                    catch (Exception)
-                    {
+                        LastError = exception;
+                        Debug.WriteLine(LastError.ToString());
                     }
                 }
+            }
 
-                return args;
-            }
-            catch (Exception)
-            {
-                return new Arguments();
-            }
+            return arguments;
         }
 
         /// <summary>
@@ -565,12 +564,12 @@ namespace RealtyParser
         {
             try
             {
-                HtmlDocument document = await WebRequestHtmlDocument(uri, "GET", encoding);
+                HtmlDocument[] documents = await WebRequestHtmlDocument(uri, "GET", encoding);
                 var links = new LinksCollection();
-                Debug.Assert(document != null, "document != null");
+                Debug.Assert(documents != null, "document != null");
                 Debug.WriteLine("xpath: " + xpath);
-                Debug.WriteLine("document: " + document.DocumentNode.OuterHtml);
-                HtmlNodeCollection nodes = document.DocumentNode.SelectNodes(xpath);
+                Debug.WriteLine("document: " + documents[0].DocumentNode.OuterHtml);
+                HtmlNodeCollection nodes = documents[0].DocumentNode.SelectNodes(xpath);
                 foreach (HtmlNode node in nodes)
                 {
                     string link = AttributeValue(node, "href");
@@ -593,12 +592,12 @@ namespace RealtyParser
         {
             try
             {
-                HtmlDocument document = await WebRequestHtmlDocument(uri, "GET", encoding);
+                HtmlDocument[] documents = await WebRequestHtmlDocument(uri, "GET", encoding);
                 var options = new OptionsCollection();
-                Debug.Assert(document != null, "document != null");
+                Debug.Assert(documents != null, "document != null");
                 Debug.WriteLine("xpath: " + xpath);
-                Debug.WriteLine("document: " + document.DocumentNode.OuterHtml);
-                HtmlNodeCollection nodes = document.DocumentNode.SelectNodes(xpath);
+                Debug.WriteLine("document: " + documents[0].DocumentNode.OuterHtml);
+                HtmlNodeCollection nodes = documents[0].DocumentNode.SelectNodes(xpath);
                 foreach (HtmlNode node in nodes)
                 {
                     string option = AttributeValue(node, "value");
@@ -690,15 +689,9 @@ namespace RealtyParser
         /// <returns></returns>
         public static string AttributeValue(HtmlNode node, string attributeName)
         {
-            try
-            {
-                HtmlAttribute attribute = node.Attributes[attributeName];
-                return attribute.Value;
-            }
-            catch (Exception)
-            {
-                return "";
-            }
+            HtmlAttribute attribute = node.Attributes[attributeName];
+            if (attribute != null) return attribute.Value;
+            return null;
         }
 
         /// <summary>
@@ -709,10 +702,9 @@ namespace RealtyParser
         /// <returns></returns>
         public static string InvokeNodeProperty(HtmlNode node, string propertyName)
         {
-            Type type = typeof (HtmlNode);
-            Debug.Assert(type != null, "type != null");
-            PropertyInfo propertyInfo = type.GetProperty(propertyName);
-            return (string) propertyInfo.GetValue(node, null);
+            PropertyInfo propertyInfo = typeof (HtmlNode).GetProperty(propertyName);
+            if (propertyInfo != null) return (string) propertyInfo.GetValue(node, null);
+            return null;
         }
 
         #endregion

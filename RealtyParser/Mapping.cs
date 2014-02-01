@@ -4,13 +4,13 @@ using System.Reflection;
 namespace RealtyParser
 {
     /// <summary>
-    /// Вспомогательный класс 
-    /// Используется для доступа к значениям словаря по ключу
+    ///     Вспомогательный класс
+    ///     Используется для доступа к значениям словаря по ключу
     /// </summary>
     public class Mapping : Dictionary<string, Dictionary<long, string>>
     {
         /// <summary>
-        /// Используется для доступа к значениям словаря по ключу
+        ///     Используется для доступа к значениям словаря по ключу
         /// </summary>
         public Dictionary<long, string> Action
         {
@@ -29,8 +29,9 @@ namespace RealtyParser
                     Add(propertyName, value);
             }
         }
+
         /// <summary>
-        /// Используется для доступа к значениям словаря по ключу
+        ///     Используется для доступа к значениям словаря по ключу
         /// </summary>
         public Dictionary<long, string> Rubric
         {
@@ -49,8 +50,9 @@ namespace RealtyParser
                     Add(propertyName, value);
             }
         }
+
         /// <summary>
-        /// Используется для доступа к значениям словаря по ключу
+        ///     Используется для доступа к значениям словаря по ключу
         /// </summary>
         public Dictionary<long, string> Region
         {

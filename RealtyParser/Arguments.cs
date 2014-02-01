@@ -3,94 +3,125 @@ using System.Reflection;
 
 namespace RealtyParser
 {
-    public class Arguments : Dictionary<string, string>
+    /// <summary>
+    ///     Класс для хранения параметров, передаваемых в процедуру замены полей в шаблоне
+    ///     Используется для доступа к значениям словаря по ключу
+    ///     Ключи словаря представляют собой строки, передаваемые в качестве регулярного выражения
+    ///     в функцию Regex.Replace для замены полей в шаблоне на значения данного словаря
+    /// </summary>
+    public class Arguments : DictionaryOfList
     {
         public Arguments(Arguments args)
         {
-            InsertOrReplaceArguments(args);
+            InsertOrReplace(args);
         }
 
         public Arguments()
         {
         }
 
-        public Arguments InsertOrReplaceArguments(Dictionary<string, string> dictionary)
+        public List<string> RegionId
+        {
+            get
+            {
+                string propertyName =
+                    RealtyParserUtils.RegexEscape(@"{{" + MethodBase.GetCurrentMethod().Name.Substring(4) + @"}}");
+                if (!ContainsKey(propertyName)) Add(propertyName, new List<string>());
+                return this[propertyName];
+            }
+            set
+            {
+                string propertyName =
+                    RealtyParserUtils.RegexEscape(@"{{" + MethodBase.GetCurrentMethod().Name.Substring(4) + @"}}");
+                if (ContainsKey(propertyName))
+                    this[propertyName] = value;
+                else
+                    Add(propertyName, value);
+            }
+        }
+
+        public List<string> RubricId
+        {
+            get
+            {
+                string propertyName =
+                    RealtyParserUtils.RegexEscape(@"{{" + MethodBase.GetCurrentMethod().Name.Substring(4) + @"}}");
+                if (!ContainsKey(propertyName)) Add(propertyName, new List<string>());
+                return this[propertyName];
+            }
+            set
+            {
+                string propertyName =
+                    RealtyParserUtils.RegexEscape(@"{{" + MethodBase.GetCurrentMethod().Name.Substring(4) + @"}}");
+                if (ContainsKey(propertyName))
+                    this[propertyName] = value;
+                else
+                    Add(propertyName, value);
+            }
+        }
+
+        public List<string> ActionId
+        {
+            get
+            {
+                string propertyName =
+                    RealtyParserUtils.RegexEscape(@"{{" + MethodBase.GetCurrentMethod().Name.Substring(4) + @"}}");
+                if (!ContainsKey(propertyName)) Add(propertyName, new List<string>());
+                return this[propertyName];
+            }
+            set
+            {
+                string propertyName =
+                    RealtyParserUtils.RegexEscape(@"{{" + MethodBase.GetCurrentMethod().Name.Substring(4) + @"}}");
+                if (ContainsKey(propertyName))
+                    this[propertyName] = value;
+                else
+                    Add(propertyName, value);
+            }
+        }
+
+        public List<string> PublicationId
+        {
+            get
+            {
+                string propertyName =
+                    RealtyParserUtils.RegexEscape(@"{{" + MethodBase.GetCurrentMethod().Name.Substring(4) + @"}}");
+                if (!ContainsKey(propertyName)) Add(propertyName, new List<string>());
+                return this[propertyName];
+            }
+            set
+            {
+                string propertyName =
+                    RealtyParserUtils.RegexEscape(@"{{" + MethodBase.GetCurrentMethod().Name.Substring(4) + @"}}");
+                if (ContainsKey(propertyName))
+                    this[propertyName] = value;
+                else
+                    Add(propertyName, value);
+            }
+        }
+
+        public Arguments InsertOrAppend(Arguments dictionary)
         {
             foreach (var arg in dictionary)
-                if (ContainsKey(arg.Key))
-                    this[arg.Key] = arg.Value;
-                else
-                    Add(arg.Key, arg.Value);
+            {
+                if (!ContainsKey(arg.Key))
+                    Add(arg.Key, new List<string>());
+                this[arg.Key].AddRange(arg.Value);
+            }
+
             return this;
         }
 
-        public string RegionId
+        public Arguments InsertOrReplace(Arguments dictionary)
         {
-            get
+            foreach (var arg in dictionary)
             {
-                string propertyName = @"\{\{" + MethodBase.GetCurrentMethod().Name.Substring(4) + @"\}\}";
-                if (!ContainsKey(propertyName)) Add(propertyName, "");
-                return this[propertyName];
+                if (!ContainsKey(arg.Key))
+                    Add(arg.Key, arg.Value);
+                this[arg.Key] = arg.Value;
             }
-            set
-            {
-                string propertyName = @"\{\{" + MethodBase.GetCurrentMethod().Name.Substring(4) + @"\}\}";
-                if (ContainsKey(propertyName))
-                    this[propertyName] = value;
-                else
-                    Add(propertyName, value);
-            }
-        }
-        public string RubricId
-        {
-            get
-            {
-                string propertyName = @"\{\{" + MethodBase.GetCurrentMethod().Name.Substring(4) + @"\}\}";
-                if (!ContainsKey(propertyName)) Add(propertyName, "");
-                return this[propertyName];
-            }
-            set
-            {
-                string propertyName = @"\{\{" + MethodBase.GetCurrentMethod().Name.Substring(4) + @"\}\}";
-                if (ContainsKey(propertyName))
-                    this[propertyName] = value;
-                else
-                    Add(propertyName, value);
-            }
-        }
-        public string ActionId
-        {
-            get
-            {
-                string propertyName = @"\{\{" + MethodBase.GetCurrentMethod().Name.Substring(4) + @"\}\}";
-                if (!ContainsKey(propertyName)) Add(propertyName, "");
-                return this[propertyName];
-            }
-            set
-            {
-                string propertyName = @"\{\{" + MethodBase.GetCurrentMethod().Name.Substring(4) + @"\}\}";
-                if (ContainsKey(propertyName))
-                    this[propertyName] = value;
-                else
-                    Add(propertyName, value);
-            }
-        }
-        public string PublicationId
-        {
-            get
-            {
-                string propertyName = @"\{\{" + MethodBase.GetCurrentMethod().Name.Substring(4) + @"\}\}";
-                if (!ContainsKey(propertyName)) Add(propertyName, "");
-                return this[propertyName];
-            }
-            set
-            {
-                string propertyName = @"\{\{" + MethodBase.GetCurrentMethod().Name.Substring(4) + @"\}\}";
-                if (ContainsKey(propertyName))
-                    this[propertyName] = value;
-                else
-                    Add(propertyName, value);
-            }
+
+            return this;
         }
     }
 }

@@ -22,3 +22,5 @@ D:\Projects\RealtyParser\RealtyParserUnitTest\bin\Debug\libtidy.dll
 D:\Projects\RealtyParser\RealtyParserUnitTest\bin\Debug\TidyManaged.dll
 D:\Projects\RealtyParser\RealtyParserUnitTest\bin\Debug\TidyManaged.pdb
 D:\Projects\RealtyParser\RealtyParserUnitTest\bin\Debug\TidyManagedTest.html
+D:\Projects\RealtyParser\RealtyParserUnitTest\bin\Debug\ServiceStack.Text.dll
+D:\Projects\RealtyParser\RealtyParserUnitTest\bin\Debug\ServiceStack.Text.xml

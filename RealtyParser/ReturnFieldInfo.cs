@@ -15,7 +15,7 @@ namespace RealtyParser
         /// <returns></returns>
         public override string ToString()
         {
-            return ReturnFieldId;
+            return SiteId + "\t" + ReturnFieldId + "\t" + ReturnFieldXpathTemplate + "\t" + ReturnFieldResultTemplate + "\t" + ReturnFieldRegexPattern + "\t" + ReturnFieldRegexReplacement;
         }
 
         /// <summary>
