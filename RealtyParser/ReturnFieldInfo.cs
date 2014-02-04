@@ -140,5 +140,25 @@ namespace RealtyParser
                     Add(propertyName, value);
             }
         }
+        /// <summary>
+        /// Шаблон для выборки результатов 
+        /// </summary>
+        public string ReturnFieldRegexMatchPattern
+        {
+            get
+            {
+                string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
+                if (!ContainsKey(propertyName)) Add(propertyName, "");
+                return this[propertyName];
+            }
+            set
+            {
+                string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
+                if (ContainsKey(propertyName))
+                    this[propertyName] = value;
+                else
+                    Add(propertyName, value);
+            }
+        }
     }
 }

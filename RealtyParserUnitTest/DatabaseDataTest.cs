@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Text.RegularExpressions;
 using HtmlAgilityPack;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RealtyParser;
@@ -67,11 +66,14 @@ namespace RealtyParserUnitTest
             // TODO: добавьте здесь логику теста
             //
             const long siteId = 1;
-            foreach (string mappedTableName in _database.GetList<string>("Mapping", "TableName"))
+            foreach (
+                var dictionary in
+                    _database.GetList<string>("Mapping", "TableName")
+                        .Select(mappedTableName => _database.GetDictionary<long>(
+                            "Site" + mappedTableName + "Mapping", "" + mappedTableName + "Id",
+                            "Site" + mappedTableName + "Id",
+                            siteId)))
             {
-                Dictionary<long, string> dictionary = _database.GetDictionary<long>(
-                    "Site" + mappedTableName + "Mapping", "" + mappedTableName + "Id", "Site" + mappedTableName + "Id",
-                    siteId);
                 Assert.IsTrue(dictionary.Count > 0);
                 Assert.IsTrue(!String.IsNullOrEmpty(dictionary[1]));
             }
@@ -142,18 +144,14 @@ namespace RealtyParserUnitTest
             // TODO: добавьте здесь логику теста
             //
 
-            long siteId = 2;
-
-            long regionId;
-            long rubricId;
-            long actionId;
+            const long siteId = 2;
 
             SiteProperties properties = _database.GetSiteProperties(siteId);
             Mapping mapping = properties.Mapping;
 
-            regionId = properties.Mapping.Region.Keys.FirstOrDefault();
-            rubricId = properties.Mapping.Rubric.Keys.FirstOrDefault();
-            actionId = properties.Mapping.Action.Keys.FirstOrDefault();
+            long regionId = properties.Mapping.Region.Keys.FirstOrDefault();
+            long rubricId = properties.Mapping.Rubric.Keys.FirstOrDefault();
+            long actionId = properties.Mapping.Action.Keys.FirstOrDefault();
 
             Console.WriteLine("-------------------------------------------------------------------");
             Console.WriteLine("siteId -> " + siteId);
@@ -188,15 +186,15 @@ namespace RealtyParserUnitTest
                               "] -> '" + mappingAntiActionId + "'");
             Console.WriteLine("-------------------------------------------------------------------");
 
-            Arguments args = RealtyParserUtils.BuildArguments(_database, regionId, rubricId, actionId,
+            ParametersValues args = RealtyParserUtils.BuildParametersValues(_database, regionId, rubricId, actionId,
                 properties.Mapping, siteId);
             Console.WriteLine(args.ToString());
 
             for (long level = 1; level <= levelRegion; level++)
-                Assert.IsTrue(args.ContainsKey(Regex.Escape(@"{{RegionId[" + level + @"]}}")));
+                Assert.IsTrue(args.ContainsKey(RealtyParserUtils.RegexEscape(@"{{RegionId[" + level + @"]}}")));
 
             for (long level = 1; level <= levelRubric; level++)
-                Assert.IsTrue(args.ContainsKey(Regex.Escape(@"{{RubricId[" + level + @"]}}")));
+                Assert.IsTrue(args.ContainsKey(RealtyParserUtils.RegexEscape(@"{{RubricId[" + level + @"]}}")));
         }
 
         [TestMethod]
@@ -206,18 +204,14 @@ namespace RealtyParserUnitTest
             // TODO: добавьте здесь логику теста
             //
 
-            long siteId = 2;
-
-            long regionId;
-            long rubricId;
-            long actionId;
+            const long siteId = 2;
 
             SiteProperties properties = _database.GetSiteProperties(siteId);
             Mapping mapping = properties.Mapping;
 
-            regionId = properties.Mapping.Region.Keys.LastOrDefault();
-            rubricId = properties.Mapping.Rubric.Keys.LastOrDefault();
-            actionId = properties.Mapping.Action.Keys.LastOrDefault();
+            long regionId = properties.Mapping.Region.Keys.LastOrDefault();
+            long rubricId = properties.Mapping.Rubric.Keys.LastOrDefault();
+            long actionId = properties.Mapping.Action.Keys.LastOrDefault();
 
             Console.WriteLine("-------------------------------------------------------------------");
             Console.WriteLine("siteId -> " + siteId);
@@ -252,16 +246,16 @@ namespace RealtyParserUnitTest
                               "] -> '" + mappingAntiActionId + "'");
             Console.WriteLine("-------------------------------------------------------------------");
 
-            Arguments args = RealtyParserUtils.BuildArguments(_database, regionId, rubricId, actionId,
+            ParametersValues args = RealtyParserUtils.BuildParametersValues(_database, regionId, rubricId, actionId,
                 properties.Mapping, siteId);
             foreach (var arg in args)
                 Console.WriteLine(arg.Key + " <-> " + arg.Value);
 
             for (long level = 1; level <= levelRegion; level++)
-                Assert.IsTrue(args.ContainsKey(Regex.Escape(@"{{RegionId[" + level + @"]}}")));
+                Assert.IsTrue(args.ContainsKey(RealtyParserUtils.RegexEscape(@"{{RegionId[" + level + @"]}}")));
 
             for (long level = 1; level <= levelRubric; level++)
-                Assert.IsTrue(args.ContainsKey(Regex.Escape(@"{{RubricId[" + level + @"]}}")));
+                Assert.IsTrue(args.ContainsKey(RealtyParserUtils.RegexEscape(@"{{RubricId[" + level + @"]}}")));
         }
     }
 }

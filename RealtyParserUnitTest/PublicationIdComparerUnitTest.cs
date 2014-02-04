@@ -1,13 +1,16 @@
-﻿using System.Text.RegularExpressions;
+﻿using System;
+using System.Text.RegularExpressions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using RealtyParser;
+using RealtyParser.PublicationIdComparer;
 
 namespace RealtyParserUnitTest
 {
     /// <summary>
-    ///     Сводное описание для RegexUnitTest
+    ///     Сводное описание для PublicationIdComparerUnitTest
     /// </summary>
     [TestClass]
-    public class RegexUnitTest
+    public class PublicationIdComparerUnitTest
     {
         /// <summary>
         ///     Получает или устанавливает контекст теста, в котором предоставляются
@@ -40,15 +43,26 @@ namespace RealtyParserUnitTest
         #endregion
 
         [TestMethod]
-        public void TestEmptyRegex()
+        public void OnlyDatetimeComparerTest()
         {
             //
             // TODO: добавьте здесь логику теста
             //
-            const string input = "ABCDEF";
-            var regex = new Regex(".*");
-            string output = regex.Replace(input, "$&");
-            Assert.AreEqual(input, output);
+            var comparer = new OnlyDatetimeComparer();
+            Assert.IsTrue(comparer.Compare("##11.03.2013 14:37:42##", "##10.04.2013 14:37:42##") < 0);
+            Assert.IsTrue(comparer.Compare("[888,##11.03.2014 14:37:42##]", "##10.04.2013 14:37:42##") > 0);
+            Assert.IsTrue(comparer.Compare("[222,##11.03.2013 14:37:42##]", "[1111,##11.03.2013 14:37:42##]") == 0);
+        }
+        [TestMethod]
+        public void OnlyDatetimeComparer()
+        {
+            //
+            // TODO: добавьте здесь логику теста
+            //
+            var comparer = new OnlyDatetimeComparer();
+            MatchCollection matchesX = Regex.Matches("[888,##11.03.2014 14:37:42##]", RealtyParser.PublicationIdComparer.OnlyDatetimeComparer.DateTimePatten);
+            DateTime dateTimeX = (matchesX.Count > 0) ? RealtyParserUtils.DateTimeParse(matchesX[0].Groups["date"].Value) : DateTime.Now;
+            Console.WriteLine(dateTimeX);
         }
     }
 }

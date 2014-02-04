@@ -4,19 +4,27 @@ using System.Reflection;
 namespace RealtyParser
 {
     /// <summary>
-    ///     Класс для хранения параметров, передаваемых в процедуру замены полей в шаблоне
+    ///     Класс для хранения значения параметров, передаваемых в процедуру замены полей в шаблоне
     ///     Используется для доступа к значениям словаря по ключу
     ///     Ключи словаря представляют собой строки, передаваемые в качестве регулярного выражения
     ///     в функцию Regex.Replace для замены полей в шаблоне на значения данного словаря
     /// </summary>
-    public class Arguments : DictionaryOfList
+    public class ParametersValues : DictionaryOfList
     {
-        public Arguments(Arguments args)
+        public ParametersValues(ParametersValues args)
         {
             InsertOrReplace(args);
         }
 
-        public Arguments()
+        public ParametersValues(ReturnFields returnFields)
+        {
+            foreach (var returnField in returnFields)
+            {
+                Add(RealtyParserUtils.RegexEscape(@"{{" + returnField.Key + @"}}"), returnField.Value);
+            }
+        }
+
+        public ParametersValues()
         {
         }
 
@@ -100,7 +108,7 @@ namespace RealtyParser
             }
         }
 
-        public Arguments InsertOrAppend(Arguments dictionary)
+        public ParametersValues InsertOrAppend(ParametersValues dictionary)
         {
             foreach (var arg in dictionary)
             {
@@ -112,7 +120,7 @@ namespace RealtyParser
             return this;
         }
 
-        public Arguments InsertOrReplace(Arguments dictionary)
+        public ParametersValues InsertOrReplace(ParametersValues dictionary)
         {
             foreach (var arg in dictionary)
             {

@@ -31,7 +31,7 @@ namespace RealtyParser
         public static object LastError { get; set; }
 
         /// <summary>
-        ///     Единый коннектор к классу базы данных
+        ///     Единый коннектор к базе данных
         /// </summary>
         public static RealtyParserDatabase GetDatabase()
         {
@@ -53,21 +53,19 @@ namespace RealtyParser
             {
                 Encoding encoder = Encoding.GetEncoding(encoding);
                 var reader = new StreamReader(responce.GetResponseStream(), encoder);
-                var input = new MemoryStream(Encoding.UTF8.GetBytes(reader.ReadToEnd()));
-                var output = new MemoryStream();
-
-                input.Seek(0, SeekOrigin.Begin);
-                var firstEdition = new HtmlDocument();
-                firstEdition.LoadHtml(new StreamReader(input, Encoding.UTF8).ReadToEnd());
-                collection.Add(firstEdition);
+                var memoryStreams = new List<MemoryStream>
+                {
+                    new MemoryStream(Encoding.UTF8.GetBytes(reader.ReadToEnd()))
+                };
 
                 Debug.WriteLine("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
-                input.Seek(0, SeekOrigin.Begin);
-                Debug.WriteLine(new StreamReader(input).ReadToEnd());
+                memoryStreams.Last().Seek(0, SeekOrigin.Begin);
+                Debug.WriteLine(new StreamReader(memoryStreams.Last()).ReadToEnd());
                 Debug.WriteLine("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
-                input.Seek(0, SeekOrigin.Begin);
 
-                Document tidy = Document.FromStream(input);
+                memoryStreams.First().Seek(0, SeekOrigin.Begin);
+                Document tidy = Document.FromStream(memoryStreams.First());
+
                 tidy.ForceOutput = true;
                 tidy.PreserveEntities = true;
                 tidy.InputCharacterEncoding = EncodingType.Raw;
@@ -77,16 +75,22 @@ namespace RealtyParser
                 tidy.Quiet = true;
                 tidy.OutputXhtml = true;
                 tidy.CleanAndRepair();
-                tidy.Save(output);
+
+                memoryStreams.Add(new MemoryStream());
+                tidy.Save(memoryStreams.Last());
 
                 Debug.WriteLine(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-                output.Seek(0, SeekOrigin.Begin);
-                Debug.WriteLine(new StreamReader(output, Encoding.UTF8).ReadToEnd());
+                memoryStreams.Last().Seek(0, SeekOrigin.Begin);
+                Debug.WriteLine(new StreamReader(memoryStreams.Last(), Encoding.UTF8).ReadToEnd());
                 Debug.WriteLine(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-                var secondEdition = new HtmlDocument();
-                output.Seek(0, SeekOrigin.Begin);
-                secondEdition.LoadHtml(new StreamReader(output, Encoding.UTF8).ReadToEnd());
-                collection.Add(secondEdition);
+
+                foreach (MemoryStream stream in memoryStreams)
+                {
+                    stream.Seek(0, SeekOrigin.Begin);
+                    var edition = new HtmlDocument();
+                    edition.LoadHtml(new StreamReader(stream, Encoding.UTF8).ReadToEnd());
+                    collection.Add(edition);
+                }
             }
             return collection.ToArray();
         }
@@ -98,13 +102,21 @@ namespace RealtyParser
         {
             try
             {
-                return
-                    Activator.CreateInstance(Type.GetType("RealtyParser.PublicationIdComparer." + className)) as
-                        IComparer<string>;
-            }
-            catch (ArgumentNullException)
-            {
+                string moduleNamespace = typeof (RealtyParserParsingModule).Namespace;
+                string fullClassName = moduleNamespace + ".PublicationIdComparer." + className;
+                Debug.WriteLine(fullClassName);
+                Type type = Type.GetType(fullClassName);
+                if (type != null)
+                    return
+                        Activator.CreateInstance(type) as
+                            IComparer<string>;
                 throw new NotImplementedException();
+            }
+            catch (Exception exception)
+            {
+                LastError = exception;
+                Debug.WriteLine(LastError.ToString());
+                throw;
             }
         }
 
@@ -258,7 +270,7 @@ namespace RealtyParser
             }
             try
             {
-                webPublication.ModifyDate = DateTime.Parse(
+                webPublication.ModifyDate = DateTimeParse(
                     returnFields.WebPublicationModifyDate
                         .Aggregate((i, j) => i + "\t" + j));
             }
@@ -341,19 +353,24 @@ namespace RealtyParser
             return regex.Replace(text, @"\$&").Trim();
         }
 
+        public static DateTime DateTimeParse(string s)
+        {
+            return DateTime.Parse(s);
+        }
+
         /// <summary>
         ///     Замена в строке-шаблоне идентификаторов-параметров на их значения
         /// </summary>
-        public static List<string> ParseTemplate(string template, Arguments arguments)
+        public static List<string> ParseTemplate(string template, ParametersValues parametersValues)
         {
             Debug.WriteLine("Start ParseTemplate: " + template);
-            Debug.WriteLine(arguments.ToString());
+            Debug.WriteLine(parametersValues.ToString());
             var list = new List<string>();
-            int maxCount = arguments.MaxCount;
+            int maxCount = parametersValues.MaxCount;
             for (int index = 0; index < maxCount; index++)
             {
                 string value = template.Trim();
-                foreach (var pair in arguments.Where(pair => pair.Value != null && pair.Value.Count > index))
+                foreach (var pair in parametersValues.Where(pair => pair.Value != null && pair.Value.Count > index))
                     try
                     {
                         var regex = new Regex(pair.Key, RegexOptions.IgnoreCase);
@@ -376,45 +393,53 @@ namespace RealtyParser
         ///     Поиск и формирование значений возвращаемых полей загруженного с сайта объявления
         /// </summary>
         public static ReturnFields BuildReturnFields(RealtyParserDatabase database, HtmlNode[] parentNodes,
-            Arguments parentArguments, List<ReturnFieldInfo> returnFieldInfos)
+            ParametersValues parentParametersValues, List<ReturnFieldInfo> returnFieldInfos)
         {
             var returnFields = new ReturnFields();
             foreach (ReturnFieldInfo returnFieldInfo in returnFieldInfos)
             {
-                var agregated = new Arguments();
+                var agregated = new ParametersValues();
                 foreach (HtmlNode parentNode in parentNodes)
                 {
-                    var arguments = new Arguments();
-                    List<string> xpaths = ParseTemplate(returnFieldInfo.ReturnFieldXpathTemplate, parentArguments);
-                    foreach (HtmlNode node in xpaths.Select(xpath => parentNode.SelectNodes(xpath)).Where(nodes => nodes != null).SelectMany(nodes => nodes))
+                    var arguments = new ParametersValues();
+                    List<string> xpaths = ParseTemplate(returnFieldInfo.ReturnFieldXpathTemplate, parentParametersValues);
+                    foreach (
+                        HtmlNode node in
+                            xpaths.Select(xpath => parentNode != null ? parentNode.SelectNodes(xpath) : null)
+                                .Where(nodes => nodes != null)
+                                .SelectMany(nodes => nodes))
                     {
-                        arguments.InsertOrAppend(parentArguments);
-                        arguments.InsertOrAppend(BuildArguments(returnFieldInfo.ReturnFieldResultTemplate, node));
+                        arguments.InsertOrAppend(parentParametersValues);
+                        arguments.InsertOrAppend(BuildParametersValues(returnFieldInfo.ReturnFieldResultTemplate, node));
                     }
-                    foreach (KeyValuePair<string, List<string>> pair in arguments)
+                    foreach (var pair in arguments)
                         if (!agregated.ContainsKey((pair.Key))) agregated.Add(pair.Key, pair.Value);
                         else if (agregated[pair.Key].Count < pair.Value.Count)
                             agregated[pair.Key] = pair.Value;
                 }
-                var list = new List<string>();
                 var regex = new Regex(returnFieldInfo.ReturnFieldRegexPattern,
                     RegexOptions.IgnoreCase | RegexOptions.Singleline);
-                foreach (string input in ParseTemplate(returnFieldInfo.ReturnFieldResultTemplate, agregated))
-                {
-                    string replace = regex.Replace(input, returnFieldInfo.ReturnFieldRegexReplacement).Trim();
-                    if (!String.IsNullOrEmpty(replace)) list.Add(replace);
-                    Debug.WriteLine("BuildReturnFields: add for " + returnFieldInfo.ReturnFieldId + " value " + input);
-                }
+                List<string> list =
+                    ParseTemplate(returnFieldInfo.ReturnFieldResultTemplate, agregated)
+                        .Select(input => regex.Replace(input, returnFieldInfo.ReturnFieldRegexReplacement).Trim())
+                        .Where(replace => !String.IsNullOrEmpty(replace))
+                        .SelectMany(
+                            replace =>
+                                (from Match match in
+                                    Regex.Matches(replace, returnFieldInfo.ReturnFieldRegexMatchPattern)
+                                    select match.Value.Trim()))
+                        .Where(value => !String.IsNullOrEmpty(value))
+                        .ToList();
                 returnFields.Add(returnFieldInfo.ReturnFieldId, list);
             }
             return returnFields;
         }
 
         /// <summary>
-        ///     Формирование пар идентификатор параметра <-> значение параметра
+        ///     Формирование пар идентификатор параметра - значение параметра
         ///     для замены в строке-шаблоне
         /// </summary>
-        public static Arguments BuildArguments(
+        public static ParametersValues BuildParametersValues(
             RealtyParserDatabase database,
             long regionId,
             long rubricId,
@@ -422,7 +447,7 @@ namespace RealtyParser
             Mapping mapping,
             long siteId)
         {
-            var arguments = new Arguments();
+            var parametersValues = new ParametersValues();
             var id = new Dictionary<string, long>
             {
                 {"Action", actionId},
@@ -437,7 +462,7 @@ namespace RealtyParser
                 try
                 {
                     mappingId.Add(mappingTable, mapping[mappingTable][id[mappingTable]]);
-                    arguments.Add(RegexEscape(@"{{" + mappingTable + @"Id}}"), mappingId[mappingTable]);
+                    parametersValues.Add(RegexEscape(@"{{" + mappingTable + @"Id}}"), mappingId[mappingTable]);
                     foreach (object userId in new object[] {id[mappingTable], mappingId[mappingTable]})
                     {
                         try
@@ -449,7 +474,7 @@ namespace RealtyParser
                                     methodInfo.Invoke(database, new[] {userId, mappingTable, siteId});
                             foreach (var field in userFields)
                             {
-                                arguments.Add(RegexEscape(@"{{" + field.Key + @"}}"), field.Value);
+                                parametersValues.Add(RegexEscape(@"{{" + field.Key + @"}}"), field.Value);
                             }
                         }
                         catch (Exception exception)
@@ -476,14 +501,14 @@ namespace RealtyParser
                         level > 0 && !String.IsNullOrEmpty(mappingId[mappingTable]);
                         level = database.GetScalar<long, string>(mappingId[mappingTable], "Level", mappingTable, siteId))
                     {
-                        arguments.Add(RegexEscape(@"{{" + mappingTable + @"Id[" + level + @"]}}"),
+                        parametersValues.Add(RegexEscape(@"{{" + mappingTable + @"Id[" + level + @"]}}"),
                             mappingId[mappingTable]);
 
                         Dictionary<string, string> userFields = database.GetUserFields(mappingId[mappingTable],
                             mappingTable, siteId);
                         foreach (var field in userFields)
                         {
-                            arguments.Add(RegexEscape(@"{{" + field.Key + @"[" + level + @"]}}"), field.Value);
+                            parametersValues.Add(RegexEscape(@"{{" + field.Key + @"[" + level + @"]}}"), field.Value);
                         }
                         mappingId[mappingTable] = database.GetScalar<string, string>(mappingId[mappingTable], "ParentId",
                             mappingTable, siteId);
@@ -495,33 +520,33 @@ namespace RealtyParser
                     Debug.WriteLine(LastError.ToString());
                 }
             }
-            return arguments;
+            return parametersValues;
         }
 
         /// <summary>
-        ///     Формирование пар идентификатор параметра <-> значение параметра
+        ///     Формирование пар идентификатор параметра - значение параметра
         ///     для замены в строке-шаблоне
         /// </summary>
-        public static Arguments BuildArguments(long pageId)
+        public static ParametersValues BuildParametersValues(long pageId)
         {
-            var arguments = new Arguments
+            var parametersValues = new ParametersValues
             {
                 {RegexEscape(@"{{PageId}}"), (pageId > 1) ? pageId.ToString(CultureInfo.InvariantCulture) : @""}
             };
-            return arguments;
+            return parametersValues;
         }
 
         /// <summary>
-        ///     Формирование пар идентификатор параметра <-> значение параметра
+        ///     Формирование пар идентификатор параметра - значение параметра
         ///     для замены в строке-шаблоне
         /// </summary>
         /// <param name="template"></param>
         /// <param name="node"></param>
         /// <returns></returns>
-        public static Arguments BuildArguments(string template, HtmlNode node)
+        public static ParametersValues BuildParametersValues(string template, HtmlNode node)
         {
             Debug.Assert(node != null);
-            var arguments = new Arguments();
+            var parametersValues = new ParametersValues();
 
             foreach (
                 string name in
@@ -540,7 +565,7 @@ namespace RealtyParser
                     try
                     {
                         object value = methodInfo.Invoke(null, new object[] {node, name});
-                        if (value != null) arguments.Add(RegexEscape(@"{{" + name + @"}}"), value.ToString());
+                        if (value != null) parametersValues.Add(RegexEscape(@"{{" + name + @"}}"), value.ToString());
                     }
                     catch (Exception exception)
                     {
@@ -550,7 +575,7 @@ namespace RealtyParser
                 }
             }
 
-            return arguments;
+            return parametersValues;
         }
 
         /// <summary>
@@ -652,7 +677,8 @@ namespace RealtyParser
 
                 string index = rights.First().Key;
                 int distance = LevenshteinDistance.Compute(a, b);
-                foreach (var right in rights.Where(right => index != right.Key))
+                foreach (
+                    var right in rights.Where(right => String.Compare(index, right.Key, StringComparison.Ordinal) != 0))
                 {
                     b = right.Value;
                     builder = new StringBuilder();

@@ -32,7 +32,7 @@ namespace RealtyParserUnitTest
         public void TestParseTemplate()
         {
             string template = "RegionId={{RegionId}}&RubricId={{RubricId[1]}}&ActionId={{ActionId}}";
-            Arguments args = new Arguments
+            ParametersValues args = new ParametersValues
             {
                 {@"\{\{RegionId\}\}", "1"},
                 {@"\{\{RubricId\[1\]\}\}", "2"}

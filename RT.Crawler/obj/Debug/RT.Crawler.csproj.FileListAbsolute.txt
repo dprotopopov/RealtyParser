@@ -10,4 +10,3 @@ D:\Projects\RealtyParser\RT.Crawler\bin\Debug\RT.Crawler.dll
 D:\Projects\RealtyParser\RT.Crawler\bin\Debug\RT.Crawler.pdb
 D:\Projects\RealtyParser\RT.Crawler\obj\Debug\RT.Crawler.dll
 D:\Projects\RealtyParser\RT.Crawler\obj\Debug\RT.Crawler.pdb
-D:\Projects\RealtyParser\RT.Crawler\obj\Debug\RT.Crawler.csprojResolveAssemblyReference.cache

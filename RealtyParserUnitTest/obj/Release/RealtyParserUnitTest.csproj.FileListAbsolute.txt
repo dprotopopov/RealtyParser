@@ -10,6 +10,7 @@ D:\Projects\RealtyParser\RealtyParserUnitTest\bin\Release\RealtyParser.dll
 D:\Projects\RealtyParser\RealtyParserUnitTest\bin\Release\RT.ParsingLibs.dll
 D:\Projects\RealtyParser\RealtyParserUnitTest\bin\Release\TidyManaged.dll
 D:\Projects\RealtyParser\RealtyParserUnitTest\bin\Release\System.Data.SQLite.dll
+D:\Projects\RealtyParser\RealtyParserUnitTest\bin\Release\ServiceStack.Text.dll
 D:\Projects\RealtyParser\RealtyParserUnitTest\bin\Release\RT.Crawler.dll
 D:\Projects\RealtyParser\RealtyParserUnitTest\bin\Release\RealtyParser.pdb
 D:\Projects\RealtyParser\RealtyParserUnitTest\bin\Release\RT.ParsingLibs.pdb
@@ -18,10 +19,9 @@ D:\Projects\RealtyParser\RealtyParserUnitTest\bin\Release\TidyManaged.xml
 D:\Projects\RealtyParser\RealtyParserUnitTest\bin\Release\HtmlAgilityPack.pdb
 D:\Projects\RealtyParser\RealtyParserUnitTest\bin\Release\HtmlAgilityPack.xml
 D:\Projects\RealtyParser\RealtyParserUnitTest\bin\Release\System.Data.SQLite.xml
+D:\Projects\RealtyParser\RealtyParserUnitTest\bin\Release\ServiceStack.Text.xml
 D:\Projects\RealtyParser\RealtyParserUnitTest\bin\Release\RT.Crawler.pdb
 D:\Projects\RealtyParser\RealtyParserUnitTest\bin\Release\RT.Crawler.xml
 D:\Projects\RealtyParser\RealtyParserUnitTest\obj\Release\RealtyParserUnitTest.csprojResolveAssemblyReference.cache
 D:\Projects\RealtyParser\RealtyParserUnitTest\obj\Release\RealtyParserUnitTest.dll
 D:\Projects\RealtyParser\RealtyParserUnitTest\obj\Release\RealtyParserUnitTest.pdb
-D:\Projects\RealtyParser\RealtyParserUnitTest\bin\Release\ServiceStack.Text.dll
-D:\Projects\RealtyParser\RealtyParserUnitTest\bin\Release\ServiceStack.Text.xml

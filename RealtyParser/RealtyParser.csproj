@@ -67,7 +67,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Arguments.cs" />
+    <Compile Include="ParametersValues.cs" />
     <Compile Include="DictionaryOfList.cs" />
     <Compile Include="HierarhialItem.cs" />
     <Compile Include="HierarhialItemCollection.cs" />
@@ -75,6 +75,8 @@
     <Compile Include="LinksCollection.cs" />
     <Compile Include="Mapping.cs" />
     <Compile Include="OptionsCollection.cs" />
+    <Compile Include="PublicationIdComparer\DatetimeFirstIdSecondComparer.cs" />
+    <Compile Include="PublicationIdComparer\OnlyDatetimeComparer.cs" />
     <Compile Include="PublicationIdComparer\OnlyDigitsDecimalComparer.cs" />
     <Compile Include="RealtyParserDatabase.cs" />
     <Compile Include="RealtyParserParsingModule.cs" />

@@ -46,7 +46,7 @@ namespace RealtyParser
             long regionId = request.RegionId;
             long rubricId = request.RubricId;
             long actionId = request.ActionId;
-            string lastPublicationId = request.LastPublicationId;
+            string lastResourceId = request.LastPublicationId;
             long pageId = 0;
             int responceLevel = 4;
             var responseCode = new List<ParseResponseCode>
@@ -65,16 +65,16 @@ namespace RealtyParser
                 return new ParseResponse
                 {
                     ResponseCode = responseCode[responceLevel],
-                    LastPublicationId = lastPublicationId,
+                    LastPublicationId = lastResourceId,
                     ModuleName = GetType().ToString(),
                     Publications = new List<WebPublication>()
                 };
             }
 
             Debug.WriteLine("Параметр LastPublicationId " +
-                            (string.IsNullOrEmpty(lastPublicationId) ? " ПУСТОЙ !!!!!!!" : " НЕ ПУСТОЙ !!!!!!!"));
+                            (string.IsNullOrEmpty(lastResourceId) ? " ПУСТОЙ !!!!!!!" : " НЕ ПУСТОЙ !!!!!!!"));
 
-            if (string.IsNullOrEmpty(lastPublicationId)) lastPublicationId = "";
+            if (string.IsNullOrEmpty(lastResourceId)) lastResourceId = "";
 
             Debug.WriteLine("-------------------------------------------------------------------");
             Debug.WriteLine("Используются параметры:");
@@ -82,11 +82,12 @@ namespace RealtyParser
             Debug.WriteLine("regionId -> " + regionId);
             Debug.WriteLine("rubricId -> " + rubricId);
             Debug.WriteLine("actionId -> " + actionId);
-            Debug.WriteLine("lastPublicationId -> '" + lastPublicationId + "'");
+            Debug.WriteLine("lastPublicationId -> '" + lastResourceId + "'");
             Debug.WriteLine("-------------------------------------------------------------------");
 
 
-            Arguments siteArguments = RealtyParserUtils.BuildArguments(_database, regionId, rubricId, actionId,
+            ParametersValues siteParametersValues = RealtyParserUtils.BuildParametersValues(_database, regionId,
+                rubricId, actionId,
                 properties.Mapping, siteId);
 
             var baseBuilder = new UriBuilder(properties.Url)
@@ -95,19 +96,21 @@ namespace RealtyParser
                 Password = properties.Password,
             };
 
-
-            var publicationIds = new List<string>();
-            int index = -1;
-            while ((++pageId > 0 && publicationIds.Count < Convert.ToInt32(properties.CountAd) &&
-                    (!lastPublicationId.IsNullOrEmpty()) &&
-                    (index = publicationIds.BinarySearch(0, publicationIds.Count, lastPublicationId, comparer)) < 0) ||
-                   (lastPublicationId.IsNullOrEmpty() && pageId == 1))
+            var resourceIds = new List<string>();
+            var dictionary = new Dictionary<string, string>();
+            while ((++pageId > 0 && resourceIds.Count < Convert.ToInt32(properties.CountAd) &&
+                    ((!lastResourceId.IsNullOrEmpty()) &&
+                     (resourceIds.Count == 0 || comparer.Compare(resourceIds.First(), lastResourceId) > 0)) ||
+                    (lastResourceId.IsNullOrEmpty() && pageId == 1)))
             {
-                Arguments pageArguments =
-                    new Arguments(siteArguments).InsertOrReplace(RealtyParserUtils.BuildArguments(pageId));
-                Debug.WriteLine(pageArguments.ToString());
+                ParametersValues pageParametersValues =
+                    new ParametersValues(siteParametersValues).InsertOrReplace(
+                        RealtyParserUtils.BuildParametersValues(pageId));
+                Debug.WriteLine(pageParametersValues.ToString());
                 int count = 0;
-                foreach (string url in RealtyParserUtils.ParseTemplate(properties.ExtSearchTemplate, pageArguments))
+                foreach (
+                    string url in RealtyParserUtils.ParseTemplate(properties.ExtSearchTemplate, pageParametersValues)
+                    )
                 {
                     Debug.WriteLine(url);
                     try
@@ -117,11 +120,26 @@ namespace RealtyParser
                             await
                                 RealtyParserUtils.WebRequestHtmlDocument(builder.Uri, properties.Method,
                                     properties.Encoding);
-                        var nodes = documents.Select(document => document.DocumentNode).ToArray();
+                        HtmlNode[] nodes = documents.Select(document => document.DocumentNode).ToArray();
                         ReturnFields returnFields = RealtyParserUtils.BuildReturnFields(_database, nodes,
-                            pageArguments, properties.ReturnFieldInfos);
-                        publicationIds.AddRange(returnFields.PublicationId);
-                        count += returnFields.PublicationId.Count;
+                            pageParametersValues, properties.ReturnFieldInfos);
+                        var arguments = new ParametersValues(returnFields);
+                        List<string> keys = RealtyParserUtils.ParseTemplate(properties.ResourceIdTemplate, arguments);
+                        List<string> values = RealtyParserUtils.ParseTemplate(properties.UnoSearchTemplate, arguments);
+                        for (int i = returnFields.PublicationLink.Count; i-- > 0;)
+                        {
+                            try
+                            {
+                                dictionary.Add(keys[i], values[i]);
+                                resourceIds.Add(keys[i]);
+                            }
+                            catch (Exception exception)
+                            {
+                                _lastError = exception;
+                                Debug.WriteLine(_lastError.ToString());
+                            }
+                        }
+                        count += returnFields.PublicationLink.Count;
                     }
                     catch (Exception exception)
                     {
@@ -130,32 +148,34 @@ namespace RealtyParser
                     }
                 }
                 if (count == 0) break;
-                publicationIds.Sort(comparer);
+                resourceIds.Sort(comparer);
             }
             try
             {
-                if (string.IsNullOrEmpty(lastPublicationId) && publicationIds.Count == 0)
+                if (string.IsNullOrEmpty(lastResourceId) && resourceIds.Count == 0)
                 {
                     responceLevel = Math.Min(1, responceLevel);
                 }
-                else if (string.IsNullOrEmpty(lastPublicationId) && publicationIds.Count > 0)
+                else if (string.IsNullOrEmpty(lastResourceId) && resourceIds.Count > 0)
                 {
                     //При первом вызове метода парсера из DLL не известно о IdRes объявления внутри ресурса, поэтому он
                     //передает значение NULL. В этом случае парсер должен выбрать самое последнее объявление и
                     //вернуть его IdRes ресурса.
-                    publicationIds.RemoveRange(0, publicationIds.Count - 1);
+                    resourceIds.RemoveRange(0, resourceIds.Count - 1);
                 }
-                else if (index < 0)
+                else if (!string.IsNullOrEmpty(lastResourceId) && resourceIds.BinarySearch(lastResourceId, comparer) < 0)
                 {
                     responceLevel = Math.Min(2, responceLevel);
 
                     //Если IdRes не найден, то парсер возвращает последнии CountAD
                     //объявлений (такая ситуация может получится, если размещенное объявление к следующей
                     //итерации будет удалено на ресурсе)
-                    publicationIds.RemoveRange(0,
-                        (int) (publicationIds.Count - Convert.ToUInt32(properties.CountAd)));
+                    resourceIds.RemoveRange(0,
+                        (int) (resourceIds.Count - Convert.ToUInt32(properties.CountAd)));
                 }
-                else if (index == publicationIds.Count - 1)
+
+                if (!string.IsNullOrEmpty(lastResourceId) && resourceIds.Count > 0 &&
+                    comparer.Compare(resourceIds.Last(), lastResourceId) < 0)
                 {
                     //Одним из условий работы парсера является требование к оптимизации алгоритма
                     //получения новых объявлений, т.е. необходимо делать минимальное количество запросов
@@ -163,9 +183,9 @@ namespace RealtyParser
                     //получать выборку нужных объявлений. Затем отсеивать объявления, которые были до
                     //IdRes и использовать дальнейшие ссылки только для новых объявлений.
                     responceLevel = Math.Min(3, responceLevel);
-                    publicationIds.Clear();
+                    resourceIds.Clear();
                 }
-                else if (index < publicationIds.Count - 1)
+                else if (!string.IsNullOrEmpty(lastResourceId))
                 {
                     //Одним из условий работы парсера является требование к оптимизации алгоритма
                     //получения новых объявлений, т.е. необходимо делать минимальное количество запросов
@@ -173,8 +193,12 @@ namespace RealtyParser
                     //получать выборку нужных объявлений. Затем отсеивать объявления, которые были до
                     //IdRes и использовать дальнейшие ссылки только для новых объявлений.
                     responceLevel = Math.Min(4, responceLevel);
-                    publicationIds.RemoveRange(0, index + 1);
+                    resourceIds =
+                        resourceIds.Where(item => comparer.Compare(item, lastResourceId) > 0).ToList();
                 }
+
+                resourceIds.RemoveRange(0,
+                    (int) (resourceIds.Count - Convert.ToUInt32(properties.CountAd)));
             }
             catch (Exception exception)
             {
@@ -182,29 +206,26 @@ namespace RealtyParser
                 Debug.WriteLine(_lastError.ToString());
             }
             var publications = new List<WebPublication>();
+            foreach (string resourceId in resourceIds)
             {
-                var arguments = new Arguments {{RealtyParserUtils.RegexEscape("{{PublicationId}}"), publicationIds}};
-                for (int i = arguments.PublicationId.Count; i-- > 0;) arguments.InsertOrAppend(siteArguments);
-                foreach (string url in RealtyParserUtils.ParseTemplate(properties.UnoSearchTemplate, arguments))
+                try
                 {
-                    try
-                    {
-                        var builder = new UriBuilder(baseBuilder + url);
-                        HtmlDocument[] documents =
-                            await
-                                RealtyParserUtils.WebRequestHtmlDocument(builder.Uri, properties.Method,
-                                    properties.Encoding);
-                        var nodes = documents.Select(document => document.DocumentNode).ToArray();
-                        ReturnFields returnFields = RealtyParserUtils.BuildReturnFields(_database, nodes,
-                            siteArguments, properties.ReturnFieldInfos);
-                        publications.Add(RealtyParserUtils.CreateWebPublication(returnFields, regionId, rubricId,
-                            actionId, builder));
-                    }
-                    catch (Exception exception)
-                    {
-                        _lastError = exception;
-                        Debug.WriteLine(_lastError.ToString());
-                    }
+                    string url = dictionary[resourceId];
+                    var builder = new UriBuilder(baseBuilder + url);
+                    HtmlDocument[] documents =
+                        await
+                            RealtyParserUtils.WebRequestHtmlDocument(builder.Uri, properties.Method,
+                                properties.Encoding);
+                    HtmlNode[] nodes = documents.Select(document => document.DocumentNode).ToArray();
+                    ReturnFields returnFields = RealtyParserUtils.BuildReturnFields(_database, nodes,
+                        siteParametersValues, properties.ReturnFieldInfos);
+                    publications.Add(RealtyParserUtils.CreateWebPublication(returnFields, regionId, rubricId,
+                        actionId, builder));
+                }
+                catch (Exception exception)
+                {
+                    _lastError = exception;
+                    Debug.WriteLine(_lastError.ToString());
                 }
             }
 
@@ -213,7 +234,7 @@ namespace RealtyParser
             return new ParseResponse
             {
                 ResponseCode = responseCode[responceLevel],
-                LastPublicationId = publicationIds.DefaultIfEmpty(lastPublicationId).LastOrDefault(),
+                LastPublicationId = resourceIds.DefaultIfEmpty(lastResourceId).LastOrDefault(),
                 ModuleName = GetType().ToString(),
                 Publications = publications
             };

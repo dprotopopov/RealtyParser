@@ -1,6 +1,6 @@
+D:\Projects\RealtyParser\RealtyParserEditor\bin\Release\RealtyParserEditor.exe.config
 D:\Projects\RealtyParser\RealtyParserEditor\bin\Release\libtidy.dll
 D:\Projects\RealtyParser\RealtyParserEditor\bin\Release\RealtyParser.db
-D:\Projects\RealtyParser\RealtyParserEditor\bin\Release\RealtyParserEditor.exe.config
 D:\Projects\RealtyParser\RealtyParserEditor\bin\Release\RealtyParserEditor.exe.manifest
 D:\Projects\RealtyParser\RealtyParserEditor\bin\Release\RealtyParserEditor.application
 D:\Projects\RealtyParser\RealtyParserEditor\bin\Release\RealtyParserEditor.exe
@@ -9,6 +9,7 @@ D:\Projects\RealtyParser\RealtyParserEditor\bin\Release\RealtyParser.dll
 D:\Projects\RealtyParser\RealtyParserEditor\bin\Release\RT.ParsingLibs.dll
 D:\Projects\RealtyParser\RealtyParserEditor\bin\Release\System.Data.SQLite.dll
 D:\Projects\RealtyParser\RealtyParserEditor\bin\Release\HtmlAgilityPack.dll
+D:\Projects\RealtyParser\RealtyParserEditor\bin\Release\ServiceStack.Text.dll
 D:\Projects\RealtyParser\RealtyParserEditor\bin\Release\RT.Crawler.dll
 D:\Projects\RealtyParser\RealtyParserEditor\bin\Release\TidyManaged.dll
 D:\Projects\RealtyParser\RealtyParserEditor\bin\Release\RealtyParser.pdb
@@ -17,6 +18,7 @@ D:\Projects\RealtyParser\RealtyParserEditor\bin\Release\RT.ParsingLibs.xml
 D:\Projects\RealtyParser\RealtyParserEditor\bin\Release\System.Data.SQLite.xml
 D:\Projects\RealtyParser\RealtyParserEditor\bin\Release\HtmlAgilityPack.pdb
 D:\Projects\RealtyParser\RealtyParserEditor\bin\Release\HtmlAgilityPack.xml
+D:\Projects\RealtyParser\RealtyParserEditor\bin\Release\ServiceStack.Text.xml
 D:\Projects\RealtyParser\RealtyParserEditor\bin\Release\RT.Crawler.pdb
 D:\Projects\RealtyParser\RealtyParserEditor\bin\Release\RT.Crawler.xml
 D:\Projects\RealtyParser\RealtyParserEditor\bin\Release\TidyManaged.xml
@@ -34,5 +36,3 @@ D:\Projects\RealtyParser\RealtyParserEditor\obj\Release\RealtyParserEditor.exe.m
 D:\Projects\RealtyParser\RealtyParserEditor\obj\Release\RealtyParserEditor.application
 D:\Projects\RealtyParser\RealtyParserEditor\obj\Release\RealtyParserEditor.exe
 D:\Projects\RealtyParser\RealtyParserEditor\obj\Release\RealtyParserEditor.pdb
-D:\Projects\RealtyParser\RealtyParserEditor\bin\Release\ServiceStack.Text.dll
-D:\Projects\RealtyParser\RealtyParserEditor\bin\Release\ServiceStack.Text.xml
