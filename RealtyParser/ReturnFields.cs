@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Reflection;
+using RealtyParser.Collections;
 
 namespace RealtyParser
 {
@@ -27,6 +28,7 @@ namespace RealtyParser
                     Add(propertyName, value);
             }
         }
+
         public List<string> PublicationDate
         {
             get
@@ -44,6 +46,7 @@ namespace RealtyParser
                     Add(propertyName, value);
             }
         }
+
         public List<string> PublicationLink
         {
             get

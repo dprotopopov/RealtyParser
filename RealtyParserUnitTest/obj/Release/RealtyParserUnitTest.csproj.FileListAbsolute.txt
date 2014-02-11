@@ -1,7 +1,6 @@
 D:\Projects\RealtyParser\RealtyParserUnitTest\bin\Release\libtidy.dll
 D:\Projects\RealtyParser\RealtyParserUnitTest\bin\Release\RealtyParser.db
 D:\Projects\RealtyParser\RealtyParserUnitTest\bin\Release\TestInvokeNodeProperty.html
-D:\Projects\RealtyParser\RealtyParserUnitTest\bin\Release\TidyManagedTest.html
 D:\Projects\RealtyParser\RealtyParserUnitTest\bin\Release\RealtyParserUnitTest.dll.config
 D:\Projects\RealtyParser\RealtyParserUnitTest\bin\Release\RealtyParserUnitTest.dll
 D:\Projects\RealtyParser\RealtyParserUnitTest\bin\Release\RealtyParserUnitTest.pdb

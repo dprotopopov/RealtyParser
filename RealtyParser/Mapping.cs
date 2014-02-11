@@ -7,17 +7,17 @@ namespace RealtyParser
     ///     Вспомогательный класс
     ///     Используется для доступа к значениям словаря по ключу
     /// </summary>
-    public class Mapping : Dictionary<string, Dictionary<long, string>>
+    public class Mapping : Collections.Mapping
     {
         /// <summary>
         ///     Используется для доступа к значениям словаря по ключу
         /// </summary>
-        public Dictionary<long, string> Action
+        public Dictionary<object, object> Action
         {
             get
             {
                 string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
-                if (!ContainsKey(propertyName)) Add(propertyName, new Dictionary<long, string>());
+                if (!ContainsKey(propertyName)) Add(propertyName, new Dictionary<object, object>());
                 return this[propertyName];
             }
             set
@@ -33,12 +33,12 @@ namespace RealtyParser
         /// <summary>
         ///     Используется для доступа к значениям словаря по ключу
         /// </summary>
-        public Dictionary<long, string> Rubric
+        public Dictionary<object, object> Rubric
         {
             get
             {
                 string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
-                if (!ContainsKey(propertyName)) Add(propertyName, new Dictionary<long, string>());
+                if (!ContainsKey(propertyName)) Add(propertyName, new Dictionary<object, object>());
                 return this[propertyName];
             }
             set
@@ -54,12 +54,12 @@ namespace RealtyParser
         /// <summary>
         ///     Используется для доступа к значениям словаря по ключу
         /// </summary>
-        public Dictionary<long, string> Region
+        public Dictionary<object, object> Region
         {
             get
             {
                 string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
-                if (!ContainsKey(propertyName)) Add(propertyName, new Dictionary<long, string>());
+                if (!ContainsKey(propertyName)) Add(propertyName, new Dictionary<object, object>());
                 return this[propertyName];
             }
             set

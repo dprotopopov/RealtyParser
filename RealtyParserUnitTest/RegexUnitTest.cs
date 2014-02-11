@@ -1,4 +1,5 @@
-﻿using System.Text.RegularExpressions;
+﻿using System.Reflection;
+using System.Text.RegularExpressions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace RealtyParserUnitTest
@@ -49,6 +50,17 @@ namespace RealtyParserUnitTest
             var regex = new Regex(".*");
             string output = regex.Replace(input, "$&");
             Assert.AreEqual(input, output);
+        }
+
+        [TestMethod]
+        public void TestRegexEscape()
+        {
+            //
+            // TODO: добавьте здесь логику теста
+            //
+            string name =
+                RealtyParser.Regex.Escape(string.Format(@"{{{{{0}}}}}", MethodBase.GetCurrentMethod().Name));
+            Assert.AreEqual(name, RealtyParser.Regex.Escape(@"{{" + MethodBase.GetCurrentMethod().Name + @"}}"));
         }
     }
 }

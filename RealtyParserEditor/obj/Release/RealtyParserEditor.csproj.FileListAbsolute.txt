@@ -1,6 +1,6 @@
+D:\Projects\RealtyParser\RealtyParserEditor\bin\Release\RealtyParser.db
 D:\Projects\RealtyParser\RealtyParserEditor\bin\Release\RealtyParserEditor.exe.config
 D:\Projects\RealtyParser\RealtyParserEditor\bin\Release\libtidy.dll
-D:\Projects\RealtyParser\RealtyParserEditor\bin\Release\RealtyParser.db
 D:\Projects\RealtyParser\RealtyParserEditor\bin\Release\RealtyParserEditor.exe.manifest
 D:\Projects\RealtyParser\RealtyParserEditor\bin\Release\RealtyParserEditor.application
 D:\Projects\RealtyParser\RealtyParserEditor\bin\Release\RealtyParserEditor.exe

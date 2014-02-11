@@ -1,0 +1,16 @@
+﻿using System.Collections.Generic;
+
+namespace RealtyParser.Collections
+{
+    /// <summary>
+    ///     Не входит в техническое задание
+    /// </summary>
+    public class HierarchicalItemCollection : Dictionary<string, HierarchicalItem>
+    {
+        public void Add(string key, string value, string parentId, int level)
+        {
+            if (!ContainsKey(key))
+                Add(key, new HierarchicalItem {Key = key, Value = value, ParentId = parentId, Level = level});
+        }
+    }
+}

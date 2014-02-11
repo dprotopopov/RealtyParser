@@ -3,12 +3,12 @@ using RealtyParser;
 
 namespace RealtyParserEditor
 {
-    public partial class AboutForm : Form, IChildFormInterface
+    public partial class AboutForm : Form, IChildForm
     {
         public AboutForm()
         {
             InitializeComponent();
-            RealtyParserParsingModule parsingModule = new RealtyParserParsingModule();
+            var parsingModule = new RealtyParserParsingModule();
             propertyGridControl1.SelectedObject = parsingModule.About();
         }
 
@@ -18,7 +18,7 @@ namespace RealtyParserEditor
 
         public void Reload()
         {
-            RealtyParserParsingModule parsingModule = new RealtyParserParsingModule();
+            var parsingModule = new RealtyParserParsingModule();
             propertyGridControl1.SelectedObject = parsingModule.About();
         }
     }

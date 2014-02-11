@@ -126,6 +126,10 @@
       <Project>{8ac9f758-9ce0-4203-854e-2b17cdc65c01}</Project>
       <Name>RealtyParser</Name>
     </ProjectReference>
+    <ProjectReference Include="..\RT.ParsingLibs\RT.ParsingLibs.csproj">
+      <Project>{27CC5B61-3729-4F39-AD0C-D8CE99120FD4}</Project>
+      <Name>RT.ParsingLibs</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

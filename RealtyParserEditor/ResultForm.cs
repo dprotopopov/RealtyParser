@@ -7,7 +7,7 @@ using RT.ParsingLibs.Responses;
 
 namespace RealtyParserEditor
 {
-    public partial class ResultForm : Form, IChildFormInterface
+    public partial class ResultForm : Form, IChildForm
     {
         public ResultForm()
         {
@@ -26,11 +26,14 @@ namespace RealtyParserEditor
             propertyGridControlAdditionalInfo.SelectedObject = null;
             propertyGridControlContact.SelectedObject = null;
             propertyGridControlRealtyAdditionalInfo.SelectedObject = null;
-            RealtyParserParsingModule parsingModule = new RealtyParserParsingModule();
-            propertyGridControlParseResponse.SelectedObject = await parsingModule.Result(propertyGridControlParseRequest.SelectedObject as ParseRequest);
+            var parsingModule = new RealtyParserParsingModule();
+            propertyGridControlParseResponse.SelectedObject =
+                await parsingModule.Result(propertyGridControlParseRequest.SelectedObject as ParseRequest);
             try
             {
-                foreach (var item in ((ParseResponse)propertyGridControlParseResponse.SelectedObject).Publications)
+                foreach (
+                    WebPublication item in
+                        ((ParseResponse) propertyGridControlParseResponse.SelectedObject).Publications)
                 {
                     listBoxPublications.Items.Add(item);
                 }
@@ -60,18 +63,20 @@ namespace RealtyParserEditor
             listBoxPhone.Items.Clear();
             listBoxEmail.Items.Clear();
             propertyGridControlWebPublication.SelectedObject = listBoxPublications.SelectedItem as WebPublication;
-            propertyGridControlAdditionalInfo.SelectedObject = ((WebPublication)listBoxPublications.SelectedItem).AdditionalInfo;
-            propertyGridControlContact.SelectedObject = ((WebPublication)listBoxPublications.SelectedItem).Contact;
-            propertyGridControlRealtyAdditionalInfo.SelectedObject = ((WebPublication)listBoxPublications.SelectedItem).AdditionalInfo.RealtyAdditionalInfo;
-            foreach (var item in ((WebPublication)listBoxPublications.SelectedItem).Photos)
+            propertyGridControlAdditionalInfo.SelectedObject =
+                ((WebPublication) listBoxPublications.SelectedItem).AdditionalInfo;
+            propertyGridControlContact.SelectedObject = ((WebPublication) listBoxPublications.SelectedItem).Contact;
+            propertyGridControlRealtyAdditionalInfo.SelectedObject =
+                ((WebPublication) listBoxPublications.SelectedItem).AdditionalInfo.RealtyAdditionalInfo;
+            foreach (Uri item in ((WebPublication) listBoxPublications.SelectedItem).Photos)
             {
                 listBoxPhotos.Items.Add(item);
             }
-            foreach (var item in ((WebPublication)listBoxPublications.SelectedItem).Contact.Phone)
+            foreach (string item in ((WebPublication) listBoxPublications.SelectedItem).Contact.Phone)
             {
                 listBoxPhone.Items.Add(item);
             }
-            foreach (var item in ((WebPublication)listBoxPublications.SelectedItem).Contact.Email)
+            foreach (string item in ((WebPublication) listBoxPublications.SelectedItem).Contact.Email)
             {
                 listBoxEmail.Items.Add(item);
             }

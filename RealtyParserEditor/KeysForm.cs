@@ -1,16 +1,17 @@
 ﻿using System;
 using System.Windows.Forms;
 using RealtyParser;
+using RT.ParsingLibs.Models;
 
 namespace RealtyParserEditor
 {
-    public partial class KeysForm : Form, IChildFormInterface
+    public partial class KeysForm : Form, IChildForm
     {
         public KeysForm()
         {
             InitializeComponent();
-            RealtyParserParsingModule parsingModule = new RealtyParserParsingModule();
-            foreach (var item in parsingModule.Keys())
+            var parsingModule = new RealtyParserParsingModule();
+            foreach (Bind item in parsingModule.Keys())
             {
                 //listBoxKeys.Items.Add(item);
             }
@@ -23,8 +24,8 @@ namespace RealtyParserEditor
         public void Reload()
         {
             propertyGridControlBind.SelectedObject = null;
-            RealtyParserParsingModule parsingModule = new RealtyParserParsingModule();
-            foreach (var item in parsingModule.Keys())
+            var parsingModule = new RealtyParserParsingModule();
+            foreach (Bind item in parsingModule.Keys())
             {
                 //listBoxKeys.Items.Add(item);
             }

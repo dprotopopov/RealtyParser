@@ -1,4 +1,0 @@
-D:\Projects\RealtyParser\TidyManaged-master\bin\Debug\TidyManaged.dll
-D:\Projects\RealtyParser\TidyManaged-master\bin\Debug\TidyManaged.pdb
-D:\Projects\RealtyParser\TidyManaged-master\obj\Debug\TidyManaged.dll
-D:\Projects\RealtyParser\TidyManaged-master\obj\Debug\TidyManaged.pdb

@@ -25,5 +25,7 @@ D:\Projects\RealtyParser\RealtyParser\bin\Release\ServiceStack.OrmLite.xml
 D:\Projects\RealtyParser\RealtyParser\bin\Release\ServiceStack.Text.xml
 D:\Projects\RealtyParser\RealtyParser\bin\Release\System.Data.SQLite.xml
 D:\Projects\RealtyParser\RealtyParser\obj\Release\RealtyParser.csprojResolveAssemblyReference.cache
+D:\Projects\RealtyParser\RealtyParser\obj\Release\RealtyParser.Properties.Resources.resources
+D:\Projects\RealtyParser\RealtyParser\obj\Release\RealtyParser.csproj.GenerateResource.Cache
 D:\Projects\RealtyParser\RealtyParser\obj\Release\RealtyParser.dll
 D:\Projects\RealtyParser\RealtyParser\obj\Release\RealtyParser.pdb

@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Text.RegularExpressions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using RealtyParser;
-using RealtyParser.PublicationIdComparer;
+using RealtyParser.PublicationComparer;
 
 namespace RealtyParserUnitTest
 {
@@ -53,6 +52,7 @@ namespace RealtyParserUnitTest
             Assert.IsTrue(comparer.Compare("[888,##11.03.2014 14:37:42##]", "##10.04.2013 14:37:42##") > 0);
             Assert.IsTrue(comparer.Compare("[222,##11.03.2013 14:37:42##]", "[1111,##11.03.2013 14:37:42##]") == 0);
         }
+
         [TestMethod]
         public void OnlyDatetimeComparer()
         {
@@ -60,8 +60,11 @@ namespace RealtyParserUnitTest
             // TODO: добавьте здесь логику теста
             //
             var comparer = new OnlyDatetimeComparer();
-            MatchCollection matchesX = Regex.Matches("[888,##11.03.2014 14:37:42##]", RealtyParser.PublicationIdComparer.OnlyDatetimeComparer.DateTimePatten);
-            DateTime dateTimeX = (matchesX.Count > 0) ? RealtyParserUtils.DateTimeParse(matchesX[0].Groups["date"].Value) : DateTime.Now;
+            MatchCollection matchesX = Regex.Matches("[888,##11.03.2014 14:37:42##]",
+                RealtyParser.PublicationComparer.OnlyDatetimeComparer.DateTimePatten);
+            DateTime dateTimeX = (matchesX.Count > 0)
+                ? RealtyParser.DateTime.Parse(matchesX[0].Groups["date"].Value)
+                : DateTime.Now;
             Console.WriteLine(dateTimeX);
         }
     }

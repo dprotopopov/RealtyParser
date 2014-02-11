@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <asmv1:assembly xsi:schemaLocation="urn:schemas-microsoft-com:asm.v1 assembly.adaptive.xsd" manifestVersion="1.0" xmlns:asmv1="urn:schemas-microsoft-com:asm.v1" xmlns="urn:schemas-microsoft-com:asm.v2" xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:co.v1="urn:schemas-microsoft-com:clickonce.v1" xmlns:asmv3="urn:schemas-microsoft-com:asm.v3" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" xmlns:co.v2="urn:schemas-microsoft-com:clickonce.v2">
-  <asmv1:assemblyIdentity name="RealtyParserEditor.exe" version="1.0.0.15" publicKeyToken="0000000000000000" language="neutral" processorArchitecture="msil" type="win32" />
+  <asmv1:assemblyIdentity name="RealtyParserEditor.exe" version="1.0.0.17" publicKeyToken="0000000000000000" language="neutral" processorArchitecture="msil" type="win32" />
   <application />
   <entryPoint>
     <assemblyIdentity name="RealtyParserEditor" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
@@ -707,14 +707,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="RealtyParser.dll" size="57344">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="RealtyParser.dll" size="66048">
       <assemblyIdentity name="RealtyParser" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>E3Fbk4uL2zqhKaqVoX84HckHp/DM6BfnlbuqQffhZW8=</dsig:DigestValue>
+        <dsig:DigestValue>BE/MVvot4vvbPcw9MXBv7JIWYdpbbD1kQbJdqwdBMLA=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -726,7 +726,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>TIo3zLmDSjlL+XzffkWHDrzFknaqlgL5J0MAySuyKWU=</dsig:DigestValue>
+        <dsig:DigestValue>HsgP2GmSS8y4z+PtmGElh+wGfl6N9QyX6jpkGJjFAKw=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -738,7 +738,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>Q/79hOlS54TRDL3Zep4JLTRhmYvtyIfigtpyfV6GivY=</dsig:DigestValue>
+        <dsig:DigestValue>NBGUaA4gorwXYkXJJVWMyrho4lrCcScK+Qm8shMeUWM=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -750,7 +750,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>lNjAhe5NXsU/XzVs0egiFa0SLODtjynouwk3ZoudKZM=</dsig:DigestValue>
+        <dsig:DigestValue>rosUKSAjR6WKVCk5W7SkUKNL0ob1faFESV5ghV+6POs=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -786,7 +786,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>4ySEr1CFHr1zhAwjesYzecr0lG1Zm9PVi+7eB9Ftpkk=</dsig:DigestValue>
+        <dsig:DigestValue>mRuzYZpISu9CMhCpY8y9q6O4GkyZ/knMxk5O4QT1Sok=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -799,13 +799,22 @@
       <dsig:DigestValue>3rh1EzjKduipuEmylhn1h6+bnTzT13TCFw1sI8/VKKY=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="RealtyParserEditor.exe.config" size="545">
+  <file name="RealtyParser.db" size="12353536">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>ckntpjxKZoqWB0ZJ5owjlB7xem+I1Q0NeXDYzHdyxEU=</dsig:DigestValue>
+      <dsig:DigestValue>/60a8HKUaIvhW28GfaSsocfqjTMBj43S6gc8P8Hrg7s=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="RealtyParserEditor.exe.config" size="538">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>G5sMNzT0SwX05OafQPeOmSjTgf0XYoZIgz79Z6IYFc4=</dsig:DigestValue>
     </hash>
   </file>
 </asmv1:assembly>

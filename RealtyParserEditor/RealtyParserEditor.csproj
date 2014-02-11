@@ -27,7 +27,7 @@
     <PublisherName>Dmitry Protopopov</PublisherName>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>16</ApplicationRevision>
+    <ApplicationRevision>18</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -89,7 +89,7 @@
     <Compile Include="AboutForm.Designer.cs">
       <DependentUpon>AboutForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="ChildFormInterface.cs" />
+    <Compile Include="IChildForm.cs" />
     <Compile Include="KeysForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -175,7 +175,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="RealtyParser.db" />
+    <Content Include="RealtyParser.db">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="RealtyParserEditor_TemporaryKey.pfx" />
     <None Include="Resources\refresh_32x32.png" />
   </ItemGroup>

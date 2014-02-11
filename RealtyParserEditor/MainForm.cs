@@ -1,22 +1,25 @@
 ﻿using System;
+using DevExpress.XtraBars;
+using DevExpress.XtraBars.Ribbon;
 
 namespace RealtyParserEditor
 {
-    public partial class MainForm : DevExpress.XtraBars.Ribbon.RibbonForm
+    public partial class MainForm : RibbonForm
     {
-        private readonly SitePropertiesForm _siteForm;
         private readonly AboutForm _aboutForm;
-        private readonly SourcesForm _sourcesForm;
         private readonly KeysForm _keysForm;
         private readonly ResultForm _resultForm;
+        private readonly SitePropertiesForm _siteForm;
+        private readonly SourcesForm _sourcesForm;
+
         public MainForm()
         {
             InitializeComponent();
-            _siteForm = new SitePropertiesForm { MdiParent = this };
-            _aboutForm = new AboutForm { MdiParent = this };
-            _sourcesForm = new SourcesForm { MdiParent = this };
-            _keysForm = new KeysForm { MdiParent = this };
-            _resultForm = new ResultForm { MdiParent = this };
+            _siteForm = new SitePropertiesForm {MdiParent = this};
+            _aboutForm = new AboutForm {MdiParent = this};
+            _sourcesForm = new SourcesForm {MdiParent = this};
+            _keysForm = new KeysForm {MdiParent = this};
+            _resultForm = new ResultForm {MdiParent = this};
         }
 
         private void MainForm_Load(object sender, EventArgs e)
@@ -28,15 +31,15 @@ namespace RealtyParserEditor
             _aboutForm.Show();
         }
 
-        private void barButtonItem2_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        private void barButtonItem2_ItemClick(object sender, ItemClickEventArgs e)
         {
-            IChildFormInterface child = ActiveMdiChild as IChildFormInterface;
+            var child = ActiveMdiChild as IChildForm;
             if (child != null) child.Save();
         }
 
-        private void barButtonItem1_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        private void barButtonItem1_ItemClick(object sender, ItemClickEventArgs e)
         {
-            IChildFormInterface child = ActiveMdiChild as IChildFormInterface;
+            var child = ActiveMdiChild as IChildForm;
             if (child != null) child.Reload();
         }
     }

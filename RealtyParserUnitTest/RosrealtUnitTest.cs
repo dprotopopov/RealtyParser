@@ -4,20 +4,22 @@ using RealtyParser;
 namespace RealtyParserUnitTest
 {
     /// <summary>
-    /// Сводное описание для RosrealtUnitTest
+    ///     Сводное описание для RosrealtUnitTest
     /// </summary>
     [TestClass]
     public class RosrealtUnitTest
     {
-        static readonly RealtyParserDatabase Database = RealtyParserUtils.GetDatabase();
-        const long SiteId = 2;
+        private const long SiteId = 2;
+        private static readonly Database Database = RealtyParserParsingModule.Database;
+
         /// <summary>
-        ///Получает или устанавливает контекст теста, в котором предоставляются
-        ///сведения о текущем тестовом запуске и обеспечивается его функциональность.
-        ///</summary>
+        ///     Получает или устанавливает контекст теста, в котором предоставляются
+        ///     сведения о текущем тестовом запуске и обеспечивается его функциональность.
+        /// </summary>
         public TestContext TestContext { get; set; }
 
         #region Дополнительные атрибуты тестирования
+
         //
         // При написании тестов можно использовать следующие дополнительные атрибуты:
         //
@@ -37,6 +39,7 @@ namespace RealtyParserUnitTest
         // [TestCleanup()]
         // public void MyTestCleanup() { }
         //
+
         #endregion
 
         [TestMethod]
@@ -45,10 +48,11 @@ namespace RealtyParserUnitTest
             //
             // TODO: добавьте здесь логику теста
             //
-            SiteProperties properties = Database.GetSiteProperties(SiteId);
-            Assert.IsTrue(properties.Mapping.Action.Count > 0);
-            Assert.IsTrue(properties.Mapping.Rubric.Count > 0);
-            Assert.IsTrue(properties.Mapping.Region.Count > 0);
+            object siteId = Database.GetScalar(SiteId, "Site");
+            Mapping mapping = Database.GetMapping(siteId);
+            Assert.IsTrue(mapping.Action.Count > 0);
+            Assert.IsTrue(mapping.Rubric.Count > 0);
+            Assert.IsTrue(mapping.Region.Count > 0);
         }
     }
 }

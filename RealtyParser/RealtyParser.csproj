@@ -33,6 +33,12 @@
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>false</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>RealtyParser.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="HtmlAgilityPack">
       <HintPath>..\packages\HtmlAgilityPack.1.4.6\lib\Net45\HtmlAgilityPack.dll</HintPath>
@@ -67,23 +73,37 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ParametersValues.cs" />
-    <Compile Include="DictionaryOfList.cs" />
-    <Compile Include="HierarhialItem.cs" />
-    <Compile Include="HierarhialItemCollection.cs" />
+    <Compile Include="Collections\DictionaryOfList.cs" />
+    <Compile Include="Collections\HierarchicalItem.cs" />
+    <Compile Include="Collections\HierarchicalItemCollection.cs" />
+    <Compile Include="Collections\LinksCollection.cs" />
+    <Compile Include="Collections\Mapping.cs" />
+    <Compile Include="Collections\OptionsCollection.cs" />
+    <Compile Include="Collections\Properties.cs" />
+    <Compile Include="DateTime.cs" />
+    <Compile Include="Comparer.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="RequestProperties.cs" />
+    <Compile Include="ReturnFieldInfos.cs" />
+    <Compile Include="SiteClass.cs" />
+    <Compile Include="String.cs" />
+    <Compile Include="Values.cs" />
     <Compile Include="LevenshteinDistance.cs" />
-    <Compile Include="LinksCollection.cs" />
     <Compile Include="Mapping.cs" />
-    <Compile Include="OptionsCollection.cs" />
-    <Compile Include="PublicationIdComparer\DatetimeFirstIdSecondComparer.cs" />
-    <Compile Include="PublicationIdComparer\OnlyDatetimeComparer.cs" />
-    <Compile Include="PublicationIdComparer\OnlyDigitsDecimalComparer.cs" />
-    <Compile Include="RealtyParserDatabase.cs" />
+    <Compile Include="PublicationComparer\DatetimeFirstIdSecondComparer.cs" />
+    <Compile Include="PublicationComparer\OnlyDatetimeComparer.cs" />
+    <Compile Include="PublicationComparer\OnlyDigitsDecimalComparer.cs" />
+    <Compile Include="Database.cs" />
     <Compile Include="RealtyParserParsingModule.cs" />
-    <Compile Include="PublicationIdComparer\AscComparer.cs" />
-    <Compile Include="PublicationIdComparer\DescComparer.cs" />
+    <Compile Include="PublicationComparer\AscComparer.cs" />
+    <Compile Include="PublicationComparer\DescComparer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RealtyParserUtils.cs" />
+    <Compile Include="Parser.cs" />
+    <Compile Include="Regex.cs" />
     <Compile Include="ReturnFieldInfo.cs" />
     <Compile Include="ReturnFields.cs" />
     <Compile Include="SiteProperties.cs" />
@@ -96,6 +116,7 @@
     <Content Include="RealtyParser.db">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="RealtyParser.snk" />
     <None Include="Структура базы данных.docx" />
     <None Include="Техническое задание на разработку парсера v4.pdf" />
   </ItemGroup>
@@ -115,6 +136,12 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
