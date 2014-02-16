@@ -10,13 +10,6 @@ namespace RealtyParser
     {
         private static readonly CultureInfo CultureInfo = CultureInfo.InvariantCulture;
 
-        private static readonly string[] AddressPatterns =
-        {
-            @"\bг\.\s", @"\bпгт\.\s", @"\bп\.\s", @"\bс\.\s", @"\bдер\.\s", @"\bх\.\s", @"\bст\-ца\s", @"\bаул\s",
-            @"\bг\b", @"\bп\b", @"\bс\b", @"\bдер\b", @"\bх\b", @"\bпгт\b", @"\bстца\b", @"\bаул\b",
-            @"г\.", @"пгт", @"п\.", @"с\.", @"дер\.", @"х\.", @"ст\-ца", @"аул",
-            @"\.", @"\-"
-        };
 
         public static string IntroText(string text, int introLength = 120)
         {
@@ -38,13 +31,33 @@ namespace RealtyParser
             return string.Join("", parts.Select(part => CultureInfo.TextInfo.ToTitleCase(part)));
         }
 
+        #region
+
+        private static readonly Dictionary<string, string> AddressReplacements = new Dictionary<string, string>
+        {
+            {@"ё", @"е"},
+            {@"\bг\.(.*)", @"$1"},
+            {@"\bпгт\s(.*)", @"$1"},
+            {@"\bп\.(.*)", @"$1 (поселок)"},
+            {@"\bдер\.(.*)", @"$1 (деревня)"},
+            {@"\bх\.(.*)", @"$1 (хутор)"},
+            {@"\bс\.(.*)", @"$1 (село)"},
+            {@"\bст\-ца\s(.*)", @"$1 (станица)"},
+            {@"\bаул\s(.*)", @"$1 (аул)"},
+            {@"\bст\.(.*)", @"$1 (станция)"},
+            {@"\bсвх\s(.*)", @"$1"},
+        };
+
         public static string NormalizeAddress(string str)
         {
-            str = AddressPatterns.Aggregate(str.ToLower(),
-                (current, pattern) =>
-                    new System.Text.RegularExpressions.Regex(pattern, RegexOptions.IgnoreCase).Replace(current, @" "));
+            str = AddressReplacements.Aggregate(str.ToLower(),
+                (current, pair) =>
+                    new System.Text.RegularExpressions.Regex(pair.Key, RegexOptions.IgnoreCase).Replace(current,
+                        pair.Value));
             str = new System.Text.RegularExpressions.Regex(@"\s+").Replace(str, @" ");
             return str.Trim();
         }
+
+        #endregion
     }
 }

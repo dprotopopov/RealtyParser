@@ -714,7 +714,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>qtWa8KQEMYxU1KN6xIOlTRDrcboPkfNMAST6V0IGCms=</dsig:DigestValue>
+        <dsig:DigestValue>/K/QR1EPjZoSdpz/0F+TY9yfXjiKnDBw3khOaiOuolo=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -726,7 +726,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>C9WagvlhT8D+GJJkQK/LtG9O6Bq0t7aqGeINveezloI=</dsig:DigestValue>
+        <dsig:DigestValue>5VuJKmDdQWNOC4aYPdzbry3hEEYeeqya4KcdX+d03uk=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -805,7 +805,7 @@
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>EDz0p63nT2vkcrNuuH8AdiOSCb/Zrdua0Nm2uWXmMvY=</dsig:DigestValue>
+      <dsig:DigestValue>slYS/5tMoWKbTSlnHo68wsDbDHqW+pxj2rxn/2fWsdE=</dsig:DigestValue>
     </hash>
   </file>
   <file name="RealtyParserEditor.exe.config" size="538">
