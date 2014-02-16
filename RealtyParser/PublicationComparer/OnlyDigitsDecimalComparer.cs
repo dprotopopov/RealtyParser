@@ -11,9 +11,9 @@ namespace RealtyParser.PublicationComparer
         {
             var regex = new System.Text.RegularExpressions.Regex(NonDigitPattern);
             string valueX = regex.Replace(x, @"").Trim();
-            if (System.String.IsNullOrEmpty(valueX)) valueX = "0";
+            if (string.IsNullOrEmpty(valueX)) valueX = "0";
             string valueY = regex.Replace(y, @"").Trim();
-            if (System.String.IsNullOrEmpty(valueY)) valueY = "0";
+            if (string.IsNullOrEmpty(valueY)) valueY = "0";
             return Convert.ToDecimal(valueX).CompareTo(Convert.ToDecimal(valueY));
         }
     }

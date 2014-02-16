@@ -3,6 +3,7 @@
     public interface IChildForm
     {
         void Save();
-        void Reload();
+        void ClearResults();
+        void Execute();
     }
 }

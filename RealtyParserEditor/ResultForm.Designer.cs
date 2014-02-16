@@ -35,19 +35,19 @@
             this.splitContainer3 = new System.Windows.Forms.SplitContainer();
             this.listBoxPublications = new System.Windows.Forms.ListBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.tabPageWebPublication = new System.Windows.Forms.TabPage();
             this.propertyGridControlWebPublication = new DevExpress.XtraVerticalGrid.PropertyGridControl();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.tabPageAdditionalInfo = new System.Windows.Forms.TabPage();
             this.propertyGridControlAdditionalInfo = new DevExpress.XtraVerticalGrid.PropertyGridControl();
-            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.tabPageContact = new System.Windows.Forms.TabPage();
             this.propertyGridControlContact = new DevExpress.XtraVerticalGrid.PropertyGridControl();
-            this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.tabPageRealtyAdditionalInfo = new System.Windows.Forms.TabPage();
             this.propertyGridControlRealtyAdditionalInfo = new DevExpress.XtraVerticalGrid.PropertyGridControl();
-            this.tabPage5 = new System.Windows.Forms.TabPage();
+            this.tabPagePhotos = new System.Windows.Forms.TabPage();
             this.listBoxPhotos = new System.Windows.Forms.ListBox();
-            this.tabPage6 = new System.Windows.Forms.TabPage();
+            this.tabPagePhone = new System.Windows.Forms.TabPage();
             this.listBoxPhone = new System.Windows.Forms.ListBox();
-            this.tabPage7 = new System.Windows.Forms.TabPage();
+            this.tabPageEmail = new System.Windows.Forms.TabPage();
             this.listBoxEmail = new System.Windows.Forms.ListBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -64,17 +64,17 @@
             this.splitContainer3.Panel2.SuspendLayout();
             this.splitContainer3.SuspendLayout();
             this.tabControl1.SuspendLayout();
-            this.tabPage1.SuspendLayout();
+            this.tabPageWebPublication.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.propertyGridControlWebPublication)).BeginInit();
-            this.tabPage2.SuspendLayout();
+            this.tabPageAdditionalInfo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.propertyGridControlAdditionalInfo)).BeginInit();
-            this.tabPage3.SuspendLayout();
+            this.tabPageContact.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.propertyGridControlContact)).BeginInit();
-            this.tabPage4.SuspendLayout();
+            this.tabPageRealtyAdditionalInfo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.propertyGridControlRealtyAdditionalInfo)).BeginInit();
-            this.tabPage5.SuspendLayout();
-            this.tabPage6.SuspendLayout();
-            this.tabPage7.SuspendLayout();
+            this.tabPagePhotos.SuspendLayout();
+            this.tabPagePhone.SuspendLayout();
+            this.tabPageEmail.SuspendLayout();
             this.SuspendLayout();
             // 
             // splitContainer1
@@ -91,7 +91,7 @@
             // 
             this.splitContainer1.Panel2.Controls.Add(this.splitContainer2);
             this.splitContainer1.Size = new System.Drawing.Size(981, 578);
-            this.splitContainer1.SplitterDistance = 429;
+            this.splitContainer1.SplitterDistance = 276;
             this.splitContainer1.TabIndex = 0;
             // 
             // propertyGridControlParseRequest
@@ -99,7 +99,7 @@
             this.propertyGridControlParseRequest.Dock = System.Windows.Forms.DockStyle.Fill;
             this.propertyGridControlParseRequest.Location = new System.Drawing.Point(0, 0);
             this.propertyGridControlParseRequest.Name = "propertyGridControlParseRequest";
-            this.propertyGridControlParseRequest.Size = new System.Drawing.Size(429, 578);
+            this.propertyGridControlParseRequest.Size = new System.Drawing.Size(276, 578);
             this.propertyGridControlParseRequest.TabIndex = 0;
             // 
             // splitContainer2
@@ -116,7 +116,7 @@
             // splitContainer2.Panel2
             // 
             this.splitContainer2.Panel2.Controls.Add(this.splitContainer3);
-            this.splitContainer2.Size = new System.Drawing.Size(548, 578);
+            this.splitContainer2.Size = new System.Drawing.Size(701, 578);
             this.splitContainer2.SplitterDistance = 153;
             this.splitContainer2.TabIndex = 0;
             // 
@@ -125,7 +125,7 @@
             this.propertyGridControlParseResponse.Dock = System.Windows.Forms.DockStyle.Fill;
             this.propertyGridControlParseResponse.Location = new System.Drawing.Point(0, 0);
             this.propertyGridControlParseResponse.Name = "propertyGridControlParseResponse";
-            this.propertyGridControlParseResponse.Size = new System.Drawing.Size(548, 153);
+            this.propertyGridControlParseResponse.Size = new System.Drawing.Size(701, 153);
             this.propertyGridControlParseResponse.TabIndex = 1;
             // 
             // splitContainer3
@@ -142,7 +142,7 @@
             // splitContainer3.Panel2
             // 
             this.splitContainer3.Panel2.Controls.Add(this.tabControl1);
-            this.splitContainer3.Size = new System.Drawing.Size(548, 421);
+            this.splitContainer3.Size = new System.Drawing.Size(701, 421);
             this.splitContainer3.SplitterDistance = 179;
             this.splitContainer3.TabIndex = 0;
             // 
@@ -153,112 +153,112 @@
             this.listBoxPublications.ItemHeight = 16;
             this.listBoxPublications.Location = new System.Drawing.Point(0, 0);
             this.listBoxPublications.Name = "listBoxPublications";
-            this.listBoxPublications.Size = new System.Drawing.Size(548, 179);
+            this.listBoxPublications.Size = new System.Drawing.Size(701, 179);
             this.listBoxPublications.TabIndex = 0;
             this.listBoxPublications.SelectedIndexChanged += new System.EventHandler(this.listBoxPublications_SelectedValueChanged);
             // 
             // tabControl1
             // 
-            this.tabControl1.Controls.Add(this.tabPage1);
-            this.tabControl1.Controls.Add(this.tabPage2);
-            this.tabControl1.Controls.Add(this.tabPage3);
-            this.tabControl1.Controls.Add(this.tabPage4);
-            this.tabControl1.Controls.Add(this.tabPage5);
-            this.tabControl1.Controls.Add(this.tabPage6);
-            this.tabControl1.Controls.Add(this.tabPage7);
+            this.tabControl1.Controls.Add(this.tabPageWebPublication);
+            this.tabControl1.Controls.Add(this.tabPageAdditionalInfo);
+            this.tabControl1.Controls.Add(this.tabPageContact);
+            this.tabControl1.Controls.Add(this.tabPageRealtyAdditionalInfo);
+            this.tabControl1.Controls.Add(this.tabPagePhotos);
+            this.tabControl1.Controls.Add(this.tabPagePhone);
+            this.tabControl1.Controls.Add(this.tabPageEmail);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(548, 238);
+            this.tabControl1.Size = new System.Drawing.Size(701, 238);
             this.tabControl1.TabIndex = 0;
             // 
-            // tabPage1
+            // tabPageWebPublication
             // 
-            this.tabPage1.Controls.Add(this.propertyGridControlWebPublication);
-            this.tabPage1.Location = new System.Drawing.Point(4, 25);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(540, 209);
-            this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "tabPage1";
-            this.tabPage1.UseVisualStyleBackColor = true;
+            this.tabPageWebPublication.Controls.Add(this.propertyGridControlWebPublication);
+            this.tabPageWebPublication.Location = new System.Drawing.Point(4, 25);
+            this.tabPageWebPublication.Name = "tabPageWebPublication";
+            this.tabPageWebPublication.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageWebPublication.Size = new System.Drawing.Size(693, 209);
+            this.tabPageWebPublication.TabIndex = 0;
+            this.tabPageWebPublication.Text = "WebPublication";
+            this.tabPageWebPublication.UseVisualStyleBackColor = true;
             // 
             // propertyGridControlWebPublication
             // 
             this.propertyGridControlWebPublication.Dock = System.Windows.Forms.DockStyle.Fill;
             this.propertyGridControlWebPublication.Location = new System.Drawing.Point(3, 3);
             this.propertyGridControlWebPublication.Name = "propertyGridControlWebPublication";
-            this.propertyGridControlWebPublication.Size = new System.Drawing.Size(534, 203);
+            this.propertyGridControlWebPublication.Size = new System.Drawing.Size(687, 203);
             this.propertyGridControlWebPublication.TabIndex = 0;
             // 
-            // tabPage2
+            // tabPageAdditionalInfo
             // 
-            this.tabPage2.Controls.Add(this.propertyGridControlAdditionalInfo);
-            this.tabPage2.Location = new System.Drawing.Point(4, 25);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(540, 209);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "tabPage2";
-            this.tabPage2.UseVisualStyleBackColor = true;
+            this.tabPageAdditionalInfo.Controls.Add(this.propertyGridControlAdditionalInfo);
+            this.tabPageAdditionalInfo.Location = new System.Drawing.Point(4, 25);
+            this.tabPageAdditionalInfo.Name = "tabPageAdditionalInfo";
+            this.tabPageAdditionalInfo.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageAdditionalInfo.Size = new System.Drawing.Size(693, 209);
+            this.tabPageAdditionalInfo.TabIndex = 1;
+            this.tabPageAdditionalInfo.Text = "AdditionalInfo";
+            this.tabPageAdditionalInfo.UseVisualStyleBackColor = true;
             // 
             // propertyGridControlAdditionalInfo
             // 
             this.propertyGridControlAdditionalInfo.Dock = System.Windows.Forms.DockStyle.Fill;
             this.propertyGridControlAdditionalInfo.Location = new System.Drawing.Point(3, 3);
             this.propertyGridControlAdditionalInfo.Name = "propertyGridControlAdditionalInfo";
-            this.propertyGridControlAdditionalInfo.Size = new System.Drawing.Size(534, 203);
+            this.propertyGridControlAdditionalInfo.Size = new System.Drawing.Size(687, 203);
             this.propertyGridControlAdditionalInfo.TabIndex = 0;
             // 
-            // tabPage3
+            // tabPageContact
             // 
-            this.tabPage3.Controls.Add(this.propertyGridControlContact);
-            this.tabPage3.Location = new System.Drawing.Point(4, 25);
-            this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(540, 209);
-            this.tabPage3.TabIndex = 2;
-            this.tabPage3.Text = "tabPage3";
-            this.tabPage3.UseVisualStyleBackColor = true;
+            this.tabPageContact.Controls.Add(this.propertyGridControlContact);
+            this.tabPageContact.Location = new System.Drawing.Point(4, 25);
+            this.tabPageContact.Name = "tabPageContact";
+            this.tabPageContact.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageContact.Size = new System.Drawing.Size(693, 209);
+            this.tabPageContact.TabIndex = 2;
+            this.tabPageContact.Text = "Contact";
+            this.tabPageContact.UseVisualStyleBackColor = true;
             // 
             // propertyGridControlContact
             // 
             this.propertyGridControlContact.Dock = System.Windows.Forms.DockStyle.Fill;
             this.propertyGridControlContact.Location = new System.Drawing.Point(3, 3);
             this.propertyGridControlContact.Name = "propertyGridControlContact";
-            this.propertyGridControlContact.Size = new System.Drawing.Size(534, 203);
+            this.propertyGridControlContact.Size = new System.Drawing.Size(687, 203);
             this.propertyGridControlContact.TabIndex = 0;
             // 
-            // tabPage4
+            // tabPageRealtyAdditionalInfo
             // 
-            this.tabPage4.Controls.Add(this.propertyGridControlRealtyAdditionalInfo);
-            this.tabPage4.Location = new System.Drawing.Point(4, 25);
-            this.tabPage4.Name = "tabPage4";
-            this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage4.Size = new System.Drawing.Size(540, 209);
-            this.tabPage4.TabIndex = 3;
-            this.tabPage4.Text = "tabPage4";
-            this.tabPage4.UseVisualStyleBackColor = true;
+            this.tabPageRealtyAdditionalInfo.Controls.Add(this.propertyGridControlRealtyAdditionalInfo);
+            this.tabPageRealtyAdditionalInfo.Location = new System.Drawing.Point(4, 25);
+            this.tabPageRealtyAdditionalInfo.Name = "tabPageRealtyAdditionalInfo";
+            this.tabPageRealtyAdditionalInfo.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageRealtyAdditionalInfo.Size = new System.Drawing.Size(693, 209);
+            this.tabPageRealtyAdditionalInfo.TabIndex = 3;
+            this.tabPageRealtyAdditionalInfo.Text = "RealtyAdditionalInfo";
+            this.tabPageRealtyAdditionalInfo.UseVisualStyleBackColor = true;
             // 
             // propertyGridControlRealtyAdditionalInfo
             // 
             this.propertyGridControlRealtyAdditionalInfo.Dock = System.Windows.Forms.DockStyle.Fill;
             this.propertyGridControlRealtyAdditionalInfo.Location = new System.Drawing.Point(3, 3);
             this.propertyGridControlRealtyAdditionalInfo.Name = "propertyGridControlRealtyAdditionalInfo";
-            this.propertyGridControlRealtyAdditionalInfo.Size = new System.Drawing.Size(534, 203);
+            this.propertyGridControlRealtyAdditionalInfo.Size = new System.Drawing.Size(687, 203);
             this.propertyGridControlRealtyAdditionalInfo.TabIndex = 0;
             // 
-            // tabPage5
+            // tabPagePhotos
             // 
-            this.tabPage5.Controls.Add(this.listBoxPhotos);
-            this.tabPage5.Location = new System.Drawing.Point(4, 25);
-            this.tabPage5.Name = "tabPage5";
-            this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage5.Size = new System.Drawing.Size(540, 209);
-            this.tabPage5.TabIndex = 4;
-            this.tabPage5.Text = "tabPage5";
-            this.tabPage5.UseVisualStyleBackColor = true;
+            this.tabPagePhotos.Controls.Add(this.listBoxPhotos);
+            this.tabPagePhotos.Location = new System.Drawing.Point(4, 25);
+            this.tabPagePhotos.Name = "tabPagePhotos";
+            this.tabPagePhotos.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPagePhotos.Size = new System.Drawing.Size(693, 209);
+            this.tabPagePhotos.TabIndex = 4;
+            this.tabPagePhotos.Text = "Photos";
+            this.tabPagePhotos.UseVisualStyleBackColor = true;
             // 
             // listBoxPhotos
             // 
@@ -267,19 +267,19 @@
             this.listBoxPhotos.ItemHeight = 16;
             this.listBoxPhotos.Location = new System.Drawing.Point(3, 3);
             this.listBoxPhotos.Name = "listBoxPhotos";
-            this.listBoxPhotos.Size = new System.Drawing.Size(534, 203);
+            this.listBoxPhotos.Size = new System.Drawing.Size(687, 203);
             this.listBoxPhotos.TabIndex = 0;
             // 
-            // tabPage6
+            // tabPagePhone
             // 
-            this.tabPage6.Controls.Add(this.listBoxPhone);
-            this.tabPage6.Location = new System.Drawing.Point(4, 25);
-            this.tabPage6.Name = "tabPage6";
-            this.tabPage6.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage6.Size = new System.Drawing.Size(540, 209);
-            this.tabPage6.TabIndex = 5;
-            this.tabPage6.Text = "tabPage6";
-            this.tabPage6.UseVisualStyleBackColor = true;
+            this.tabPagePhone.Controls.Add(this.listBoxPhone);
+            this.tabPagePhone.Location = new System.Drawing.Point(4, 25);
+            this.tabPagePhone.Name = "tabPagePhone";
+            this.tabPagePhone.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPagePhone.Size = new System.Drawing.Size(693, 209);
+            this.tabPagePhone.TabIndex = 5;
+            this.tabPagePhone.Text = "Phone";
+            this.tabPagePhone.UseVisualStyleBackColor = true;
             // 
             // listBoxPhone
             // 
@@ -288,19 +288,19 @@
             this.listBoxPhone.ItemHeight = 16;
             this.listBoxPhone.Location = new System.Drawing.Point(3, 3);
             this.listBoxPhone.Name = "listBoxPhone";
-            this.listBoxPhone.Size = new System.Drawing.Size(534, 203);
+            this.listBoxPhone.Size = new System.Drawing.Size(687, 203);
             this.listBoxPhone.TabIndex = 0;
             // 
-            // tabPage7
+            // tabPageEmail
             // 
-            this.tabPage7.Controls.Add(this.listBoxEmail);
-            this.tabPage7.Location = new System.Drawing.Point(4, 25);
-            this.tabPage7.Name = "tabPage7";
-            this.tabPage7.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage7.Size = new System.Drawing.Size(540, 209);
-            this.tabPage7.TabIndex = 6;
-            this.tabPage7.Text = "tabPage7";
-            this.tabPage7.UseVisualStyleBackColor = true;
+            this.tabPageEmail.Controls.Add(this.listBoxEmail);
+            this.tabPageEmail.Location = new System.Drawing.Point(4, 25);
+            this.tabPageEmail.Name = "tabPageEmail";
+            this.tabPageEmail.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageEmail.Size = new System.Drawing.Size(693, 209);
+            this.tabPageEmail.TabIndex = 6;
+            this.tabPageEmail.Text = "Email";
+            this.tabPageEmail.UseVisualStyleBackColor = true;
             // 
             // listBoxEmail
             // 
@@ -309,7 +309,7 @@
             this.listBoxEmail.ItemHeight = 16;
             this.listBoxEmail.Location = new System.Drawing.Point(3, 3);
             this.listBoxEmail.Name = "listBoxEmail";
-            this.listBoxEmail.Size = new System.Drawing.Size(534, 203);
+            this.listBoxEmail.Size = new System.Drawing.Size(687, 203);
             this.listBoxEmail.TabIndex = 0;
             // 
             // ResultForm
@@ -335,17 +335,17 @@
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer3)).EndInit();
             this.splitContainer3.ResumeLayout(false);
             this.tabControl1.ResumeLayout(false);
-            this.tabPage1.ResumeLayout(false);
+            this.tabPageWebPublication.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.propertyGridControlWebPublication)).EndInit();
-            this.tabPage2.ResumeLayout(false);
+            this.tabPageAdditionalInfo.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.propertyGridControlAdditionalInfo)).EndInit();
-            this.tabPage3.ResumeLayout(false);
+            this.tabPageContact.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.propertyGridControlContact)).EndInit();
-            this.tabPage4.ResumeLayout(false);
+            this.tabPageRealtyAdditionalInfo.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.propertyGridControlRealtyAdditionalInfo)).EndInit();
-            this.tabPage5.ResumeLayout(false);
-            this.tabPage6.ResumeLayout(false);
-            this.tabPage7.ResumeLayout(false);
+            this.tabPagePhotos.ResumeLayout(false);
+            this.tabPagePhone.ResumeLayout(false);
+            this.tabPageEmail.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -358,20 +358,20 @@
         private DevExpress.XtraVerticalGrid.PropertyGridControl propertyGridControlParseResponse;
         private System.Windows.Forms.SplitContainer splitContainer3;
         private System.Windows.Forms.TabControl tabControl1;
-        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.TabPage tabPageWebPublication;
         private DevExpress.XtraVerticalGrid.PropertyGridControl propertyGridControlWebPublication;
-        private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.TabPage tabPageAdditionalInfo;
         private DevExpress.XtraVerticalGrid.PropertyGridControl propertyGridControlAdditionalInfo;
-        private System.Windows.Forms.TabPage tabPage3;
+        private System.Windows.Forms.TabPage tabPageContact;
         private DevExpress.XtraVerticalGrid.PropertyGridControl propertyGridControlContact;
-        private System.Windows.Forms.TabPage tabPage4;
+        private System.Windows.Forms.TabPage tabPageRealtyAdditionalInfo;
         private DevExpress.XtraVerticalGrid.PropertyGridControl propertyGridControlRealtyAdditionalInfo;
         private System.Windows.Forms.ListBox listBoxPublications;
-        private System.Windows.Forms.TabPage tabPage5;
+        private System.Windows.Forms.TabPage tabPagePhotos;
         private System.Windows.Forms.ListBox listBoxPhotos;
-        private System.Windows.Forms.TabPage tabPage6;
+        private System.Windows.Forms.TabPage tabPagePhone;
         private System.Windows.Forms.ListBox listBoxPhone;
-        private System.Windows.Forms.TabPage tabPage7;
+        private System.Windows.Forms.TabPage tabPageEmail;
         private System.Windows.Forms.ListBox listBoxEmail;
     }
 }

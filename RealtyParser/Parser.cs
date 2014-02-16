@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -17,12 +16,15 @@ using TidyManaged;
 namespace RealtyParser
 {
     /// <summary>
-    ///     Статичный класс вспомогательных алгоритмов
+    ///     Класс вспомогательных алгоритмов
     /// </summary>
     public class Parser
     {
-        private const string FieldPattern = @"\{\{(?<name>[^\}]*)\}\}";
-
+        private const char SplitChar = '\\';
+        public Transformation Transformation { get; set; }
+        public ProgressCallback ProgressCallback { get; set; }
+        public AppendLineCallback AppendLineCallback { get; set; }
+        public CompliteCallback CompliteCallback { get; set; }
         private object LastError { get; set; }
 
         /// <summary>
@@ -32,11 +34,14 @@ namespace RealtyParser
         {
             Debug.WriteLine("Begin {0}::{1}", GetType().Name, MethodBase.GetCurrentMethod().Name);
             Debug.WriteLine(uri.ToString());
+            long current = 0;
+            long total = 1;
             ICrawler crawler = new WebCrawler();
             var requestWeb = (HttpWebRequest) WebRequest.Create(uri);
             requestWeb.Method = method;
             var collection = new List<HtmlDocument>();
             WebResponse responce = await crawler.GetResponse(requestWeb);
+            if (ProgressCallback != null) ProgressCallback(++current, ++total);
             if (responce != null)
             {
                 Encoding encoder = Encoding.GetEncoding(encoding);
@@ -48,11 +53,7 @@ namespace RealtyParser
                     {
                         new MemoryStream(Encoding.UTF8.GetBytes(reader.ReadToEnd()))
                     };
-
-                    Debug.WriteLine("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
-                    memoryStreams.Last().Seek(0, SeekOrigin.Begin);
-                    Debug.WriteLine(new StreamReader(memoryStreams.Last()).ReadToEnd());
-                    Debug.WriteLine("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
+                    if (ProgressCallback != null) ProgressCallback(++current, ++total);
 
                     memoryStreams.First().Seek(0, SeekOrigin.Begin);
                     Document tidy = Document.FromStream(memoryStreams.First());
@@ -70,10 +71,7 @@ namespace RealtyParser
                     memoryStreams.Add(new MemoryStream());
                     tidy.Save(memoryStreams.Last());
 
-                    Debug.WriteLine(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-                    memoryStreams.Last().Seek(0, SeekOrigin.Begin);
-                    Debug.WriteLine(new StreamReader(memoryStreams.Last(), Encoding.UTF8).ReadToEnd());
-                    Debug.WriteLine(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+                    if (ProgressCallback != null) ProgressCallback(++current, ++total);
 
                     foreach (MemoryStream stream in memoryStreams)
                     {
@@ -82,8 +80,10 @@ namespace RealtyParser
                         edition.LoadHtml(new StreamReader(stream, Encoding.UTF8).ReadToEnd());
                         collection.Add(edition);
                     }
+                    if (ProgressCallback != null) ProgressCallback(++current, total);
                 }
             }
+            if (CompliteCallback != null) CompliteCallback();
             Debug.WriteLine("End {0}::{1}", GetType().Name, MethodBase.GetCurrentMethod().Name);
             return collection.ToArray();
         }
@@ -98,6 +98,8 @@ namespace RealtyParser
             )
         {
             Debug.WriteLine("Begin {0}::{1}", GetType().Name, MethodBase.GetCurrentMethod().Name);
+            long current = 0;
+            long total = 1;
             var webPublication = new WebPublication
             {
                 AdditionalInfo = new AdditionalInfo
@@ -116,32 +118,35 @@ namespace RealtyParser
             {
                 webPublication.AdditionalInfo.RealtyAdditionalInfo.Address =
                     returnFields.WebPublicationAdditionalInfoRealtyAdditionalInfoAddress
-                        .Aggregate((i, j) => System.String.Format("{0}\t{1}", i, j));
+                        .Aggregate((i, j) => string.Format("{0}\t{1}", i, j));
             }
             catch (Exception)
             {
                 webPublication.AdditionalInfo.RealtyAdditionalInfo.Address = "";
             }
+            if (ProgressCallback != null) ProgressCallback(++current, ++total);
             try
             {
                 webPublication.AdditionalInfo.RealtyAdditionalInfo.District =
                     returnFields.WebPublicationAdditionalInfoRealtyAdditionalInfoDistrict
-                        .Aggregate((i, j) => System.String.Format("{0}\t{1}", i, j));
+                        .Aggregate((i, j) => string.Format("{0}\t{1}", i, j));
             }
             catch (Exception)
             {
                 webPublication.AdditionalInfo.RealtyAdditionalInfo.District = "";
             }
+            if (ProgressCallback != null) ProgressCallback(++current, ++total);
             try
             {
                 webPublication.AdditionalInfo.RealtyAdditionalInfo.AppointmentOfRoom =
                     returnFields.WebPublicationAdditionalInfoRealtyAdditionalInfoAppointmentOfRoom
-                        .Aggregate((i, j) => System.String.Format("{0}\t{1}", i, j));
+                        .Aggregate((i, j) => string.Format("{0}\t{1}", i, j));
             }
             catch (Exception)
             {
                 webPublication.AdditionalInfo.RealtyAdditionalInfo.AppointmentOfRoom = "";
             }
+            if (ProgressCallback != null) ProgressCallback(++current, ++total);
             try
             {
                 webPublication.AdditionalInfo.RealtyAdditionalInfo.CostAll =
@@ -153,6 +158,7 @@ namespace RealtyParser
             {
                 webPublication.AdditionalInfo.RealtyAdditionalInfo.CostAll = 0m;
             }
+            if (ProgressCallback != null) ProgressCallback(++current, ++total);
             try
             {
                 webPublication.AdditionalInfo.RealtyAdditionalInfo.TotalSpace =
@@ -164,15 +170,17 @@ namespace RealtyParser
             {
                 webPublication.AdditionalInfo.RealtyAdditionalInfo.TotalSpace = 0;
             }
+            if (ProgressCallback != null) ProgressCallback(++current, ++total);
             try
             {
                 webPublication.Contact.Author = returnFields.WebPublicationContactAuthor
-                    .Aggregate((i, j) => System.String.Format("{0}\t{1}", i, j));
+                    .Aggregate((i, j) => string.Format("{0}\t{1}", i, j));
             }
             catch (Exception)
             {
                 webPublication.Contact.Author = "";
             }
+            if (ProgressCallback != null) ProgressCallback(++current, ++total);
             try
             {
                 webPublication.Contact.AuthorUrl =
@@ -182,15 +190,17 @@ namespace RealtyParser
             {
                 webPublication.Contact.AuthorUrl = null;
             }
+            if (ProgressCallback != null) ProgressCallback(++current, ++total);
             try
             {
                 webPublication.Contact.ContactName = returnFields.WebPublicationContactContactName
-                    .Aggregate((i, j) => System.String.Format("{0}\t{1}", i, j));
+                    .Aggregate((i, j) => string.Format("{0}\t{1}", i, j));
             }
             catch (Exception)
             {
                 webPublication.Contact.ContactName = "";
             }
+            if (ProgressCallback != null) ProgressCallback(++current, ++total);
             try
             {
                 webPublication.Contact.Email = returnFields.WebPublicationContactEmail;
@@ -199,16 +209,18 @@ namespace RealtyParser
             {
                 webPublication.Contact.Email = new List<string>();
             }
+            if (ProgressCallback != null) ProgressCallback(++current, ++total);
             try
             {
                 webPublication.Contact.Icq = Convert.ToUInt32(
                     returnFields.WebPublicationContactIcq
-                        .Aggregate((i, j) => System.String.Format("{0}\t{1}", i, j)));
+                        .Aggregate((i, j) => string.Format("{0}\t{1}", i, j)));
             }
             catch (Exception)
             {
                 webPublication.Contact.Icq = 0;
             }
+            if (ProgressCallback != null) ProgressCallback(++current, ++total);
             try
             {
                 webPublication.Contact.Phone = returnFields.WebPublicationContactPhone;
@@ -217,34 +229,38 @@ namespace RealtyParser
             {
                 webPublication.Contact.Phone = new List<string>();
             }
+            if (ProgressCallback != null) ProgressCallback(++current, ++total);
             try
             {
                 webPublication.Contact.Skype = returnFields.WebPublicationContactSkype
-                    .Aggregate((i, j) => System.String.Format("{0}\t{1}", i, j));
+                    .Aggregate((i, j) => string.Format("{0}\t{1}", i, j));
             }
             catch (Exception)
             {
                 webPublication.Contact.Skype = "";
             }
+            if (ProgressCallback != null) ProgressCallback(++current, ++total);
             try
             {
                 webPublication.Description = returnFields.WebPublicationDescription
-                    .Aggregate((i, j) => System.String.Format("{0}\t{1}", i, j));
+                    .Aggregate((i, j) => string.Format("{0}\t{1}", i, j));
             }
             catch (Exception)
             {
                 webPublication.Description = "";
             }
+            if (ProgressCallback != null) ProgressCallback(++current, ++total);
             try
             {
                 webPublication.ModifyDate = DateTime.Parse(
                     returnFields.WebPublicationModifyDate
-                        .Aggregate((i, j) => System.String.Format("{0}\t{1}", i, j)));
+                        .Aggregate((i, j) => string.Format("{0}\t{1}", i, j)));
             }
             catch (Exception)
             {
                 webPublication.ModifyDate = System.DateTime.Now;
             }
+            if (ProgressCallback != null) ProgressCallback(++current, ++total);
             try
             {
                 webPublication.Photos = String.ConvertToUri(returnFields.WebPublicationPhotos);
@@ -253,15 +269,17 @@ namespace RealtyParser
             {
                 webPublication.Photos = new List<Uri>();
             }
+            if (ProgressCallback != null) ProgressCallback(++current, ++total);
             try
             {
                 webPublication.PublicationId = returnFields.WebPublicationPublicationId
-                    .Aggregate((i, j) => System.String.Format("{0}\t{1}", i, j));
+                    .Aggregate((i, j) => string.Format("{0}\t{1}", i, j));
             }
             catch (Exception)
             {
                 webPublication.PublicationId = "";
             }
+            if (ProgressCallback != null) ProgressCallback(++current, ++total);
             try
             {
                 webPublication.RegionId = Database.ConvertTo<long>(id.Region);
@@ -270,6 +288,7 @@ namespace RealtyParser
             {
                 webPublication.RegionId = 0;
             }
+            if (ProgressCallback != null) ProgressCallback(++current, ++total);
             try
             {
                 webPublication.RubricId = Database.ConvertTo<long>(id.Rubric);
@@ -278,6 +297,7 @@ namespace RealtyParser
             {
                 webPublication.RubricId = 0;
             }
+            if (ProgressCallback != null) ProgressCallback(++current, ++total);
             try
             {
                 webPublication.ActionId = Database.ConvertTo<long>(id.Action);
@@ -286,14 +306,16 @@ namespace RealtyParser
             {
                 webPublication.ActionId = 0;
             }
+            if (ProgressCallback != null) ProgressCallback(++current, ++total);
             try
             {
-                webPublication.Site = new Uri(System.String.Format("{0}://{1}", builder.Scheme, builder.Host));
+                webPublication.Site = new Uri(string.Format("{0}://{1}", builder.Scheme, builder.Host));
             }
             catch (Exception)
             {
                 webPublication.Site = null;
             }
+            if (ProgressCallback != null) ProgressCallback(++current, ++total);
             try
             {
                 webPublication.Url = builder.Uri;
@@ -302,51 +324,31 @@ namespace RealtyParser
             {
                 webPublication.Url = null;
             }
+            if (ProgressCallback != null) ProgressCallback(++current, total);
+            if (CompliteCallback != null) CompliteCallback();
             Debug.WriteLine("End {0}::{1}", GetType().Name, MethodBase.GetCurrentMethod().Name);
             return webPublication;
-        }
-
-        /// <summary>
-        ///     Замена в строке-шаблоне идентификаторов-параметров на их значения
-        /// </summary>
-        public List<string> ParseTemplate(string template, Values values)
-        {
-            Debug.WriteLine("Begin {0}::{1}", GetType().Name, MethodBase.GetCurrentMethod().Name);
-            var list = new List<string>();
-            int maxCount = values.MaxCount;
-            for (int[] index = {0}; index[0] < maxCount; index[0]++)
-            {
-                string value = template.Trim();
-                foreach (var pair in values.Where(pair => pair.Value != null && pair.Value.Count > index[0]))
-                {
-                    var regex = new System.Text.RegularExpressions.Regex(pair.Key, RegexOptions.IgnoreCase);
-                    value = regex.Replace(value, pair.Value[index[0]]).Trim();
-                }
-                var rgx = new System.Text.RegularExpressions.Regex(FieldPattern, RegexOptions.IgnoreCase);
-                value = rgx.Replace(value, @"").Trim();
-                if (!System.String.IsNullOrEmpty(value)) list.Add(value);
-                Debug.WriteLine("ParseTemplate: {0} add value {1}", template, value);
-            }
-            Debug.WriteLine("End {0}::{1}", GetType().Name, MethodBase.GetCurrentMethod().Name);
-            return list;
         }
 
         /// <summary>
         ///     Поиск и формирование значений возвращаемых полей загруженного с сайта объявления
         /// </summary>
         public ReturnFields BuildReturnFields(HtmlNode[] parentNodes,
-            Values parentValues, IEnumerable<ReturnFieldInfo> returnFieldInfos)
+            Values parentValues, ReturnFieldInfos returnFieldInfos)
         {
             Debug.WriteLine("Begin {0}::{1}", GetType().Name, MethodBase.GetCurrentMethod().Name);
             var returnFields = new ReturnFields();
-            foreach (ReturnFieldInfo returnFieldInfo in returnFieldInfos)
+            long current = 0;
+            long total = returnFieldInfos.Count;
+            foreach (ReturnFieldInfo returnFieldInfo in returnFieldInfos.Values)
             {
                 var agregated = new Values();
                 foreach (HtmlNode parentNode in parentNodes)
                 {
                     var values = new Values();
-                    List<string> xpaths = ParseTemplate(returnFieldInfo.ReturnFieldXpathTemplate.ToString(),
-                        parentValues);
+                    List<string> xpaths =
+                        Transformation.ParseTemplate(returnFieldInfo.ReturnFieldXpathTemplate.ToString(),
+                            parentValues);
                     HtmlNode node = parentNode;
                     foreach (
                         HtmlNode htmlNode in
@@ -365,20 +367,22 @@ namespace RealtyParser
                 var regex = new System.Text.RegularExpressions.Regex(returnFieldInfo.ReturnFieldRegexPattern.ToString(),
                     RegexOptions.IgnoreCase | RegexOptions.Singleline);
                 List<string> list =
-                    ParseTemplate(returnFieldInfo.ReturnFieldResultTemplate.ToString(), agregated)
+                    Transformation.ParseTemplate(returnFieldInfo.ReturnFieldResultTemplate.ToString(), agregated)
                         .Select(
                             input => regex.Replace(input, returnFieldInfo.ReturnFieldRegexReplacement.ToString()).Trim())
-                        .Where(replace => !System.String.IsNullOrEmpty(replace))
+                        .Where(replace => !string.IsNullOrEmpty(replace))
                         .SelectMany(
                             replace =>
                                 (from Match match in
                                     System.Text.RegularExpressions.Regex.Matches(replace,
                                         returnFieldInfo.ReturnFieldRegexMatchPattern.ToString())
                                     select match.Value.Trim()))
-                        .Where(value => !System.String.IsNullOrEmpty(value))
+                        .Where(value => !string.IsNullOrEmpty(value))
                         .ToList();
                 returnFields.Add(returnFieldInfo.ReturnFieldId.ToString(), list);
+                if (ProgressCallback != null) ProgressCallback(++current, total);
             }
+            if (CompliteCallback != null) CompliteCallback();
             Debug.WriteLine("End {0}::{1}", GetType().Name, MethodBase.GetCurrentMethod().Name);
             return returnFields;
         }
@@ -387,95 +391,41 @@ namespace RealtyParser
         ///     Формирование пар идентификатор параметра - значение параметра
         ///     для замены в строке-шаблоне
         /// </summary>
-        public Values BuildValues(
-            Database database,
-            RequestProperties id,
-            RequestProperties mappingId)
+        public Values BuildValues(Database database, RequestProperties requestId, RequestProperties mappedId)
         {
             Debug.WriteLine("Begin {0}::{1}", GetType().Name, MethodBase.GetCurrentMethod().Name);
-            Debug.WriteLine("id {0}", id);
-            Debug.WriteLine("mappingId {0}", mappingId);
-            IEnumerable<string> mapping = database.GetList("Mapping", "TableName").Select(item => item.ToString());
-            IEnumerable<string> hierarchical =
-                database.GetList("Hierarchical", "TableName").Select(item => item.ToString());
-            Debug.WriteLine("mapping {0}", mapping);
-            Debug.WriteLine("hierarchical {0}", hierarchical);
-            var values = new Values
-            {
-                {
-                    mappingId.Keys.Select(item => Regex.Escape(System.String.Format(@"{{{{{0}}}}}", item))).ToList(),
-                    mappingId.Values.Select(item => item.ToString()).ToList()
-                }
-            };
+            Debug.WriteLine("requestId {0}", requestId);
+            Debug.WriteLine("mappedId {0}", mappedId);
+            IEnumerable<string> mapping =
+                database.GetList(Database.MappingTable, Database.TableNameColumn).Select(item => item.ToString());
+            var values = new Values();
 
+            long current = 0;
+            long total = mapping.Count();
             foreach (string mappingTable in mapping)
             {
-                Debug.Assert(id[mappingTable] != null && !System.String.IsNullOrEmpty(id[mappingTable].ToString()));
-                Debug.Assert(mappingId[mappingTable] != null &&
-                             !System.String.IsNullOrEmpty(mappingId[mappingTable].ToString()));
-                Dictionary<string, object> userFields = database.GetUserFields(id[mappingTable], mappingId[mappingTable],
-                    mappingTable, id.Site);
-                Debug.WriteLine(mappingTable);
+                Debug.Assert(requestId[mappingTable] != null &&
+                             !string.IsNullOrEmpty(requestId[mappingTable].ToString()));
+                Debug.Assert(mappedId[mappingTable] != null &&
+                             !string.IsNullOrEmpty(mappedId[mappingTable].ToString()));
+
+                string[] parents = mappedId[mappingTable].ToString().Split(SplitChar);
+                values.Add(Regex.Escape(string.Format("{{{{{0}}}}}", mappingTable)), parents.Last());
+                for (int i = 0; i < parents.Count(); i++)
+                    values.Add(Regex.Escape(string.Format("{{{{{0}[{1}]}}}}", mappingTable, i)), parents[i]);
+
+                Collections.Properties userFields = database.GetUserFields(requestId[mappingTable],
+                    mappedId[mappingTable],
+                    mappingTable, requestId.Site);
                 List<string> keys =
-                    userFields.Keys.Select(item => Regex.Escape(System.String.Format(@"{{{{{0}}}}}", item))).ToList();
+                    userFields.Keys.Select(item => Regex.Escape(string.Format("{{{{{0}}}}}", item))).ToList();
                 List<string> list = userFields.Values.Select(item => item.ToString()).ToList();
-                var mappingTableValues = new Values {{keys, list}};
-                values.InsertOrReplace(mappingTableValues);
-            }
-
-            foreach (string mappingTable in hierarchical)
-            {
-                for (
-                    object level = database.GetScalar(mappingId[mappingTable], "Level", mappingTable, mappingId.Site);
-                    Database.ConvertTo<long>(level) > 0;
-                    level = database.GetScalar(mappingId[mappingTable], "Level", mappingTable, mappingId.Site))
-                {
-                    Debug.Assert(id[mappingTable] != null && !System.String.IsNullOrEmpty(id[mappingTable].ToString()));
-                    Debug.Assert(mappingId[mappingTable] != null &&
-                                 !System.String.IsNullOrEmpty(mappingId[mappingTable].ToString()));
-                    Dictionary<string, object> mappingUserFields = database.GetUserFields(id[mappingTable],
-                        mappingId[mappingTable],
-                        mappingTable, id.Site);
-
-                    var mappingTableValues = new Values
-                    {
-                        {
-                            Regex.Escape(System.String.Format(@"{{{{{0}[{1}]}}}}", mappingTable, level)),
-                            mappingId[mappingTable].ToString()
-                        },
-                        {
-                            mappingUserFields.Keys.Select(
-                                item => Regex.Escape(System.String.Format(@"{{{{{0}[{1}]}}}}", item, level))).ToList(),
-                            mappingUserFields.Values.Select(item => item.ToString()).ToList()
-                        }
-                    };
-                    values.InsertOrReplace(mappingTableValues);
-
-                    mappingId[mappingTable] = database.GetScalar(mappingId[mappingTable], "ParentId",
-                        mappingTable, mappingId.Site);
-                    if (mappingId[mappingTable] == null ||
-                        System.String.IsNullOrEmpty(mappingId[mappingTable].ToString())) break;
-                }
+                values.InsertOrReplace(new Values {{keys, list}});
+                if (ProgressCallback != null) ProgressCallback(++current, total);
             }
 
             Debug.WriteLine("values {0}", values);
-
-            Debug.WriteLine("End {0}::{1}", GetType().Name, MethodBase.GetCurrentMethod().Name);
-            return values;
-        }
-
-        /// <summary>
-        ///     Формирование пар идентификатор параметра - значение параметра
-        ///     для замены в строке-шаблоне
-        /// </summary>
-        public Values BuildValues(long pageId)
-        {
-            Debug.WriteLine("Begin {0}::{1}", GetType().Name, MethodBase.GetCurrentMethod().Name);
-            var values = new Values
-            {
-                {Regex.Escape(@"{{Page}}"), (pageId > 1) ? pageId.ToString(CultureInfo.InvariantCulture) : @""}
-            };
-            Debug.WriteLine("values {0}", values);
+            if (CompliteCallback != null) CompliteCallback();
             Debug.WriteLine("End {0}::{1}", GetType().Name, MethodBase.GetCurrentMethod().Name);
             return values;
         }
@@ -492,13 +442,14 @@ namespace RealtyParser
             Debug.Assert(node != null);
             Debug.WriteLine("Begin {0}::{1}", GetType().Name, MethodBase.GetCurrentMethod().Name);
             var values = new Values();
-
+            MatchCollection matches = System.Text.RegularExpressions.Regex.Matches(template, Transformation.FieldPattern);
+            long current = 0;
+            long total = matches.Count;
             foreach (
                 string name in
-                    from Match match in System.Text.RegularExpressions.Regex.Matches(template, FieldPattern)
-                    select match.Groups["name"].Value)
+                    from Match match in matches
+                    select match.Groups[Transformation.NameGroup].Value)
             {
-                Debug.WriteLine("{0} <- {1}", template, name);
                 foreach (
                     MethodInfo methodInfo in
                         new[]
@@ -509,9 +460,10 @@ namespace RealtyParser
                 {
                     try
                     {
+                        string key = Regex.Escape(string.Format("{{{{{0}}}}}", name));
+                        if (values.ContainsKey(key)) continue;
                         object value = methodInfo.Invoke(null, new object[] {node, name});
-                        if (value != null)
-                            values.Add(Regex.Escape(System.String.Format(@"{{{{{0}}}}}", name)), value.ToString());
+                        if (value != null) values.Add(key, value.ToString());
                     }
                     catch (Exception exception)
                     {
@@ -519,8 +471,10 @@ namespace RealtyParser
                         Debug.WriteLine(LastError.ToString());
                     }
                 }
+                if (ProgressCallback != null) ProgressCallback(++current, total);
             }
             Debug.WriteLine("values {0}", values);
+            if (CompliteCallback != null) CompliteCallback();
             Debug.WriteLine("End {0}::{1}", GetType().Name, MethodBase.GetCurrentMethod().Name);
             return values;
         }
@@ -536,8 +490,7 @@ namespace RealtyParser
         public static string AttributeValue(HtmlNode node, string attributeName)
         {
             HtmlAttribute attribute = node.Attributes[attributeName];
-            if (attribute != null) return attribute.Value;
-            return null;
+            return attribute != null ? attribute.Value : null;
         }
 
         /// <summary>
@@ -548,9 +501,14 @@ namespace RealtyParser
         /// <returns></returns>
         public static string InvokeNodeProperty(HtmlNode node, string propertyName)
         {
-            PropertyInfo propertyInfo = typeof (HtmlNode).GetProperty(propertyName);
-            if (propertyInfo != null) return (string) propertyInfo.GetValue(node, null);
-            return null;
+            string[] names = propertyName.Split('.');
+            object value = node;
+            foreach (PropertyInfo propertyInfo in names.Select(name => typeof (HtmlNode).GetProperty(name)))
+            {
+                value = propertyInfo != null ? propertyInfo.GetValue(value, null) : null;
+                if (value == null) return null;
+            }
+            return (string) value;
         }
 
         #endregion

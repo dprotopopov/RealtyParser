@@ -16,7 +16,7 @@ namespace RealtyParser.Collections
                 {Regex.Escape(@"{{Key}}"), Keys.ToList()},
                 {Regex.Escape(@"{{Value}}"), Values.ToList()}
             };
-            return System.String.Join("\n", RealtyParserParsingModule.Parser.ParseTemplate(@"{{Key}} -> {{Value}}", values).ToArray());
+            return string.Join("\n", new Transformation().ParseTemplate(@"{{Key}}:{{Value}}", values).ToArray());
         }
     }
 }

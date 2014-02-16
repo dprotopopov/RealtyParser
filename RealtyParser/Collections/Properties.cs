@@ -10,9 +10,11 @@ namespace RealtyParser.Collections
             var values = new Values
             {
                 {Regex.Escape(@"{{Key}}"), Keys.ToList()},
-                {Regex.Escape(@"{{Value}}"), Values.Select(item => (item != null) ? item.ToString() : "(null)").ToList()}
+                {
+                    Regex.Escape(@"{{Value}}"), Values.Select(item => (item != null) ? item.ToString() : "(null)").ToList()
+                }
             };
-            return System.String.Join("\n", RealtyParserParsingModule.Parser.ParseTemplate(@"{{Key}}:{{Value}}", values).ToArray());
+            return string.Join("\n", new Transformation().ParseTemplate(@"{{Key}}:{{Value}}", values));
         }
     }
 }

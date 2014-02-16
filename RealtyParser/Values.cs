@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using RealtyParser.Collections;
 
@@ -21,7 +22,7 @@ namespace RealtyParser
         {
             foreach (var returnField in returnFields)
             {
-                Add(Regex.Escape(System.String.Format(@"{{{{{0}}}}}", returnField.Key)), returnField.Value);
+                Add(Regex.Escape(string.Format("{{{{{0}}}}}", returnField.Key)), returnField.Value);
             }
         }
 
@@ -34,14 +35,14 @@ namespace RealtyParser
             get
             {
                 string propertyName =
-                    Regex.Escape(System.String.Format(@"{{{{{0}}}}}", MethodBase.GetCurrentMethod().Name.Substring(4)));
+                    Regex.Escape(string.Format("{{{{{0}}}}}", MethodBase.GetCurrentMethod().Name.Substring(4)));
                 if (!ContainsKey(propertyName)) Add(propertyName, new List<string>());
                 return this[propertyName];
             }
             set
             {
                 string propertyName =
-                    Regex.Escape(System.String.Format(@"{{{{{0}}}}}", MethodBase.GetCurrentMethod().Name.Substring(4)));
+                    Regex.Escape(string.Format("{{{{{0}}}}}", MethodBase.GetCurrentMethod().Name.Substring(4)));
                 if (ContainsKey(propertyName))
                     this[propertyName] = value;
                 else
@@ -54,14 +55,14 @@ namespace RealtyParser
             get
             {
                 string propertyName =
-                    Regex.Escape(System.String.Format(@"{{{{{0}}}}}", MethodBase.GetCurrentMethod().Name.Substring(4)));
+                    Regex.Escape(string.Format("{{{{{0}}}}}", MethodBase.GetCurrentMethod().Name.Substring(4)));
                 if (!ContainsKey(propertyName)) Add(propertyName, new List<string>());
                 return this[propertyName];
             }
             set
             {
                 string propertyName =
-                    Regex.Escape(System.String.Format(@"{{{{{0}}}}}", MethodBase.GetCurrentMethod().Name.Substring(4)));
+                    Regex.Escape(string.Format("{{{{{0}}}}}", MethodBase.GetCurrentMethod().Name.Substring(4)));
                 if (ContainsKey(propertyName))
                     this[propertyName] = value;
                 else
@@ -74,14 +75,14 @@ namespace RealtyParser
             get
             {
                 string propertyName =
-                    Regex.Escape(System.String.Format(@"{{{{{0}}}}}", MethodBase.GetCurrentMethod().Name.Substring(4)));
+                    Regex.Escape(string.Format("{{{{{0}}}}}", MethodBase.GetCurrentMethod().Name.Substring(4)));
                 if (!ContainsKey(propertyName)) Add(propertyName, new List<string>());
                 return this[propertyName];
             }
             set
             {
                 string propertyName =
-                    Regex.Escape(System.String.Format(@"{{{{{0}}}}}", MethodBase.GetCurrentMethod().Name.Substring(4)));
+                    Regex.Escape(string.Format("{{{{{0}}}}}", MethodBase.GetCurrentMethod().Name.Substring(4)));
                 if (ContainsKey(propertyName))
                     this[propertyName] = value;
                 else
@@ -94,14 +95,14 @@ namespace RealtyParser
             get
             {
                 string propertyName =
-                    Regex.Escape(System.String.Format(@"{{{{{0}}}}}", MethodBase.GetCurrentMethod().Name.Substring(4)));
+                    Regex.Escape(string.Format("{{{{{0}}}}}", MethodBase.GetCurrentMethod().Name.Substring(4)));
                 if (!ContainsKey(propertyName)) Add(propertyName, new List<string>());
                 return this[propertyName];
             }
             set
             {
                 string propertyName =
-                    Regex.Escape(System.String.Format(@"{{{{{0}}}}}", MethodBase.GetCurrentMethod().Name.Substring(4)));
+                    Regex.Escape(string.Format("{{{{{0}}}}}", MethodBase.GetCurrentMethod().Name.Substring(4)));
                 if (ContainsKey(propertyName))
                     this[propertyName] = value;
                 else
@@ -131,6 +132,16 @@ namespace RealtyParser
             }
 
             return this;
+        }
+
+        public Values Slice(int i)
+        {
+            var values = new Values();
+            foreach (var pair in this.Where(pair => i < pair.Value.Count))
+            {
+                values.Add(pair.Key, pair.Value[i]);
+            }
+            return values;
         }
     }
 }

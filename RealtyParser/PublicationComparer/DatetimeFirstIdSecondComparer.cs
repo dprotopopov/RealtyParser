@@ -27,11 +27,11 @@ namespace RealtyParser.PublicationComparer
             string idX = (structureX.Count > 0)
                 ? structureX[0].Groups["id"].Value.Trim()
                 : "";
-            if (System.String.IsNullOrEmpty(idX)) idX = "0";
-            string idY = (structureX.Count > 0)
-                ? structureX[0].Groups["id"].Value.Trim()
+            if (string.IsNullOrEmpty(idX)) idX = "0";
+            string idY = (structureY.Count > 0)
+                ? structureY[0].Groups["id"].Value.Trim()
                 : "";
-            if (System.String.IsNullOrEmpty(idY)) idY = "0";
+            if (string.IsNullOrEmpty(idY)) idY = "0";
 
             return Convert.ToDecimal(idX).CompareTo(Convert.ToDecimal(idY));
         }

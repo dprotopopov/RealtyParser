@@ -1,4 +1,5 @@
-﻿using System.Windows.Forms;
+﻿using System.Linq;
+using System.Windows.Forms;
 using RealtyParser;
 using RT.ParsingLibs.Models;
 
@@ -14,18 +15,19 @@ namespace RealtyParserEditor
 
         public void Save()
         {
-            listBoxSources.Items.Clear();
-            var parsingModule = new RealtyParserParsingModule();
-            foreach (string item in parsingModule.Sources(propertyGridControlBind.SelectedObject as Bind))
-            {
-                listBoxSources.Items.Add(item);
-            }
         }
 
-        public void Reload()
+        public void ClearResults()
         {
             listBoxSources.Items.Clear();
             propertyGridControlBind.SelectedObject = new Bind();
+        }
+
+        public void Execute()
+        {
+            var module = new ParsingModule();
+            listBoxSources.Items.Clear();
+            listBoxSources.Items.AddRange(module.Sources(propertyGridControlBind.SelectedObject as Bind).ToArray());
         }
     }
 }

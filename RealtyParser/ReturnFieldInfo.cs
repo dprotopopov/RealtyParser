@@ -11,7 +11,7 @@ namespace RealtyParser
         /// <summary>
         ///     Идентификатор сайта
         /// </summary>
-        private object SiteId
+        public object SiteId
         {
             get
             {
@@ -163,7 +163,7 @@ namespace RealtyParser
         /// <returns></returns>
         public override string ToString()
         {
-            return System.String.Format("{0}\t{1}\t{2}\t{3}\t{4}\t{5}", SiteId, ReturnFieldId, ReturnFieldXpathTemplate,
+            return string.Format("{0}\t{1}\t{2}\t{3}\t{4}\t{5}", SiteId, ReturnFieldId, ReturnFieldXpathTemplate,
                 ReturnFieldResultTemplate, ReturnFieldRegexPattern, ReturnFieldRegexReplacement);
         }
     }

@@ -2,7 +2,7 @@
 
 namespace RealtyParser.Collections
 {
-    public class Mapping : Dictionary<string, Dictionary<object, object>>
+    public class Mapping : Dictionary<object, object>
     {
     }
 }

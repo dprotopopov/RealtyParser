@@ -73,32 +73,43 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AppendLineCallback.cs" />
+    <Compile Include="Array.cs" />
+    <Compile Include="BuilderInfo.cs" />
+    <Compile Include="BuilderInfos.cs" />
     <Compile Include="Collections\DictionaryOfList.cs" />
     <Compile Include="Collections\HierarchicalItem.cs" />
     <Compile Include="Collections\HierarchicalItemCollection.cs" />
     <Compile Include="Collections\LinksCollection.cs" />
     <Compile Include="Collections\Mapping.cs" />
+    <Compile Include="Collections\Mappings.cs" />
     <Compile Include="Collections\OptionsCollection.cs" />
     <Compile Include="Collections\Properties.cs" />
+    <Compile Include="CompliteCallback.cs" />
     <Compile Include="DateTime.cs" />
     <Compile Include="Comparer.cs" />
+    <Compile Include="ObjectComparer.cs" />
+    <Compile Include="ProgressCallback.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="QueueStack.cs" />
     <Compile Include="RequestProperties.cs" />
     <Compile Include="ReturnFieldInfos.cs" />
-    <Compile Include="SiteClass.cs" />
+    <Compile Include="Builder.cs" />
     <Compile Include="String.cs" />
+    <Compile Include="Transformation.cs" />
+    <Compile Include="Type.cs" />
     <Compile Include="Values.cs" />
     <Compile Include="LevenshteinDistance.cs" />
-    <Compile Include="Mapping.cs" />
+    <Compile Include="Mappings.cs" />
     <Compile Include="PublicationComparer\DatetimeFirstIdSecondComparer.cs" />
     <Compile Include="PublicationComparer\OnlyDatetimeComparer.cs" />
     <Compile Include="PublicationComparer\OnlyDigitsDecimalComparer.cs" />
     <Compile Include="Database.cs" />
-    <Compile Include="RealtyParserParsingModule.cs" />
+    <Compile Include="ParsingModule.cs" />
     <Compile Include="PublicationComparer\AscComparer.cs" />
     <Compile Include="PublicationComparer\DescComparer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -10,7 +10,7 @@ namespace RealtyParserUnitTest
     public class RosrealtUnitTest
     {
         private const long SiteId = 2;
-        private static readonly Database Database = RealtyParserParsingModule.Database;
+        private static readonly Database Database = ParsingModule.Database;
 
         /// <summary>
         ///     Получает или устанавливает контекст теста, в котором предоставляются
@@ -48,11 +48,11 @@ namespace RealtyParserUnitTest
             //
             // TODO: добавьте здесь логику теста
             //
-            object siteId = Database.GetScalar(SiteId, "Site");
-            Mapping mapping = Database.GetMapping(siteId);
-            Assert.IsTrue(mapping.Action.Count > 0);
-            Assert.IsTrue(mapping.Rubric.Count > 0);
-            Assert.IsTrue(mapping.Region.Count > 0);
+            object siteId = Database.GetScalar(SiteId, Database.SiteTable);
+            Mappings mappings = Database.GetMappings(siteId);
+            Assert.IsTrue(mappings.Action.Count > 0);
+            Assert.IsTrue(mappings.Rubric.Count > 0);
+            Assert.IsTrue(mappings.Region.Count > 0);
         }
     }
 }

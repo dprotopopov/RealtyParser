@@ -15,7 +15,25 @@ namespace RealtyParserEditor
             propertyGridControlParseRequest.SelectedObject = new ParseRequest();
         }
 
-        public async void Save()
+        public void Save()
+        {
+        }
+
+        public void ClearResults()
+        {
+            propertyGridControlParseRequest.SelectedObject = new ParseRequest();
+            listBoxPublications.Items.Clear();
+            listBoxPhotos.Items.Clear();
+            listBoxPhone.Items.Clear();
+            listBoxEmail.Items.Clear();
+            propertyGridControlParseResponse.SelectedObject = null;
+            propertyGridControlWebPublication.SelectedObject = null;
+            propertyGridControlAdditionalInfo.SelectedObject = null;
+            propertyGridControlContact.SelectedObject = null;
+            propertyGridControlRealtyAdditionalInfo.SelectedObject = null;
+        }
+
+        public async void Execute()
         {
             listBoxPublications.Items.Clear();
             listBoxPhotos.Items.Clear();
@@ -26,7 +44,7 @@ namespace RealtyParserEditor
             propertyGridControlAdditionalInfo.SelectedObject = null;
             propertyGridControlContact.SelectedObject = null;
             propertyGridControlRealtyAdditionalInfo.SelectedObject = null;
-            var parsingModule = new RealtyParserParsingModule();
+            var parsingModule = new ParsingModule();
             propertyGridControlParseResponse.SelectedObject =
                 await parsingModule.Result(propertyGridControlParseRequest.SelectedObject as ParseRequest);
             try
@@ -41,20 +59,6 @@ namespace RealtyParserEditor
             catch (Exception)
             {
             }
-        }
-
-        public void Reload()
-        {
-            propertyGridControlParseRequest.SelectedObject = new ParseRequest();
-            listBoxPublications.Items.Clear();
-            listBoxPhotos.Items.Clear();
-            listBoxPhone.Items.Clear();
-            listBoxEmail.Items.Clear();
-            propertyGridControlParseResponse.SelectedObject = null;
-            propertyGridControlWebPublication.SelectedObject = null;
-            propertyGridControlAdditionalInfo.SelectedObject = null;
-            propertyGridControlContact.SelectedObject = null;
-            propertyGridControlRealtyAdditionalInfo.SelectedObject = null;
         }
 
         private void listBoxPublications_SelectedValueChanged(object sender, EventArgs e)

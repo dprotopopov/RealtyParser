@@ -8,18 +8,23 @@ namespace RealtyParserEditor
         public AboutForm()
         {
             InitializeComponent();
-            var parsingModule = new RealtyParserParsingModule();
-            propertyGridControl1.SelectedObject = parsingModule.About();
+            var module = new ParsingModule();
+            propertyGridControl1.SelectedObject = module.About();
         }
 
         public void Save()
         {
         }
 
-        public void Reload()
+        public void ClearResults()
         {
-            var parsingModule = new RealtyParserParsingModule();
-            propertyGridControl1.SelectedObject = parsingModule.About();
+            propertyGridControl1.SelectedObject = null;
+        }
+
+        public void Execute()
+        {
+            var module = new ParsingModule();
+            propertyGridControl1.SelectedObject = module.About();
         }
     }
 }

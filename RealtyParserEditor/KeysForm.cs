@@ -1,7 +1,7 @@
 ﻿using System;
+using System.Linq;
 using System.Windows.Forms;
 using RealtyParser;
-using RT.ParsingLibs.Models;
 
 namespace RealtyParserEditor
 {
@@ -10,25 +10,24 @@ namespace RealtyParserEditor
         public KeysForm()
         {
             InitializeComponent();
-            var parsingModule = new RealtyParserParsingModule();
-            foreach (Bind item in parsingModule.Keys())
-            {
-                //listBoxKeys.Items.Add(item);
-            }
         }
 
         public void Save()
         {
         }
 
-        public void Reload()
+        public void ClearResults()
         {
             propertyGridControlBind.SelectedObject = null;
-            var parsingModule = new RealtyParserParsingModule();
-            foreach (Bind item in parsingModule.Keys())
-            {
-                //listBoxKeys.Items.Add(item);
-            }
+            listBoxKeys.Items.Clear();
+        }
+
+        public void Execute()
+        {
+            propertyGridControlBind.SelectedObject = null;
+            listBoxKeys.Items.Clear();
+            var module = new ParsingModule();
+            listBoxKeys.Items.AddRange(module.Keys().Cast<object>().ToArray());
         }
 
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)

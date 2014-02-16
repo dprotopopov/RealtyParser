@@ -38,7 +38,7 @@ namespace RealtyParser.Collections
                     {Regex.Escape(@"{{Value}}"), item.Value.ToList()},
                 });
             }
-            return System.String.Join("\n", RealtyParserParsingModule.Parser.ParseTemplate(@"{{Key}}:{{Value}}", values).ToArray());
+            return string.Join("\n", new Transformation().ParseTemplate(@"{{Key}}:{{Value}}", values).ToArray());
         }
 
         public ListViewItem ToListViewItem(string name, IEnumerable<string> fieldNames)
@@ -47,7 +47,7 @@ namespace RealtyParser.Collections
             Debug.Assert(fieldNames != null, "fieldNames != null");
             foreach (string fieldName in fieldNames)
             {
-                viewItem.SubItems.Add(this[fieldName].Aggregate((i, j) => System.String.Format("{0}\t{1}", i, j)));
+                viewItem.SubItems.Add(this[fieldName].Aggregate((i, j) => string.Format("{0}\t{1}", i, j)));
             }
             return viewItem;
         }

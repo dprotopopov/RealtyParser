@@ -31,22 +31,22 @@ namespace RealtyParserUnitTest
         [TestMethod]
         public void TestParseTemplate()
         {
-            const string template = "RegionId={{RegionId}}&RubricId={{RubricId[1]}}&ActionId={{ActionId}}";
+            const string template = "RegionId={{Region}}&Rubric={{Rubric[1]}}&Action={{Action}}";
             Values args = new Values
             {
-                {@"\{\{RegionId\}\}", "1"},
-                {@"\{\{RubricId\[1\]\}\}", "2"}
+                {@"\{\{Region\}\}", "1"},
+                {@"\{\{Rubric\[1\]\}\}", "2"}
             };
-            Assert.AreEqual(RealtyParserParsingModule.Parser.ParseTemplate(template, args), "RegionId=1&RubricId=2&ActionId=");
+            Assert.AreEqual(new Transformation().ParseTemplate(template, args), "Region=1&Rubric=2&Action=");
         }
 
         [TestMethod]
         public async void TestWebRequestHtmlDocument()
         {
             Uri uri = new Uri("http://rbc.ru");
-            HtmlDocument[] documents = await RealtyParserParsingModule.Parser.WebRequestHtmlDocument(uri, "GET", "utf-8");
+            HtmlDocument[] documents = await ParsingModule.Parser.WebRequestHtmlDocument(uri, "GET", "utf-8");
             Assert.IsNotNull(documents);
-            Assert.IsFalse(System.String.IsNullOrEmpty(documents[0].DocumentNode.InnerText));
+            Assert.IsFalse(string.IsNullOrEmpty(documents[0].DocumentNode.InnerText));
         }
     }
 }

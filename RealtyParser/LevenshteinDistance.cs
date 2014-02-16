@@ -1,21 +1,21 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace RealtyParser
 {
-
     /// <summary>
-    /// Contains approximate string matching
+    ///     Contains approximate string matching
     /// </summary>
     public static class LevenshteinDistance
     {
         /// <summary>
-        /// Compute the distance between two strings.
+        ///     Compute the distance between two strings.
         /// </summary>
         public static int Compute(string s, string t)
         {
             int n = s.Length;
             int m = t.Length;
-            int[,] d = new int[n + 1, m + 1];
+            var d = new int[n + 1, m + 1];
 
             // Step 1
             if (n == 0)
@@ -54,6 +54,20 @@ namespace RealtyParser
             }
             // Step 7
             return d[n, m];
+        }
+
+        public static string FindNeighbour(string pattern, IEnumerable<string> collection, int maxDistance)
+        {
+            string find = "";
+            int distance = maxDistance;
+            foreach (string s in collection)
+            {
+                int compute = Compute(s, pattern);
+                if (compute >= distance ) continue;
+                distance = compute;
+                find = s;
+            }
+            return find;
         }
     }
 }

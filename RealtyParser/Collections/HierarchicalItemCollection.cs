@@ -12,5 +12,10 @@ namespace RealtyParser.Collections
             if (!ContainsKey(key))
                 Add(key, new HierarchicalItem {Key = key, Value = value, ParentId = parentId, Level = level});
         }
+
+        public void Add(HierarchicalItem item)
+        {
+            if (!ContainsKey(item.Key)) Add(item.Key, item);
+        }
     }
 }

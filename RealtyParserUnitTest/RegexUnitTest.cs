@@ -59,7 +59,7 @@ namespace RealtyParserUnitTest
             // TODO: добавьте здесь логику теста
             //
             string name =
-                RealtyParser.Regex.Escape(string.Format(@"{{{{{0}}}}}", MethodBase.GetCurrentMethod().Name));
+                RealtyParser.Regex.Escape(string.Format("{{{{{0}}}}}", MethodBase.GetCurrentMethod().Name));
             Assert.AreEqual(name, RealtyParser.Regex.Escape(@"{{" + MethodBase.GetCurrentMethod().Name + @"}}"));
         }
     }

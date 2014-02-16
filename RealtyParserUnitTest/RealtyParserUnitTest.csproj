@@ -58,7 +58,7 @@
     <Compile Include="HapUnitTest.cs" />
     <Compile Include="LevenshteinDistanceUnitTest.cs" />
     <Compile Include="PublicationIdComparerUnitTest.cs" />
-    <Compile Include="RealtyParserParsingModuleUnitTest.cs" />
+    <Compile Include="ParsingModuleUnitTest.cs" />
     <Compile Include="RealtyParserUtilsUnitTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RegexUnitTest.cs" />
