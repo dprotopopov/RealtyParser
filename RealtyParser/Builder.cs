@@ -158,6 +158,7 @@ namespace RealtyParser
                 },
             };
             List<string> commandTexts = Transformation.ParseTemplate(insertOrReplaceString, values);
+
             AppendLineCallback("BEGIN;");
             foreach (string commandText in commandTexts)
             {

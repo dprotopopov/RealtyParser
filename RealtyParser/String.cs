@@ -10,9 +10,12 @@ namespace RealtyParser
     {
         private static readonly CultureInfo CultureInfo = CultureInfo.InvariantCulture;
 
-        private static readonly string[] Patterns =
+        private static readonly string[] AddressPatterns =
         {
-            @"\bг\b", @"\bп\b", @"\bс\b", @"\bх\b",@"\bпгт\b", @"\bст\-ца\b", @"\bстца\b", @"\.", @"\-", 
+            @"\bг\.\s", @"\bпгт\.\s", @"\bп\.\s", @"\bс\.\s", @"\bдер\.\s", @"\bх\.\s", @"\bст\-ца\s", @"\bаул\s",
+            @"\bг\b", @"\bп\b", @"\bс\b", @"\bдер\b", @"\bх\b", @"\bпгт\b", @"\bстца\b", @"\bаул\b",
+            @"г\.", @"пгт", @"п\.", @"с\.", @"дер\.", @"х\.", @"ст\-ца", @"аул",
+            @"\.", @"\-"
         };
 
         public static string IntroText(string text, int introLength = 120)
@@ -37,7 +40,7 @@ namespace RealtyParser
 
         public static string NormalizeAddress(string str)
         {
-            str = Patterns.Aggregate(str.ToLower(),
+            str = AddressPatterns.Aggregate(str.ToLower(),
                 (current, pattern) =>
                     new System.Text.RegularExpressions.Regex(pattern, RegexOptions.IgnoreCase).Replace(current, @" "));
             str = new System.Text.RegularExpressions.Regex(@"\s+").Replace(str, @" ");
