@@ -11,7 +11,7 @@ namespace RealtyParser
     /// </summary>
     public class ReturnFields : DictionaryOfList
     {
-        public List<string> PublicationId
+        public IEnumerable<string> PublicationId
         {
             get
             {
@@ -29,7 +29,7 @@ namespace RealtyParser
             }
         }
 
-        public List<string> PublicationDate
+        public IEnumerable<string> PublicationDate
         {
             get
             {
@@ -47,7 +47,7 @@ namespace RealtyParser
             }
         }
 
-        public List<string> PublicationLink
+        public IEnumerable<string> PublicationLink
         {
             get
             {
@@ -65,7 +65,7 @@ namespace RealtyParser
             }
         }
 
-        public List<string> WebPublicationAdditionalInfoRealtyAdditionalInfoAddress
+        public IEnumerable<string> Subdomain
         {
             get
             {
@@ -83,7 +83,7 @@ namespace RealtyParser
             }
         }
 
-        public List<string> WebPublicationAdditionalInfoRealtyAdditionalInfoDistrict
+        public IEnumerable<string> Option
         {
             get
             {
@@ -101,7 +101,7 @@ namespace RealtyParser
             }
         }
 
-        public List<string> WebPublicationAdditionalInfoRealtyAdditionalInfoAppointmentOfRoom
+        public IEnumerable<string> Title
         {
             get
             {
@@ -119,7 +119,7 @@ namespace RealtyParser
             }
         }
 
-        public List<string> WebPublicationAdditionalInfoRealtyAdditionalInfoCostAll
+        public IEnumerable<string> OptionRedirect
         {
             get
             {
@@ -137,7 +137,7 @@ namespace RealtyParser
             }
         }
 
-        public List<string> WebPublicationAdditionalInfoRealtyAdditionalInfoTotalSpace
+        public IEnumerable<string> ValueRedirect
         {
             get
             {
@@ -155,7 +155,7 @@ namespace RealtyParser
             }
         }
 
-        public List<string> WebPublicationContactAuthor
+        public IEnumerable<string> WebPublicationSite
         {
             get
             {
@@ -173,7 +173,7 @@ namespace RealtyParser
             }
         }
 
-        public List<string> WebPublicationContactAuthorUrl
+        public IEnumerable<string> WebPublicationUrl
         {
             get
             {
@@ -191,7 +191,7 @@ namespace RealtyParser
             }
         }
 
-        public List<string> WebPublicationContactContactName
+        public IEnumerable<string> WebPublicationAdditionalInfoRealtyAdditionalInfoAddress
         {
             get
             {
@@ -209,7 +209,7 @@ namespace RealtyParser
             }
         }
 
-        public List<string> WebPublicationContactEmail
+        public IEnumerable<string> WebPublicationAdditionalInfoRealtyAdditionalInfoDistrict
         {
             get
             {
@@ -227,7 +227,7 @@ namespace RealtyParser
             }
         }
 
-        public List<string> WebPublicationContactIcq
+        public IEnumerable<string> WebPublicationAdditionalInfoRealtyAdditionalInfoAppointmentOfRoom
         {
             get
             {
@@ -245,7 +245,7 @@ namespace RealtyParser
             }
         }
 
-        public List<string> WebPublicationContactPhone
+        public IEnumerable<string> WebPublicationAdditionalInfoRealtyAdditionalInfoCostAll
         {
             get
             {
@@ -263,7 +263,7 @@ namespace RealtyParser
             }
         }
 
-        public List<string> WebPublicationContactSkype
+        public IEnumerable<string> WebPublicationAdditionalInfoRealtyAdditionalInfoTotalSpace
         {
             get
             {
@@ -281,7 +281,7 @@ namespace RealtyParser
             }
         }
 
-        public List<string> WebPublicationDescription
+        public IEnumerable<string> WebPublicationAdditionalInfoRealtyAdditionalInfoFloorNumber
         {
             get
             {
@@ -299,7 +299,7 @@ namespace RealtyParser
             }
         }
 
-        public List<string> WebPublicationModifyDate
+        public IEnumerable<string> WebPublicationAdditionalInfoRealtyAdditionalInfoFloor
         {
             get
             {
@@ -317,7 +317,7 @@ namespace RealtyParser
             }
         }
 
-        public List<string> WebPublicationPhotos
+        public IEnumerable<string> WebPublicationAdditionalInfoRealtyAdditionalInfoRoomNumber
         {
             get
             {
@@ -335,7 +335,439 @@ namespace RealtyParser
             }
         }
 
-        public List<string> WebPublicationPublicationId
+        public IEnumerable<string> WebPublicationAdditionalInfoRealtyAdditionalInfoRealEstateType
+        {
+            get
+            {
+                string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
+                if (!ContainsKey(propertyName)) Add(propertyName, new List<string>());
+                return this[propertyName];
+            }
+            set
+            {
+                string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
+                if (ContainsKey(propertyName))
+                    this[propertyName] = value;
+                else
+                    Add(propertyName, value);
+            }
+        }
+
+        public IEnumerable<string> WebPublicationAdditionalInfoRealtyAdditionalInfoWallМaterial
+        {
+            get
+            {
+                string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
+                if (!ContainsKey(propertyName)) Add(propertyName, new List<string>());
+                return this[propertyName];
+            }
+            set
+            {
+                string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
+                if (ContainsKey(propertyName))
+                    this[propertyName] = value;
+                else
+                    Add(propertyName, value);
+            }
+        }
+
+        public IEnumerable<string> WebPublicationAdditionalInfoRealtyAdditionalInfoFurnish
+        {
+            get
+            {
+                string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
+                if (!ContainsKey(propertyName)) Add(propertyName, new List<string>());
+                return this[propertyName];
+            }
+            set
+            {
+                string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
+                if (ContainsKey(propertyName))
+                    this[propertyName] = value;
+                else
+                    Add(propertyName, value);
+            }
+        }
+
+        public IEnumerable<string> WebPublicationAdditionalInfoRealtyAdditionalInfoLivingSpace
+        {
+            get
+            {
+                string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
+                if (!ContainsKey(propertyName)) Add(propertyName, new List<string>());
+                return this[propertyName];
+            }
+            set
+            {
+                string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
+                if (ContainsKey(propertyName))
+                    this[propertyName] = value;
+                else
+                    Add(propertyName, value);
+            }
+        }
+
+        public IEnumerable<string> WebPublicationAdditionalInfoRealtyAdditionalInfoKitchenSpace
+        {
+            get
+            {
+                string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
+                if (!ContainsKey(propertyName)) Add(propertyName, new List<string>());
+                return this[propertyName];
+            }
+            set
+            {
+                string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
+                if (ContainsKey(propertyName))
+                    this[propertyName] = value;
+                else
+                    Add(propertyName, value);
+            }
+        }
+
+        public IEnumerable<string> WebPublicationAdditionalInfoRealtyAdditionalInfoCostPerMeter
+        {
+            get
+            {
+                string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
+                if (!ContainsKey(propertyName)) Add(propertyName, new List<string>());
+                return this[propertyName];
+            }
+            set
+            {
+                string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
+                if (ContainsKey(propertyName))
+                    this[propertyName] = value;
+                else
+                    Add(propertyName, value);
+            }
+        }
+
+        public IEnumerable<string> WebPublicationAdditionalInfoRealtyAdditionalInfoIsLoggia
+        {
+            get
+            {
+                string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
+                if (!ContainsKey(propertyName)) Add(propertyName, new List<string>());
+                return this[propertyName];
+            }
+            set
+            {
+                string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
+                if (ContainsKey(propertyName))
+                    this[propertyName] = value;
+                else
+                    Add(propertyName, value);
+            }
+        }
+
+        public IEnumerable<string> WebPublicationAdditionalInfoRealtyAdditionalInfoWc
+        {
+            get
+            {
+                string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
+                if (!ContainsKey(propertyName)) Add(propertyName, new List<string>());
+                return this[propertyName];
+            }
+            set
+            {
+                string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
+                if (ContainsKey(propertyName))
+                    this[propertyName] = value;
+                else
+                    Add(propertyName, value);
+            }
+        }
+
+        public IEnumerable<string> WebPublicationAdditionalInfoRealtyAdditionalInfoViewFromProperty
+        {
+            get
+            {
+                string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
+                if (!ContainsKey(propertyName)) Add(propertyName, new List<string>());
+                return this[propertyName];
+            }
+            set
+            {
+                string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
+                if (ContainsKey(propertyName))
+                    this[propertyName] = value;
+                else
+                    Add(propertyName, value);
+            }
+        }
+
+        public IEnumerable<string> WebPublicationAdditionalInfoRealtyAdditionalInfoIsParking
+        {
+            get
+            {
+                string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
+                if (!ContainsKey(propertyName)) Add(propertyName, new List<string>());
+                return this[propertyName];
+            }
+            set
+            {
+                string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
+                if (ContainsKey(propertyName))
+                    this[propertyName] = value;
+                else
+                    Add(propertyName, value);
+            }
+        }
+
+        public IEnumerable<string> WebPublicationAdditionalInfoRealtyAdditionalInfoTenancy
+        {
+            get
+            {
+                string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
+                if (!ContainsKey(propertyName)) Add(propertyName, new List<string>());
+                return this[propertyName];
+            }
+            set
+            {
+                string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
+                if (ContainsKey(propertyName))
+                    this[propertyName] = value;
+                else
+                    Add(propertyName, value);
+            }
+        }
+
+        public IEnumerable<string> WebPublicationAdditionalInfoRealtyAdditionalInfoLeasableSpace
+        {
+            get
+            {
+                string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
+                if (!ContainsKey(propertyName)) Add(propertyName, new List<string>());
+                return this[propertyName];
+            }
+            set
+            {
+                string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
+                if (ContainsKey(propertyName))
+                    this[propertyName] = value;
+                else
+                    Add(propertyName, value);
+            }
+        }
+
+        public IEnumerable<string> WebPublicationAdditionalInfoRealtyAdditionalInfoLandSpace
+        {
+            get
+            {
+                string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
+                if (!ContainsKey(propertyName)) Add(propertyName, new List<string>());
+                return this[propertyName];
+            }
+            set
+            {
+                string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
+                if (ContainsKey(propertyName))
+                    this[propertyName] = value;
+                else
+                    Add(propertyName, value);
+            }
+        }
+
+        public IEnumerable<string> WebPublicationContactAuthor
+        {
+            get
+            {
+                string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
+                if (!ContainsKey(propertyName)) Add(propertyName, new List<string>());
+                return this[propertyName];
+            }
+            set
+            {
+                string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
+                if (ContainsKey(propertyName))
+                    this[propertyName] = value;
+                else
+                    Add(propertyName, value);
+            }
+        }
+
+        public IEnumerable<string> WebPublicationContactAuthorUrl
+        {
+            get
+            {
+                string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
+                if (!ContainsKey(propertyName)) Add(propertyName, new List<string>());
+                return this[propertyName];
+            }
+            set
+            {
+                string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
+                if (ContainsKey(propertyName))
+                    this[propertyName] = value;
+                else
+                    Add(propertyName, value);
+            }
+        }
+
+        public IEnumerable<string> WebPublicationContactContactName
+        {
+            get
+            {
+                string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
+                if (!ContainsKey(propertyName)) Add(propertyName, new List<string>());
+                return this[propertyName];
+            }
+            set
+            {
+                string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
+                if (ContainsKey(propertyName))
+                    this[propertyName] = value;
+                else
+                    Add(propertyName, value);
+            }
+        }
+
+        public IEnumerable<string> WebPublicationContactEmail
+        {
+            get
+            {
+                string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
+                if (!ContainsKey(propertyName)) Add(propertyName, new List<string>());
+                return this[propertyName];
+            }
+            set
+            {
+                string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
+                if (ContainsKey(propertyName))
+                    this[propertyName] = value;
+                else
+                    Add(propertyName, value);
+            }
+        }
+
+        public IEnumerable<string> WebPublicationContactIcq
+        {
+            get
+            {
+                string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
+                if (!ContainsKey(propertyName)) Add(propertyName, new List<string>());
+                return this[propertyName];
+            }
+            set
+            {
+                string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
+                if (ContainsKey(propertyName))
+                    this[propertyName] = value;
+                else
+                    Add(propertyName, value);
+            }
+        }
+
+        public IEnumerable<string> WebPublicationContactPhone
+        {
+            get
+            {
+                string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
+                if (!ContainsKey(propertyName)) Add(propertyName, new List<string>());
+                return this[propertyName];
+            }
+            set
+            {
+                string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
+                if (ContainsKey(propertyName))
+                    this[propertyName] = value;
+                else
+                    Add(propertyName, value);
+            }
+        }
+
+        public IEnumerable<string> WebPublicationContactSkype
+        {
+            get
+            {
+                string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
+                if (!ContainsKey(propertyName)) Add(propertyName, new List<string>());
+                return this[propertyName];
+            }
+            set
+            {
+                string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
+                if (ContainsKey(propertyName))
+                    this[propertyName] = value;
+                else
+                    Add(propertyName, value);
+            }
+        }
+
+        public IEnumerable<string> WebPublicationDescription
+        {
+            get
+            {
+                string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
+                if (!ContainsKey(propertyName)) Add(propertyName, new List<string>());
+                return this[propertyName];
+            }
+            set
+            {
+                string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
+                if (ContainsKey(propertyName))
+                    this[propertyName] = value;
+                else
+                    Add(propertyName, value);
+            }
+        }
+
+        public IEnumerable<string> WebPublicationModifyDate
+        {
+            get
+            {
+                string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
+                if (!ContainsKey(propertyName)) Add(propertyName, new List<string>());
+                return this[propertyName];
+            }
+            set
+            {
+                string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
+                if (ContainsKey(propertyName))
+                    this[propertyName] = value;
+                else
+                    Add(propertyName, value);
+            }
+        }
+
+        public IEnumerable<string> WebPublicationPhotos
+        {
+            get
+            {
+                string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
+                if (!ContainsKey(propertyName)) Add(propertyName, new List<string>());
+                return this[propertyName];
+            }
+            set
+            {
+                string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
+                if (ContainsKey(propertyName))
+                    this[propertyName] = value;
+                else
+                    Add(propertyName, value);
+            }
+        }
+
+        public IEnumerable<string> WebPublicationPublicationId
+        {
+            get
+            {
+                string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
+                if (!ContainsKey(propertyName)) Add(propertyName, new List<string>());
+                return this[propertyName];
+            }
+            set
+            {
+                string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
+                if (ContainsKey(propertyName))
+                    this[propertyName] = value;
+                else
+                    Add(propertyName, value);
+            }
+        }
+
+        public IEnumerable<string> Value
         {
             get
             {

@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using RealtyParser.Collections;
@@ -18,11 +20,16 @@ namespace RealtyParser
             InsertOrReplace(values);
         }
 
+        public Values(Values values, int i)
+        {
+            InsertOrReplace(values.Slice(i));
+        }
+
         public Values(ReturnFields returnFields)
         {
             foreach (var returnField in returnFields)
             {
-                Add(Regex.Escape(string.Format("{{{{{0}}}}}", returnField.Key)), returnField.Value);
+                Add(string.Format("{0}", returnField.Key), returnField.Value);
             }
         }
 
@@ -30,19 +37,19 @@ namespace RealtyParser
         {
         }
 
-        public List<string> RegionId
+        public IEnumerable<string> Option
         {
             get
             {
                 string propertyName =
-                    Regex.Escape(string.Format("{{{{{0}}}}}", MethodBase.GetCurrentMethod().Name.Substring(4)));
+                    MethodBase.GetCurrentMethod().Name.Substring(4);
                 if (!ContainsKey(propertyName)) Add(propertyName, new List<string>());
                 return this[propertyName];
             }
             set
             {
                 string propertyName =
-                    Regex.Escape(string.Format("{{{{{0}}}}}", MethodBase.GetCurrentMethod().Name.Substring(4)));
+                    MethodBase.GetCurrentMethod().Name.Substring(4);
                 if (ContainsKey(propertyName))
                     this[propertyName] = value;
                 else
@@ -50,19 +57,19 @@ namespace RealtyParser
             }
         }
 
-        public List<string> RubricId
+        public IEnumerable<string> Value
         {
             get
             {
                 string propertyName =
-                    Regex.Escape(string.Format("{{{{{0}}}}}", MethodBase.GetCurrentMethod().Name.Substring(4)));
+                    MethodBase.GetCurrentMethod().Name.Substring(4);
                 if (!ContainsKey(propertyName)) Add(propertyName, new List<string>());
                 return this[propertyName];
             }
             set
             {
                 string propertyName =
-                    Regex.Escape(string.Format("{{{{{0}}}}}", MethodBase.GetCurrentMethod().Name.Substring(4)));
+                    MethodBase.GetCurrentMethod().Name.Substring(4);
                 if (ContainsKey(propertyName))
                     this[propertyName] = value;
                 else
@@ -70,19 +77,19 @@ namespace RealtyParser
             }
         }
 
-        public List<string> ActionId
+        public IEnumerable<string> Key
         {
             get
             {
                 string propertyName =
-                    Regex.Escape(string.Format("{{{{{0}}}}}", MethodBase.GetCurrentMethod().Name.Substring(4)));
+                    MethodBase.GetCurrentMethod().Name.Substring(4);
                 if (!ContainsKey(propertyName)) Add(propertyName, new List<string>());
                 return this[propertyName];
             }
             set
             {
                 string propertyName =
-                    Regex.Escape(string.Format("{{{{{0}}}}}", MethodBase.GetCurrentMethod().Name.Substring(4)));
+                    MethodBase.GetCurrentMethod().Name.Substring(4);
                 if (ContainsKey(propertyName))
                     this[propertyName] = value;
                 else
@@ -90,19 +97,19 @@ namespace RealtyParser
             }
         }
 
-        public List<string> PublicationId
+        public IEnumerable<string> Page
         {
             get
             {
                 string propertyName =
-                    Regex.Escape(string.Format("{{{{{0}}}}}", MethodBase.GetCurrentMethod().Name.Substring(4)));
+                    MethodBase.GetCurrentMethod().Name.Substring(4);
                 if (!ContainsKey(propertyName)) Add(propertyName, new List<string>());
                 return this[propertyName];
             }
             set
             {
                 string propertyName =
-                    Regex.Escape(string.Format("{{{{{0}}}}}", MethodBase.GetCurrentMethod().Name.Substring(4)));
+                    MethodBase.GetCurrentMethod().Name.Substring(4);
                 if (ContainsKey(propertyName))
                     this[propertyName] = value;
                 else
@@ -110,37 +117,171 @@ namespace RealtyParser
             }
         }
 
-        public Values InsertOrAppend(Values values)
+        public IEnumerable<string> Url
         {
-            foreach (var pair in values)
+            get
             {
-                if (!ContainsKey(pair.Key))
-                    Add(pair.Key, new List<string>());
-                this[pair.Key].AddRange(pair.Value);
+                string propertyName =
+                    MethodBase.GetCurrentMethod().Name.Substring(4);
+                if (!ContainsKey(propertyName)) Add(propertyName, new List<string>());
+                return this[propertyName];
             }
-
-            return this;
+            set
+            {
+                string propertyName =
+                    MethodBase.GetCurrentMethod().Name.Substring(4);
+                if (ContainsKey(propertyName))
+                    this[propertyName] = value;
+                else
+                    Add(propertyName, value);
+            }
         }
 
-        public Values InsertOrReplace(Values values)
+        public IEnumerable<string> Region
         {
-            foreach (var pair in values)
+            get
             {
-                if (!ContainsKey(pair.Key))
-                    Add(pair.Key, pair.Value);
-                this[pair.Key] = pair.Value;
+                string propertyName =
+                    MethodBase.GetCurrentMethod().Name.Substring(4);
+                if (!ContainsKey(propertyName)) Add(propertyName, new List<string>());
+                return this[propertyName];
             }
-
-            return this;
+            set
+            {
+                string propertyName =
+                    MethodBase.GetCurrentMethod().Name.Substring(4);
+                if (ContainsKey(propertyName))
+                    this[propertyName] = value;
+                else
+                    Add(propertyName, value);
+            }
         }
 
-        public Values Slice(int i)
+        public IEnumerable<string> Rubric
+        {
+            get
+            {
+                string propertyName =
+                    MethodBase.GetCurrentMethod().Name.Substring(4);
+                if (!ContainsKey(propertyName)) Add(propertyName, new List<string>());
+                return this[propertyName];
+            }
+            set
+            {
+                string propertyName =
+                    MethodBase.GetCurrentMethod().Name.Substring(4);
+                if (ContainsKey(propertyName))
+                    this[propertyName] = value;
+                else
+                    Add(propertyName, value);
+            }
+        }
+
+        public IEnumerable<string> Action
+        {
+            get
+            {
+                string propertyName =
+                    MethodBase.GetCurrentMethod().Name.Substring(4);
+                if (!ContainsKey(propertyName)) Add(propertyName, new List<string>());
+                return this[propertyName];
+            }
+            set
+            {
+                string propertyName =
+                    MethodBase.GetCurrentMethod().Name.Substring(4);
+                if (ContainsKey(propertyName))
+                    this[propertyName] = value;
+                else
+                    Add(propertyName, value);
+            }
+        }
+
+        public IEnumerable<string> PublicationId
+        {
+            get
+            {
+                string propertyName =
+                    MethodBase.GetCurrentMethod().Name.Substring(4);
+                if (!ContainsKey(propertyName)) Add(propertyName, new List<string>());
+                return this[propertyName];
+            }
+            set
+            {
+                string propertyName =
+                    MethodBase.GetCurrentMethod().Name.Substring(4);
+                if (ContainsKey(propertyName))
+                    this[propertyName] = value;
+                else
+                    Add(propertyName, value);
+            }
+        }
+
+        public IEnumerable<string> Title
+        {
+            get
+            {
+                string propertyName =
+                    MethodBase.GetCurrentMethod().Name.Substring(4);
+                if (!ContainsKey(propertyName)) Add(propertyName, new List<string>());
+                return this[propertyName];
+            }
+            set
+            {
+                string propertyName =
+                    MethodBase.GetCurrentMethod().Name.Substring(4);
+                if (ContainsKey(propertyName))
+                    this[propertyName] = value;
+                else
+                    Add(propertyName, value);
+            }
+        }
+
+        public IEnumerable<string> Table
+        {
+            get
+            {
+                string propertyName =
+                    MethodBase.GetCurrentMethod().Name.Substring(4);
+                if (!ContainsKey(propertyName)) Add(propertyName, new List<string>());
+                return this[propertyName];
+            }
+            set
+            {
+                string propertyName =
+                    MethodBase.GetCurrentMethod().Name.Substring(4);
+                if (ContainsKey(propertyName))
+                    this[propertyName] = value;
+                else
+                    Add(propertyName, value);
+            }
+        }
+
+        public void InsertOrAppend(Values values)
+        {
+            string methodName = MethodBase.GetCurrentMethod().Name;
+            Type[] types = {typeof (DictionaryOfList)};
+            MethodInfo methodInfo = GetType().GetMethod(methodName, types);
+            Debug.Assert(methodInfo != null);
+            object[] objects = {values};
+            methodInfo.Invoke(this, objects);
+        }
+
+        public void InsertOrReplace(Values values)
+        {
+            string methodName = MethodBase.GetCurrentMethod().Name;
+            Type[] types = {typeof (DictionaryOfList)};
+            MethodInfo methodInfo = GetType().GetMethod(methodName, types);
+            Debug.Assert(methodInfo != null);
+            object[] objects = {values};
+            methodInfo.Invoke(this, objects);
+        }
+
+        public new Values Slice(int i)
         {
             var values = new Values();
-            foreach (var pair in this.Where(pair => i < pair.Value.Count))
-            {
-                values.Add(pair.Key, pair.Value[i]);
-            }
+            foreach (var pair in this.Where(pair => i < pair.Value.Count()))
+                values.Add(pair.Key, pair.Value.ToList()[i]);
             return values;
         }
     }

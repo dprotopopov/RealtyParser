@@ -7,7 +7,6 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RealtyParser;
 using RealtyParser.Collections;
 using Mappings = RealtyParser.Mappings;
-using String = System.String;
 
 namespace RealtyParserUnitTest
 {
@@ -17,7 +16,9 @@ namespace RealtyParserUnitTest
     [TestClass]
     public class DatabaseDataTest
     {
-        private readonly Database _database = new Database();
+        private static readonly ParserModule ParserModule = new ParserModule();
+        private static readonly Database Database = ParserModule.Database;
+        private static readonly ComparerManager ComparerManager = ParserModule.ComparerManager;
 
         /// <summary>
         ///     Получает или устанавливает контекст теста, в котором предоставляются
@@ -55,9 +56,9 @@ namespace RealtyParserUnitTest
             //
             // TODO: добавьте здесь логику теста
             //
-            foreach (object tableName in _database.GetList(Database.MappingTable, Database.TableNameColumn))
+            foreach (object tableName in Database.GetList(Database.MappingTable, Database.TableNameColumn))
             {
-                Mapping table = _database.GetMapping(tableName.ToString());
+                Mapping table = Database.GetMapping(tableName.ToString());
                 Assert.IsTrue(table.Count > 0);
             }
         }
@@ -68,11 +69,11 @@ namespace RealtyParserUnitTest
             //
             // TODO: добавьте здесь логику теста
             //
-            object siteId = _database.GetScalar((long) 1, Database.SiteTable);
+            object siteId = Database.GetScalar((long) 1, Database.SiteTable);
             foreach (
-                var dictionary in
-                    _database.GetList(Database.MappingTable, Database.TableNameColumn)
-                        .Select(mappedTableName => _database.GetMapping(
+                Mapping dictionary in
+                    Database.GetList(Database.MappingTable, Database.TableNameColumn)
+                        .Select(mappedTableName => Database.GetMapping(
                             String.Format("Site{0}Mappings", mappedTableName.ToString()),
                             String.Format("{0}Id", mappedTableName.ToString()),
                             String.Format("Site{0}Id", mappedTableName.ToString()),
@@ -88,14 +89,14 @@ namespace RealtyParserUnitTest
             //
             // TODO: добавьте здесь логику теста
             //
-            object siteId = _database.GetScalar((long) 1, Database.SiteTable);
-            object regionId = _database.GetScalar((long) 1, "Region");
-            object rubricId = _database.GetScalar((long) 1, "Rubric");
-            object actionId = _database.GetScalar((long) 1, "Action");
-            SiteProperties properties = _database.GetSiteProperties(siteId);
-            Assert.IsTrue(_database.GetScalar(regionId, "Region", siteId) != null &&
-                          _database.GetScalar(rubricId, "Rubric", siteId) != null &&
-                          _database.GetScalar(actionId, "Action", siteId) != null);
+            object siteId = Database.GetScalar((long) 1, Database.SiteTable);
+            object regionId = Database.GetScalar((long) 1, "Region");
+            object rubricId = Database.GetScalar((long) 1, "Rubric");
+            object actionId = Database.GetScalar((long) 1, "Action");
+            SiteProperties properties = Database.GetSiteProperties(siteId);
+            Assert.IsTrue(Database.GetScalar(regionId, "Region", siteId) != null &&
+                          Database.GetScalar(rubricId, "Rubric", siteId) != null &&
+                          Database.GetScalar(actionId, "Action", siteId) != null);
         }
 
         [TestMethod]
@@ -104,9 +105,9 @@ namespace RealtyParserUnitTest
             //
             // TODO: добавьте здесь логику теста
             //
-            System.Type type = typeof(HtmlNode);
+            Type type = typeof (HtmlNode);
             Assert.IsNotNull(type);
-            IEnumerable<object> propertyNames = _database.GetList("NodePropertyName", "NodePropertyName");
+            IEnumerable<object> propertyNames = Database.GetList("NodePropertyName", "NodePropertyName");
             foreach (object propertyName in propertyNames)
             {
                 PropertyInfo propertyInfo = type.GetProperty(propertyName.ToString());
@@ -124,10 +125,10 @@ namespace RealtyParserUnitTest
             //
             // TODO: добавьте здесь логику теста
             //
-            IEnumerable<object> classNames = _database.GetList("PublicationIdComparer", "ClassName");
+            IEnumerable<object> classNames = Database.GetList("PublicationIdComparer", "ClassName");
             foreach (object className in classNames)
             {
-                Assert.IsNotNull(Comparer.CreatePublicationComparer(className.ToString()));
+                Assert.IsNotNull(ComparerManager.CreatePublicationComparer(className.ToString()));
             }
         }
 
@@ -137,7 +138,7 @@ namespace RealtyParserUnitTest
             //
             // TODO: добавьте здесь логику теста
             //
-            IEnumerable<object> methodNames = _database.GetList("HtmlMethod", "MethodInfo");
+            IEnumerable<object> methodNames = Database.GetList("HtmlMethod", "Method");
             IList<object> enumerable = methodNames as IList<object> ?? methodNames.ToList();
             Assert.AreEqual(enumerable.Count, 2);
             Assert.IsTrue(enumerable.Contains("GET"));
@@ -151,9 +152,9 @@ namespace RealtyParserUnitTest
             // TODO: добавьте здесь логику теста
             //
 
-            object siteId = _database.GetScalar((long) 2, Database.SiteTable);
+            object siteId = Database.GetScalar((long) 2, Database.SiteTable);
 
-            Mappings mappings = _database.GetMappings(siteId);
+            Mappings mappings = Database.GetMappings(siteId);
 
             object regionId = mappings.Region.Keys.FirstOrDefault();
             object rubricId = mappings.Rubric.Keys.FirstOrDefault();
@@ -174,12 +175,12 @@ namespace RealtyParserUnitTest
             object mappingRubricId = mappings.Rubric[rubricId];
             object mappingActionId = mappings.Action[actionId];
 
-            object antiActionId = _database.GetScalar(actionId, "AntiActionId", "Action");
-            object levelRegion = _database.GetScalar(mappingRegionId, Database.LevelColumn, "Region", siteId);
-            object levelRubric = _database.GetScalar(mappingRubricId, Database.LevelColumn, "Rubric", siteId);
-            object mappingParentRegionId = _database.GetScalar(mappingRegionId, Database.ParentIdColumn, "Region",
+            object antiActionId = Database.GetScalar(actionId, "AntiActionId", "Action");
+            object levelRegion = Database.GetScalar(mappingRegionId, Database.LevelColumn, "Region", siteId);
+            object levelRubric = Database.GetScalar(mappingRubricId, Database.LevelColumn, "Rubric", siteId);
+            object mappingParentRegionId = Database.GetScalar(mappingRegionId, Database.ParentIdColumn, "Region",
                 siteId);
-            object mappingParentRubricd = _database.GetScalar(mappingRubricId, Database.ParentIdColumn, "Rubric",
+            object mappingParentRubricd = Database.GetScalar(mappingRubricId, Database.ParentIdColumn, "Rubric",
                 siteId);
             object mappingAntiActionId = mappings.Action[antiActionId];
 
@@ -192,25 +193,35 @@ namespace RealtyParserUnitTest
                 mappingAntiActionId);
             Console.WriteLine(@"-------------------------------------------------------------------");
 
-            var id = new RequestProperties
+            var requestId = new RequestProperties
             {
                 {"Action", actionId},
                 {"Region", regionId},
                 {"Rubric", rubricId},
                 {Database.SiteTable, siteId}
             };
-            IEnumerable<string> mappingTable = _database.GetList(Database.MappingTable, Database.TableNameColumn).Select(item => item.ToString());
-            var mappingId = (RequestProperties) mappingTable.ToDictionary(item => item,
-                item => _database.GetScalar(id[item], item, id.Site));
-            mappingId.Site = id.Site;
-            Values args = ParsingModule.Parser.BuildValues(_database, id, mappingId);
+            IEnumerable<string> mapping =
+                Database.GetList(Database.MappingTable, Database.TableNameColumn).Select(item => item.ToString());
+            var mappedId = new RequestProperties
+            {
+                requestId.Where(pair => mapping.Contains(pair.Key)).ToDictionary(pair => pair.Key,
+                    pair => Database.GetScalar(pair.Value, Database.LevelColumn, requestId.Site)),
+                requestId.Where(pair => !mapping.Contains(pair.Key)).ToDictionary(pair => pair.Key,
+                    pair => pair.Value),
+            };
+            var mappedLevel = new RequestProperties
+            {
+                mappedId.Where(pair => mapping.Contains(pair.Key)).ToDictionary(pair => pair.Key,
+                    pair => Database.GetScalar(pair.Value, Database.LevelColumn, pair.Key, requestId.Site))
+            };
+            Values args = ParserModule.Parser.BuildValues(requestId, mappedId, mappedLevel);
             Console.WriteLine(args.ToString());
 
             for (long level = 1; level <= Database.ConvertTo<long>(levelRegion); level++)
-                Assert.IsTrue(args.ContainsKey(Regex.Escape(string.Format("{{{{RegionId[{0}]}}}}", level))));
+                Assert.IsTrue(args.ContainsKey(string.Format("Region[{0}]", level)));
 
             for (long level = 1; level <= Database.ConvertTo<long>(levelRubric); level++)
-                Assert.IsTrue(args.ContainsKey(Regex.Escape(string.Format("{{{{RubricId[{0}]}}}}", level))));
+                Assert.IsTrue(args.ContainsKey(string.Format("Rubric[{0}]", level)));
         }
 
         [TestMethod]
@@ -220,9 +231,9 @@ namespace RealtyParserUnitTest
             // TODO: добавьте здесь логику теста
             //
 
-            object siteId = _database.GetScalar((long) 2, Database.SiteTable);
+            object siteId = Database.GetScalar((long) 2, Database.SiteTable);
 
-            Mappings mappings = _database.GetMappings(siteId);
+            Mappings mappings = Database.GetMappings(siteId);
 
             object regionId = mappings.Region.Keys.LastOrDefault();
             object rubricId = mappings.Rubric.Keys.LastOrDefault();
@@ -243,12 +254,12 @@ namespace RealtyParserUnitTest
             object mappingRubricId = mappings.Rubric[rubricId];
             object mappingActionId = mappings.Action[actionId];
 
-            object antiActionId = _database.GetScalar(actionId, "AntiActionId", "Action");
-            object levelRegion = _database.GetScalar(mappingRegionId, Database.LevelColumn, "Region", siteId);
-            object levelRubric = _database.GetScalar(mappingRubricId, Database.LevelColumn, "Rubric", siteId);
-            object mappingParentRegionId = _database.GetScalar(mappingRegionId, Database.ParentIdColumn, "Region",
+            object antiActionId = Database.GetScalar(actionId, "AntiActionId", "Action");
+            object levelRegion = Database.GetScalar(mappingRegionId, Database.LevelColumn, "Region", siteId);
+            object levelRubric = Database.GetScalar(mappingRubricId, Database.LevelColumn, "Rubric", siteId);
+            object mappingParentRegionId = Database.GetScalar(mappingRegionId, Database.ParentIdColumn, "Region",
                 siteId);
-            object mappingParentRubricd = _database.GetScalar(mappingRubricId, Database.ParentIdColumn, "Rubric",
+            object mappingParentRubricd = Database.GetScalar(mappingRubricId, Database.ParentIdColumn, "Rubric",
                 siteId);
             object mappingAntiActionId = mappings.Action[antiActionId];
 
@@ -261,25 +272,35 @@ namespace RealtyParserUnitTest
                 mappingAntiActionId);
             Console.WriteLine(@"-------------------------------------------------------------------");
 
-            var id = new RequestProperties
+            var requestId = new RequestProperties
             {
                 {"Action", actionId},
                 {"Region", regionId},
                 {"Rubric", rubricId},
                 {Database.SiteTable, siteId}
             };
-            IEnumerable<string> mappingTable = _database.GetList(Database.MappingTable, Database.TableNameColumn).Select(item => item.ToString());
-            var mappingId = (RequestProperties) mappingTable.ToDictionary(item => item,
-                item => _database.GetScalar(id[item], item, id.Site));
-            mappingId.Site = id.Site;
-            Values args = ParsingModule.Parser.BuildValues(_database, id, mappingId);
+            IEnumerable<string> mapping =
+                Database.GetList(Database.MappingTable, Database.TableNameColumn).Select(item => item.ToString());
+            var mappedId = new RequestProperties
+            {
+                requestId.Where(pair => mapping.Contains(pair.Key)).ToDictionary(pair => pair.Key,
+                    pair => Database.GetScalar(pair.Value, Database.LevelColumn, requestId.Site)),
+                requestId.Where(pair => !mapping.Contains(pair.Key)).ToDictionary(pair => pair.Key,
+                    pair => pair.Value),
+            };
+            var mappedLevel = new RequestProperties
+            {
+                mappedId.Where(pair => mapping.Contains(pair.Key)).ToDictionary(pair => pair.Key,
+                    pair => Database.GetScalar(pair.Value, Database.LevelColumn, pair.Key, requestId.Site))
+            };
+            Values args = ParserModule.Parser.BuildValues(requestId, mappedId, mappedLevel);
             Console.WriteLine(args.ToString());
 
             for (long level = 1; level <= Database.ConvertTo<long>(levelRegion); level++)
-                Assert.IsTrue(args.ContainsKey(Regex.Escape(string.Format("{{{{RegionId[{0}]}}}}", level))));
+                Assert.IsTrue(args.ContainsKey(string.Format("Region[{0}]", level)));
 
             for (long level = 1; level <= Database.ConvertTo<long>(levelRubric); level++)
-                Assert.IsTrue(args.ContainsKey(Regex.Escape(string.Format("{{{{RubricId[{0}]}}}}", level))));
+                Assert.IsTrue(args.ContainsKey(string.Format("Rubric[{0}]", level)));
         }
     }
 }

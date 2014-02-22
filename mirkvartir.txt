@@ -1,0 +1,262 @@
+
+regionId
+provinceId
+cityId
+townId
+districtId
+subwayId
+streetId
+houseId
+
+/%d0%a0%d0%be%d1%81%d1%81%d0%b8%d1%8f/%d0%9c%d0%be%d1%81%d0%ba%d0%b2%d0%b0+%d0%b3%d0%be%d1%80%d0%be%d0%b4/%d0%92%d0%bd%d1%83%d0%ba%d0%be%d0%b2%d1%81%d0%ba%d0%be%d0%b5+%d0%bf%d0%be%d1%81%d0%b5%d0%bb%d0%b5%d0%bd%d0%b8%d0%b5/
+
+<a href="/Pages/Estate/PopupContainer.aspx?popupKey=regionId&amp;search=flats&amp;popupLocation=1,0,0,0,0,0,0,0,0,0,0&amp;" popup="regionId" id="cf_pop_region">Регион</a>
+
+http://www.mirkvartir.ru/Pages/Estate/PopupContainer.aspx?popupKey=regionId&search=flats&popupLocation=1,0,0,0,0,0,0,0,0,0,0&
+
+//li[@class='t1']/a[@href]
+
+/{{regionId}}/{{provinceId}}/{{cityId}}/{{townId}}/{{districtId}}/{{subwayId}}/{{streetId}}/{{houseId}}
+
+<div class="title">
+		                    <span><a href="/Pages/Estate/PopupContainer.aspx?popupKey=regionId&amp;search=flats&amp;popupLocation=1,77,0,0,0,0,0,0,0,0,0&amp;" popup="regionId" id="cf_pop_region">Регион</a></span>
+              	            
+	                            <span class="clr">
+	                                <b>Москва город</b>
+	                                <a href="#" onclick="geoRedirect('/%d0%a0%d0%be%d1%81%d1%81%d0%b8%d1%8f/'); return false;" class="close"></a>
+	                            </span>
+	                        
+	                    </div>
+
+3	Subdomain	/	{{Url}}	(http(s)?:\/\/)?([^\.]+\.).*	$3	.*
+
+2	Region	http://rosrealt.ru/poisk.php?Region={{Region}}&City={{City}}&District={{District}}	//select[@name='{{Option}}']/option[@value]	{{value}}	.* $& {{NextSibling.InnerText}}	\{{Region}}\{{City}}\{{District}}
+2	Rubric	http://rosrealt.ru/poisk.php?Sdelka=1&Type_realty={{Type_realty}}&Kind_realty={{Kind_realty}}&Room={{Room}}	//select[@name='{{Option}}']/option[@value]	{{value}}	.* $& {{NextSibling.InnerText}}	\{{Type_realty}}\{{Kind_realty}}\{{Room}}
+2	Action	http://rosrealt.ru/poisk.php?Type_realty=1&Sdelka={{Sdelka}}	//select[@name='{{Option}}']/option[@value]	{{value}}	.* $& {{NextSibling.InnerText}}	\{{Sdelka}}
+
+Region http://www.mirkvartir.ru/россия/{{Value}} //li/a[@href] {{href}} .* $& {{InnerText}} \{{regionId}}\{{provinceId}}\{{cityId}}\{{townId}}\{{districtId}}\{{subwayId}}\{{streetId}}\{{houseId}}
+Rubric http://{{actionId}}mirkvartir.ru/Москва/{{choice_house_type}} \//span[@class='text'][not(a[@href])]\//ul[@class='{{Option}}']/li[@class='ui-tabs-selected']/a[@href] {{href}} 
+\\(http(s)?:\/\/)?([^\.]+\.)mirkvartir\.ru.*\\.* \\$3\\.* {{InnerText}} \{{actionId}}\{{choice_house_type}}
+Action http://{{actionId}}mirkvartir.ru/Москва/ //span[@class='text'][not(a[@href])] {{href}} (http(s)?:\/\/)?([^\.]+\.)mirkvartir\.ru.* $3 {{InnerText}} \{{actionId}}
+
+Subdomain / {{Url}} (http(s)?:\/\/)?([^\.]+).* $3 .*
+OptionRedirect //div[@class='title'][not(span[@class='clr'])]//a[@popupKey='{{Option}}'] {{href}} .* $& .*
+ValueRedirect //link[rel='dns-prefetch']['{{Option}}'='actionId']['{{actionId}}'=''] {{href}} .* $& .*
+
+Url http://{{Action}}mirkvartir.ru/{{Region}}/{{Rubric[2]}}?roomsFrom={{roomsFrom}}&roomsTo={{roomsTo}}&p={{Page}}
+
+//link[@rel='dns-prefetch']['actionId'='actionId'][''=''],//div[@class='title'][not(span[@class='clr'])]//a[@popupKey='actionId']
+
+http://{{Action}}mirkvartir.ru/{{PublicationLink}}
+[{{PublicationId}},##{{PublicationDate}}##]
+DatetimeFirstIdSecondComparer
+
+3	OptionRedirect	//link[@rel='dns-prefetch'][@href='{{actionId}}mirkvartir.ru']	{{href}}	.*	$&	.*
+3	OptionRedirect	//div[@class='title'][not(span[@class='clr'])]//a[@popupKey='{{Option}}']['{{Table}}'='Region']	{{href}}	.*	$&	.*
+
+2	WebPublicationUrl	/	{{Url}}	.*	$&	.*
+2	WebPublicationSite	/	{{Url}}	((http(s)?:\/\/)?[^\/\?]+).*	$1	.*
+
+utf-8
+\{{Url}}\{{href}}
+
+http://www.mirkvartir.ru/Москва/
+
+http://mirkvartir.ru/россия
+
+http://www.mirkvartir.ru/Москва/?roomsFrom=2&roomsTo=2
+
+<ul class="choice_house_type" id="house_type_tabs"><li class="ui-tabs-selected">
+						<a href="http://www.mirkvartir.ru/%d0%9c%d0%be%d1%81%d0%ba%d0%b2%d0%b0/">Квартира</a></li><li>
+						<a href="http://www.mirkvartir.ru/%d0%9c%d0%be%d1%81%d0%ba%d0%b2%d0%b0/%d0%9a%d0%be%d0%bc%d0%bd%d0%b0%d1%82%d1%8b/">Комната</a></li><li>
+						<a href="http://www.mirkvartir.ru/%d0%9c%d0%be%d1%81%d0%ba%d0%b2%d0%b0/%d0%9d%d0%be%d0%b2%d0%be%d1%81%d1%82%d1%80%d0%be%d0%b9%d0%ba%d0%b8/">Новостройка</a></li></ul>
+
+3	Rubric	http://{{actionId}}mirkvartir.ru/Москва/{{choice_house_type}}	\//link[@rel='dns-prefetch'][contains(@href,'{{actionId}}mirkvartir.ru')]\//ul[@class='{{Option}}']/li[@class='ui-tabs-selected']/a[@href][not('{{actionId}}'='')]	\//span[@class='text']/a[@href]\//ul[@class='{{Option}}']/li[@class='ui-tabs-selected']/a[@href]	{{href}}	\\(http(s)?:\/\/)?([^\.]+\.)mirkvartir\.ru.*\\.*	\\$3\\.*	{{InnerText}}	.*	$&	\{{actionId}}\{{choice_house_type}}
+WebPublicationAdditionalInfoRealtyAdditionalInfoFloorNumber
+WebPublicationAdditionalInfoRealtyAdditionalInfoFloor
+WebPublicationAdditionalInfoRealtyAdditionalInfoRoomNumber
+WebPublicationAdditionalInfoRealtyAdditionalInfoRealEstateType
+WebPublicationAdditionalInfoRealtyAdditionalInfoWallМaterial
+WebPublicationAdditionalInfoRealtyAdditionalInfoFurnish
+WebPublicationAdditionalInfoRealtyAdditionalInfoLivingSpace
+WebPublicationAdditionalInfoRealtyAdditionalInfoKitchenSpace
+WebPublicationAdditionalInfoRealtyAdditionalInfoCostPerMeter
+WebPublicationAdditionalInfoRealtyAdditionalInfoIsLoggia
+WebPublicationAdditionalInfoRealtyAdditionalInfoWc
+WebPublicationAdditionalInfoRealtyAdditionalInfoViewFromProperty
+WebPublicationAdditionalInfoRealtyAdditionalInfoIsParking
+WebPublicationAdditionalInfoRealtyAdditionalInfoTenancy
+WebPublicationAdditionalInfoRealtyAdditionalInfoLeasableSpace
+WebPublicationAdditionalInfoRealtyAdditionalInfoLandSpace
+
+Title:3	Title	//span[@class='text'][not(a[@href])][not('{{actionId}}'='')]	{{InnerText}}	.*	$&
+Begin Crawler::MoveNext
+http://www.mirkvartir.ru/Москва/
+\//span[@class='text']/a[@href]\//ul[@class='{{Option}}']/li/a[@href]
+
+Больше - не меньше. Я выполню запрос SQL
+DELETE FROM SiteRegion WHERE SiteRegion.SiteRegionId IN (SELECT SiteRegion.SiteRegionId FROM SiteRegion LEFT JOIN SiteRegionMapping USING(SiteRegionId,SiteId) WHERE SiteRegionMapping.RegionId IS NULL AND SiteRegionMapping.SiteId=2) AND SiteRegion.SiteId=2
+Просто я не создавал индекс SiteRegionMapping (SiteRegionId,SiteId) - поэтому запрос выполняется долго
+
+Кстати обнаружилась новая небольшая техническая проблемка - библиотека RT.WebCrauler использует асинхронный запрос к сайту. Новый сайт использует компрессию GZip. При установленном флаге автоматически распаковывать запрос, но втором запросе программа виснет
+Имеется ввиду два запроса подряд - с мелым иньервалом времени между запросами
+
+            ICrawler crawler = new WebCrawler();
+            var requestWeb = (HttpWebRequest) WebRequest.Create(uri);
+//            requestWeb.AutomaticDecompression = DecompressionMethods.GZip;
+            requestWeb.Method = method;
+            WebResponse responce = await crawler.GetResponse(requestWeb);
+Если раскоментировать, то на втором запросе виснет
+
+3	OptionRedirect	//link[@rel='dns-prefetch']['{{Option}}'='actionId']['{{actionId}}'=''][contains(@href,'mirkvartir.ru')]	{{href}}	.*	$&	.*
+3	OptionRedirect	//div[@class='title'][not(span[@class='clr'])]//a[@popupKey='{{Option}}']['{{Table}}'='Region']	{{href}}	.*	$&	.*
+
+
+3	Action	http://{{actionId}}mirkvartir.ru/Москва/	//link[@rel='dns-prefetch'][contains(@href,'{{actionId}}mirkvartir.ru')]	//span[@class='text'][not(a[@href])]	{{href}}	(http(s)?:\/\/)?([^\.]+\.)mirkvartir\.ru.*	$3	{{InnerText}}	.*	$&	\{{actionId}}
+
+3	Region	http://www.mirkvartir.ru/россия/{{Value}}	//li/a[@href]	//li/a[@href]	{{href}}	((http(s)?\:\/\/)?([^\.]+\.)?mirkvartir\.ru)|(\/(россия|квартира|новостройка|комната|дом|участок|дача|коттедж|таунхаус))|(\/+\Z)		{{InnerText}}	.*	$&	\{{region}}\{{province}}\{{city}}\{{town}}\{{district}}\{{subway}}\{{street}}\{{house}}
+
+3	OptionRedirect	//div[@class='title'][not(span[@class='clr'])]//a[@id='cf_pop_{{Option}}']['{{Table}}'='Region']	{{href}}	.*	$&	.*
+
+((http(s)?\:\/\/)?([^\.]+\.)?mirkvartir\.ru)|(\/(россия|москва))|(\/+\Z)
+
+<a href="http://zem.mirkvartir.ru/%d0%a0%d0%be%d1%81%d1%81%d0%b8%d1%8f/">Участок</a>
+<a href="http://dom.mirkvartir.ru/%d0%a0%d0%be%d1%81%d1%81%d0%b8%d1%8f/%d0%9a%d0%be%d1%82%d1%82%d0%b5%d0%b4%d0%b6%d0%b8/">Коттедж</a>
+
+3	Rubric	http://{{actionId}}mirkvartir.ru/Москва/{{choice_house_type}}	\//span[@class='text']/a[@href]\//ul[@class='choice_house_type']/li/a[@href]	\//span[@class='text']/a[@href]\//ul[@class='{{actionId}}']/li/a[@href]
+	{{href}}	\\(http(s)?:\/\/)?([^\.]+\.)mirkvartir\.ru.*\\((http(s)?\:\/\/)?([^\.]+\.)?mirkvartir\.ru)|(\/(россия|москва))|(\/+\Z)	\\$3\\	{{InnerText}}	.*	$&	\{{actionId}}\{{choice_house_type}}
+
+//li[@class='t1']/a[@href]
+									<a href="/%d0%90%d0%b4%d1%8b%d0%b3%d0%b5%d1%8f+%d1%80%d0%b5%d1%81%d0%bf%d1%83%d0%b1%d0%bb%d0%b8%d0%ba%d0%b0/" target="_parent">Адыгея республика</a> 
+                            &nbsp;(120) 
+                            
+								</li>
+
+3	Rubric	http://{{actionId}}mirkvartir.ru/Москва{{choice_house_type}}	\//span[@class='text']/a[@href]\//ul[@class='choice_house_type']/li/a[@href]	\//span[@class='text']/a[@href]\//ul[@class='choice_house_type']/li/a[@href]	{{href}}	\\(http(s)?:\/\/)?([^\.]+\.)mirkvartir\.ru.*\\((http(s)?\:\/\/)?([^\.]+\.)?mirkvartir\.ru)|(\/(россия|москва))|(\/+\Z)	\\$3\\	{{InnerText}}	.*	$&	\{{actionId}}\{{choice_house_type}}
+
+3	Rubric	http://{{actionId}}mirkvartir.ru/Москва{{choice_house_type}}	\//span[@class='text']/a[@href]\//ul[@class='choice_house_type']/li/a[@href]	\//span[@class='text']/a[@href]\//ul[@class='choice_house_type']/li/a[@href]	{{href}}/	\\(http(s)?:\/\/)?([^\.]+\.)mirkvartir\.ru.*\\((http(s)?\:\/\/)?([^\.]+\.)?mirkvartir\.ru)|(\/(россия|москва))	\\$3\\	{{InnerText}}	.*	$&	\{{actionId}}\{{choice_house_type}}
+
+(http(s)?:\/\/)?([^\.]+\.)mirkvartir\.ru.*
+
+3	OptionRedirect	['{{Url}}'='http://mirkvartir.ru/москва']	http://www.mirkvartir.ru/москва	.*	$&	.*
+3	OptionRedirect	//div[@class='title'][not(span[@class='clr'])]//a[@id='cf_pop_{{Option}}']['{{Table}}'='Region']	{{href}}	.*	$&	.*
+
+/html['http://www.mirkvartir.ru/россия'='http://mirkvartir.ru/москва']
+http://{{actionId}}mirkvartir.ru/россия{{choice_house_type}}
+/['http://mirkvartir.ru/москва'='http://mirkvartir.ru/Москва']
+http://rosrealt.ru/poisk.php?Region={{Region}}&City={{City}}&District={{District}}
+
+3	Region	http://www.mirkvartir.ru/россия	http://www.mirkvartir.ru{{Value}}	//li[@class='t1']/a[@href][contains('{{Url}}','popup')]	//li[@class='t1']/a[@href][contains('{{Url}}','popup')]	{{href}}	(о(дедовский))?|(((http(s)?\:\/\/)?([^\.]+\.)?mirkvartir\.ru)|(\/(россия|квартира|новостройка|комната|дом|участок|дача|коттедж|таунхаус)\b)|(\/+\Z))	$2	{{InnerText}}	.*	$&	\{{region}}\{{province}}\{{city}}\{{town}}\{{district}}
+
+2	Rubric	http://rosrealt.ru/poisk.php?	http://rosrealt.ru/poisk.php?Sdelka=1&Type_realty={{Type_realty}}&Kind_realty={{Kind_realty}}&Room={{Room}}	//select[@name='{{Option}}']/option[@value]	//select[@name='{{Option}}']/option[@value]	{{value}}	.*	$&	{{NextSibling.InnerText}}	.*	$&	\{{Type_realty}}\{{Kind_realty}}\{{Room}}
+
+\{{region}}\{{province}}\{{city}}\{{town}}\{{district}} \!\!\?\?\?
+\{{Type_realty}}\{{Kind_realty}}\{{Room}} \!\!\!
+\{{Region}}\{{City}}\{{District}}
+
+3	Region	http://www.mirkvartir.ru/россия	http://www.mirkvartir.ru{{Value}}	//li[@class='t1']/a[@href][contains('{{Url}}','popup')]	//li[@class='t1']/a[@href][contains('{{Url}}','popup')]	{{href}}	(((http(s)?\:\/\/)?([^\.]+\.)?mirkvartir\.ru)|(\/(россия|квартира|новостройка|комната|дом|участок|дача|коттедж|таунхаус)\Z)|(\/+\Z))		{{InnerText}}	.*	$&	\{{region}}\{{province}}\{{city}}\{{town}}\{{district}}	\!\!\?\?\!
+2	Action	http://rosrealt.ru/poisk.php?	http://rosrealt.ru/poisk.php?Type_realty=1&Sdelka={{Sdelka}}	//select[@name='{{Option}}']/option[@value]	//select[@name='{{Option}}']/option[@value]	{{value}}	.*	$&	{{NextSibling.InnerText}}	.*	$&	\{{Sdelka}}
+
+/Россия/Санкт-Петербург+город
+
+//div[@class='list_item']/a[@href]
+
+3	PublicationLink	//div[@class='list_item']/a[@href]	{{href}}	.*	$&	.*
+3	PublicationId	//div[@class='list_item']/a[@href]	{{href}}	\D+		.*
+ 
+<div class="list_item" onclick="_em.notify(_em.CAT_ESTATE, _em.TYPE_ESTATE_CLICK, 107068364);document.location='/107068364/';">
+			<a href="/107068364/" class="left photo" onclick="_em.notify(_em.CAT_ESTATE, _em.TYPE_ESTATE_CLICK, 107068364);">
+				<span style="width:90px;height:90px">
+				<noscript>&lt;img src="http://f.mirkvartir.ru/90x90/53/53907157-817d-4bd9-ab7f-356620004ca0.jpg" alt="Московская область, Ногинский район, Ногинск город, Энергетиков улица, 7" width="90" height="90" title="1 фото"/&gt;</noscript>
+				<span class="img-post-load-cntr" style=""><span style="width:90px;height:90px;background:url('http://files.mirkvartir.ru/files/images/img-ajax-loader.gif') no-repeat center center;display:block"><img class="img-post-load photo-item-img" src="http://f.mirkvartir.ru/90x90/53/53907157-817d-4bd9-ab7f-356620004ca0.jpg" post-src="http://f.mirkvartir.ru/90x90/53/53907157-817d-4bd9-ab7f-356620004ca0.jpg" pl-width="90" pl-height="90" width="90" height="90"></span></span>
+				<div class="photo-count-container"><div class="photo-count">1</div></div>
+				</span>
+			</a>
+			<div class="cntr ">
+				<p>
+					<span>
+					<a class="m cmpz-list-item" href="/107068364/" title="" onclick="_em.notify(_em.CAT_ESTATE, _em.TYPE_ESTATE_CLICK, 107068364);">
+						<span class="w100p">
+							<span class="address link">Московская область, Ногинский район, Ногинск город, Энергетиков улица, 7</span>
+							
+						</span>
+						<span class="link-add-desc">продается двухкомнатная квартира,</span>
+					</a>45 м<sup>2</sup>,  этаж 1 из 5</span></p><p class="search_desc">Квартира в развитом районе,"Красный Электрик", комнаты смежные, санузел совмещённый, колонка, прямая...</p><p></p><p><strong>2&nbsp;300&nbsp;000&nbsp;руб.</strong>&nbsp;&nbsp;(51&nbsp;111 руб./м<sup>2</sup>)</p></div>
+			<script type="text/javascript">_em.addEvent(_em.CAT_ESTATE, _em.TYPE_ESTATE_SHOW, 107068364);</script>
+		</div>
+
+3	WebPublicationAdditionalInfoRealtyAdditionalInfoRoomNumber	///td[@class='item-label'][contains(text(),'Кол-во комнат')]/following-sibling::td[@class='item-content']	{{InnerText}} 	.*	$&	.*
+3	WebPublicationAdditionalInfoRealtyAdditionalInfoTotalSpace	//td[@class='item-label'][contains(text(),'Площадь')]/following-sibling::td[@class='item-content']	{{InnerText}} 	\s*(\d+)\s*\/\s*(\d+)\s*\/\s*(\d+).*	$1	.*
+3	WebPublicationAdditionalInfoRealtyAdditionalInfoLivingSpace	//td[@class='item-label'][contains(text(),'Площадь')]/following-sibling::td[@class='item-content']	{{InnerText}} 	\s*(\d+)\s*\/\s*(\d+)\s*\/\s*(\d+).*	$2	.*
+3	WebPublicationAdditionalInfoRealtyAdditionalInfoKitchenSpace	//td[@class='item-label'][contains(text(),'Площадь')]/following-sibling::td[@class='item-content']	{{InnerText}} 	\s*(\d+)\s*\/\s*(\d+)\s*\/\s*(\d+).*	$3	.*
+3	WebPublicationAdditionalInfoRealtyAdditionalInfoCostAll	//p[@class='price']/strong[@itemprop='price']	{{InnerText}} 	\D+		.*
+
+3	WebPublicationAdditionalInfoRealtyAdditionalInfoCostPerMeter	//p/label[contains(text(),'Стоимость м2')]/following-sibling::span/b	{{InnerText}} 	\D+		.*
+3	WebPublicationAdditionalInfoRealtyAdditionalInfoWallМaterial	//p/label[contains(text(),'Материал стен')]/following-sibling::span	{{InnerText}} 	.*	$&	.*
+
+3	WebPublicationAdditionalInfoRealtyAdditionalInfoFloorNumber	//td[@class='item-label'][contains(text(),'Этаж')]/following-sibling::td[@class='item-content']	{{InnerText}} 	\s*(\d+)\s*\/\s*(\d+).*	$1	.*
+3	WebPublicationAdditionalInfoRealtyAdditionalInfoFloor	//td[@class='item-label'][contains(text(),'Этаж')]/following-sibling::td[@class='item-content']	{{InnerText}} 	\s*(\d+)\s*\/\s*(\d+).*	$2	.*
+3	WebPublicationAdditionalInfoRealtyAdditionalInfoAddress	//dt[@class='item-label'][contains(text(),'Адрес')]/following-sibling::dd[@class='item-content']/a	{{InnerText}} 	.*	$&	.*
+3	WebPublicationAdditionalInfoRealtyAdditionalInfoDistrict	(//dt[@class='item-label'][contains(text(),'Адрес')]/following-sibling::dd[@class='item-content']/a)[4]	{{InnerText}} 	.*	$&	.*
+3	WebPublicationModifyDate	//td[@class='label'][contains(text(),'Oбновлено')]/following-sibling::td[@class='tc-content']/time[@datetime]	{{InnerText}} 	(\d+\s+\w+\s+\d+)	$1	.*
+3	WebPublicationPublicationId	/	{{Url}}	\D+		.*
+3	WebPublicationPhotos	//div[@id='slide_content']/div/img[@src]	{{src}}	.*	$&	.*
+3	WebPublicationDescription	//p[@itemprop='description']	{{InnerText}}	.*	$&	.*
+3	WebPublicationContactPhone	//p[@class='contact-item']/span[@itemprop='telephone']	{{InnerText}}	.*	$&	.*
+3	WebPublicationContactContactName	//p[@class='contact-item']/b[@itemprop='name']	{{InnerText}}	.*	$&	.*
+3	WebPublicationContactAuthor	//td[@class='label'][contains(text(),'Источник')]/following-sibling::td[@class='tc-content']/a	{{InnerText}}	.*	$&	.*
+3	WebPublicationContactAuthorUrl	//td[@class='label'][contains(text(),'Источник')]/following-sibling::td[@class='tc-content']/a[@href]	{{href}}	.*	$&	.*
+
+<tr><td class="label">Источник</td>
+			<td class="tc-content"><a href="http://sitinedvizhimost.mirkvartir.ru/" target="_blank">Сити Недвижимость</a>&nbsp;(ID в источнике <a target="_blank" onclick="_gaq.push(['_trackEvent', 'ExternalLink', 'ID', 'Сити Недвижимость']);_em.notify(_em.CAT_EXTERNALLINK,_em.TYPE_EXTERNALLINK_ID_CLICK,111145409);" href="/Goto.ashx?out=www.city99.ru%2fobject%2f569631%2f%3futm_source%3dmirkvartir%26utm_medium%3dcpc%26utm_campaign%3dmirkvartir_estatedetails_id%3futm_term%3d111145409" rel="nofollow">56963101</a>)</td></tr>
+
+<p class="contact-item"><b itemprop="name">Амашукели Николай</b></p>
+
+<p class="contact-item"><span>Телефон:&nbsp;</span><span id="estatePhoneSpan" itemprop="telephone">+7 (926) 235-02-20</span></p>
+
+<p class="estate-description" itemprop="description">Продается 1к.кв. в Балашихе (15 мин. транспортом от м.Новогиреево, Ш.Энтузиастов, Щелковская; 20 мин. от Партизанской, Перово). Центр города, развитая инфраструктура, удобное транспортное сообщение с Москвой. Современный жилой район, рядом ТЦ, администрация гор.округа. Квартира находится в новом монолитно-кирпичном доме, окна во двор. Без отделки. Свободная продажа.</p>
+
+<div id="slide_content" style="width: 280px; height: 180px">
+		<div><img src="http://f.mirkvartir.ru/280x180/00/00000000-0000-0000-0000-000000000000.jpg" alt="Продажа однокомнатной квартиры в новостройке, ул. Первомайская, 1 в Балашихе - МИР КВАРТИР" width="280" height="180"></div></div>
+
+<tr>
+			<td class="label">Oбновлено</td>
+			<td class="tc-content"> 
+				<time itemprop="availabilityStarts" datetime="2013-02-19">21 февраля 2014 г. (в базе более 3-х мес)</time>				
+			</td>
+		</tr>
+
+<h1 class="s2" itemprop="name"><span>Продажа однокомнатной квартиры в новостройке,</span>г. Балашиха, ул. Первомайская, 1</h1>
+<p><label>Число комнат:</label><span><b>1</b>-комнатная</span></p>
+<p><label>Общая площадь:</label><span><b>38</b> м<sup>2</sup> (кухня 8 м<sup>2</sup>)</span></p>
+<p class="price"><strong itemprop="price">3&nbsp;790&nbsp;000</strong> руб. <meta itemprop="priceCurrency" content="RUB"></p>
+<p>
+					<label>Стоимость м2:</label>
+					<span><b>99&nbsp;737</b> руб.</span>
+				</p>
+<p><label>Этаж:</label><span><b>3</b> из 17</span></p>
+<p>
+			<label>Материал стен:</label>
+			<span>монолит-кирпич</span>
+		</p>
+//td[@class='item-label'][contains(text(),'Площадь')]/following-sibling::td[@class='item-content']
+<td class="item-label">Площадь,&nbsp;м<sup>2</sup></td>
+<td class="item-content">38 /19 /8 (общ./жил./кух.)</td>
+<tr class="info-item">
+				<td class="item-label">Кол-во комнат</td>
+				<td class="item-content">1</td>
+			</tr>
+<tr class="info-item">
+			<td class="item-label">Этаж / этажность</td>
+			<td class="item-content">3 / 17</td>
+		</tr>
+
+<dl class="info-item" itemprop="address" itemscope="" itemtype="http://schema.org/PostalAddress">
+					<dt class="item-label">Адрес</dt>
+					<dd class="item-content"><a href="/%d0%a0%d0%be%d1%81%d1%81%d0%b8%d1%8f/%d0%9d%d0%be%d0%b2%d0%be%d1%81%d1%82%d1%80%d0%be%d0%b9%d0%ba%d0%b8/" itemprop="addressCountry">Россия</a>, <a href="/%d0%9c%d0%be%d1%81%d0%ba%d0%be%d0%b2%d1%81%d0%ba%d0%b0%d1%8f+%d0%be%d0%b1%d0%bb%d0%b0%d1%81%d1%82%d1%8c/%d0%9d%d0%be%d0%b2%d0%be%d1%81%d1%82%d1%80%d0%be%d0%b9%d0%ba%d0%b8/" itemprop="addressRegion">Московская область</a>, <a href="/%d0%9c%d0%be%d1%81%d0%ba%d0%be%d0%b2%d1%81%d0%ba%d0%b0%d1%8f+%d0%be%d0%b1%d0%bb%d0%b0%d1%81%d1%82%d1%8c/%d0%91%d0%b0%d0%bb%d0%b0%d1%88%d0%b8%d1%85%d0%b0/%d0%9d%d0%be%d0%b2%d0%be%d1%81%d1%82%d1%80%d0%be%d0%b9%d0%ba%d0%b8/" itemprop="addressLocality">Балашиха город</a>, <a href="/%d0%9c%d0%be%d1%81%d0%ba%d0%be%d0%b2%d1%81%d0%ba%d0%b0%d1%8f+%d0%be%d0%b1%d0%bb%d0%b0%d1%81%d1%82%d1%8c/%d0%91%d0%b0%d0%bb%d0%b0%d1%88%d0%b8%d1%85%d0%b0/%d0%9f%d0%b5%d1%80%d0%b2%d0%be%d0%bc%d0%b0%d0%b9%d1%81%d0%ba%d0%b0%d1%8f+%d1%83%d0%bb%d0%b8%d1%86%d0%b0/%d0%9d%d0%be%d0%b2%d0%be%d1%81%d1%82%d1%80%d0%be%d0%b9%d0%ba%d0%b8/" itemprop="streetAddress">Первомайская улица</a>, <a href="/%d0%9c%d0%be%d1%81%d0%ba%d0%be%d0%b2%d1%81%d0%ba%d0%b0%d1%8f+%d0%be%d0%b1%d0%bb%d0%b0%d1%81%d1%82%d1%8c/%d0%91%d0%b0%d0%bb%d0%b0%d1%88%d0%b8%d1%85%d0%b0/%d0%9f%d0%b5%d1%80%d0%b2%d0%be%d0%bc%d0%b0%d0%b9%d1%81%d0%ba%d0%b0%d1%8f+%d1%83%d0%bb%d0%b8%d1%86%d0%b0/%d0%9d%d0%be%d0%b2%d0%be%d1%81%d1%82%d1%80%d0%be%d0%b9%d0%ba%d0%b8/?houseId=3524788">1</a></dd><dt class="item-label">Ближайшее шоссе</dt>
+						<dd class="item-content">
+							
+									<a href="/%d0%9c%d0%be%d1%81%d0%ba%d0%be%d0%b2%d1%81%d0%ba%d0%b0%d1%8f+%d0%be%d0%b1%d0%bb%d0%b0%d1%81%d1%82%d1%8c/%d1%88%d0%be%d1%81%d1%81%d0%b5+%d0%93%d0%be%d1%80%d1%8c%d0%ba%d0%be%d0%b2%d1%81%d0%ba%d0%be%d0%b5/%d0%9d%d0%be%d0%b2%d0%be%d1%81%d1%82%d1%80%d0%be%d0%b9%d0%ba%d0%b8/">Горьковское</a>, 
+									<a href="/%d0%9c%d0%be%d1%81%d0%ba%d0%be%d0%b2%d1%81%d0%ba%d0%b0%d1%8f+%d0%be%d0%b1%d0%bb%d0%b0%d1%81%d1%82%d1%8c/%d1%88%d0%be%d1%81%d1%81%d0%b5+%d0%a9%d0%b5%d0%bb%d0%ba%d0%be%d0%b2%d1%81%d0%ba%d0%be%d0%b5/%d0%9d%d0%be%d0%b2%d0%be%d1%81%d1%82%d1%80%d0%be%d0%b9%d0%ba%d0%b8/">Щелковское</a>, 
+									<a href="/%d0%9c%d0%be%d1%81%d0%ba%d0%be%d0%b2%d1%81%d0%ba%d0%b0%d1%8f+%d0%be%d0%b1%d0%bb%d0%b0%d1%81%d1%82%d1%8c/%d1%88%d0%be%d1%81%d1%81%d0%b5+%d0%9d%d0%be%d0%b2%d0%be%d1%80%d1%8f%d0%b7%d0%b0%d0%bd%d1%81%d0%ba%d0%be%d0%b5/%d0%9d%d0%be%d0%b2%d0%be%d1%81%d1%82%d1%80%d0%be%d0%b9%d0%ba%d0%b8/">Новорязанское</a>
+						</dd></dl>

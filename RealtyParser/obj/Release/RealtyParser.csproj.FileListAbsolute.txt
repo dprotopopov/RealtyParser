@@ -29,3 +29,7 @@ D:\Projects\RealtyParser\RealtyParser\obj\Release\RealtyParser.Properties.Resour
 D:\Projects\RealtyParser\RealtyParser\obj\Release\RealtyParser.csproj.GenerateResource.Cache
 D:\Projects\RealtyParser\RealtyParser\obj\Release\RealtyParser.dll
 D:\Projects\RealtyParser\RealtyParser\obj\Release\RealtyParser.pdb
+D:\Projects\RealtyParser\RealtyParser\obj\Release\RealtyParser.Forms.AboutBox.resources
+D:\Projects\RealtyParser\RealtyParser\bin\Release\MirkvartirParser.db
+D:\Projects\RealtyParser\RealtyParser\bin\Release\RosrealtParser.db
+D:\Projects\RealtyParser\RealtyParser\bin\Release\ICSharpCode.SharpZipLib.dll

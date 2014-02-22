@@ -1,5 +1,7 @@
 247 записей не найдено
 
+Использовались следующие замены:
+
         private static readonly Dictionary<string, string> AddressReplacements = new Dictionary<string, string>
         {
             {@"ё", @"е"},

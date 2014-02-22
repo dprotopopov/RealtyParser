@@ -27,7 +27,7 @@
     <PublisherName>Dmitry Protopopov</PublisherName>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>19</ApplicationRevision>
+    <ApplicationRevision>20</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -75,6 +75,10 @@
     <Reference Include="DevExpress.XtraLayout.v13.2, Version=13.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="DevExpress.XtraPrinting.v13.2, Version=13.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="DevExpress.XtraVerticalGrid.v13.2, Version=13.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="HtmlAgilityPack, Version=1.4.6.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\HtmlAgilityPack.1.4.6\lib\Net45\HtmlAgilityPack.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
@@ -83,30 +87,60 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AboutForm.cs">
+    <Compile Include="Children\AboutForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="AboutForm.Designer.cs">
+    <Compile Include="Children\AboutForm.Designer.cs">
       <DependentUpon>AboutForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="IChildForm.cs" />
-    <Compile Include="KeysForm.cs">
+    <Compile Include="Children\BuilderForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="KeysForm.Designer.cs">
+    <Compile Include="Children\BuilderForm.Designer.cs">
+      <DependentUpon>BuilderForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Children\HapForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Children\HapForm.Designer.cs">
+      <DependentUpon>HapForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Children\KeysForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Children\KeysForm.Designer.cs">
       <DependentUpon>KeysForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Children\MappingEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Children\MappingEditor.Designer.cs">
+      <DependentUpon>MappingEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Children\ResultForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Children\ResultForm.Designer.cs">
+      <DependentUpon>ResultForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Children\SitePropertiesForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Children\SitePropertiesForm.Designer.cs">
+      <DependentUpon>SitePropertiesForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Children\SourcesForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Children\SourcesForm.Designer.cs">
+      <DependentUpon>SourcesForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="IChildForm.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="MappingEditor.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="MappingEditor.Designer.cs">
-      <DependentUpon>MappingEditor.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="ProgressForm.cs">
@@ -116,41 +150,32 @@
       <DependentUpon>ProgressForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ResultForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ResultForm.Designer.cs">
-      <DependentUpon>ResultForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="SitePropertiesForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="SitePropertiesForm.Designer.cs">
-      <DependentUpon>SitePropertiesForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="SourcesForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="SourcesForm.Designer.cs">
-      <DependentUpon>SourcesForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="BuilderForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="BuilderForm.Designer.cs">
-      <DependentUpon>BuilderForm.cs</DependentUpon>
-    </Compile>
-    <EmbeddedResource Include="AboutForm.resx">
+    <EmbeddedResource Include="Children\AboutForm.resx">
       <DependentUpon>AboutForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="KeysForm.resx">
+    <EmbeddedResource Include="Children\BuilderForm.resx">
+      <DependentUpon>BuilderForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Children\HapForm.resx">
+      <DependentUpon>HapForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Children\KeysForm.resx">
       <DependentUpon>KeysForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Children\MappingEditor.resx">
+      <DependentUpon>MappingEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Children\ResultForm.resx">
+      <DependentUpon>ResultForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Children\SitePropertiesForm.resx">
+      <DependentUpon>SitePropertiesForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Children\SourcesForm.resx">
+      <DependentUpon>SourcesForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="MappingEditor.resx">
-      <DependentUpon>MappingEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ProgressForm.resx">
       <DependentUpon>ProgressForm.cs</DependentUpon>
@@ -166,18 +191,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="ResultForm.resx">
-      <DependentUpon>ResultForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="SitePropertiesForm.resx">
-      <DependentUpon>SitePropertiesForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="SourcesForm.resx">
-      <DependentUpon>SourcesForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="BuilderForm.resx">
-      <DependentUpon>BuilderForm.cs</DependentUpon>
-    </EmbeddedResource>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -195,6 +209,10 @@
     <ProjectReference Include="..\RealtyParser\RealtyParser.csproj">
       <Project>{8ac9f758-9ce0-4203-854e-2b17cdc65c01}</Project>
       <Name>RealtyParser</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RT.Crawler\RT.Crawler.csproj">
+      <Project>{03624a95-b0fa-4115-a498-9e88e140956c}</Project>
+      <Name>RT.Crawler</Name>
     </ProjectReference>
     <ProjectReference Include="..\RT.ParsingLibs\RT.ParsingLibs.csproj">
       <Project>{27CC5B61-3729-4F39-AD0C-D8CE99120FD4}</Project>

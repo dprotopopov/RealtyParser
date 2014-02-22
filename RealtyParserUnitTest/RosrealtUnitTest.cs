@@ -10,7 +10,8 @@ namespace RealtyParserUnitTest
     public class RosrealtUnitTest
     {
         private const long SiteId = 2;
-        private static readonly Database Database = ParsingModule.Database;
+        private static readonly ParserModule ParserModule = new ParserModule();
+        private static readonly Database Database = ParserModule.Database;
 
         /// <summary>
         ///     Получает или устанавливает контекст теста, в котором предоставляются

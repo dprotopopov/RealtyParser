@@ -24,3 +24,6 @@ D:\Projects\RealtyParser\RealtyParserUnitTest\bin\Release\RT.Crawler.xml
 D:\Projects\RealtyParser\RealtyParserUnitTest\obj\Release\RealtyParserUnitTest.csprojResolveAssemblyReference.cache
 D:\Projects\RealtyParser\RealtyParserUnitTest\obj\Release\RealtyParserUnitTest.dll
 D:\Projects\RealtyParser\RealtyParserUnitTest\obj\Release\RealtyParserUnitTest.pdb
+D:\Projects\RealtyParser\RealtyParserUnitTest\bin\Release\MirkvartirParser.db
+D:\Projects\RealtyParser\RealtyParserUnitTest\bin\Release\RosrealtParser.db
+D:\Projects\RealtyParser\RealtyParserUnitTest\bin\Release\ICSharpCode.SharpZipLib.dll

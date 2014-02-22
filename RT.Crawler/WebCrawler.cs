@@ -5,34 +5,44 @@ using System.Threading.Tasks;
 namespace RT.Crawler
 {
     /// <summary>
-    /// Crawler (получения контента с веба)
+    ///     Crawler (получения контента с веба)
     /// </summary>
     public class WebCrawler : ICrawler
     {
         /// <summary>
-        /// Получить ответ
+        ///     Получить ответ
         /// </summary>
         /// <param name="request">Запрос</param>
         /// <returns>Ответ</returns>
         public async Task<WebResponse> GetResponse(WebRequest request)
         {
-            OnUriLogger(new UriEventArgs(request.RequestUri));//залогируем запрос 
-
-            return await Task.Factory.FromAsync(
-                request.BeginGetResponse,
-                asyncResult => request.EndGetResponse(asyncResult),
-                null);
+            OnUriLogger(new UriEventArgs(request.RequestUri)); //залогируем запрос 
+            try
+            {
+                return await Task.Factory.FromAsync(
+                    request.BeginGetResponse,
+                    asyncResult => request.EndGetResponse(asyncResult),
+                    null);
+            }
+            catch (WebException wex)
+            {
+                return null;
+            }
+            catch (Exception exception)
+            {
+                return null;
+            }
         }
 
         #region Helper Methods
 
         /// <summary>
-        /// Событие запроса Uri
+        ///     Событие запроса Uri
         /// </summary>
         public static event EventHandler<UriEventArgs> UriLogger;
 
         /// <summary>
-        /// Логирование запроса ссылки
+        ///     Логирование запроса ссылки
         /// </summary>
         /// <param name="e"></param>
         private void OnUriLogger(UriEventArgs e)
@@ -42,8 +52,5 @@ namespace RT.Crawler
         }
 
         #endregion
-
-
-
     }
 }

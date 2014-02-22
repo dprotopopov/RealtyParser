@@ -27,7 +27,7 @@
         </member>
         <member name="T:RT.Crawler.WebCrawler">
             <summary>
-            Crawler (получения контента с веба)
+                Crawler (получения контента с веба)
             </summary>
         </member>
         <member name="T:RT.Crawler.ICrawler">
@@ -44,20 +44,20 @@
         </member>
         <member name="M:RT.Crawler.WebCrawler.GetResponse(System.Net.WebRequest)">
             <summary>
-            Получить ответ
+                Получить ответ
             </summary>
             <param name="request">Запрос</param>
             <returns>Ответ</returns>
         </member>
         <member name="M:RT.Crawler.WebCrawler.OnUriLogger(RT.Crawler.UriEventArgs)">
             <summary>
-            Логирование запроса ссылки
+                Логирование запроса ссылки
             </summary>
             <param name="e"></param>
         </member>
         <member name="E:RT.Crawler.WebCrawler.UriLogger">
             <summary>
-            Событие запроса Uri
+                Событие запроса Uri
             </summary>
         </member>
     </members>

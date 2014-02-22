@@ -9,22 +9,44 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using HtmlAgilityPack;
 using RealtyParser.Collections;
+using String = RealtyParser.Types.String;
 
 namespace RealtyParser
 {
     public class Builder
     {
-        private const string Empty = @"";
         private const string ReturnTitle = @"Title";
+        private const string ReturnValue = @"Value";
+
+        private static readonly Dictionary<string, string> OptionPatches = new Dictionary<string, string>
+        {
+            {@"областьодедовский", @"область/Домодовский"},
+        };
+
+        private static readonly Dictionary<string, string> ValuePatches = new Dictionary<string, string>
+        {
+            {@"областьодедовский", @"область/Домодовский"},
+            {@"\A\/Санкт\-Петербург\Z", @"/Россия/Санкт-Петербург+город"},
+            {@"\A\/Москва\Z", @"/Россия/Москва+город"},
+            {@"\A\/(Москва|Санкт\-Петербург)\+город", @"/Россия/$1+город"},
+        };
 
         #region
 
-        private static readonly Database Database = new Database();
-        private static readonly Transformation Transformation = new Transformation();
-        private static readonly Parser Parser = new Parser {Transformation = Transformation};
-        private static readonly ObjectComparer Comparer = new ObjectComparer();
+        public string ModuleNamespace { get; set; }
+        public Database Database { get; set; }
+        private Transformation Transformation { get; set; }
+        public Parser Parser { get; set; }
+
+        private ObjectComparer ObjectComparer { get; set; }
+        public CompressionManager CompressionManager { get; set; }
+        private Converter Converter { get; set; }
+
+        public Crawler Crawler { get; set; }
 
         #endregion
+
+        private object _lastError;
 
         #region
 
@@ -34,8 +56,6 @@ namespace RealtyParser
 
         #endregion
 
-        private readonly string _optionKey = Regex.Escape(@"{{Option}}");
-
         public Builder()
         {
             GridItems = new List<GridItem>();
@@ -44,6 +64,14 @@ namespace RealtyParser
             SiteMinLevel = 0;
             SiteMaxLevel = 1;
             MaxDistance = Int32.MaxValue;
+            ModuleNamespace = GetType().Namespace;
+            Database = new Database {ModuleNamespace = ModuleNamespace};
+            CompressionManager = new CompressionManager {ModuleNamespace = ModuleNamespace};
+            Converter = new Converter {ModuleNamespace = ModuleNamespace};
+            Transformation = new Transformation();
+            Parser = new Parser {Transformation = Transformation, Database = Database, Converter = Converter};
+            Crawler = new Crawler {CompressionManager = CompressionManager};
+            ObjectComparer = new ObjectComparer();
         }
 
         public ProgressCallback ProgressCallback { get; set; }
@@ -71,6 +99,7 @@ namespace RealtyParser
         public List<GridItem> GridItems { get; set; }
         public KeyValuePair<Dictionary<object, string>, Dictionary<object, string>> TitleData { get; set; }
         public KeyValuePair<Dictionary<object, string>, Dictionary<object, string>> IndexData { get; set; }
+        private ReturnFieldInfos ReturnFieldInfos { get; set; }
 
 
         public void BuildGridItems()
@@ -85,8 +114,8 @@ namespace RealtyParser
                     Dictionary<object, KeyValuePair<object, string>>,
                     Dictionary<object, KeyValuePair<object, string>>>(
                     TitleData.Key.ToDictionary(
-                        item => item.Key, item => item, Comparer),
-                    TitleData.Value.ToDictionary(item => item.Key, item => item, Comparer));
+                        item => item.Key, item => item, ObjectComparer),
+                    TitleData.Value.ToDictionary(item => item.Key, item => item, ObjectComparer));
 
             Mapping mapping = Database.GetMapping(TableName.ToString(), MinLevel, MaxLevel, SiteMinLevel, SiteMaxLevel,
                 SiteId);
@@ -139,11 +168,11 @@ namespace RealtyParser
                     TableName, Database.MappingTable, Database.IdColumn);
 
             string siteIdPattern =
-                Regex.Escape(string.Format("{{{{{0}{1}}}}}", Database.SiteTable, Database.IdColumn));
+                string.Format("{0}{1}", Database.SiteTable, Database.IdColumn);
             string tableIdPattern =
-                Regex.Escape(string.Format("{{{{{0}{1}}}}}", TableName, Database.IdColumn));
+                string.Format("{0}{1}", TableName, Database.IdColumn);
             string siteTableIdPattern =
-                Regex.Escape(string.Format("{{{{{0}{1}{2}}}}}", Database.SiteTable, TableName, Database.IdColumn));
+                string.Format("{0}{1}{2}", Database.SiteTable, TableName, Database.IdColumn);
 
             var values = new Values
             {
@@ -157,7 +186,7 @@ namespace RealtyParser
                     GridItems.Select(item => item.Value.Key.ToString()).ToList()
                 },
             };
-            List<string> commandTexts = Transformation.ParseTemplate(insertOrReplaceString, values);
+            IEnumerable<string> commandTexts = Transformation.ParseTemplate(insertOrReplaceString, values);
 
             AppendLineCallback("BEGIN;");
             foreach (string commandText in commandTexts)
@@ -210,14 +239,14 @@ namespace RealtyParser
             foreach (object key in items)
             {
                 object i = key;
-                var list = new List<string>();
+                var list = new StackListQueue<string>();
                 do
                 {
-                    list.Add(titleMapping[i].ToString());
+                    if (titleMapping.ContainsKey(i)) list.Add(titleMapping[i].ToString());
                 } while
                     (
                     contains &&
-                    Database.ConvertTo<long>(levelMapping[i]) > 1 &&
+                    levelMapping.ContainsKey(i) && Database.ConvertTo<long>(levelMapping[i]) > 1 &&
                     parentMapping.ContainsKey(i) && (i = parentMapping[i]) != null &&
                     !string.IsNullOrEmpty(i.ToString())
                     );
@@ -234,22 +263,24 @@ namespace RealtyParser
             return dictionary;
         }
 
-        private KeyValuePair<object[], object[]> GetAllChildren(KeyValuePair<object, object> pair,
-            KeyValuePair<Dictionary<object, object[]>, Dictionary<object, object[]>> childrenPair)
+        private KeyValuePair<StackListQueue<object>, StackListQueue<object>> GetAllChildren(
+            KeyValuePair<object, object> pair,
+            KeyValuePair<Dictionary<object, StackListQueue<object>>, Dictionary<object, StackListQueue<object>>>
+                childrenPair)
         {
-            var list = new List<object> {pair.Key};
+            var list = new StackListQueue<object> {pair.Key};
             for (int i = 0; i < list.Count(); i++)
             {
                 if (childrenPair.Key.ContainsKey(list[i]))
                     list.AddRange(childrenPair.Key[list[i]]);
             }
-            var list1 = new List<object> {pair.Value};
+            var list1 = new StackListQueue<object> {pair.Value};
             for (int i = 0; i < list1.Count(); i++)
             {
                 if (childrenPair.Value.ContainsKey(list1[i]))
                     list1.AddRange(childrenPair.Value[list1[i]]);
             }
-            return new KeyValuePair<object[], object[]>(list.ToArray(), list1.ToArray());
+            return new KeyValuePair<StackListQueue<object>, StackListQueue<object>>(list, list1);
         }
 
         public void BuildMappingData()
@@ -290,7 +321,7 @@ namespace RealtyParser
                     items[1].ToDictionary(pair => pair.Key,
                         pair => String.ToTitleCase(String.NormalizeAddress(pair.Value.ToString().ToLower()))));
 
-            object[][][] objects =
+            object[][][] objects2 =
             {
                 new[]
                 {
@@ -340,7 +371,7 @@ namespace RealtyParser
             };
 
             Dictionary<object, string>[] titles =
-                objects.Select((x, i) => BuildFullTitle(items[i].Keys.ToArray(), x)).ToArray();
+                objects2.Select((x, i) => BuildFullTitle(items[i].Keys.ToArray(), x)).ToArray();
 
             TitleData =
                 new KeyValuePair<Dictionary<object, string>, Dictionary<object, string>>(titles[0], titles[1]);
@@ -362,22 +393,24 @@ namespace RealtyParser
             Dictionary<object, string> key = IndexData.Key;
             Dictionary<object, string> value = IndexData.Value;
 
-            var data = new KeyValuePair<object[], object[]>(key.Keys.ToArray(), value.Keys.ToArray());
-            Array.Sort(data.Key, Comparer);
-            Array.Sort(data.Value, Comparer);
+            var data =
+                new KeyValuePair<StackListQueue<object>, StackListQueue<object>>(new StackListQueue<object> {key.Keys},
+                    new StackListQueue<object> {value.Keys});
+            data.Key.Sort(ObjectComparer);
+            data.Value.Sort(ObjectComparer);
 
             var
                 titles = new KeyValuePair<
                     Dictionary<object, KeyValuePair<object, string>>,
                     Dictionary<object, KeyValuePair<object, string>>>(
                     TitleData.Key.ToDictionary(
-                        item => item.Key, item => item, Comparer),
-                    TitleData.Value.ToDictionary(item => item.Key, item => item, Comparer));
+                        item => item.Key, item => item, ObjectComparer),
+                    TitleData.Value.ToDictionary(item => item.Key, item => item, ObjectComparer));
 
             GridItems.Clear();
 
             var progress = new object();
-            var queueStack = new QueueStack<KeyValuePair<object[], object[]>>();
+            var stackListQueue = new StackListQueue<KeyValuePair<StackListQueue<object>, StackListQueue<object>>>();
 
             if (MinLevel > 0 && SiteMinLevel > 0)
             {
@@ -417,16 +450,21 @@ namespace RealtyParser
                 lock (progress) Total += parentMappings[0].Count + parentMappings[1].Count;
                 lock (progress) if (ProgressCallback != null) ProgressCallback(Current, Total);
 
-                Dictionary<object, object[]>[] children =
+                Dictionary<object, StackListQueue<object>>[] children =
                     parentMappings.Select(
                         parentMapping =>
                             parentMapping.Values.Distinct()
                                 .ToDictionary(item => item,
                                     item =>
-                                        parentMapping.Where(pair => Comparer.Equals(pair.Value, item))
-                                            .Select(pair => pair.Key).ToArray(), Comparer)).ToArray();
+                                        new StackListQueue<object>
+                                        {
+                                            parentMapping.Where(pair => ObjectComparer.Equals(pair.Value, item))
+                                                .Select(pair => pair.Key)
+                                        }, ObjectComparer)).ToArray();
                 var childrenPair =
-                    new KeyValuePair<Dictionary<object, object[]>, Dictionary<object, object[]>>(children[0],
+                    new KeyValuePair
+                        <Dictionary<object, StackListQueue<object>>, Dictionary<object, StackListQueue<object>>>(
+                        children[0],
                         children[1]);
 
                 lock (progress) Current += parentMappings[0].Count + parentMappings[1].Count;
@@ -434,26 +472,26 @@ namespace RealtyParser
 
                 Parallel.ForEach(mapping, map =>
                 {
-                    KeyValuePair<object[], object[]> pair = GetAllChildren(map, childrenPair);
+                    KeyValuePair<StackListQueue<object>, StackListQueue<object>> pair = GetAllChildren(map, childrenPair);
                     if (pair.Key.Any() && pair.Value.Any())
                     {
-                        lock (progress) Total += pair.Key.Length + pair.Value.Length;
+                        lock (progress) Total += pair.Key.Count + pair.Value.Count;
                         lock (progress) if (ProgressCallback != null) ProgressCallback(Current, Total);
 
-                        Array.Sort(pair.Key, Comparer);
-                        Array.Sort(pair.Value, Comparer);
+                        pair.Key.Sort(ObjectComparer);
+                        pair.Value.Sort(ObjectComparer);
 
                         var keyValuePair =
-                            new KeyValuePair<object[], object[]>(
-                                Array<object>.IntersectSorted(pair.Key, data.Key, Comparer),
-                                Array<object>.IntersectSorted(pair.Value, data.Value, Comparer));
+                            new KeyValuePair<StackListQueue<object>, StackListQueue<object>>(
+                                StackListQueue<object>.IntersectSorted(pair.Key, data.Key, ObjectComparer),
+                                StackListQueue<object>.IntersectSorted(pair.Value, data.Value, ObjectComparer));
 
-                        lock (progress) Current += pair.Key.Length + pair.Value.Length;
+                        lock (progress) Current += pair.Key.Count + pair.Value.Count;
                         lock (progress) if (ProgressCallback != null) ProgressCallback(Current, Total);
 
-                        lock (queueStack) queueStack.Enqueue(keyValuePair);
+                        lock (stackListQueue) stackListQueue.Enqueue(keyValuePair);
 
-                        lock (progress) Total += keyValuePair.Key.Length + keyValuePair.Value.Length;
+                        lock (progress) Total += keyValuePair.Key.Count + keyValuePair.Value.Count;
                         lock (progress) if (ProgressCallback != null) ProgressCallback(Current, Total);
                     }
 
@@ -462,37 +500,45 @@ namespace RealtyParser
             }
             else
             {
-                queueStack.Enqueue(data);
-                Total += data.Key.Length + data.Value.Length;
+                stackListQueue.Enqueue(data);
+                Total += data.Key.Count + data.Value.Count;
                 if (ProgressCallback != null) ProgressCallback(Current, Total);
             }
 
             var gridItems = new object();
 
-            Total += queueStack.Count;
+            Total += stackListQueue.Count;
 
-            Parallel.ForEach(queueStack, keyValuePair =>
+            Parallel.ForEach(stackListQueue, keyValuePair =>
             {
                 List<string> list = keyValuePair.Key.Select(item => key[item]).ToList();
                 list.AddRange(keyValuePair.Value.Select(item => value[item]).ToList());
-                Dictionary<string, KeyValuePair<object[], object[]>> map = list.Distinct().ToDictionary(name => name,
-                    name =>
-                        new KeyValuePair<object[], object[]>(
-                            (keyValuePair.Key.Where(
-                                item => System.String.Compare(key[item], name, StringComparison.OrdinalIgnoreCase) == 0)
-                                ).ToArray(),
-                            (keyValuePair.Value.Where(
-                                item =>
-                                    System.String.Compare(value[item], name, StringComparison.OrdinalIgnoreCase) == 0)
-                                ).ToArray()));
+                Dictionary<string, KeyValuePair<StackListQueue<object>, StackListQueue<object>>> map =
+                    list.Distinct().ToDictionary(name => name,
+                        name =>
+                            new KeyValuePair<StackListQueue<object>, StackListQueue<object>>(
+                                new StackListQueue<object>
+                                {
+                                    keyValuePair.Key.Where(
+                                        item =>
+                                            string.Compare(key[item], name, StringComparison.OrdinalIgnoreCase) ==
+                                            0)
+                                },
+                                new StackListQueue<object>
+                                {
+                                    keyValuePair.Value.Where(
+                                        item =>
+                                            string.Compare(value[item], name, StringComparison.OrdinalIgnoreCase) ==
+                                            0)
+                                }));
 
-                lock (progress) Current += keyValuePair.Key.Length + keyValuePair.Value.Length;
+                lock (progress) Current += keyValuePair.Key.Count + keyValuePair.Value.Count;
                 lock (progress) if (ProgressCallback != null) ProgressCallback(Current, Total);
 
                 IEnumerable<string> bad =
-                    (from item in map where item.Value.Value.Length == 0 select item.Key);
+                    (from item in map where item.Value.Value.Count == 0 select item.Key);
                 IEnumerable<string> good =
-                    (from item in map where item.Value.Value.Length > 0 select item.Key);
+                    (from item in map where item.Value.Value.Count > 0 select item.Key);
 
                 lock (progress) Total += bad.Count()*good.Count();
                 lock (progress) if (ProgressCallback != null) ProgressCallback(Current, Total);
@@ -503,7 +549,8 @@ namespace RealtyParser
                     var pair in
                         dictionary.Where(pair => !string.IsNullOrEmpty(pair.Key) && !string.IsNullOrEmpty(pair.Value)))
                 {
-                    map[pair.Key] = new KeyValuePair<object[], object[]>(map[pair.Key].Key, map[pair.Value].Value);
+                    map[pair.Key] = new KeyValuePair<StackListQueue<object>, StackListQueue<object>>(map[pair.Key].Key,
+                        map[pair.Value].Value);
                 }
 
                 lock (progress) Current += bad.Count()*good.Count();
@@ -592,48 +639,113 @@ namespace RealtyParser
                     Database.ParentIdColumn, Database.LevelColumn);
 
             string siteIdPattern =
-                Regex.Escape(string.Format("{{{{{0}{1}}}}}", Database.SiteTable, Database.IdColumn));
+                string.Format("{0}{1}", Database.SiteTable, Database.IdColumn);
             string siteTableIdPattern =
-                Regex.Escape(string.Format("{{{{{0}{1}{2}}}}}", Database.SiteTable, TableName, Database.IdColumn));
+                string.Format("{0}{1}{2}", Database.SiteTable, TableName, Database.IdColumn);
             string siteTableTitlePattern =
-                Regex.Escape(string.Format("{{{{{0}{1}{2}}}}}", Database.SiteTable, TableName, Database.TitleColumn));
-            string parentIdPattern = Regex.Escape(string.Format("{{{{{0}}}}}", Database.ParentIdColumn));
-            string levelPattern = Regex.Escape(string.Format("{{{{{0}}}}}", Database.LevelColumn));
+                string.Format("{0}{1}{2}", Database.SiteTable, TableName, Database.TitleColumn);
+            string parentIdPattern = string.Format("{0}", Database.ParentIdColumn);
+            string levelPattern = string.Format("{0}", Database.LevelColumn);
 
-            SiteProperties properties = Database.GetSiteProperties(SiteId);
-            BuilderInfos infos = Database.GetBuilderInfos(SiteId);
-            BuilderInfo info = infos[TableName.ToString()];
+            SiteProperties siteProperties = Database.GetSiteProperties(SiteId);
+            BuilderInfos builderInfos = Database.GetBuilderInfos(SiteId);
+            BuilderInfo builderInfo = builderInfos[TableName.ToString()];
+            Crawler.Method = siteProperties.Method.ToString();
+            Crawler.Encoding = siteProperties.Encoding.ToString();
+            Crawler.Compression = siteProperties.CompressionClassName.ToString();
+            ReturnFieldInfos = Database.GetReturnFieldInfos(SiteId);
 
-            var baseBuilder = new UriBuilder(properties.Url.ToString())
+            var baseBuilder = new UriBuilder(builderInfo.Url.ToString())
             {
-                UserName = properties.UserName.ToString(),
-                Password = properties.Password.ToString(),
+                UserName = siteProperties.UserName.ToString(),
+                Password = siteProperties.Password.ToString(),
             };
 
-            MatchCollection matches = System.Text.RegularExpressions.Regex.Matches(info.IdTemplate.ToString(),
+            MatchCollection matches = Regex.Matches(builderInfo.IdTemplate.ToString(),
                 Transformation.FieldPattern);
 
+            string[] flags = builderInfo.Flags.ToString().Split(Parser.SplitChar);
 
-            var queue = new Queue<Values>();
-            queue.Enqueue(new Values {{_optionKey, Empty}});
+            var baseValues = new Values
+            {
+                Table = new List<string> {TableName.ToString()},
+                Url = new List<string> {baseBuilder.Uri.ToString()},
+            };
+
+            var stackListQueue = new StackListQueue<KeyValuePair<int, Values>>
+            {
+                new KeyValuePair<int, Values>(1, baseValues),
+            };
             Total++;
 
-            while (queue.Any())
+            while (stackListQueue.Any())
             {
-                Values parentValues = queue.Dequeue();
+                KeyValuePair<int, Values> dequeue = stackListQueue.Dequeue();
+                Values parentValues = dequeue.Value;
+                int currentLevel = dequeue.Key;
+                Match option = matches[currentLevel - 1];
+                string optionValue = option.Groups[Transformation.NameGroup].Value;
 
-                int maxCount = parentValues.MaxCount;
-                Match option = matches[parentValues.Count - 1];
-                parentValues[_optionKey] =
-                    Enumerable.Repeat(option.Groups[Transformation.NameGroup].Value, maxCount).ToList();
+                int parentCount = parentValues.MaxCount;
 
-                List<string> urls = Transformation.ParseTemplate(info.UrlTemplate.ToString(), parentValues);
+                parentValues.Option = Enumerable.Repeat(optionValue, parentCount).ToList();
+                Debug.WriteLine("parentValues {0}:{1}", currentLevel, parentValues);
+
+                string[] keyXPathTemplates = builderInfo.KeyXPathTemplate.ToString().Split(Parser.SplitChar);
+                string[] valueXPathTemplates = builderInfo.ValueXPathTemplate.ToString().Split(Parser.SplitChar);
+                string[] keyResultTemplates = builderInfo.KeyResultTemplate.ToString().Split(Parser.SplitChar);
+                string[] valueResultTemplates = builderInfo.ValueResultTemplate.ToString().Split(Parser.SplitChar);
+                string[] keyRegexPatterns = Regex.Split(builderInfo.KeyRegexPattern.ToString(),
+                    Types.Regex.Escape(Types.Regex.Escape(Parser.SplitChar.ToString(CultureInfo.InvariantCulture))));
+                string[] valueRegexPatterns = Regex.Split(builderInfo.ValueRegexPattern.ToString(),
+                    Types.Regex.Escape(Types.Regex.Escape(Parser.SplitChar.ToString(CultureInfo.InvariantCulture))));
+                string[] keyRegexReplacements = Regex.Split(builderInfo.KeyRegexReplacement.ToString(),
+                    Types.Regex.Escape(Types.Regex.Escape(Parser.SplitChar.ToString(CultureInfo.InvariantCulture))));
+                string[] valueRegexReplacements = Regex.Split(builderInfo.ValueRegexReplacement.ToString(),
+                    Types.Regex.Escape(Types.Regex.Escape(Parser.SplitChar.ToString(CultureInfo.InvariantCulture))));
+
+                string keyXPathTemplate = (keyXPathTemplates != null && keyXPathTemplates.Length > currentLevel)
+                    ? keyXPathTemplates[currentLevel]
+                    : builderInfo.KeyXPathTemplate.ToString();
+                string valueXPathTemplate = (valueXPathTemplates != null && valueXPathTemplates.Length > currentLevel)
+                    ? valueXPathTemplates[currentLevel]
+                    : builderInfo.ValueXPathTemplate.ToString();
+                string keyResultTemplate = (keyResultTemplates != null && keyResultTemplates.Length > currentLevel)
+                    ? keyResultTemplates[currentLevel]
+                    : builderInfo.KeyResultTemplate.ToString();
+                string valueResultTemplate = (valueResultTemplates != null && valueResultTemplates.Length > currentLevel)
+                    ? valueResultTemplates[currentLevel]
+                    : builderInfo.ValueResultTemplate.ToString();
+                string keyRegexPattern = (keyRegexPatterns != null && keyRegexPatterns.Length > currentLevel)
+                    ? keyRegexPatterns[currentLevel]
+                    : builderInfo.KeyRegexPattern.ToString();
+                string valueRegexPattern = (valueRegexPatterns != null && valueRegexPatterns.Length > currentLevel)
+                    ? valueRegexPatterns[currentLevel]
+                    : builderInfo.ValueRegexPattern.ToString();
+                string keyRegexReplacement = (keyRegexReplacements != null && keyRegexReplacements.Length > currentLevel)
+                    ? keyRegexReplacements[currentLevel]
+                    : builderInfo.KeyRegexReplacement.ToString();
+                string valueRegexReplacement = (valueRegexReplacements != null &&
+                                                valueRegexReplacements.Length > currentLevel)
+                    ? valueRegexReplacements[currentLevel]
+                    : builderInfo.ValueRegexReplacement.ToString();
 
                 var returnFieldInfos = new ReturnFieldInfos();
-                foreach (var pair in new Dictionary<object, object>
+                foreach (
+                    string key in
+                        ReturnFieldInfos.GetType().GetProperties()
+                            .Select(propertyInfo => propertyInfo.Name)
+                            .Where(key => ReturnFieldInfos.ContainsKey(key)))
                 {
-                    {option.Groups[Transformation.NameGroup].Value, info.KeySelectTemplate},
-                    {ReturnTitle, info.TitleSelectTemplate}
+                    returnFieldInfos.Add(key, ReturnFieldInfos[key]);
+                }
+                foreach (var pair in new Dictionary<string, string[]>
+                {
+                    {ReturnValue, new[] {keyXPathTemplate, keyResultTemplate, keyRegexPattern, keyRegexReplacement}},
+                    {
+                        ReturnTitle,
+                        new[] {valueXPathTemplate, valueResultTemplate, valueRegexPattern, valueRegexReplacement}
+                    }
                 })
                 {
                     returnFieldInfos.Add(
@@ -641,62 +753,136 @@ namespace RealtyParser
                         {
                             SiteId = SiteId,
                             ReturnFieldId = pair.Key,
-                            ReturnFieldXpathTemplate = info.XPathTemplate,
-                            ReturnFieldResultTemplate = pair.Value,
-                            ReturnFieldRegexPattern = @".*",
-                            ReturnFieldRegexReplacement = @"$&",
+                            ReturnFieldXpathTemplate = pair.Value[0],
+                            ReturnFieldResultTemplate = pair.Value[1],
+                            ReturnFieldRegexPattern = pair.Value[2],
+                            ReturnFieldRegexReplacement = pair.Value[3],
                             ReturnFieldRegexMatchPattern = @".*",
                         });
                 }
-                List<string> parentIds = Transformation.ParseTemplate(info.IdTemplate.ToString(), parentValues);
-                for (int i = 0; i < maxCount; i++)
+                Debug.WriteLine("returnFieldInfos {0}:{1}", currentLevel, returnFieldInfos);
+                List<string> parentIds =
+                    Transformation.ParseTemplate(builderInfo.IdTemplate.ToString(), new Values
+                    {
+                        parentValues.Where(pair => string.CompareOrdinal(pair.Key, optionValue) != 0)
+                    })
+                        .Select(s => s.ToLower())
+                        .ToList();
+
+                for (int i = 0; i < parentCount; i++)
                 {
                     Values slice = parentValues.Slice(i);
-                    var builder = new UriBuilder(baseBuilder + urls[i]);
-                    HtmlDocument[] documents =
+                    Uri uri = Types.Uri.Combine(baseBuilder.Uri.ToString(), slice.Url.First());
+                    slice.Url = new List<string> {uri.ToString()};
+
+                    IEnumerable<HtmlDocument> documents =
                         await
-                            Parser.WebRequestHtmlDocument(builder.Uri, properties.Method.ToString(),
-                                properties.Encoding.ToString());
+                            Crawler.WebRequestHtmlDocument(uri, false);
 
-                    HtmlNode[] nodes = documents.Select(document => document.DocumentNode).ToArray();
-                    ReturnFields returnFields = Parser.BuildReturnFields(nodes,
+                    ReturnFields returnFields = Parser.BuildReturnFields(documents,
                         slice, returnFieldInfos);
-                    var returnValues = new Values(returnFields);
-                    foreach (var pair in slice)
-                        returnValues.Add(pair.Key, Enumerable.Repeat(pair.Value[0], returnFields.MaxCount).ToList());
-                    List<string> ids = Transformation.ParseTemplate(info.IdTemplate.ToString(),
-                        returnValues);
-                    List<string> titles = returnFields[ReturnTitle];
-                    var items = new Values
-                    {
-                        {
-                            siteIdPattern,
-                            Enumerable.Repeat(SiteId.ToString(),
-                                returnFields.MaxCount).ToList()
-                        },
-                        {siteTableIdPattern, ids},
-                        {siteTableTitlePattern, titles},
-                        {parentIdPattern, Enumerable.Repeat(parentIds[i], returnFields.MaxCount).ToList()},
-                        {
-                            levelPattern,
-                            Enumerable.Repeat(parentValues.Count.ToString(CultureInfo.InvariantCulture),
-                                returnFields.MaxCount).ToList()
-                        },
-                    };
 
-                    List<string> commandTexts = Transformation.ParseTemplate(insertOrReplaceString, items);
-                    Total += commandTexts.Count;
-                    foreach (string commandText in commandTexts)
+                    returnFields.Option =
+                        returnFields.Option.Select(
+                            seed =>
+                                OptionPatches.Aggregate(seed,
+                                    (current, patch) =>
+                                        new Regex(patch.Key, RegexOptions.IgnoreCase).Replace(current, patch.Value)));
+                    returnFields.Value =
+                        returnFields.Value.Select(
+                            seed =>
+                                ValuePatches.Aggregate(seed,
+                                    (current, patch) =>
+                                        new Regex(patch.Key, RegexOptions.IgnoreCase).Replace(current, patch.Value)));
+                    Debug.WriteLine("returnFields {0}:{1}:{2}", currentLevel, i, returnFields);
+
+                    List<string> options = returnFields.Value.ToList();
+                    List<string> titles = returnFields.Title.ToList();
+                    List<string> optionRedirect = returnFields.OptionRedirect.ToList();
+                    List<string> valueRedirect = returnFields.ValueRedirect.ToList();
+
+                    int keyCount = Math.Min(options.Count, titles.Count);
+                    if (keyCount > 0)
                     {
-                        AppendLineCallback(commandText);
-                        if (ProgressCallback != null) ProgressCallback(++Current, Total);
+                        List<string> currentOptions = options.GetRange(0, keyCount);
+                        List<string> currentTitles = titles.GetRange(0, keyCount);
+                        var currentValues = new Values();
+                        if (string.CompareOrdinal(flags[currentLevel], @"?") == 0)
+                        {
+                            currentOptions.Add(parentIds[i].Split(Parser.SplitChar)[currentLevel - 1]);
+                            foreach (var pair in slice.Where(pair => pair.Value.Any()))
+                                currentValues.Add(pair.Key, Enumerable.Repeat(pair.Value.First(), keyCount + 1).ToList());
+                        }
+                        else
+                        {
+                            foreach (var pair in slice.Where(pair => pair.Value.Any()))
+                                currentValues.Add(pair.Key, Enumerable.Repeat(pair.Value.First(), keyCount).ToList());
+                        }
+
+                        if (currentValues.ContainsKey(optionValue)) currentValues[optionValue] = currentOptions;
+                        else currentValues.Add(optionValue, currentOptions);
+
+                        List<string> ids = Transformation.ParseTemplate(builderInfo.IdTemplate.ToString(),
+                            currentValues).Select(s => s.ToLower()).ToList();
+                        var items = new Values
+                        {
+                            {
+                                siteIdPattern,
+                                Enumerable.Repeat(SiteId.ToString(), keyCount).ToList()
+                            },
+                            {siteTableIdPattern, ids.GetRange(0, keyCount)},
+                            {siteTableTitlePattern, currentTitles},
+                            {parentIdPattern, Enumerable.Repeat(parentIds[i], keyCount).ToList()},
+                            {
+                                levelPattern,
+                                Enumerable.Repeat(currentLevel.ToString(CultureInfo.InvariantCulture),
+                                    keyCount).ToList()
+                            },
+                        };
+
+                        IEnumerable<string> commandTexts = Transformation.ParseTemplate(insertOrReplaceString, items);
+                        Debug.Assert(commandTexts.Count() == keyCount);
+                        Total += commandTexts.Count();
+                        foreach (string commandText in commandTexts)
+                        {
+                            AppendLineCallback(commandText);
+                            if (ProgressCallback != null) ProgressCallback(++Current, Total);
+                        }
+
+                        currentValues.Remove(string.Format("{0}", ReturnTitle));
+                        if (currentLevel < matches.Count)
+                        {
+                            currentValues.Value = currentOptions;
+                            currentValues.Title = new List<string>();
+                            currentValues.Url = Transformation.ParseTemplate(builderInfo.UrlTemplate.ToString(),
+                                currentValues).ToList();
+                            stackListQueue.Enqueue(new KeyValuePair<int, Values>(currentLevel + 1, currentValues));
+                            Total += currentValues.MaxCount;
+                        }
                     }
-
-                    if (parentValues.Count < matches.Count)
+                    foreach (var redirect in new[] {optionRedirect, valueRedirect})
                     {
-                        returnValues.Remove(Regex.Escape(string.Format("{{{{{0}}}}}", ReturnTitle)));
-                        queue.Enqueue(returnValues);
-                        Total += returnValues.MaxCount;
+                        int countRedirect = redirect.Count;
+                        if (countRedirect == 0) continue;
+                        int optionCount = Math.Min(options.Count() - keyCount, countRedirect);
+                        int titleCount = Math.Min(titles.Count() - keyCount, countRedirect);
+                        List<string> redirectOptions = (optionCount > 0)
+                            ? options.GetRange(keyCount, optionCount)
+                            : new List<string>();
+                        List<string> redirectTitles = (titleCount > 0)
+                            ? titles.GetRange(keyCount, titleCount)
+                            : new List<string>();
+                        var redirectValues = new Values();
+                        foreach (var pair in slice.Where(pair => pair.Value.Any()))
+                            redirectValues.Add(pair.Key,
+                                Enumerable.Repeat(pair.Value.First(), countRedirect).ToList());
+                        if (redirectValues.ContainsKey(optionValue)) redirectValues[optionValue] = redirectOptions;
+                        else redirectValues.Add(optionValue, redirectOptions);
+                        redirectValues.Url = optionRedirect;
+                        redirectValues.Value = redirectOptions;
+                        redirectValues.Title = redirectTitles;
+                        stackListQueue.Enqueue(new KeyValuePair<int, Values>(currentLevel, redirectValues));
+                        Total += countRedirect;
                     }
                     if (ProgressCallback != null) ProgressCallback(++Current, Total);
                 }

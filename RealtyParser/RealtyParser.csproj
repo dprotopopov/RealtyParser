@@ -23,6 +23,7 @@
     <WarningLevel>4</WarningLevel>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <Prefer32Bit>false</Prefer32Bit>
+    <CodeAnalysisIgnoreGeneratedCode>false</CodeAnalysisIgnoreGeneratedCode>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -42,6 +43,9 @@
   <ItemGroup>
     <Reference Include="HtmlAgilityPack">
       <HintPath>..\packages\HtmlAgilityPack.1.4.6\lib\Net45\HtmlAgilityPack.dll</HintPath>
+    </Reference>
+    <Reference Include="ICSharpCode.SharpZipLib">
+      <HintPath>..\packages\SharpZipLib.0.86.0\lib\20\ICSharpCode.SharpZipLib.dll</HintPath>
     </Reference>
     <Reference Include="ServiceStack.Common">
       <HintPath>..\packages\ServiceStack.Common.4.0.7\lib\net40\ServiceStack.Common.dll</HintPath>
@@ -69,14 +73,18 @@
     <Reference Include="System.Data.SQLite.Linq">
       <HintPath>..\packages\System.Data.SQLite.x86.1.0.90.0\lib\net45\System.Data.SQLite.Linq.dll</HintPath>
     </Reference>
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Net.Http.WebRequest" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AppendLineCallback.cs" />
-    <Compile Include="Array.cs" />
     <Compile Include="BuilderInfo.cs" />
     <Compile Include="BuilderInfos.cs" />
+    <Compile Include="Collections\Array.cs" />
     <Compile Include="Collections\DictionaryOfList.cs" />
     <Compile Include="Collections\HierarchicalItem.cs" />
     <Compile Include="Collections\HierarchicalItemCollection.cs" />
@@ -85,9 +93,22 @@
     <Compile Include="Collections\Mappings.cs" />
     <Compile Include="Collections\OptionsCollection.cs" />
     <Compile Include="Collections\Properties.cs" />
+    <Compile Include="Collections\StackListQueue.cs" />
     <Compile Include="CompliteCallback.cs" />
-    <Compile Include="DateTime.cs" />
-    <Compile Include="Comparer.cs" />
+    <Compile Include="ComparerManager.cs" />
+    <Compile Include="CompressionManager.cs" />
+    <Compile Include="Compression\DeflateStream.cs" />
+    <Compile Include="Compression\GZipStream.cs" />
+    <Compile Include="Compression\ICompression.cs" />
+    <Compile Include="Compression\NoCompression.cs" />
+    <Compile Include="Converter.cs" />
+    <Compile Include="Crawler.cs" />
+    <Compile Include="Forms\AboutBox.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\AboutBox.Designer.cs">
+      <DependentUpon>AboutBox.cs</DependentUpon>
+    </Compile>
     <Compile Include="ObjectComparer.cs" />
     <Compile Include="ProgressCallback.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
@@ -95,31 +116,39 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="QueueStack.cs" />
     <Compile Include="RequestProperties.cs" />
     <Compile Include="ReturnFieldInfos.cs" />
     <Compile Include="Builder.cs" />
-    <Compile Include="String.cs" />
+    <Compile Include="Types\Boolean.cs" />
+    <Compile Include="Types\DateTime.cs" />
+    <Compile Include="Types\Decimal.cs" />
+    <Compile Include="Types\Int32.cs" />
+    <Compile Include="Types\Regex.cs" />
+    <Compile Include="Types\String.cs" />
+    <Compile Include="Types\Type.cs" />
+    <Compile Include="Types\UInt32.cs" />
     <Compile Include="Transformation.cs" />
-    <Compile Include="Type.cs" />
+    <Compile Include="Types\Uri.cs" />
     <Compile Include="Values.cs" />
     <Compile Include="LevenshteinDistance.cs" />
     <Compile Include="Mappings.cs" />
-    <Compile Include="PublicationComparer\DatetimeFirstIdSecondComparer.cs" />
-    <Compile Include="PublicationComparer\OnlyDatetimeComparer.cs" />
-    <Compile Include="PublicationComparer\OnlyDigitsDecimalComparer.cs" />
+    <Compile Include="Comparer\DatetimeFirstIdSecondComparer.cs" />
+    <Compile Include="Comparer\OnlyDatetimeComparer.cs" />
+    <Compile Include="Comparer\OnlyDigitsDecimalComparer.cs" />
     <Compile Include="Database.cs" />
-    <Compile Include="ParsingModule.cs" />
-    <Compile Include="PublicationComparer\AscComparer.cs" />
-    <Compile Include="PublicationComparer\DescComparer.cs" />
+    <Compile Include="ParserModule.cs" />
+    <Compile Include="Comparer\AscComparer.cs" />
+    <Compile Include="Comparer\DescComparer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Parser.cs" />
-    <Compile Include="Regex.cs" />
     <Compile Include="ReturnFieldInfo.cs" />
     <Compile Include="ReturnFields.cs" />
     <Compile Include="SiteProperties.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="MirkvartirParser.db">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="packages.config" />
     <Content Include="libtidy.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -128,7 +157,12 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Include="RealtyParser.snk" />
+    <Content Include="RosrealtParser.db">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Include="Алгоритм.doc" />
     <None Include="Структура базы данных.docx" />
+    <None Include="Техническое задание на разработку парсера v10.pdf" />
     <None Include="Техническое задание на разработку парсера v4.pdf" />
   </ItemGroup>
   <ItemGroup>
@@ -149,11 +183,15 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Forms\AboutBox.resx">
+      <DependentUpon>AboutBox.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

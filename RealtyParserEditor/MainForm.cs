@@ -1,6 +1,8 @@
 ﻿using System;
 using DevExpress.XtraBars;
 using DevExpress.XtraBars.Ribbon;
+using RealtyParser.Forms;
+using RealtyParserEditor.Children;
 
 namespace RealtyParserEditor
 {
@@ -8,6 +10,7 @@ namespace RealtyParserEditor
     {
         private readonly AboutForm _aboutForm;
         private readonly BuilderForm _builderForm;
+        private readonly HapForm _hapForm;
         private readonly KeysForm _keysForm;
         private readonly MappingEditor _mappingEditor;
         private readonly ResultForm _resultForm;
@@ -24,6 +27,7 @@ namespace RealtyParserEditor
             _resultForm = new ResultForm {MdiParent = this};
             _builderForm = new BuilderForm {MdiParent = this};
             _mappingEditor = new MappingEditor {MdiParent = this};
+            _hapForm = new HapForm {MdiParent = this};
         }
 
         private void MainForm_Load(object sender, EventArgs e)
@@ -35,6 +39,7 @@ namespace RealtyParserEditor
             _builderForm.Show();
             _aboutForm.Show();
             _mappingEditor.Show();
+            _hapForm.Show();
         }
 
         private void barButtonItem2_ItemClick(object sender, ItemClickEventArgs e)
@@ -62,8 +67,8 @@ namespace RealtyParserEditor
 
         private void barButtonItem5_ItemClick(object sender, ItemClickEventArgs e)
         {
-            _aboutForm.Show();
-            _aboutForm.Focus();
+            var aboutBox = new AboutBox();
+            aboutBox.ShowDialog();
         }
     }
 }

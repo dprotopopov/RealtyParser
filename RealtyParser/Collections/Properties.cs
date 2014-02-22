@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using String = RealtyParser.Types.String;
 
 namespace RealtyParser.Collections
 {
@@ -9,12 +11,13 @@ namespace RealtyParser.Collections
         {
             var values = new Values
             {
-                {Regex.Escape(@"{{Key}}"), Keys.ToList()},
+                {Transformation.KeyKey, Keys.ToList()},
                 {
-                    Regex.Escape(@"{{Value}}"), Values.Select(item => (item != null) ? item.ToString() : "(null)").ToList()
+                    Transformation.ValueKey, Values.Select(item => (item != null) ? item.ToString() : "(null)").ToList()
                 }
             };
-            return string.Join("\n", new Transformation().ParseTemplate(@"{{Key}}:{{Value}}", values));
+            return String.Parse(new Transformation().ParseTemplate(
+                    string.Format(@"{{{{{0}}}}}:{{{{{1}}}}}", Transformation.KeyKey, Transformation.ValueKey), values));
         }
     }
 }

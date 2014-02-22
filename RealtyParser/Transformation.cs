@@ -1,14 +1,20 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Reflection;
+using RealtyParser.Types;
+using String = System.String;
 
 namespace RealtyParser
 {
     public class Transformation
     {
         public const string NameGroup = @"name";
-        public const string FieldPattern = @"\{\{(?<" + NameGroup + @">[^\}]*)\}\}";
+        public const string KeyKey = @"Key";
+        public const string ValueKey = @"Value";
+
+        public readonly string FieldPattern = String.Format("{0}(?<{1}>[^\\}}]*){2}", Regex.Escape(@"{{"),
+            NameGroup,
+            Regex.Escape(@"}}"));
 
         public ProgressCallback ProgressCallback { get; set; }
         public AppendLineCallback AppendLineCallback { get; set; }
@@ -17,7 +23,7 @@ namespace RealtyParser
         /// <summary>
         ///     Замена в строке-шаблоне идентификаторов-параметров на их значения
         /// </summary>
-        public List<string> ParseTemplate(string template, Values values)
+        public IEnumerable<string> ParseTemplate(string template, Values values)
         {
             var list = new List<string>();
             int maxCount = values.MaxCount;
@@ -31,12 +37,12 @@ namespace RealtyParser
                 for (int i = 0; i < (parts.Length & ~1); i += 2)
                 {
                     list1.Add(parts[i]);
-                    string key = Regex.Escape(string.Format("{{{{{0}}}}}", parts[i + 1]));
-                    if (values.ContainsKey(key) && values[key].Count > index) list1.Add(values[key][index]);
+                    string key = String.Format("{0}", parts[i + 1]);
+                    if (values.ContainsKey(key) && values[key].Count() > index) list1.Add(values[key].ToList()[index]);
                 }
                 list1.Add(parts.Last());
-                string value = System.String.Join("", list1).Trim();
-                if (!string.IsNullOrEmpty(value)) list.Add(value);
+                string value = String.Join("", list1).Trim();
+                if (!String.IsNullOrEmpty(value)) list.Add(value);
                 if (ProgressCallback != null) ProgressCallback(++current, total);
             }
             if (CompliteCallback != null) CompliteCallback();

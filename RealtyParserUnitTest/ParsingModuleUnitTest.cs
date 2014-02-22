@@ -12,7 +12,7 @@ namespace RealtyParserUnitTest
     [TestClass]
     public class ParsingModuleUnitTest
     {
-        ParsingModule module = new ParsingModule();
+        ParserModule module = new ParserModule();
 
         /// <summary>
         ///Получает или устанавливает контекст теста, в котором предоставляются

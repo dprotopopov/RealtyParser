@@ -26,18 +26,22 @@ namespace RealtyParser
         public const string LevelColumn = "Level";
         public const string ParentIdColumn = "Parent" + IdColumn;
         public const string HasChildColumn = "HasChild";
+        public const string ModuleNamespaceColumn = "ModuleNamespace";
+        public readonly string SiteIdColumn = string.Format("{0}{1}", SiteTable, IdColumn);
 
-        /// <summary>
-        ///     Инициализация
-        /// </summary>
+        private readonly MethodInfo _stringFormatMethodInfo = typeof (string).GetMethod("Format",
+            new[] {typeof (string), typeof (object[])});
+
         public Database()
         {
-            //Assembly assembly = GetType().Assembly;
-            //var resourceManager = new ResourceManager("Resources.Strings", assembly);
-            //string connectionString = resourceManager.GetString("ConnectionString");
-            const string connectionString = "data source=RealtyParser.db";
-            Connection = new SQLiteConnection(connectionString);
+            ModuleNamespace = GetType().Namespace;
+            ConnectionString = string.Format("data source={0}.db", ModuleNamespace);
+            Connection = new SQLiteConnection(ConnectionString);
         }
+
+        public string ModuleNamespace { get; set; }
+
+        private string ConnectionString { get; set; }
 
         public ProgressCallback ProgressCallback { get; set; }
         public AppendLineCallback AppendLineCallback { get; set; }
@@ -231,7 +235,7 @@ namespace RealtyParser
 
         #region
 
-        private readonly Dictionary<System.Type[], string> _getListProfiles = new Dictionary<System.Type[], string>
+        private readonly Dictionary<Type[], string> _getListProfiles = new Dictionary<Type[], string>
         {
             {
                 new[] {typeof (string)},
@@ -257,6 +261,12 @@ namespace RealtyParser
                     SiteTable, IdColumn, ParentIdColumn)
             },
             {
+                new[] {typeof (object), typeof (string), typeof (object)},
+                string.Format(
+                    "SELECT {0}{{1}}{2} FROM {0}{{1}}{1} WHERE ({{1}}{2}=@{2}) AND ({0}{2}=@{0}{2})",
+                    SiteTable, MappingTable, IdColumn)
+            },
+            {
                 new[] {typeof (string), typeof (long), typeof (long), typeof (object)},
                 string.Format(
                     "SELECT {{0}}{0} FROM {{0}} WHERE ({1}=@{1}) AND ({2}>=@Min{2}) AND ({2}<=@Max{2})",
@@ -275,33 +285,41 @@ namespace RealtyParser
         /// </summary>
         public IEnumerable<object> GetList(params object[] parameters)
         {
-            System.Type[] types = parameters.Select(parameter => parameter.GetType()).ToArray();
+            Type[] types = parameters.Select(parameter => parameter.GetType()).ToArray();
             long current = 0;
             long total = 1;
-            foreach (var pair in _getListProfiles.Where(pair => Type.IsKindOf(types, pair.Key)))
+            foreach (var pair in _getListProfiles.Where(pair => Types.Type.IsKindOf(types, pair.Key)))
             {
                 var values = new List<object>();
                 Connection.Open();
                 using (SQLiteCommand command = Connection.CreateCommand())
                 {
+                    command.CommandText =
+                        (string) _stringFormatMethodInfo.Invoke(null, new object[] {pair.Value, parameters});
+                    Debug.WriteLine(command.CommandText);
                     switch (types.Length)
                     {
                         case 1:
-                            command.CommandText = string.Format(pair.Value, parameters[0]);
                             command.Parameters.Add(new SQLiteParameter(string.Format("@{0}", ParentIdColumn),
                                 parameters[parameters.Length - 1]));
                             command.Parameters.Add(new SQLiteParameter(string.Format("@{0}{1}", SiteTable, IdColumn),
                                 parameters[parameters.Length - 1]));
                             break;
                         case 2:
-                            command.CommandText = string.Format(pair.Value, parameters[0], parameters[1]);
                             command.Parameters.Add(new SQLiteParameter(string.Format("@{0}", ParentIdColumn),
                                 parameters[parameters.Length - 1]));
                             command.Parameters.Add(new SQLiteParameter(string.Format("@{0}{1}", SiteTable, IdColumn),
                                 parameters[parameters.Length - 1]));
                             break;
+                        case 3:
+                            command.Parameters.Add(new SQLiteParameter(string.Format("@{0}", IdColumn),
+                                parameters[0]));
+                            command.Parameters.Add(new SQLiteParameter(string.Format("@{0}", ParentIdColumn),
+                                parameters[parameters.Length - 2]));
+                            command.Parameters.Add(new SQLiteParameter(string.Format("@{0}{1}", SiteTable, IdColumn),
+                                parameters[parameters.Length - 1]));
+                            break;
                         case 4:
-                            command.CommandText = string.Format(pair.Value, parameters[0]);
                             command.Parameters.Add(new SQLiteParameter(string.Format("@Min{0}", LevelColumn),
                                 parameters[parameters.Length - 3]));
                             command.Parameters.Add(new SQLiteParameter(string.Format("@Max{0}", LevelColumn),
@@ -310,7 +328,6 @@ namespace RealtyParser
                                 parameters[parameters.Length - 1]));
                             break;
                         case 5:
-                            command.CommandText = string.Format(pair.Value, parameters[0]);
                             command.Parameters.Add(new SQLiteParameter(string.Format("@Min{0}", LevelColumn),
                                 parameters[parameters.Length - 4]));
                             command.Parameters.Add(new SQLiteParameter(string.Format("@Max{0}", LevelColumn),
@@ -341,7 +358,7 @@ namespace RealtyParser
 
         #region
 
-        private readonly Dictionary<System.Type[], string> _getMappingProfiles = new Dictionary<System.Type[], string>
+        private readonly Dictionary<Type[], string> _getMappingProfiles = new Dictionary<Type[], string>
         {
             {
                 new[] {typeof (string)},
@@ -358,14 +375,14 @@ namespace RealtyParser
                     IdColumn,
                     TitleColumn, LevelColumn)
             },
-             {
+            {
                 new[] {typeof (string), typeof (long), typeof (long), typeof (object)},
                 string.Format(
                     "SELECT {0}{{0}}{1},{0}{{0}}{2} FROM {0}{{0}} WHERE ({0}{1}=@{0}{1}) AND ({3}>=@{0}Min{3}) AND ({3}<=@{0}Max{3})",
                     SiteTable,
                     IdColumn, TitleColumn, LevelColumn)
             },
-           {
+            {
                 new[] {typeof (string), typeof (string), typeof (string)},
                 string.Format("SELECT {{1}},{{2}} FROM {{0}}")
             },
@@ -401,25 +418,25 @@ namespace RealtyParser
         /// </summary>
         public Mapping GetMapping(params object[] parameters)
         {
-            System.Type[] types = parameters.Select(arg => arg.GetType()).ToArray();
-            foreach (var pair in _getMappingProfiles.Where(pair => Type.IsKindOf(types, pair.Key)))
+            Type[] types = parameters.Select(arg => arg.GetType()).ToArray();
+            foreach (var pair in _getMappingProfiles.Where(pair => Types.Type.IsKindOf(types, pair.Key)))
             {
                 var mapping = new Mapping();
                 Connection.Open();
                 using (SQLiteCommand command = Connection.CreateCommand())
                 {
+                    command.CommandText =
+                        (string) _stringFormatMethodInfo.Invoke(null, new object[] {pair.Value, parameters});
+                    Debug.WriteLine(command.CommandText);
                     switch (types.Length)
                     {
                         case 1:
-                            command.CommandText = string.Format(pair.Value, parameters[0]);
                             break;
                         case 2:
-                            command.CommandText = string.Format(pair.Value, parameters[0], parameters[1]);
                             command.Parameters.Add(new SQLiteParameter(string.Format("@{0}{1}", SiteTable, IdColumn),
                                 parameters[parameters.Length - 1]));
                             break;
                         case 6:
-                            command.CommandText = string.Format(pair.Value, parameters[0], parameters[1], parameters[2]);
                             command.Parameters.Add(new SQLiteParameter(string.Format("@Min{0}", LevelColumn),
                                 parameters[parameters.Length - 5]));
                             command.Parameters.Add(new SQLiteParameter(string.Format("@Max{0}", LevelColumn),
@@ -434,7 +451,6 @@ namespace RealtyParser
                                 parameters[parameters.Length - 1]));
                             break;
                         default:
-                            command.CommandText = string.Format(pair.Value, parameters[0], parameters[1], parameters[2]);
                             command.Parameters.Add(new SQLiteParameter(string.Format("@Min{0}", LevelColumn),
                                 parameters[parameters.Length - 2]));
                             command.Parameters.Add(new SQLiteParameter(string.Format("@Max{0}", LevelColumn),
@@ -539,7 +555,7 @@ namespace RealtyParser
 
         #region
 
-        private readonly Dictionary<System.Type[], string> _getScalarProfiles = new Dictionary<System.Type[], string>
+        private readonly Dictionary<Type[], string> _getScalarProfiles = new Dictionary<Type[], string>
         {
             {
                 new[] {typeof (object), typeof (string)},
@@ -550,13 +566,17 @@ namespace RealtyParser
                 string.Format("SELECT {{0}} FROM {{1}} WHERE {{1}}{0}=@{0}", IdColumn)
             },
             {
+                new[] {typeof (object), typeof (string), typeof (string), typeof (string)},
+                string.Format("SELECT {{0}} FROM {{2}} WHERE {{1}}=@{0}", IdColumn)
+            },
+            {
                 new[] {typeof (object), typeof (string), typeof (object)},
                 string.Format("SELECT {0}{{0}}{1} FROM {0}{{0}}{2} WHERE {{0}}{1}=@{1} AND {0}{1}=@{0}{1}",
                     SiteTable, IdColumn, MappingTable)
             },
             {
                 new[] {typeof (object), typeof (string), typeof (string), typeof (object)},
-                string.Format("SELECT {{0}} FROM {0}{{1}} WHERE {0}{{1}}{1}=@Id AND {0}{1}=@{0}{1}", SiteTable,
+                string.Format("SELECT {{0}} FROM {0}{{1}} WHERE {0}{{1}}{1}=@{1} AND {0}{1}=@{0}{1}", SiteTable,
                     IdColumn)
             }
         };
@@ -568,16 +588,18 @@ namespace RealtyParser
         /// </summary>
         public object GetScalar(params object[] parameters)
         {
-            System.Type[] types = parameters.Select(arg => arg.GetType()).ToArray();
-            foreach (var pair in _getScalarProfiles.Where(pair => Type.IsKindOf(types, pair.Key)))
+            Type[] types = parameters.Select(arg => arg.GetType()).ToArray();
+            foreach (var pair in _getScalarProfiles.Where(pair => Types.Type.IsKindOf(types, pair.Key)))
             {
                 Connection.Open();
                 using (SQLiteCommand command = Connection.CreateCommand())
                 {
+                    command.CommandText =
+                        (string)
+                            _stringFormatMethodInfo.Invoke(null,
+                                new object[] {pair.Value, parameters.Where((val, idx) => idx != 0).ToArray()});
+                    Debug.WriteLine(command.CommandText);
                     command.Parameters.Add(new SQLiteParameter(string.Format("@{0}", IdColumn), parameters[0]));
-                    command.CommandText = (parameters.Length == 2)
-                        ? string.Format(pair.Value, parameters[1])
-                        : string.Format(pair.Value, parameters[1], parameters[2]);
                     command.Parameters.Add(new SQLiteParameter(string.Format("@{0}{1}", SiteTable, IdColumn),
                         parameters[parameters.Length - 1]));
                     SQLiteDataReader reader = command.ExecuteReader();

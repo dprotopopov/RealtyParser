@@ -1,0 +1,6 @@
+BEGIN;
+DELETE FROM SiteActionMapping WHERE SiteId=3;
+DELETE FROM SiteRubricMapping WHERE SiteId=3;
+DELETE FROM SiteAction WHERE SiteId=3;
+DELETE FROM SiteRubric WHERE SiteId=3;
+COMMIT;

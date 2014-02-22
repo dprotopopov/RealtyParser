@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text.RegularExpressions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using RealtyParser.PublicationComparer;
+using RealtyParser.Comparer;
 
 namespace RealtyParserUnitTest
 {
@@ -61,9 +61,9 @@ namespace RealtyParserUnitTest
             //
             var comparer = new OnlyDatetimeComparer();
             MatchCollection matchesX = Regex.Matches("[888,##11.03.2014 14:37:42##]",
-                RealtyParser.PublicationComparer.OnlyDatetimeComparer.DateTimePatten);
+                RealtyParser.Comparer.OnlyDatetimeComparer.DateTimePatten);
             DateTime dateTimeX = (matchesX.Count > 0)
-                ? RealtyParser.DateTime.Parse(matchesX[0].Groups["date"].Value)
+                ? RealtyParser.Types.DateTime.Parse(matchesX[0].Groups["date"].Value)
                 : DateTime.Now;
             Console.WriteLine(dateTimeX);
         }

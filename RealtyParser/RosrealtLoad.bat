@@ -4,4 +4,5 @@ rem sqlite3 RealtyParser.db < RosrealtActionMapping.sql
 rem sqlite3 RealtyParser.db < RosrealtRubricMapping.sql
 rem sqlite3 RealtyParser.db < RosrealtRegion.sql
 rem sqlite3 RealtyParser.db < RosrealtRegionMapping1.sql
-sqlite3 RealtyParser.db < RosrealtRegionMapping2.sql
+rem sqlite3 RealtyParser.db < RosrealtRegionMapping2.sql
+sqlite3 RealtyParser.db < RosrealtRegionDelete.sql
