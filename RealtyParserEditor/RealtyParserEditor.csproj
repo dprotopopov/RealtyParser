@@ -27,7 +27,7 @@
     <PublisherName>Dmitry Protopopov</PublisherName>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>20</ApplicationRevision>
+    <ApplicationRevision>22</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -191,6 +191,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Content Include="MirkvartirParser.sqlite3">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -201,11 +204,22 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Content Include="RosrealtParser.sqlite3">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\RealtyParser.Mirkvartir\RealtyParser.Mirkvartir.csproj">
+      <Project>{c67274ba-03f8-44a7-8146-f745a6f662d5}</Project>
+      <Name>RealtyParser.Mirkvartir</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RealtyParser.Rosrealt\RealtyParser.Rosrealt.csproj">
+      <Project>{57de8459-4895-490b-a412-e9b7b6f0441b}</Project>
+      <Name>RealtyParser.Rosrealt</Name>
+    </ProjectReference>
     <ProjectReference Include="..\RealtyParser\RealtyParser.csproj">
       <Project>{8ac9f758-9ce0-4203-854e-2b17cdc65c01}</Project>
       <Name>RealtyParser</Name>
@@ -220,7 +234,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="RealtyParser.db">
+    <Content Include="RealtyParser.sqlite3">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Include="RealtyParserEditor_TemporaryKey.pfx" />
@@ -259,7 +273,10 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PreBuildEvent>copy /v /y D:\Projects\RealtyParser\RealtyParser\RealtyParser.db  D:\Projects\RealtyParser\RealtyParserEditor\RealtyParser.db</PreBuildEvent>
+    <PreBuildEvent>copy /v /y D:\Projects\RealtyParser\RealtyParser\RealtyParser.sqlite3  D:\Projects\RealtyParser\RealtyParserEditor\RealtyParser.sqlite3
+copy /v /y D:\Projects\RealtyParser\RealtyParser\MirkvartirParser.sqlite3  D:\Projects\RealtyParser\RealtyParserEditor\MirkvartirParser.sqlite3
+copy /v /y D:\Projects\RealtyParser\RealtyParser\RosrealtParser.sqlite3  D:\Projects\RealtyParser\RealtyParserEditor\RosrealtParser.sqlite3
+</PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

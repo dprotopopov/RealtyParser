@@ -20,6 +20,7 @@ namespace RealtyParser.Collections
         {
             Add(value);
         }
+
         public void Add(IEnumerable<T> value)
         {
             AddRange(value);
@@ -33,7 +34,8 @@ namespace RealtyParser.Collections
             return value;
         }
 
-        public static StackListQueue<T> IntersectSorted<T>(StackListQueue<T> array1, StackListQueue<T> array2, IComparer<T> comparer)
+        public static StackListQueue<T> IntersectSorted<T>(StackListQueue<T> array1, StackListQueue<T> array2,
+            IComparer<T> comparer)
         {
             int i = 0;
             int j = 0;
@@ -53,7 +55,8 @@ namespace RealtyParser.Collections
             return stackListQueue;
         }
 
-        public static StackListQueue<T> DistinctSorted<T>(StackListQueue<T> array1, StackListQueue<T> array2, IComparer<T> comparer)
+        public static StackListQueue<T> DistinctSorted<T>(StackListQueue<T> array1, StackListQueue<T> array2,
+            IComparer<T> comparer)
         {
             int i = 0;
             int j = 0;

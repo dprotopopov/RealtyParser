@@ -1,12 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using RealtyParser.Trace;
 using RealtyParser.Types;
 using String = System.String;
 
 namespace RealtyParser
 {
-    public class Transformation
+    public class Transformation : ITrace
     {
         public const string NameGroup = @"name";
         public const string KeyKey = @"Key";
@@ -47,6 +48,12 @@ namespace RealtyParser
             }
             if (CompliteCallback != null) CompliteCallback();
             return list;
+        }
+
+        public IEnumerable<string> ParseTemplate(Values values)
+        {
+            return ParseTemplate(
+                string.Format(@"{{{{{0}}}}}:{{{{{1}}}}}", KeyKey, ValueKey), values);
         }
     }
 }

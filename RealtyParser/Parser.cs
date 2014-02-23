@@ -6,6 +6,7 @@ using System.Reflection;
 using System.Text.RegularExpressions;
 using HtmlAgilityPack;
 using RealtyParser.Collections;
+using RealtyParser.Trace;
 using RT.ParsingLibs.Models;
 
 namespace RealtyParser
@@ -13,7 +14,7 @@ namespace RealtyParser
     /// <summary>
     ///     Класс вспомогательных алгоритмов
     /// </summary>
-    public class Parser
+    public class Parser : ITrace
     {
         public const char SplitChar = '\\';
 
@@ -157,7 +158,8 @@ namespace RealtyParser
         /// <summary>
         ///     Поиск и формирование значений возвращаемых полей загруженного с сайта объявления
         /// </summary>
-        public ReturnFields BuildReturnFields(IEnumerable<HtmlDocument> parentDocuments, Values parentValues, ReturnFieldInfos returnFieldInfos)
+        public ReturnFields BuildReturnFields(IEnumerable<HtmlDocument> parentDocuments, Values parentValues,
+            ReturnFieldInfos returnFieldInfos)
         {
             Debug.WriteLine("Begin {0}::{1}", GetType().Name, MethodBase.GetCurrentMethod().Name);
             var returnFields = new ReturnFields();
@@ -175,7 +177,11 @@ namespace RealtyParser
 
                     foreach (string xpath in xpaths) Debug.WriteLine(xpath);
 
-                    foreach (HtmlNode htmlNode in xpaths.Select(xpath => document.DocumentNode.SelectNodes(xpath)).Where(nodes => nodes != null).SelectMany(nodes => nodes))
+                    foreach (
+                        HtmlNode htmlNode in
+                            xpaths.Select(xpath => document.DocumentNode.SelectNodes(xpath))
+                                .Where(nodes => nodes != null)
+                                .SelectMany(nodes => nodes))
                     {
                         values.InsertOrAppend(BuildValues(returnFieldInfo.ReturnFieldResultTemplate.ToString(), htmlNode));
                     }

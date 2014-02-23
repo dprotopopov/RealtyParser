@@ -63,7 +63,7 @@ namespace RealtyParser
 
             Debug.WriteLine("Invoke {0} of {1}", parseMethodInfo.Name, type.Name);
 
-            return parseMethodInfo.Invoke(null, new[] { obj });
+            return parseMethodInfo.Invoke(null, new[] {obj});
         }
     }
 }

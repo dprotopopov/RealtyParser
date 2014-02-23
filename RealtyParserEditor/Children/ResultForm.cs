@@ -1,7 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 using RealtyParser;
+using RealtyParser.Mirkvartir;
+using RealtyParser.Rosrealt;
+using RT.ParsingLibs;
 using RT.ParsingLibs.Models;
 using RT.ParsingLibs.Requests;
 using RT.ParsingLibs.Responses;
@@ -10,11 +14,17 @@ namespace RealtyParserEditor.Children
 {
     public partial class ResultForm : Form, IChildForm
     {
-        private static readonly ParserModule ParserModule = new ParserModule();
-
         public ResultForm()
         {
             InitializeComponent();
+            listBoxDll.Items.AddRange(
+                new List<ParserModule>
+                {
+                    new ParserModule(),
+                    new RosrealtParser(),
+                    new MirkvartirParser(),
+                }.Select(item => new KeyValuePair<string, IParsingModule>(item.ModuleClassname, item))
+                    .Cast<object>().ToArray());
             propertyGridControlParseRequest.SelectedObject = new ParseRequest();
         }
 
@@ -38,6 +48,8 @@ namespace RealtyParserEditor.Children
 
         public async void Execute()
         {
+            if (listBoxDll.SelectedItem == null) return;
+            IParsingModule module = ((KeyValuePair<string, IParsingModule>) listBoxDll.SelectedItem).Value;
             listBoxPublications.Items.Clear();
             listBoxPhotos.Items.Clear();
             listBoxPhone.Items.Clear();
@@ -48,7 +60,7 @@ namespace RealtyParserEditor.Children
             propertyGridControlContact.SelectedObject = null;
             propertyGridControlRealtyAdditionalInfo.SelectedObject = null;
             propertyGridControlParseResponse.SelectedObject =
-                await ParserModule.Result(propertyGridControlParseRequest.SelectedObject as ParseRequest);
+                await module.Result(propertyGridControlParseRequest.SelectedObject as ParseRequest);
             try
             {
                 foreach (
@@ -75,11 +87,11 @@ namespace RealtyParserEditor.Children
             propertyGridControlRealtyAdditionalInfo.SelectedObject =
                 ((WebPublication) listBoxPublications.SelectedItem).AdditionalInfo.RealtyAdditionalInfo;
             listBoxPhotos.Items.AddRange(
-                ((WebPublication)listBoxPublications.SelectedItem).Photos.Cast<object>().ToArray());
+                ((WebPublication) listBoxPublications.SelectedItem).Photos.Cast<object>().ToArray());
             listBoxPhone.Items.AddRange(
-                ((WebPublication)listBoxPublications.SelectedItem).Contact.Phone.Cast<object>().ToArray());
+                ((WebPublication) listBoxPublications.SelectedItem).Contact.Phone.Cast<object>().ToArray());
             listBoxEmail.Items.AddRange(
-                ((WebPublication)listBoxPublications.SelectedItem).Contact.Email.Cast<object>().ToArray());
+                ((WebPublication) listBoxPublications.SelectedItem).Contact.Email.Cast<object>().ToArray());
         }
     }
 }

@@ -1,7 +1,7 @@
-D:\Projects\RealtyParser\RealtyParserUnitTest\bin\Debug\RealtyParser.db
-D:\Projects\RealtyParser\RealtyParserUnitTest\bin\Debug\MirkvartirParser.db
+D:\Projects\RealtyParser\RealtyParserUnitTest\bin\Debug\MirkvartirParser.sqlite3
 D:\Projects\RealtyParser\RealtyParserUnitTest\bin\Debug\libtidy.dll
-D:\Projects\RealtyParser\RealtyParserUnitTest\bin\Debug\RosrealtParser.db
+D:\Projects\RealtyParser\RealtyParserUnitTest\bin\Debug\RealtyParser.sqlite3
+D:\Projects\RealtyParser\RealtyParserUnitTest\bin\Debug\RosrealtParser.sqlite3
 D:\Projects\RealtyParser\RealtyParserUnitTest\bin\Debug\TestInvokeNodeProperty.html
 D:\Projects\RealtyParser\RealtyParserUnitTest\bin\Debug\RealtyParserUnitTest.dll.config
 D:\Projects\RealtyParser\RealtyParserUnitTest\bin\Debug\RealtyParserUnitTest.dll

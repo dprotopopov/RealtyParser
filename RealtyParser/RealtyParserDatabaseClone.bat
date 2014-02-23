@@ -1,2 +1,2 @@
-copy /v /y RealtyParser.db RosrealtParser.db
-copy /v /y RealtyParser.db MirkvartirParser.db
+copy /v /y RealtyParser.sqlite3 RosrealtParser.sqlite3
+copy /v /y RealtyParser.sqlite3 MirkvartirParser.sqlite3

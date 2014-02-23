@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace RealtyParser.Types
 {
@@ -8,16 +9,18 @@ namespace RealtyParser.Types
     {
         public const System.Uri Default = null;
 
+        private static readonly string Pattern =
+            @"^(?<shema>([^:/?#]+)://)?(?<domain>[^/?#]*)?(?<path>[^?#]*)(?<query>\?([^#]*))?(?<part>#(.*))?";
+
         public static System.Uri Parse(string s)
         {
             return string.IsNullOrEmpty(s) ? Default : new System.Uri(s);
         }
-        readonly static string Pattern = @"^(?<shema>([^:/?#]+)://)?(?<domain>[^/?#]*)?(?<path>[^?#]*)(?<query>\?([^#]*))?(?<part>#(.*))?";
 
         public static System.Uri Combine(string baseUrl, string url)
         {
-            var baseMatch = System.Text.RegularExpressions.Regex.Match(baseUrl, Pattern);
-            var match = System.Text.RegularExpressions.Regex.Match(url, Pattern);
+            Match baseMatch = System.Text.RegularExpressions.Regex.Match(baseUrl, Pattern);
+            Match match = System.Text.RegularExpressions.Regex.Match(url, Pattern);
             string shema = string.IsNullOrEmpty(match.Groups["shema"].Value)
                 ? baseMatch.Groups["shema"].Value
                 : match.Groups["shema"].Value;
@@ -35,6 +38,7 @@ namespace RealtyParser.Types
                 : match.Groups["part"].Value;
             return new System.Uri(shema + domain + path + query + part);
         }
+
         /// <summary>
         ///     Конвертация списка строк в список Uri
         /// </summary>

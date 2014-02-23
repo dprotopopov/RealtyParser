@@ -11,13 +11,7 @@ namespace RealtyParser.Collections
     {
         public override string ToString()
         {
-            var values = new Values
-            {
-                {Transformation.KeyKey, Keys.ToList()},
-                {Transformation.ValueKey, Values.ToList()}
-            };
-            return String.Parse(new Transformation().ParseTemplate(
-                string.Format(@"{{{{{0}}}}}:{{{{{1}}}}}", Transformation.KeyKey, Transformation.ValueKey), values));
+            return String.Parse(new Transformation().ParseTemplate(new Values(Keys, Values)));
         }
     }
 }

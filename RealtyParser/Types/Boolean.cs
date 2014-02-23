@@ -33,5 +33,10 @@ namespace RealtyParser.Types
                 return Default;
             }
         }
+
+        public static bool And(bool b, bool b1)
+        {
+            return b && b1;
+        }
     }
 }

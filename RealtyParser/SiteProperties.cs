@@ -216,9 +216,30 @@ namespace RealtyParser
         }
 
         /// <summary>
-        ///     Название класса из данной сборки, реализующего Icomparer для сравнения двух идентификаторов обхявлений
+        ///     Название класса из данной сборки, реализующего Icomparer для сравнения двух идентификаторов объявлений
         /// </summary>
         public object PublicationComparerClassName
+        {
+            get
+            {
+                string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
+                if (!ContainsKey(propertyName)) Add(propertyName, "");
+                return this[propertyName];
+            }
+            set
+            {
+                string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
+                if (ContainsKey(propertyName))
+                    this[propertyName] = value;
+                else
+                    Add(propertyName, value);
+            }
+        }
+
+        /// <summary>
+        ///     Название класса данной сборки
+        /// </summary>
+        public object ModuleClassName
         {
             get
             {

@@ -63,7 +63,7 @@ namespace RealtyParser
             foreach (string s in collection)
             {
                 int compute = Compute(s, pattern);
-                if (compute >= distance ) continue;
+                if (compute >= distance) continue;
                 distance = compute;
                 find = s;
             }

@@ -1,4 +1,3 @@
-D:\Projects\RealtyParser\RealtyParserEditor\bin\Release\RealtyParser.db
 D:\Projects\RealtyParser\RealtyParserEditor\bin\Release\RealtyParserEditor.exe.config
 D:\Projects\RealtyParser\RealtyParserEditor\bin\Release\libtidy.dll
 D:\Projects\RealtyParser\RealtyParserEditor\bin\Release\RealtyParserEditor.exe.manifest
@@ -9,7 +8,6 @@ D:\Projects\RealtyParser\RealtyParserEditor\bin\Release\RealtyParser.dll
 D:\Projects\RealtyParser\RealtyParserEditor\bin\Release\RT.ParsingLibs.dll
 D:\Projects\RealtyParser\RealtyParserEditor\bin\Release\System.Data.SQLite.dll
 D:\Projects\RealtyParser\RealtyParserEditor\bin\Release\HtmlAgilityPack.dll
-D:\Projects\RealtyParser\RealtyParserEditor\bin\Release\ServiceStack.Text.dll
 D:\Projects\RealtyParser\RealtyParserEditor\bin\Release\RT.Crawler.dll
 D:\Projects\RealtyParser\RealtyParserEditor\bin\Release\TidyManaged.dll
 D:\Projects\RealtyParser\RealtyParserEditor\bin\Release\RealtyParser.pdb
@@ -18,7 +16,6 @@ D:\Projects\RealtyParser\RealtyParserEditor\bin\Release\RT.ParsingLibs.xml
 D:\Projects\RealtyParser\RealtyParserEditor\bin\Release\System.Data.SQLite.xml
 D:\Projects\RealtyParser\RealtyParserEditor\bin\Release\HtmlAgilityPack.pdb
 D:\Projects\RealtyParser\RealtyParserEditor\bin\Release\HtmlAgilityPack.xml
-D:\Projects\RealtyParser\RealtyParserEditor\bin\Release\ServiceStack.Text.xml
 D:\Projects\RealtyParser\RealtyParserEditor\bin\Release\RT.Crawler.pdb
 D:\Projects\RealtyParser\RealtyParserEditor\bin\Release\RT.Crawler.xml
 D:\Projects\RealtyParser\RealtyParserEditor\bin\Release\TidyManaged.xml
@@ -32,8 +29,6 @@ D:\Projects\RealtyParser\RealtyParserEditor\obj\Release\RealtyParserEditor.appli
 D:\Projects\RealtyParser\RealtyParserEditor\obj\Release\RealtyParserEditor.exe
 D:\Projects\RealtyParser\RealtyParserEditor\obj\Release\RealtyParserEditor.pdb
 D:\Projects\RealtyParser\RealtyParserEditor\obj\Release\RealtyParserEditor.ProgressForm.resources
-D:\Projects\RealtyParser\RealtyParserEditor\bin\Release\MirkvartirParser.db
-D:\Projects\RealtyParser\RealtyParserEditor\bin\Release\RosrealtParser.db
 D:\Projects\RealtyParser\RealtyParserEditor\bin\Release\ICSharpCode.SharpZipLib.dll
 D:\Projects\RealtyParser\RealtyParserEditor\obj\Release\RealtyParserEditor.Children.AboutForm.resources
 D:\Projects\RealtyParser\RealtyParserEditor\obj\Release\RealtyParserEditor.Children.BuilderForm.resources
@@ -43,3 +38,12 @@ D:\Projects\RealtyParser\RealtyParserEditor\obj\Release\RealtyParserEditor.Child
 D:\Projects\RealtyParser\RealtyParserEditor\obj\Release\RealtyParserEditor.Children.ResultForm.resources
 D:\Projects\RealtyParser\RealtyParserEditor\obj\Release\RealtyParserEditor.Children.SitePropertiesForm.resources
 D:\Projects\RealtyParser\RealtyParserEditor\obj\Release\RealtyParserEditor.Children.SourcesForm.resources
+D:\Projects\RealtyParser\RealtyParserEditor\bin\Release\RealtyParser.Mirkvartir.dll
+D:\Projects\RealtyParser\RealtyParserEditor\bin\Release\RealtyParser.Rosrealt.dll
+D:\Projects\RealtyParser\RealtyParserEditor\bin\Release\RealtyParser.Mirkvartir.pdb
+D:\Projects\RealtyParser\RealtyParserEditor\bin\Release\RealtyParser.Rosrealt.pdb
+D:\Projects\RealtyParser\RealtyParserEditor\bin\Release\MirkvartirParser.sqlite3
+D:\Projects\RealtyParser\RealtyParserEditor\bin\Release\RealtyParser.sqlite3
+D:\Projects\RealtyParser\RealtyParserEditor\bin\Release\RosrealtParser.sqlite3
+D:\Projects\RealtyParser\RealtyParserEditor\bin\Release\ServiceStack.Text.dll
+D:\Projects\RealtyParser\RealtyParserEditor\bin\Release\ServiceStack.Text.xml

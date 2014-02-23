@@ -16,6 +16,7 @@ namespace RealtyParserEditor.Children
         public SitePropertiesForm()
         {
             InitializeComponent();
+            Database.Connect();
             Mapping sites = Database.GetMapping(Database.SiteTable);
             comboBoxSites.Items.AddRange(sites.Cast<object>().ToArray());
             comboBoxSites.SelectedItem = sites.FirstOrDefault();

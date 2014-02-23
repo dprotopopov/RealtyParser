@@ -6,6 +6,7 @@ using HtmlAgilityPack;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RealtyParser;
 using RealtyParser.Collections;
+using RealtyParser.Managers;
 using Mappings = RealtyParser.Mappings;
 
 namespace RealtyParserUnitTest

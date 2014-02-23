@@ -1,2 +1,2 @@
-sqlite3 RealtyParser.db < MirkvartirDelete.sql
+sqlite3 MirkvartirParser.sqlite3 < MirkvartirDelete.sql
 

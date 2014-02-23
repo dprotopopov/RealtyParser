@@ -1,60 +1,39 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text.RegularExpressions;
-
-namespace RealtyParser.Comparer
+﻿namespace RealtyParser.Comparer
 {
-    public class DatetimeFirstIdSecondComparer : IComparer<string>
+    public class DatetimeFirstIdSecondComparer : IPublicationComparer
     {
-        private const string StructurePatten = @"\[\s*(?<id>\d+)\s*\,\s*\#\#(?<date>[^\#]+)\#\#\s*\]";
+        private static readonly OnlyDatetimeComparer DatetimeComparer = new OnlyDatetimeComparer();
+        private static readonly OnlyDigitsDecimalComparer DecimalComparer = new OnlyDigitsDecimalComparer();
+        private static readonly ObjectComparer ObjectComparer = new ObjectComparer();
+        private readonly string[] _propertyNames = {"PublicationId", "PublicationDatetime"};
 
         public int Compare(string x, string y)
         {
-            MatchCollection structureX = Regex.Matches(x, StructurePatten);
-            MatchCollection structureY = Regex.Matches(y, StructurePatten);
+            var resource = new Resource(x);
+            var resource1 = new Resource(y);
+            int value = DatetimeComparer.Compare(resource.PublicationDatetime.ToString(),
+                resource1.PublicationDatetime.ToString());
+            return value != 0
+                ? value
+                : DecimalComparer.Compare(resource.PublicationId.ToString(), resource1.PublicationId.ToString());
+        }
 
-            DateTime dateTimeX;
-            DateTime dateTimeY;
-            try
-            {
-                dateTimeX = Types.DateTime.Parse(structureX[0].Groups["date"].Value.Trim());
-            }
-            catch (Exception exception)
-            {
-                dateTimeX = Types.DateTime.Default;
-            }
-            try
-            {
-                dateTimeY = Types.DateTime.Parse(structureY[0].Groups["date"].Value.Trim());
-            }
-            catch (Exception exception)
-            {
-                dateTimeY = Types.DateTime.Default;
-            }
+        public bool IsValid(string s)
+        {
+            var resource = new Resource(s);
+            return DecimalComparer.IsValid(resource.PublicationId.ToString()) &&
+                   DatetimeComparer.IsValid(resource.PublicationDatetime.ToString());
+        }
 
-            int i = dateTimeX.CompareTo(dateTimeY);
-            if (i != 0) return i;
+        public bool Equals(string x, string y)
+        {
+            return Compare(x, y) == 0;
+        }
 
-            Decimal idX;
-            Decimal idY;
-            try
-            {
-                idX = Types.Decimal.Parse(structureX[0].Groups["id"].Value.Trim());
-            }
-            catch (Exception exception)
-            {
-                idX = Types.Decimal.Default;
-            }
-            try
-            {
-                idY = Types.Decimal.Parse(structureY[0].Groups["id"].Value.Trim());
-            }
-            catch (Exception exception)
-            {
-                idY = Types.Decimal.Default;
-            }
-
-            return idX.CompareTo(idY);
+        public int GetHashCode(string obj)
+        {
+            var resource = new Resource(obj);
+            return ObjectComparer.GetHashCode(resource, _propertyNames);
         }
     }
 }

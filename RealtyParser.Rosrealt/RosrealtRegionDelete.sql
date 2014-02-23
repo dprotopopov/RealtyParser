@@ -1,0 +1,1 @@
+DELETE FROM SiteRegion WHERE SiteRegion.SiteRegionId IN (SELECT SiteRegion.SiteRegionId FROM SiteRegion LEFT JOIN SiteRegionMapping USING(SiteRegionId,SiteId) WHERE SiteRegionMapping.RegionId IS NULL AND SiteRegionMapping.SiteId=2) AND SiteRegion.SiteId=2;

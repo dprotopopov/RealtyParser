@@ -75,7 +75,7 @@ namespace RealtyParser
             }
         }
 
-        public IEnumerable<ReturnFieldInfo> PublicationDate
+        public IEnumerable<ReturnFieldInfo> PublicationDatetime
         {
             get
             {
@@ -126,8 +126,7 @@ namespace RealtyParser
                     Key = Enumerable.Repeat(pair.Key, pair.Value.Count()),
                     Value = pair.Value.Select(item => item.ToString()),
                 });
-            return String.Parse(new Transformation().ParseTemplate(
-                string.Format(@"{{{{{0}}}}}:{{{{{1}}}}}", Transformation.KeyKey, Transformation.ValueKey), values));
+            return String.Parse(new Transformation().ParseTemplate(values));
         }
 
         public void Add(ReturnFieldInfo returnFieldInfo)

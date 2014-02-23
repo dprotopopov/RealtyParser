@@ -70,8 +70,7 @@ namespace RealtyParser.Collections
                     Value = item.Value,
                 });
             }
-            return String.Parse(new Transformation().ParseTemplate(
-                string.Format(@"{{{{{0}}}}}:{{{{{1}}}}}", Transformation.KeyKey, Transformation.ValueKey), values));
+            return String.Parse(new Transformation().ParseTemplate(values));
         }
 
         public ListViewItem ToListViewItem(string name, IEnumerable<string> fieldNames)

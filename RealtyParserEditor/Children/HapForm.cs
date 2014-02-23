@@ -21,37 +21,33 @@ namespace RealtyParserEditor.Children
         public HapForm()
         {
             InitializeComponent();
-            if (Database != null)
-            {
-                repositoryItemComboBoxMethod.Items.AddRange(
-                    Database.GetList("HtmlMethod", "Method").Select(s => s.ToString()).ToArray());
-                repositoryItemComboBoxEncoding.Items.AddRange(
-                    Database.GetList("HtmlEncoding", "Encoding").Select(s => s.ToString()).ToArray());
-                repositoryItemComboBoxUrl.Items.AddRange(
-                    Database.GetList("Site", "Url").Select(s => s.ToString()).ToArray());
-                repositoryItemComboBoxCompression.Items.AddRange(
-                    Database.GetList("Compression", "ClassName").Select(s => s.ToString()).ToArray());
-            }
+
+            Database.Connect();
+
+            repositoryItemComboBoxMethod.Items.AddRange(
+                Database.GetList("HtmlMethod", "Method").Select(s => s.ToString()).Cast<object>().ToArray());
+            repositoryItemComboBoxEncoding.Items.AddRange(
+                Database.GetList("HtmlEncoding", "Encoding").Select(s => s.ToString()).Cast<object>().ToArray());
+            repositoryItemComboBoxUrl.Items.AddRange(
+                Database.GetList("Site", "Url").Select(s => s.ToString()).Cast<object>().ToArray());
+            repositoryItemComboBoxCompression.Items.AddRange(
+                Database.GetList("Compression", "ClassName").Select(s => s.ToString()).Cast<object>().ToArray());
             propertyGridControlWorkspace.SelectedObject = _workspace;
         }
 
         public async void Save()
         {
-            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+            if (saveFileDialog1.ShowDialog() != DialogResult.OK) return;
+            var builder = new UriBuilder(_workspace.Url);
+            ICrawler crawler = new WebCrawler();
+            var requestWeb = (HttpWebRequest) WebRequest.Create(builder.Uri);
+            requestWeb.Method = _workspace.Method;
+            WebResponse responce = await crawler.GetResponse(requestWeb);
+            Stream responceStream = responce.GetResponseStream();
+            using (Stream writer = File.Create(saveFileDialog1.FileName))
             {
-                var builder = new UriBuilder(_workspace.Url);
-                ICrawler crawler = new WebCrawler();
-                var requestWeb = (HttpWebRequest) WebRequest.Create(builder.Uri);
-                requestWeb.Method = _workspace.Method;
-                WebResponse responce = await crawler.GetResponse(requestWeb);
-                Stream responceStream = responce.GetResponseStream();
-                using (Stream writer = File.Create(saveFileDialog1.FileName))
-                {
-                    int i;
-                    while ((i = responceStream.ReadByte()) != -1)
-                        writer.WriteByte((byte) i);
-                    writer.Close();
-                }
+                responceStream.CopyTo(writer);
+                writer.Close();
             }
         }
 

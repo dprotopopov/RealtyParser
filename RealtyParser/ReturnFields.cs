@@ -29,7 +29,7 @@ namespace RealtyParser
             }
         }
 
-        public IEnumerable<string> PublicationDate
+        public IEnumerable<string> PublicationDatetime
         {
             get
             {

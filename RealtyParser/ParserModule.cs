@@ -4,15 +4,19 @@ using System.ComponentModel.Composition;
 using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
+using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using HtmlAgilityPack;
 using RealtyParser.Collections;
+using RealtyParser.Comparer;
+using RealtyParser.Managers;
 using RT.ParsingLibs;
 using RT.ParsingLibs.Models;
 using RT.ParsingLibs.Requests;
 using RT.ParsingLibs.Responses;
 using ServiceStack;
+using Boolean = RealtyParser.Types.Boolean;
 using Uri = RealtyParser.Types.Uri;
 
 namespace RealtyParser
@@ -23,6 +27,7 @@ namespace RealtyParser
     {
         #region
 
+        public string ModuleClassname { get; set; }
         public string ModuleNamespace { get; set; }
         public Database Database { get; set; }
         public Transformation Transformation { get; set; }
@@ -32,9 +37,14 @@ namespace RealtyParser
         public Crawler Crawler { get; set; }
 
         private ReturnFieldInfos ReturnFieldInfos { get; set; }
-        private IComparer<string> Comparer { get; set; }
+        private IPublicationComparer PublicationComparer { get; set; }
         private SiteProperties SiteProperties { get; set; }
         private Converter Converter { get; set; }
+        private ResourceComparer ResourceComparer { get; set; }
+        private LinkComparer LinkComparer { get; set; }
+        private Dictionary<Link, WebPublication> PublicationHash { get; set; }
+        private ObjectComparer ObjectComparer { get; set; }
+        private IEnumerable<string> Mapping { get; set; }
 
         #endregion
 
@@ -42,15 +52,21 @@ namespace RealtyParser
 
         public ParserModule()
         {
-            ModuleNamespace = GetType().Namespace;
-            Database = new Database {ModuleNamespace = ModuleNamespace};
+            ModuleClassname = typeof (ParserModule).Namespace;
+            ModuleNamespace = typeof (ParserModule).Namespace;
+            Database = new Database {ModuleClassname = ModuleClassname};
             ComparerManager = new ComparerManager {ModuleNamespace = ModuleNamespace};
             CompressionManager = new CompressionManager {ModuleNamespace = ModuleNamespace};
             Converter = new Converter {ModuleNamespace = ModuleNamespace};
             Transformation = new Transformation();
             Parser = new Parser {Transformation = Transformation, Database = Database, Converter = Converter};
             Crawler = new Crawler {CompressionManager = CompressionManager};
+            LinkComparer = new LinkComparer();
+            ObjectComparer = new ObjectComparer();
+            PublicationHash = new Dictionary<Link, WebPublication>(LinkComparer);
         }
+
+        private UriBuilder BaseBuilder { get; set; }
 
         /// <summary>
         ///     Задача на парсинг
@@ -67,7 +83,10 @@ namespace RealtyParser
             Debug.WriteLine(string.Format("request.LastPublicationId -> '{0}'", request.LastPublicationId));
             Debug.WriteLine("-------------------------------------------------------------------");
 
-            string lastResourceId = request.LastPublicationId;
+            Database.Connect();
+            Mapping = Database.GetList(Database.MappingTable, Database.TableNameColumn).Select(item => item.ToString());
+
+
             int responseLevel = 4;
             var responseCode = new List<ParseResponseCode>
             {
@@ -80,30 +99,51 @@ namespace RealtyParser
 
             var requestId = new RequestProperties
             {
-                {"Action", Database.GetScalar(request.ActionId, "Action")},
-                {"Rubric", Database.GetScalar(request.RubricId, "Rubric")},
-                {"Region", Database.GetScalar(request.RegionId, "Region")},
                 {
                     Database.SiteTable,
-                    Database.GetScalar(ModuleNamespace, Database.SiteIdColumn, Database.ModuleNamespaceColumn,
+                    Database.GetScalar(ModuleClassname, Database.SiteIdColumn, Database.ModuleClassnameColumn,
                         Database.SiteTable)
                 },
             };
+            foreach (string table in Mapping)
+            {
+                PropertyInfo propertyInfo = request.GetType().GetProperty(table + "Id");
+                requestId.Add(table, Database.GetScalar(propertyInfo.GetValue(request), table));
+            }
 
-            if (!requestId.Select(pair => pair.Value != null).Aggregate((i, j) => i && j))
+            List<Resource> lastResources =
+                (request.LastPublicationId.IsNullOrEmpty() ? "" : request.LastPublicationId).Split('&')
+                    .Select(s => s.Trim())
+                    .Where(s => !s.IsNullOrEmpty())
+                    .Select(s => new Resource(s))
+                    .ToList();
+
+
+            Dictionary<RequestProperties, Resource> lastResourceDictionary =
+                lastResources.Select(item => new RequestProperties(item, Mapping))
+                    .Distinct().ToDictionary(item => item,
+                        item =>
+                            lastResources.Last(
+                                r => ObjectComparer.Equals(r, item, Mapping)));
+
+            Debug.WriteLine("lastResources.Count = " + lastResources.Count);
+            if (!requestId.Select(pair => pair.Value != null).Aggregate(Boolean.And))
             {
                 responseLevel = Math.Min(0, responseLevel);
                 return new ParseResponse
                 {
                     ResponseCode = responseCode[responseLevel],
-                    LastPublicationId = lastResourceId,
-                    ModuleName = GetType().ToString(),
+                    LastPublicationId = string.Join("&", lastResources.Select(item => item.ToString())),
+                    ModuleName = GetType().Name,
                     Publications = new List<WebPublication>()
                 };
             }
 
+
             SiteProperties = Database.GetSiteProperties(requestId.Site);
-            Comparer = ComparerManager.CreatePublicationComparer(SiteProperties.PublicationComparerClassName.ToString());
+            PublicationComparer =
+                ComparerManager.CreatePublicationComparer(SiteProperties.PublicationComparerClassName.ToString());
+            ResourceComparer = new ResourceComparer {PublicationComparer = PublicationComparer, Mapping = Mapping};
             ReturnFieldInfos = Database.GetReturnFieldInfos(requestId.Site);
             Crawler.Method = SiteProperties.Method.ToString();
             Crawler.Encoding = SiteProperties.Encoding.ToString();
@@ -114,10 +154,7 @@ namespace RealtyParser
             Debug.WriteLine("returnFieldInfos {0}", ReturnFieldInfos);
 
 
-            IEnumerable<string> mapping =
-                Database.GetList(Database.MappingTable, Database.TableNameColumn).Select(item => item.ToString());
-
-            Dictionary<string, List<object>> mappedEnum = mapping.ToDictionary(s => s,
+            Dictionary<string, List<object>> mappedEnum = Mapping.ToDictionary(s => s,
                 s => Database.GetList(requestId[s], s, requestId.Site).ToList());
 
             Dictionary<string, List<object>> childrenEnum = mappedEnum.ToDictionary(table => table.Key,
@@ -142,8 +179,8 @@ namespace RealtyParser
                 return new ParseResponse
                 {
                     ResponseCode = responseCode[responseLevel],
-                    LastPublicationId = lastResourceId,
-                    ModuleName = GetType().ToString(),
+                    LastPublicationId = string.Join("&", lastResources.Select(item => item.ToString())),
+                    ModuleName = GetType().Name,
                     Publications = new List<WebPublication>()
                 };
             }
@@ -156,14 +193,12 @@ namespace RealtyParser
                 select new RequestProperties {Action = action, Rubric = rubric, Region = region, Site = requestId.Site}
             };
 
-
-            if (string.IsNullOrEmpty(lastResourceId)) lastResourceId = "";
-
-            var baseBuilder = new UriBuilder(SiteProperties.Url.ToString())
+            BaseBuilder = new UriBuilder(SiteProperties.Url.ToString())
             {
                 UserName = SiteProperties.UserName.ToString(),
                 Password = SiteProperties.Password.ToString(),
             };
+
             var returnFieldInfos = new ReturnFieldInfos();
             foreach (
                 string key in
@@ -172,85 +207,209 @@ namespace RealtyParser
                         .Where(key => ReturnFieldInfos.ContainsKey(key)))
                 returnFieldInfos.Add(key, ReturnFieldInfos[key]);
 
-            var dictionary = new Dictionary<string, KeyValuePair<string, Values>>();
-            var resourceIds = new StackListQueue<string>();
+            var dictionary = new Dictionary<Resource, KeyValuePair<Link, Values>>(ResourceComparer);
+            var resources = new StackListQueue<Resource>();
             foreach (RequestProperties mappedId in includeList)
             {
                 var mappedLevel = new RequestProperties
                 {
-                    mappedId.Where(pair => mapping.Contains(pair.Key)).ToDictionary(pair => pair.Key,
+                    mappedId.Where(pair => Mapping.Contains(pair.Key)).ToDictionary(pair => pair.Key,
                         pair =>
                             Database.GetScalar(pair.Value, Database.LevelColumn, pair.Key, requestId.Site))
                 };
 
                 Values siteValues = Parser.BuildValues(requestId, mappedId, mappedLevel);
 
-                var currentResourceIds = new StackListQueue<string>();
-                for (long pageId = 1;
-                    currentResourceIds.Count < Database.ConvertTo<long>(SiteProperties.CountAd);
-                    pageId++)
+                var requestProperties = new RequestProperties(mappedId, Mapping);
+                var currentResources = new StackListQueue<Resource>();
+                try
                 {
-                    var pageValues = new Values(siteValues)
+                    for (long pageId = 1;
+                        currentResources.Count < Database.ConvertTo<long>(SiteProperties.CountAd);
+                        pageId++)
                     {
-                        Page = new List<string> {((pageId > 1) ? pageId.ToString(CultureInfo.InvariantCulture) : @"")}
-                    };
-                    Debug.WriteLine(pageValues.ToString());
-                    var loopResourceIds = new StackListQueue<string>();
-                    foreach (
-                        string url in Transformation.ParseTemplate(SiteProperties.LookupTemplate.ToString(), pageValues)
-                        )
-                    {
-                        Debug.WriteLine(url);
-                        try
+                        var pageValues = new Values(siteValues)
                         {
-                            var builder = new UriBuilder(Uri.Combine(baseBuilder.Uri.ToString(), url))
+                            Page =
+                                new List<string> {((pageId > 1) ? pageId.ToString(CultureInfo.InvariantCulture) : @"")}
+                        };
+                        Debug.WriteLine(pageValues.ToString());
+                        foreach (
+                            Link url in
+                                Transformation.ParseTemplate(SiteProperties.LookupTemplate.ToString(), pageValues)
+                                    .Select(s => new Link(s))
+                            )
+                        {
+                            Debug.WriteLine(url);
+                            try
                             {
-                                UserName = baseBuilder.UserName,
-                                Password = baseBuilder.Password,
-                            };
-                            var urlValues = new Values(pageValues)
+                                var builder = new UriBuilder(Uri.Combine(BaseBuilder.Uri.ToString(), url.ToString()))
+                                {
+                                    UserName = BaseBuilder.UserName,
+                                    Password = BaseBuilder.Password,
+                                };
+                                var urlValues = new Values(pageValues)
+                                {
+                                    Url = new List<string> {builder.Uri.ToString()}
+                                };
+                                IEnumerable<HtmlDocument> documents =
+                                    await
+                                        Crawler.WebRequestHtmlDocument(builder.Uri);
+                                Thread.Sleep(0);
+                                ReturnFields returnFields = Parser.BuildReturnFields(documents,
+                                    urlValues, returnFieldInfos);
+                                returnFields.InsertOrAppend(urlValues);
+                                int linkCount = returnFields.PublicationLink.Count();
+
+                                if (linkCount == 0)
+                                    throw new EndOfSearchDetectedException();
+
+                                Debug.WriteLine("linkCount = " + linkCount);
+                                var returnValues = new Values(returnFields);
+                                List<Link> links =
+                                    Transformation.ParseTemplate(SiteProperties.PublicationTemplate.ToString(),
+                                        returnValues)
+                                        .ToList()
+                                        .GetRange(0, linkCount)
+                                        .Select(s => new Link(s))
+                                        .ToList();
+                                Debug.WriteLine("links.Count = " + links.Count);
+
+                                foreach (var pair in siteValues.Where(pair => pair.Value.Any()))
+                                {
+                                    returnValues.Add(pair.Key, Enumerable.Repeat(pair.Value.First(), linkCount).ToList());
+                                }
+                                foreach (string item in Mapping)
+                                {
+                                    returnValues[item] =
+                                        Enumerable.Repeat(mappedId[item].ToString(), linkCount).ToList();
+                                }
+
+                                List<Resource> keys =
+                                    Transformation.ParseTemplate(SiteProperties.ResourceIdTemplate.ToString(),
+                                        returnValues)
+                                        .ToList()
+                                        .GetRange(0, linkCount)
+                                        .Select(s => new Resource(s))
+                                        .ToList();
+
+                                for (int i = 0; i < linkCount; i++)
+                                {
+                                    if (PublicationHash.ContainsKey(links[i])) throw new LoopDetectedException();
+
+                                    if (PublicationComparer.IsValid(keys[i].ToString()))
+                                    {
+                                        if (dictionary.ContainsKey(keys[i]))
+                                            throw new LoopDetectedException();
+
+                                        dictionary.Add(keys[i],
+                                            new KeyValuePair<Link, Values>(links[i], returnValues.Slice(i)));
+                                        Debug.WriteLine("Enqueue " + keys[i] + " " + PublicationComparer.GetType().Name);
+                                        currentResources.Enqueue(keys[i]);
+                                        continue;
+                                    }
+
+                                    try
+                                    {
+                                        var builder1 =
+                                            new UriBuilder(Uri.Combine(BaseBuilder.Uri.ToString(), links[i].ToString()))
+                                            {
+                                                UserName = BaseBuilder.UserName,
+                                                Password = BaseBuilder.Password,
+                                            };
+                                        var values = new Values(returnValues.Slice(i))
+                                        {
+                                            Url = new List<string> {builder1.Uri.ToString()},
+                                        };
+                                        IEnumerable<HtmlDocument> htmlDocuments =
+                                            await
+                                                Crawler.WebRequestHtmlDocument(builder1.Uri);
+                                        Thread.Sleep(0);
+                                        ReturnFields fields = Parser.BuildReturnFields(htmlDocuments,
+                                            values, ReturnFieldInfos);
+                                        var returnValues1 = new Values(fields);
+                                        returnValues1.InsertOrAppend(values);
+                                        List<Resource> list =
+                                            Transformation.ParseTemplate(SiteProperties.ResourceIdTemplate.ToString(),
+                                                returnValues1).Select(s => new Resource(s)).ToList();
+
+                                        Debug.WriteLine("Enqueue " + list.First() + " " +
+                                                        PublicationComparer.GetType().Name);
+
+                                        if (dictionary.ContainsKey(list.First()))
+                                            throw new LoopDetectedException();
+
+                                        if (lastResourceDictionary.ContainsKey(requestProperties) &&
+                                            ResourceComparer.Compare(list.First(),
+                                                lastResourceDictionary[requestProperties]) <
+                                            0)
+                                            throw new EndOfSearchDetectedException();
+
+                                        currentResources.Enqueue(list.First());
+                                        dictionary.Add(list.First(),
+                                            new KeyValuePair<Link, Values>(links[i], values));
+                                        PublicationHash.Add(links[i], Parser.CreateWebPublication(fields, requestId));
+
+                                        if (!lastResourceDictionary.ContainsKey(requestProperties))
+                                            throw new EndOfSearchDetectedException();
+                                    }
+                                    catch (EndOfSearchDetectedException exception)
+                                    {
+                                        throw;
+                                    }
+                                    catch (LoopDetectedException exception)
+                                    {
+                                        throw;
+                                    }
+                                    catch (Exception exception)
+                                    {
+                                        _lastError = exception;
+                                        Debug.WriteLine(_lastError.ToString());
+                                    }
+                                }
+                            }
+                            catch (EndOfSearchDetectedException exception)
                             {
-                                Url = new List<string> {builder.Uri.ToString()}
-                            };
-                            IEnumerable<HtmlDocument> documents =
-                                await
-                                    Crawler.WebRequestHtmlDocument(builder.Uri);
-                            Thread.Sleep(0);
-                            ReturnFields returnFields = Parser.BuildReturnFields(documents,
-                                urlValues, returnFieldInfos);
-                            var values1 = new Values(returnFields);
-                            List<string> keys =
-                                Transformation.ParseTemplate(SiteProperties.ResourceIdTemplate.ToString(),
-                                    values1).ToList();
-                            List<string> values = Transformation.ParseTemplate(
-                                SiteProperties.PublicationTemplate.ToString(),
-                                values1).ToList();
-                            for (int i = 0; i < returnFields.PublicationLink.Count(); i++)
+                                throw;
+                            }
+                            catch (LoopDetectedException exception)
                             {
-                                if (dictionary.ContainsKey(keys[i]))
-                                    continue;
-                                dictionary.Add(keys[i], new KeyValuePair<string, Values>(values[i], siteValues));
-                                loopResourceIds.Enqueue(keys[i]);
+                                throw;
+                            }
+                            catch (Exception exception)
+                            {
+                                _lastError = exception;
+                                Debug.WriteLine(_lastError.ToString());
                             }
                         }
-                        catch (Exception exception)
-                        {
-                            _lastError = exception;
-                            Debug.WriteLine(_lastError.ToString());
-                        }
+
+                        currentResources.Sort(ResourceComparer);
+                        Debug.WriteLine("currentResources.Count = " + currentResources.Count);
+                        if (!lastResourceDictionary.ContainsKey(requestProperties))
+                            throw new EndOfSearchDetectedException();
+
+                        if (
+                            ResourceComparer.Compare(currentResources.First(), lastResourceDictionary[requestProperties]) <=
+                            0)
+                            throw new EndOfSearchDetectedException();
+                        Debug.WriteLine("currentResources.First() = " + currentResources.First());
+                        Debug.WriteLine("lastResourceDictionary[requestProperties] = " +
+                                        lastResourceDictionary[requestProperties]);
                     }
-                    if (!loopResourceIds.Any()) break;
-                    loopResourceIds.Sort(Comparer);
-                    currentResourceIds = StackListQueue<string>.DistinctSorted(currentResourceIds, loopResourceIds,
-                        Comparer);
-                    if (lastResourceId.IsNullOrEmpty()) break;
-                    if (Comparer.Compare(currentResourceIds.First(), lastResourceId) <= 0) break;
                 }
-                resourceIds = StackListQueue<string>.DistinctSorted(resourceIds, currentResourceIds, Comparer);
+                catch (EndOfSearchDetectedException exception)
+                {
+                }
+                catch (LoopDetectedException exception)
+                {
+                }
+                Debug.WriteLine("resources.Count = " + resources.Count());
+                resources = StackListQueue<Resource>.DistinctSorted(resources, currentResources, ResourceComparer);
+                Debug.WriteLine("resources.Count = " + resources.Count());
             }
             try
             {
-                if (!string.IsNullOrEmpty(lastResourceId))
+                if (lastResourceDictionary.Any())
                 {
                     //Одним из условий работы парсера является требование к оптимизации алгоритма
                     //получения новых объявлений, т.е. необходимо делать минимальное количество запросов
@@ -258,60 +417,98 @@ namespace RealtyParser
                     //получать выборку нужных объявлений. Затем отсеивать объявления, которые были до
                     //IdRes и использовать дальнейшие ссылки только для новых объявлений.
 
-                    IEnumerable<string> list = resourceIds.Where(item => Comparer.Compare(item, lastResourceId) >= 0);
-                    resourceIds = new StackListQueue<string>();
-                    resourceIds.AddRange(list);
+
+                    Dictionary<RequestProperties, IEnumerable<Resource>> pairs =
+                        resources.Select(
+                            item =>
+                                new RequestProperties(item, Mapping))
+                            .Distinct().ToDictionary(item => item,
+                                item =>
+                                    resources.Where(
+                                        r => ObjectComparer.Equals(r, item, Mapping)));
+
+                    var value = new List<Resource>();
+                    foreach (var pair in pairs)
+                        if (lastResourceDictionary.ContainsKey(pair.Key))
+                            value.AddRange(
+                                pair.Value.Where(
+                                    item => ResourceComparer.Compare(item, lastResourceDictionary[pair.Key]) >= 0));
+                        else value.Add(pair.Value.Last());
+
+                    resources = new StackListQueue<Resource> {value};
+                    resources.Sort(ResourceComparer);
                 }
 
-                if (!resourceIds.Any())
+                if (!resources.Any())
                 {
                     responseLevel = Math.Min(1, responseLevel);
                 }
 
-                if (!string.IsNullOrEmpty(lastResourceId) && resourceIds.Any() &&
-                    Comparer.Compare(resourceIds.First(), lastResourceId) > 0)
+
+                Dictionary<RequestProperties, IEnumerable<Resource>> resourceDictionary =
+                    resources.Select(
+                        item => new RequestProperties(item, Mapping))
+                        .Distinct().ToDictionary(item => item,
+                            item =>
+                                resources.Where(
+                                    r => ObjectComparer.Equals(r, item, Mapping)));
+
+                if (lastResourceDictionary.Any() && resources.Any() &&
+                    lastResourceDictionary.Select(pair => resourceDictionary.ContainsKey(pair.Key) &&
+                                                          ResourceComparer.Compare(
+                                                              resourceDictionary[pair.Key].First(), pair.Value) > 0)
+                        .Aggregate(Boolean.And))
                 {
                     responseLevel = Math.Min(2, responseLevel);
                 }
 
-                if (!string.IsNullOrEmpty(lastResourceId) && resourceIds.Any() &&
-                    Comparer.Compare(resourceIds.Last(), lastResourceId) == 0)
+                if (lastResourceDictionary.Any() && resources.Any() &&
+                    lastResourceDictionary.Select(pair => resourceDictionary.ContainsKey(pair.Key) &&
+                                                          ResourceComparer.Equals(resourceDictionary[pair.Key].Last(),
+                                                              pair.Value)).Aggregate(Boolean.And))
                 {
                     responseLevel = Math.Min(3, responseLevel);
                 }
 
                 responseLevel = Math.Min(4, responseLevel);
 
-                if (string.IsNullOrEmpty(lastResourceId) && resourceIds.Count > 1)
+                if (!lastResourceDictionary.Any() && resources.Count > 1)
                 {
                     //При первом вызове метода парсера из DLL не известно о IdRes объявления внутри ресурса, поэтому он
                     //передает значение NULL. В этом случае парсер должен выбрать самое последнее объявление и
                     //вернуть его IdRes ресурса.
-                    resourceIds.RemoveRange(0, resourceIds.Count - 1);
+                    resources.RemoveRange(0, resources.Count - 1);
                 }
 
-                if (!string.IsNullOrEmpty(lastResourceId) && resourceIds.Any() &&
-                    Comparer.Compare(resourceIds.Last(), lastResourceId) == 0)
+                if (lastResourceDictionary.Any() && resources.Any() &&
+                    lastResourceDictionary.Select(pair => resourceDictionary.ContainsKey(pair.Key) &&
+                                                          ResourceComparer.Equals(resourceDictionary[pair.Key].Last(),
+                                                              pair.Value)).Aggregate(Boolean.And))
                 {
-                    resourceIds.Clear();
+                    resources.Clear();
                 }
 
 
-                if (!string.IsNullOrEmpty(lastResourceId) &&
-                    (resourceIds.Count > Database.ConvertTo<long>(SiteProperties.CountAd)) &&
-                    Comparer.Compare(resourceIds.First(), lastResourceId) > 0)
+                if (lastResourceDictionary.Any() && (resources.Count > Database.ConvertTo<long>(SiteProperties.CountAd)) &&
+                    lastResourceDictionary.Select(pair => resourceDictionary.ContainsKey(pair.Key) &&
+                                                          ResourceComparer.Compare(
+                                                              resourceDictionary[pair.Key].First(), pair.Value) > 0)
+                        .Aggregate(Boolean.And))
                 {
                     //Если IdRes не найден, то парсер возвращает последнии CountAD
                     //объявлений (такая ситуация может получится, если размещенное объявление к следующей
                     //итерации будет удалено на ресурсе)
-                    resourceIds.RemoveRange(0,
-                        (int) (resourceIds.Count - Database.ConvertTo<long>(SiteProperties.CountAd)));
+                    resources.RemoveRange(0,
+                        (int) (resources.Count - Database.ConvertTo<long>(SiteProperties.CountAd)));
                 }
 
-                if (!string.IsNullOrEmpty(lastResourceId) && resourceIds.Any() &&
-                    Comparer.Compare(resourceIds.First(), lastResourceId) == 0)
+                if (lastResourceDictionary.Any() && resources.Any() &&
+                    lastResourceDictionary.Select(pair => resourceDictionary.ContainsKey(pair.Key) &&
+                                                          ResourceComparer.Equals(
+                                                              resourceDictionary[pair.Key].First(), pair.Value))
+                        .Aggregate(Boolean.And))
                 {
-                    resourceIds.Dequeue();
+                    resources.Dequeue();
                 }
             }
             catch (Exception exception)
@@ -320,17 +517,22 @@ namespace RealtyParser
                 Debug.WriteLine(_lastError.ToString());
             }
             var publications = new List<WebPublication>();
-            foreach (string resourceId in resourceIds)
+            foreach (Resource resource in resources)
             {
+                Link url = dictionary[resource].Key;
+                if (PublicationHash.ContainsKey(url))
+                {
+                    publications.Add(PublicationHash[url]);
+                    continue;
+                }
                 try
                 {
-                    string url = dictionary[resourceId].Key;
-                    var builder = new UriBuilder(Uri.Combine(baseBuilder.Uri.ToString(), url))
+                    var builder = new UriBuilder(Uri.Combine(BaseBuilder.Uri.ToString(), url.ToString()))
                     {
-                        UserName = baseBuilder.UserName,
-                        Password = baseBuilder.Password,
+                        UserName = BaseBuilder.UserName,
+                        Password = BaseBuilder.Password,
                     };
-                    var urlValues = new Values(dictionary[resourceId].Value)
+                    var urlValues = new Values(dictionary[resource].Value)
                     {
                         Url = new List<string> {builder.Uri.ToString()}
                     };
@@ -351,11 +553,22 @@ namespace RealtyParser
 
             if (!publications.Any()) responseLevel = Math.Min(3, responseLevel);
 
+            PublicationHash.Clear();
+
+            lastResources.AddRange(resources);
+            lastResources =
+                lastResources.Select(
+                    item => new RequestProperties(item, Mapping))
+                    .Distinct().Select(
+                        item =>
+                            lastResources.Last(
+                                r => ObjectComparer.Equals(r, item, Mapping))).ToList();
+
             return new ParseResponse
             {
                 ResponseCode = responseCode[responseLevel],
-                LastPublicationId = resourceIds.DefaultIfEmpty(lastResourceId).LastOrDefault(),
-                ModuleName = GetType().ToString(),
+                LastPublicationId = string.Join("&", lastResources.Select(item => item.ToString())),
+                ModuleName = GetType().Name,
                 Publications = publications
             };
         }
@@ -370,14 +583,17 @@ namespace RealtyParser
         /// <returns> Коллекция названий ресурсов (сайтов)</returns>
         public IList<string> Sources(Bind bind)
         {
-            var requestId = new RequestProperties
-            {
-                {"Action", Database.GetScalar(bind.ActionId, "Action")},
-                {"Rubric", Database.GetScalar(bind.RubricId, "Rubric")},
-                {"Region", Database.GetScalar(bind.RegionId, "Region")},
-            };
+            Database.Connect();
+            Mapping = Database.GetList(Database.MappingTable, Database.TableNameColumn).Select(item => item.ToString());
 
-            if (!requestId.Select(pair => pair.Value != null).Aggregate((i, j) => i && j))
+            var requestId = new RequestProperties();
+            foreach (string table in Mapping)
+            {
+                PropertyInfo propertyInfo = bind.GetType().GetProperty(table + "Id");
+                requestId.Add(table, Database.GetScalar(propertyInfo.GetValue(bind), table));
+            }
+
+            if (!requestId.Select(pair => pair.Value != null).Aggregate(Boolean.And))
                 return new List<string>();
 
             Mapping sites = Database.GetMapping(Database.SiteTable);
@@ -385,7 +601,7 @@ namespace RealtyParser
             return (from site in sites
                 where
                     requestId.Select(pair => Database.GetScalar(pair.Value, pair.Key, site.Key) != null)
-                        .Aggregate((i, j) => i && j)
+                        .Aggregate(Boolean.And)
                 select site.Value.ToString()).ToList();
         }
 
@@ -412,8 +628,10 @@ namespace RealtyParser
         /// <returns>Коллекция биндов</returns>
         public IList<Bind> Keys()
         {
-            object siteId = Database.GetScalar(ModuleNamespace, Database.SiteIdColumn,
-                Database.ModuleNamespaceColumn,
+            Database.Connect();
+
+            object siteId = Database.GetScalar(ModuleClassname, Database.SiteIdColumn,
+                Database.ModuleClassnameColumn,
                 Database.SiteTable);
 
             Mappings mappings = Database.GetMappings(siteId);
@@ -436,8 +654,10 @@ namespace RealtyParser
         /// <returns></returns>
         public IList<Bind> KeysRubrics()
         {
-            object siteId = Database.GetScalar(ModuleNamespace, Database.SiteIdColumn,
-                Database.ModuleNamespaceColumn,
+            Database.Connect();
+
+            object siteId = Database.GetScalar(ModuleClassname, Database.SiteIdColumn,
+                Database.ModuleClassnameColumn,
                 Database.SiteTable);
 
             Mappings mappings = Database.GetMappings(siteId);
@@ -456,8 +676,10 @@ namespace RealtyParser
         /// <returns></returns>
         public IList<Bind> KeysRegions()
         {
-            object siteId = Database.GetScalar(ModuleNamespace, Database.SiteIdColumn,
-                Database.ModuleNamespaceColumn,
+            Database.Connect();
+
+            object siteId = Database.GetScalar(ModuleClassname, Database.SiteIdColumn,
+                Database.ModuleClassnameColumn,
                 Database.SiteTable);
 
             Mappings mappings = Database.GetMappings(siteId);
@@ -476,8 +698,10 @@ namespace RealtyParser
         /// <returns></returns>
         public IList<Bind> KeysActions()
         {
-            object siteId = Database.GetScalar(ModuleNamespace, Database.SiteIdColumn,
-                Database.ModuleNamespaceColumn,
+            Database.Connect();
+
+            object siteId = Database.GetScalar(ModuleClassname, Database.SiteIdColumn,
+                Database.ModuleClassnameColumn,
                 Database.SiteTable);
 
             Mappings mappings = Database.GetMappings(siteId);
@@ -487,6 +711,14 @@ namespace RealtyParser
                 {
                     ActionId = Database.ConvertTo<int>(action)
                 }).ToList();
+        }
+
+        public class EndOfSearchDetectedException : Exception
+        {
+        }
+
+        public class LoopDetectedException : Exception
+        {
         }
     }
 }

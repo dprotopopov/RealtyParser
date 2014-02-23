@@ -9,12 +9,14 @@ using System.Text;
 using System.Threading.Tasks;
 using HtmlAgilityPack;
 using RealtyParser.Compression;
+using RealtyParser.Managers;
+using RealtyParser.Trace;
 using RT.Crawler;
 using TidyManaged;
 
 namespace RealtyParser
 {
-    public class Crawler
+    public class Crawler : ITrace
     {
         public Crawler()
         {

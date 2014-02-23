@@ -2,6 +2,7 @@
 using System.Threading;
 using System.Windows.Forms;
 using RealtyParser;
+using RealtyParser.Trace;
 
 namespace RealtyParserEditor
 {

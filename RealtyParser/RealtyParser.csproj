@@ -81,10 +81,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AppendLineCallback.cs" />
     <Compile Include="BuilderInfo.cs" />
     <Compile Include="BuilderInfos.cs" />
-    <Compile Include="Collections\Array.cs" />
     <Compile Include="Collections\DictionaryOfList.cs" />
     <Compile Include="Collections\HierarchicalItem.cs" />
     <Compile Include="Collections\HierarchicalItemCollection.cs" />
@@ -94,9 +92,9 @@
     <Compile Include="Collections\OptionsCollection.cs" />
     <Compile Include="Collections\Properties.cs" />
     <Compile Include="Collections\StackListQueue.cs" />
-    <Compile Include="CompliteCallback.cs" />
-    <Compile Include="ComparerManager.cs" />
-    <Compile Include="CompressionManager.cs" />
+    <Compile Include="Comparer\IPublicationComparer.cs" />
+    <Compile Include="Comparer\ObjectComparer.cs" />
+    <Compile Include="Comparer\ResourceComparer.cs" />
     <Compile Include="Compression\DeflateStream.cs" />
     <Compile Include="Compression\GZipStream.cs" />
     <Compile Include="Compression\ICompression.cs" />
@@ -109,16 +107,23 @@
     <Compile Include="Forms\AboutBox.Designer.cs">
       <DependentUpon>AboutBox.cs</DependentUpon>
     </Compile>
-    <Compile Include="ObjectComparer.cs" />
-    <Compile Include="ProgressCallback.cs" />
+    <Compile Include="Link.cs" />
+    <Compile Include="LinkComparer.cs" />
+    <Compile Include="Managers\ComparerManager.cs" />
+    <Compile Include="Managers\CompressionManager.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="RequestProperties.cs" />
+    <Compile Include="Resource.cs" />
     <Compile Include="ReturnFieldInfos.cs" />
     <Compile Include="Builder.cs" />
+    <Compile Include="Trace\AppendLineCallback.cs" />
+    <Compile Include="Trace\CompliteCallback.cs" />
+    <Compile Include="Trace\ITrace.cs" />
+    <Compile Include="Trace\ProgressCallback.cs" />
     <Compile Include="Types\Boolean.cs" />
     <Compile Include="Types\DateTime.cs" />
     <Compile Include="Types\Decimal.cs" />
@@ -146,18 +151,18 @@
     <Compile Include="SiteProperties.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="MirkvartirParser.db">
+    <Content Include="MirkvartirParser.sqlite3">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Include="packages.config" />
     <Content Include="libtidy.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="RealtyParser.db">
+    <None Include="RealtyParser.snk" />
+    <Content Include="RealtyParser.sqlite3">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <None Include="RealtyParser.snk" />
-    <Content Include="RosrealtParser.db">
+    <Content Include="RosrealtParser.sqlite3">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Include="Алгоритм.doc" />

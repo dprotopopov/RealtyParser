@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.propertyGridControlParseRequest = new DevExpress.XtraVerticalGrid.PropertyGridControl();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.propertyGridControlParseResponse = new DevExpress.XtraVerticalGrid.PropertyGridControl();
             this.splitContainer3 = new System.Windows.Forms.SplitContainer();
@@ -49,11 +48,13 @@
             this.listBoxPhone = new System.Windows.Forms.ListBox();
             this.tabPageEmail = new System.Windows.Forms.TabPage();
             this.listBoxEmail = new System.Windows.Forms.ListBox();
+            this.splitContainer4 = new System.Windows.Forms.SplitContainer();
+            this.propertyGridControlParseRequest = new DevExpress.XtraVerticalGrid.PropertyGridControl();
+            this.listBoxDll = new System.Windows.Forms.ListBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.propertyGridControlParseRequest)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
             this.splitContainer2.Panel1.SuspendLayout();
             this.splitContainer2.Panel2.SuspendLayout();
@@ -75,6 +76,11 @@
             this.tabPagePhotos.SuspendLayout();
             this.tabPagePhone.SuspendLayout();
             this.tabPageEmail.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer4)).BeginInit();
+            this.splitContainer4.Panel1.SuspendLayout();
+            this.splitContainer4.Panel2.SuspendLayout();
+            this.splitContainer4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.propertyGridControlParseRequest)).BeginInit();
             this.SuspendLayout();
             // 
             // splitContainer1
@@ -85,7 +91,7 @@
             // 
             // splitContainer1.Panel1
             // 
-            this.splitContainer1.Panel1.Controls.Add(this.propertyGridControlParseRequest);
+            this.splitContainer1.Panel1.Controls.Add(this.splitContainer4);
             // 
             // splitContainer1.Panel2
             // 
@@ -93,14 +99,6 @@
             this.splitContainer1.Size = new System.Drawing.Size(981, 578);
             this.splitContainer1.SplitterDistance = 276;
             this.splitContainer1.TabIndex = 0;
-            // 
-            // propertyGridControlParseRequest
-            // 
-            this.propertyGridControlParseRequest.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.propertyGridControlParseRequest.Location = new System.Drawing.Point(0, 0);
-            this.propertyGridControlParseRequest.Name = "propertyGridControlParseRequest";
-            this.propertyGridControlParseRequest.Size = new System.Drawing.Size(276, 578);
-            this.propertyGridControlParseRequest.TabIndex = 0;
             // 
             // splitContainer2
             // 
@@ -312,6 +310,42 @@
             this.listBoxEmail.Size = new System.Drawing.Size(687, 203);
             this.listBoxEmail.TabIndex = 0;
             // 
+            // splitContainer4
+            // 
+            this.splitContainer4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer4.Location = new System.Drawing.Point(0, 0);
+            this.splitContainer4.Name = "splitContainer4";
+            this.splitContainer4.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            // 
+            // splitContainer4.Panel1
+            // 
+            this.splitContainer4.Panel1.Controls.Add(this.listBoxDll);
+            // 
+            // splitContainer4.Panel2
+            // 
+            this.splitContainer4.Panel2.Controls.Add(this.propertyGridControlParseRequest);
+            this.splitContainer4.Size = new System.Drawing.Size(276, 578);
+            this.splitContainer4.SplitterDistance = 178;
+            this.splitContainer4.TabIndex = 0;
+            // 
+            // propertyGridControlParseRequest
+            // 
+            this.propertyGridControlParseRequest.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.propertyGridControlParseRequest.Location = new System.Drawing.Point(0, 0);
+            this.propertyGridControlParseRequest.Name = "propertyGridControlParseRequest";
+            this.propertyGridControlParseRequest.Size = new System.Drawing.Size(276, 396);
+            this.propertyGridControlParseRequest.TabIndex = 1;
+            // 
+            // listBoxDll
+            // 
+            this.listBoxDll.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.listBoxDll.FormattingEnabled = true;
+            this.listBoxDll.ItemHeight = 16;
+            this.listBoxDll.Location = new System.Drawing.Point(0, 0);
+            this.listBoxDll.Name = "listBoxDll";
+            this.listBoxDll.Size = new System.Drawing.Size(276, 178);
+            this.listBoxDll.TabIndex = 1;
+            // 
             // ResultForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -324,7 +358,6 @@
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.propertyGridControlParseRequest)).EndInit();
             this.splitContainer2.Panel1.ResumeLayout(false);
             this.splitContainer2.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
@@ -346,6 +379,11 @@
             this.tabPagePhotos.ResumeLayout(false);
             this.tabPagePhone.ResumeLayout(false);
             this.tabPageEmail.ResumeLayout(false);
+            this.splitContainer4.Panel1.ResumeLayout(false);
+            this.splitContainer4.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer4)).EndInit();
+            this.splitContainer4.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.propertyGridControlParseRequest)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -353,7 +391,6 @@
         #endregion
 
         private System.Windows.Forms.SplitContainer splitContainer1;
-        private DevExpress.XtraVerticalGrid.PropertyGridControl propertyGridControlParseRequest;
         private System.Windows.Forms.SplitContainer splitContainer2;
         private DevExpress.XtraVerticalGrid.PropertyGridControl propertyGridControlParseResponse;
         private System.Windows.Forms.SplitContainer splitContainer3;
@@ -373,5 +410,8 @@
         private System.Windows.Forms.ListBox listBoxPhone;
         private System.Windows.Forms.TabPage tabPageEmail;
         private System.Windows.Forms.ListBox listBoxEmail;
+        private System.Windows.Forms.SplitContainer splitContainer4;
+        private DevExpress.XtraVerticalGrid.PropertyGridControl propertyGridControlParseRequest;
+        private System.Windows.Forms.ListBox listBoxDll;
     }
 }

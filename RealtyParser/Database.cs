@@ -6,13 +6,14 @@ using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using RealtyParser.Collections;
+using RealtyParser.Trace;
 
 namespace RealtyParser
 {
     /// <summary>
     ///     Класс для работы с базой данных
     /// </summary>
-    public class Database
+    public class Database : ITrace
     {
         public const string SiteTable = "Site";
         public const string MappingTable = "Mapping";
@@ -26,20 +27,14 @@ namespace RealtyParser
         public const string LevelColumn = "Level";
         public const string ParentIdColumn = "Parent" + IdColumn;
         public const string HasChildColumn = "HasChild";
-        public const string ModuleNamespaceColumn = "ModuleNamespace";
+        public const string ModuleNamespaceColumn = "ModuleNameSpace";
+        public const string ModuleClassnameColumn = "ModuleClassName";
         public readonly string SiteIdColumn = string.Format("{0}{1}", SiteTable, IdColumn);
 
         private readonly MethodInfo _stringFormatMethodInfo = typeof (string).GetMethod("Format",
             new[] {typeof (string), typeof (object[])});
 
-        public Database()
-        {
-            ModuleNamespace = GetType().Namespace;
-            ConnectionString = string.Format("data source={0}.db", ModuleNamespace);
-            Connection = new SQLiteConnection(ConnectionString);
-        }
-
-        public string ModuleNamespace { get; set; }
+        public string ModuleClassname { get; set; }
 
         private string ConnectionString { get; set; }
 
@@ -51,6 +46,13 @@ namespace RealtyParser
         ///     Коннектор к базе данных
         /// </summary>
         public SQLiteConnection Connection { get; set; }
+
+        public void Connect()
+        {
+            if (Connection != null) return;
+            ConnectionString = string.Format("data source={0}.sqlite3", ModuleClassname);
+            Connection = new SQLiteConnection(ConnectionString);
+        }
 
         public static T ConvertTo<T>(object obj)
         {

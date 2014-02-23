@@ -37,6 +37,12 @@ namespace RealtyParser
         {
         }
 
+        public Values(IEnumerable<string> keys, IEnumerable<string> values)
+        {
+            Key = keys;
+            Value = values;
+        }
+
         public IEnumerable<string> Option
         {
             get

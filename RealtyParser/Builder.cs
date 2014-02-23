@@ -9,11 +9,14 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using HtmlAgilityPack;
 using RealtyParser.Collections;
+using RealtyParser.Comparer;
+using RealtyParser.Managers;
+using RealtyParser.Trace;
 using String = RealtyParser.Types.String;
 
 namespace RealtyParser
 {
-    public class Builder
+    public class Builder : ITrace
     {
         private const string ReturnTitle = @"Title";
         private const string ReturnValue = @"Value";
@@ -64,8 +67,9 @@ namespace RealtyParser
             SiteMinLevel = 0;
             SiteMaxLevel = 1;
             MaxDistance = Int32.MaxValue;
-            ModuleNamespace = GetType().Namespace;
-            Database = new Database {ModuleNamespace = ModuleNamespace};
+            ModuleClassname = typeof (ParserModule).Namespace;
+            ModuleNamespace = typeof (ParserModule).Namespace;
+            Database = new Database {ModuleClassname = ModuleClassname};
             CompressionManager = new CompressionManager {ModuleNamespace = ModuleNamespace};
             Converter = new Converter {ModuleNamespace = ModuleNamespace};
             Transformation = new Transformation();
@@ -73,6 +77,8 @@ namespace RealtyParser
             Crawler = new Crawler {CompressionManager = CompressionManager};
             ObjectComparer = new ObjectComparer();
         }
+
+        public string ModuleClassname { get; set; }
 
         public ProgressCallback ProgressCallback { get; set; }
         public AppendLineCallback AppendLineCallback { get; set; }
@@ -198,8 +204,6 @@ namespace RealtyParser
 
 
             CompliteCallback = (CompliteCallback) stack.Pop();
-
-
             if (CompliteCallback != null) CompliteCallback();
             Debug.WriteLine("End {0}::{1}", GetType().Name, MethodBase.GetCurrentMethod().Name);
         }
@@ -377,7 +381,6 @@ namespace RealtyParser
                 new KeyValuePair<Dictionary<object, string>, Dictionary<object, string>>(titles[0], titles[1]);
 
             CompliteCallback = (CompliteCallback) stack.Pop();
-
             if (CompliteCallback != null) CompliteCallback();
             Debug.WriteLine("End {0}::{1}", GetType().Name, MethodBase.GetCurrentMethod().Name);
         }
@@ -570,10 +573,7 @@ namespace RealtyParser
             });
 
 
-            if (CompliteCallback != null) CompliteCallback();
-
             CompliteCallback = (CompliteCallback) stack.Pop();
-
             if (CompliteCallback != null) CompliteCallback();
             Debug.WriteLine("End {0}::{1}", GetType().Name, MethodBase.GetCurrentMethod().Name);
         }
@@ -604,8 +604,6 @@ namespace RealtyParser
             Database.Connection.Close();
 
             CompliteCallback = (CompliteCallback) stack.Pop();
-
-
             if (CompliteCallback != null) CompliteCallback();
             Debug.WriteLine("End {0}::{1}", GetType().Name, MethodBase.GetCurrentMethod().Name);
         }
@@ -890,8 +888,6 @@ namespace RealtyParser
 
             AppendLineCallback("COMMIT;");
             CompliteCallback = (CompliteCallback) stack.Pop();
-
-
             if (CompliteCallback != null) CompliteCallback();
             Debug.WriteLine("End {0}::{1}", GetType().Name, MethodBase.GetCurrentMethod().Name);
         }

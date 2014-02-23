@@ -54,6 +54,36 @@ namespace RealtyParserUnitTest
         }
 
         [TestMethod]
+        public void DatetimeFirstIdSecondComparerTest()
+        {
+            //
+            // TODO: добавьте здесь логику теста
+            //
+            var comparer = new DatetimeFirstIdSecondComparer();
+            Assert.IsTrue(
+                comparer.Compare("[PublicationId:888,PublicationDatetime:##11.03.2014 14:37:42##]",
+                    "[PublicationId:888,PublicationDatetime:##10.04.2013 14:37:42##]") > 0);
+            Assert.IsTrue(
+                comparer.Compare("[PublicationId:222,PublicationDatetime:##11.03.2013 14:37:42##]",
+                    "[PublicationId:1111,PublicationDatetime:##11.03.2013 14:37:42##]") < 0);
+            Assert.IsTrue(
+                comparer.Compare("[PublicationDatetime:##11.03.2013 14:37:42##,PublicationId:1111]",
+                    "[PublicationId:1111,PublicationDatetime:##11.03.2013 14:37:42##]") == 0);
+        }
+        [TestMethod]
+        public void DatetimeFirstIdSecondIsValidTest()
+        {
+            //
+            // TODO: добавьте здесь логику теста
+            //
+            var comparer = new DatetimeFirstIdSecondComparer();
+            Assert.IsTrue(
+                comparer.IsValid(@"[PublicationDatetime:##18.02.2014 10:07:04##,PublicationId:1551212,Action:\1,Rubric:\1\2\3,Region:\22\\]"));
+            Assert.IsFalse(
+                comparer.IsValid(@"[PublicationDatetime:####,PublicationId:109436880,Action:\www.,Rubric:\www.\,Region:\/дагестан+республика\\\\]"));
+        }
+
+        [TestMethod]
         public void OnlyDatetimeComparer()
         {
             //

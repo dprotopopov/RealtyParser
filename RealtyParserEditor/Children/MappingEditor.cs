@@ -5,6 +5,7 @@ using System.Linq;
 using System.Windows.Forms;
 using RealtyParser;
 using RealtyParser.Collections;
+using RealtyParser.Trace;
 
 namespace RealtyParserEditor.Children
 {
@@ -17,6 +18,9 @@ namespace RealtyParserEditor.Children
         public MappingEditor()
         {
             InitializeComponent();
+
+            Database.Connect();
+
             Mapping sites = Database.GetMapping("Site");
             repositoryItemComboBoxSite.Items.AddRange(sites.ToArray());
             IEnumerable<object> mapping = Database.GetList("Mapping", "TableName");
