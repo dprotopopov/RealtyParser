@@ -273,10 +273,8 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PreBuildEvent>copy /v /y D:\Projects\RealtyParser\RealtyParser\RealtyParser.sqlite3  D:\Projects\RealtyParser\RealtyParserEditor\RealtyParser.sqlite3
-copy /v /y D:\Projects\RealtyParser\RealtyParser\MirkvartirParser.sqlite3  D:\Projects\RealtyParser\RealtyParserEditor\MirkvartirParser.sqlite3
-copy /v /y D:\Projects\RealtyParser\RealtyParser\RosrealtParser.sqlite3  D:\Projects\RealtyParser\RealtyParserEditor\RosrealtParser.sqlite3
-</PreBuildEvent>
+    <PreBuildEvent>
+    </PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
