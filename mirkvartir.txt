@@ -1,4 +1,39 @@
+Версия готова.
+Проверьте работоспособность
+Справочники прогрузил и смапировал
+Соответсвующие сайтам проекты создания DLL находятся в папках
+RealtyParser.Mirkvartir
+RealtyParser.Rosrealt
 
+В настоящее время зависимости не собраны в одну библиотеку -
+надо будет воспользоваться утилитой ILMerge от Microsoft чтобы слить все зависимости в одну DLL http://www.microsoft.com/en-us/download/details.aspx?id=17630
+Соберу в окончательной редакции
+
+Базы данных сейчас у всех проектов одинаковые
+В окончательной редакции удалю не соответствующие DLL данные - просто сейчас не удалял ничего, чтобы не запутатся с данными
+Имя базы данных = имени DLL
+Расширения баз поменял на .sqlite3
+
+
+Для распаковки GZip потока я воспользлвался библиотекой SharpZipLib http://www.icsharpcode.net/OpenSource/SharpZipLib/Default.aspx
+В пакетах nuget она есть
+
+Поскольку новый сайт часто выдаёт различные ошибки (видимо связанные с упаковкой потока), то сделал до 3-х попыток запросить страницу прежде чем выдавать ошибку.
+Кроме того в библиотеку RT.Crawler внёс отлавливание события WebException
+
+https://github.com/dprotopopov/RealtyParser/
+http://protopopov.ru/realtyparsereditor/publish.htm
+
+
+copy /v /y D:\Projects\RealtyParser\RealtyParser\RealtyParser.sqlite3  D:\Projects\RealtyParser\RealtyParserEditor\RealtyParser.sqlite3
+copy /v /y D:\Projects\RealtyParser\RealtyParser\MirkvartirParser.sqlite3  D:\Projects\RealtyParser\RealtyParser.Mirkvartir\MirkvartirParser.sqlite3
+copy /v /y D:\Projects\RealtyParser\RealtyParser\RosrealtParser.sqlite3  D:\Projects\RealtyParser\RealtyParser.Rosrealt\RosrealtParser.sqlite3
+
+[PublicationDatetime:##{{PublicationDatetime}}##,PublicationId:{{PublicationId}},Action:{{Action}},Rubric:{{Rubric}},Region:{{Region}}]
+3	PublicationDatetime	//td[@class='label'][contains(text(),'Oбновлено')]/following-sibling::td[@class='tc-content']/time[@datetime]	{{InnerText}}	.*	$&	(\d+\s+\w+\s+\d+)
+
+[{{PublicationId}},##{{PublicationDate}}##]
+[{{PublicationId}}]
 regionId
 provinceId
 cityId
@@ -7,6 +42,15 @@ districtId
 subwayId
 streetId
 houseId
+
+copy /v /y D:\Projects\RealtyParser\RealtyParser\RealtyParser.sqlite3  D:\Projects\RealtyParser\RealtyParserEditor\RealtyParser.sqlite3
+copy /v /y D:\Projects\RealtyParser\RealtyParser\MirkvartirParser.sqlite3  D:\Projects\RealtyParser\RealtyParserEditor\MirkvartirParser.sqlite3
+copy /v /y D:\Projects\RealtyParser\RealtyParser\RosrealtParser.sqlite3  D:\Projects\RealtyParser\RealtyParserEditor\RosrealtParser.sqlite3
+copy /v /y D:\Projects\RealtyParser\RealtyParser\RosrealtParser.sqlite3  D:\Projects\RealtyParser\RealtyParser.Rosrealt\RosrealtParser.sqlite3
+copy /v /y D:\Projects\RealtyParser\RealtyParser\MirkvartirParser.sqlite3  D:\Projects\RealtyParser\RealtyParser.Mirkvartir\MirkvartirParser.sqlite3
+
+
+3	mirkvartir.ru	http://mirkvartir.ru	GET	GZipStream	http://{{Rubric[1]}}mirkvartir.ru{{Region}}{{Rubric[2]}}?roomsFrom={{roomsFrom}}&roomsTo={{roomsTo}}&p={{Page}}	http://{{Action}}mirkvartir.ru{{PublicationLink}}	[PublicationDatetime:##{{PublicationDatetime}}##,PublicationId:{{PublicationId}},Action:{{Action}},Rubric:{{Rubric}},Region:{{Region}}]	NULL	NULL	30	DatetimeFirstIdSecondComparer	utf-8	MirkvartirParser
 
 /%d0%a0%d0%be%d1%81%d1%81%d0%b8%d1%8f/%d0%9c%d0%be%d1%81%d0%ba%d0%b2%d0%b0+%d0%b3%d0%be%d1%80%d0%be%d0%b4/%d0%92%d0%bd%d1%83%d0%ba%d0%be%d0%b2%d1%81%d0%ba%d0%be%d0%b5+%d0%bf%d0%be%d1%81%d0%b5%d0%bb%d0%b5%d0%bd%d0%b8%d0%b5/
 
@@ -185,10 +229,11 @@ http://rosrealt.ru/poisk.php?Region={{Region}}&City={{City}}&District={{District
 			<script type="text/javascript">_em.addEvent(_em.CAT_ESTATE, _em.TYPE_ESTATE_SHOW, 107068364);</script>
 		</div>
 
-3	WebPublicationAdditionalInfoRealtyAdditionalInfoRoomNumber	///td[@class='item-label'][contains(text(),'Кол-во комнат')]/following-sibling::td[@class='item-content']	{{InnerText}} 	.*	$&	.*
+3	WebPublicationAdditionalInfoRealtyAdditionalInfoRoomNumber	//td[@class='item-label'][contains(text(),'Кол-во комнат')]/following-sibling::td[@class='item-content']	{{InnerText}} 	.*	$&	.*
 3	WebPublicationAdditionalInfoRealtyAdditionalInfoTotalSpace	//td[@class='item-label'][contains(text(),'Площадь')]/following-sibling::td[@class='item-content']	{{InnerText}} 	\s*(\d+)\s*\/\s*(\d+)\s*\/\s*(\d+).*	$1	.*
 3	WebPublicationAdditionalInfoRealtyAdditionalInfoLivingSpace	//td[@class='item-label'][contains(text(),'Площадь')]/following-sibling::td[@class='item-content']	{{InnerText}} 	\s*(\d+)\s*\/\s*(\d+)\s*\/\s*(\d+).*	$2	.*
-3	WebPublicationAdditionalInfoRealtyAdditionalInfoKitchenSpace	//td[@class='item-label'][contains(text(),'Площадь')]/following-sibling::td[@class='item-content']	{{InnerText}} 	\s*(\d+)\s*\/\s*(\d+)\s*\/\s*(\d+).*	$3	.*
+3	WebPublicationAdditionalInfoRealtyAdditionalInfoKitchenSpace	//td[@class='item-label'][contains(text(),'Площадь')]/following-sibling::td[@class='item-content'][contains(text(),'(общ./жил./кух.)')]	{{InnerText}} 	
+\s*(\S+)\s*\/\s*(\S+)\s*\/\s*(\S+)\s*.*	$3	.*
 3	WebPublicationAdditionalInfoRealtyAdditionalInfoCostAll	//p[@class='price']/strong[@itemprop='price']	{{InnerText}} 	\D+		.*
 
 3	WebPublicationAdditionalInfoRealtyAdditionalInfoCostPerMeter	//p/label[contains(text(),'Стоимость м2')]/following-sibling::span/b	{{InnerText}} 	\D+		.*
@@ -206,9 +251,22 @@ http://rosrealt.ru/poisk.php?Region={{Region}}&City={{City}}&District={{District
 3	WebPublicationContactContactName	//p[@class='contact-item']/b[@itemprop='name']	{{InnerText}}	.*	$&	.*
 3	WebPublicationContactAuthor	//td[@class='label'][contains(text(),'Источник')]/following-sibling::td[@class='tc-content']/a	{{InnerText}}	.*	$&	.*
 3	WebPublicationContactAuthorUrl	//td[@class='label'][contains(text(),'Источник')]/following-sibling::td[@class='tc-content']/a[@href]	{{href}}	.*	$&	.*
+3	WebPublicationAdditionalInfoRealtyAdditionalInfoDistrict	(//dt[@class='item-label'][contains(text(),'Адрес')]/following-sibling::dd[@class='item-content']/a)[3]	{{InnerText}}	.*	$&	.*
+
+3	WebPublicationAdditionalInfoRealtyAdditionalInfoTotalSpace	//td[@class='item-label'][contains(text(),'Площадь')]/following-sibling::td[@class='item-content'][contains(text(),'(общ./жил./кух.)')]	{{InnerText}}	\s*(\d*)\S*\s*\/\s*(\d*)\S*\s*\/\s*(\d*)\S*\s*.*	$1	\d+
+3	WebPublicationAdditionalInfoRealtyAdditionalInfoLivingSpace	//td[@class='item-label'][contains(text(),'Площадь')]/following-sibling::td[@class='item-content'][contains(text(),'(общ./жил./кух.)')]	{{InnerText}}	\s*(\S+)\s*\/\s*(\S+)\s*\/\s*(\S+)\s*.*	$2	\d+
+3	WebPublicationAdditionalInfoRealtyAdditionalInfoKitchenSpace	//td[@class='item-label'][contains(text(),'Площадь')]/following-sibling::td[@class='item-content'][contains(text(),'(общ./жил./кух.)')]	{{InnerText}}	\s*(\S+)\s*\/\s*(\S+)\s*\/\s*(\S+)\s*.*	$3	\d+
+
+
+3	WebPublicationAdditionalInfoRealtyAdditionalInfoFloorNumber	//td[@class='item-label'][contains(text(),'Этаж')]/following-sibling::td[@class='item-content']	{{InnerText}}	
+\s*(\d*)\S*\s*\/\s*(\d*)\S*\s*.*	$1	\d+
+3	WebPublicationAdditionalInfoRealtyAdditionalInfoFloor	//td[@class='item-label'][contains(text(),'Этаж')]/following-sibling::td[@class='item-content']	{{InnerText}}	\s*(\S+)\s*\/\s*(\S+)\s*.*	$2	\d+
+
 
 <tr><td class="label">Источник</td>
 			<td class="tc-content"><a href="http://sitinedvizhimost.mirkvartir.ru/" target="_blank">Сити Недвижимость</a>&nbsp;(ID в источнике <a target="_blank" onclick="_gaq.push(['_trackEvent', 'ExternalLink', 'ID', 'Сити Недвижимость']);_em.notify(_em.CAT_EXTERNALLINK,_em.TYPE_EXTERNALLINK_ID_CLICK,111145409);" href="/Goto.ashx?out=www.city99.ru%2fobject%2f569631%2f%3futm_source%3dmirkvartir%26utm_medium%3dcpc%26utm_campaign%3dmirkvartir_estatedetails_id%3futm_term%3d111145409" rel="nofollow">56963101</a>)</td></tr>
+
+<td class="item-label">Площадь дома,&nbsp;м<sup>2</sup></td>
 
 <p class="contact-item"><b itemprop="name">Амашукели Николай</b></p>
 
@@ -260,3 +318,30 @@ http://rosrealt.ru/poisk.php?Region={{Region}}&City={{City}}&District={{District
 									<a href="/%d0%9c%d0%be%d1%81%d0%ba%d0%be%d0%b2%d1%81%d0%ba%d0%b0%d1%8f+%d0%be%d0%b1%d0%bb%d0%b0%d1%81%d1%82%d1%8c/%d1%88%d0%be%d1%81%d1%81%d0%b5+%d0%a9%d0%b5%d0%bb%d0%ba%d0%be%d0%b2%d1%81%d0%ba%d0%be%d0%b5/%d0%9d%d0%be%d0%b2%d0%be%d1%81%d1%82%d1%80%d0%be%d0%b9%d0%ba%d0%b8/">Щелковское</a>, 
 									<a href="/%d0%9c%d0%be%d1%81%d0%ba%d0%be%d0%b2%d1%81%d0%ba%d0%b0%d1%8f+%d0%be%d0%b1%d0%bb%d0%b0%d1%81%d1%82%d1%8c/%d1%88%d0%be%d1%81%d1%81%d0%b5+%d0%9d%d0%be%d0%b2%d0%be%d1%80%d1%8f%d0%b7%d0%b0%d0%bd%d1%81%d0%ba%d0%be%d0%b5/%d0%9d%d0%be%d0%b2%d0%be%d1%81%d1%82%d1%80%d0%be%d0%b9%d0%ba%d0%b8/">Новорязанское</a>
 						</dd></dl>
+
+
+<div class="list_item" onclick="_em.notify(_em.CAT_ESTATE, _em.TYPE_ESTATE_CLICK, 6673426);document.location='/6673426/';">
+			<a href="/6673426/" class="left photo" onclick="_em.notify(_em.CAT_ESTATE, _em.TYPE_ESTATE_CLICK, 6673426);">
+				<span style="width:90px;height:90px">
+				<noscript>&lt;img src="http://f.mirkvartir.ru/90x90/09/097eaae6-136a-4836-a366-b53a06b169b8.jpg" alt="Московская область, Ногинский район, Электроугли, Комсомольская ул., 26А" width="90" height="90" title="1 фото"/&gt;</noscript>
+				<span class="img-post-load-cntr" style=""><span style="width:90px;height:90px;background:url('http://files.mirkvartir.ru/files/images/img-ajax-loader.gif') no-repeat center center;display:block"><img class="img-post-load photo-item-img" src="http://f.mirkvartir.ru/90x90/09/097eaae6-136a-4836-a366-b53a06b169b8.jpg" post-src="http://f.mirkvartir.ru/90x90/09/097eaae6-136a-4836-a366-b53a06b169b8.jpg" pl-width="90" pl-height="90" width="90" height="90"></span></span>
+				<div class="photo-count-container"><div class="photo-count">1</div></div>
+				</span>
+			</a>
+			<div class="cntr ">
+				<p style="display: block; float: left; width: 95%;">
+					<span>
+					<a class="m cmpz-list-item" href="/6673426/" title="" onclick="_em.notify(_em.CAT_ESTATE, _em.TYPE_ESTATE_CLICK, 6673426);">
+						<span class="w100p">
+							<span class="address link">Московская область, Ногинский район, Электроугли, Комсомольская ул., 26А</span>
+							
+						</span>
+						<span class="link-add-desc">купить квартиру в новостройке</span>
+					</a></span><br>
+						<br><span>Цена (м<sup>2</sup>): до 78&nbsp;000&nbsp;руб.</span>
+						<br clear="all"></p><p style="padding-right: 30px; float: right;">Кол-во квартир в продаже:
+						<a href="/6673426/#new_buildings">14</a>
+					</p>
+					<br clear="all"></div>
+			<script type="text/javascript">_em.addEvent(_em.CAT_ESTATE, _em.TYPE_ESTATE_SHOW, 6673426);</script>
+		</div>
