@@ -33,7 +33,7 @@ namespace RealtyParser.Comparer
         public bool IsValid(string s)
         {
             Match match = Regex.Match(s, DateTimePatten);
-            return match.Length > 0 && !match.Groups["date"].Value.Trim().IsNullOrEmpty();
+            return match.Length > 0 && !string.IsNullOrEmpty(match.Groups["date"].Value.Trim());
         }
 
         public bool Equals(string x, string y)

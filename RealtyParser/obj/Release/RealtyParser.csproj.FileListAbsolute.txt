@@ -1,5 +1,4 @@
 D:\Projects\RealtyParser\RealtyParser\bin\Release\libtidy.dll
-D:\Projects\RealtyParser\RealtyParser\bin\Release\RealtyParser.db
 D:\Projects\RealtyParser\RealtyParser\bin\Release\RealtyParser.dll
 D:\Projects\RealtyParser\RealtyParser\bin\Release\RealtyParser.pdb
 D:\Projects\RealtyParser\RealtyParser\bin\Release\HtmlAgilityPack.dll
@@ -21,7 +20,6 @@ D:\Projects\RealtyParser\RealtyParser\bin\Release\HtmlAgilityPack.pdb
 D:\Projects\RealtyParser\RealtyParser\bin\Release\HtmlAgilityPack.xml
 D:\Projects\RealtyParser\RealtyParser\bin\Release\ServiceStack.Common.xml
 D:\Projects\RealtyParser\RealtyParser\bin\Release\ServiceStack.Interfaces.xml
-D:\Projects\RealtyParser\RealtyParser\bin\Release\ServiceStack.OrmLite.xml
 D:\Projects\RealtyParser\RealtyParser\bin\Release\ServiceStack.Text.xml
 D:\Projects\RealtyParser\RealtyParser\bin\Release\System.Data.SQLite.xml
 D:\Projects\RealtyParser\RealtyParser\obj\Release\RealtyParser.csprojResolveAssemblyReference.cache
@@ -30,8 +28,14 @@ D:\Projects\RealtyParser\RealtyParser\obj\Release\RealtyParser.csproj.GenerateRe
 D:\Projects\RealtyParser\RealtyParser\obj\Release\RealtyParser.dll
 D:\Projects\RealtyParser\RealtyParser\obj\Release\RealtyParser.pdb
 D:\Projects\RealtyParser\RealtyParser\obj\Release\RealtyParser.Forms.AboutBox.resources
-D:\Projects\RealtyParser\RealtyParser\bin\Release\RosrealtParser.db
 D:\Projects\RealtyParser\RealtyParser\bin\Release\ICSharpCode.SharpZipLib.dll
 D:\Projects\RealtyParser\RealtyParser\bin\Release\MirkvartirParser.sqlite3
 D:\Projects\RealtyParser\RealtyParser\bin\Release\RealtyParser.sqlite3
 D:\Projects\RealtyParser\RealtyParser\bin\Release\RosrealtParser.sqlite3
+D:\Projects\RealtyParser\RealtyParser\bin\Release\RealtyParser.dll.config
+D:\Projects\RealtyParser\RealtyParser\bin\Release\EntityFramework.dll
+D:\Projects\RealtyParser\RealtyParser\bin\Release\EntityFramework.SqlServer.dll
+D:\Projects\RealtyParser\RealtyParser\bin\Release\System.Data.SQLite.EF6.dll
+D:\Projects\RealtyParser\RealtyParser\bin\Release\System.Data.SQLite.Linq.dll
+D:\Projects\RealtyParser\RealtyParser\bin\Release\EntityFramework.xml
+D:\Projects\RealtyParser\RealtyParser\bin\Release\EntityFramework.SqlServer.xml

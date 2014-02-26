@@ -47,3 +47,15 @@ D:\Projects\RealtyParser\RealtyParserEditor\bin\Release\RealtyParser.sqlite3
 D:\Projects\RealtyParser\RealtyParserEditor\bin\Release\RosrealtParser.sqlite3
 D:\Projects\RealtyParser\RealtyParserEditor\bin\Release\ServiceStack.Text.dll
 D:\Projects\RealtyParser\RealtyParserEditor\bin\Release\ServiceStack.Text.xml
+D:\Projects\RealtyParser\RealtyParserEditor\bin\Release\EntityFramework.dll
+D:\Projects\RealtyParser\RealtyParserEditor\bin\Release\EntityFramework.SqlServer.dll
+D:\Projects\RealtyParser\RealtyParserEditor\bin\Release\ServiceStack.Common.dll
+D:\Projects\RealtyParser\RealtyParserEditor\bin\Release\ServiceStack.Interfaces.dll
+D:\Projects\RealtyParser\RealtyParserEditor\bin\Release\ServiceStack.OrmLite.dll
+D:\Projects\RealtyParser\RealtyParserEditor\bin\Release\ServiceStack.OrmLite.SqliteNET.dll
+D:\Projects\RealtyParser\RealtyParserEditor\bin\Release\System.Data.SQLite.EF6.dll
+D:\Projects\RealtyParser\RealtyParserEditor\bin\Release\System.Data.SQLite.Linq.dll
+D:\Projects\RealtyParser\RealtyParserEditor\bin\Release\EntityFramework.xml
+D:\Projects\RealtyParser\RealtyParserEditor\bin\Release\EntityFramework.SqlServer.xml
+D:\Projects\RealtyParser\RealtyParserEditor\bin\Release\ServiceStack.Common.xml
+D:\Projects\RealtyParser\RealtyParserEditor\bin\Release\ServiceStack.Interfaces.xml

@@ -112,9 +112,9 @@ namespace RealtyParser
             }
 
             List<Resource> lastResources =
-                (request.LastPublicationId.IsNullOrEmpty() ? "" : request.LastPublicationId).Split('&')
+                (string.IsNullOrEmpty(request.LastPublicationId) ? "" : request.LastPublicationId).Split('&')
                     .Select(s => s.Trim())
-                    .Where(s => !s.IsNullOrEmpty())
+                    .Where(s => !string.IsNullOrEmpty(s))
                     .Select(s => new Resource(s))
                     .ToList();
 

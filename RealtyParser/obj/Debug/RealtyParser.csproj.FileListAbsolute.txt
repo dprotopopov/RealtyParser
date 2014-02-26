@@ -23,7 +23,6 @@ D:\Projects\RealtyParser\RealtyParser\bin\Debug\HtmlAgilityPack.pdb
 D:\Projects\RealtyParser\RealtyParser\bin\Debug\HtmlAgilityPack.xml
 D:\Projects\RealtyParser\RealtyParser\bin\Debug\ServiceStack.Common.xml
 D:\Projects\RealtyParser\RealtyParser\bin\Debug\ServiceStack.Interfaces.xml
-D:\Projects\RealtyParser\RealtyParser\bin\Debug\ServiceStack.OrmLite.xml
 D:\Projects\RealtyParser\RealtyParser\bin\Debug\ServiceStack.Text.xml
 D:\Projects\RealtyParser\RealtyParser\bin\Debug\System.Data.SQLite.xml
 D:\Projects\RealtyParser\RealtyParser\obj\Debug\RealtyParser.csprojResolveAssemblyReference.cache
@@ -32,3 +31,10 @@ D:\Projects\RealtyParser\RealtyParser\obj\Debug\RealtyParser.Properties.Resource
 D:\Projects\RealtyParser\RealtyParser\obj\Debug\RealtyParser.csproj.GenerateResource.Cache
 D:\Projects\RealtyParser\RealtyParser\obj\Debug\RealtyParser.dll
 D:\Projects\RealtyParser\RealtyParser\obj\Debug\RealtyParser.pdb
+D:\Projects\RealtyParser\RealtyParser\bin\Debug\RealtyParser.dll.config
+D:\Projects\RealtyParser\RealtyParser\bin\Debug\EntityFramework.dll
+D:\Projects\RealtyParser\RealtyParser\bin\Debug\EntityFramework.SqlServer.dll
+D:\Projects\RealtyParser\RealtyParser\bin\Debug\System.Data.SQLite.EF6.dll
+D:\Projects\RealtyParser\RealtyParser\bin\Debug\System.Data.SQLite.Linq.dll
+D:\Projects\RealtyParser\RealtyParser\bin\Debug\EntityFramework.xml
+D:\Projects\RealtyParser\RealtyParser\bin\Debug\EntityFramework.SqlServer.xml

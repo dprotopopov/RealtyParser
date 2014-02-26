@@ -25,3 +25,15 @@ D:\Projects\RealtyParser\RealtyParser.Rosrealt\bin\Debug\ServiceStack.Text.xml
 D:\Projects\RealtyParser\RealtyParser.Rosrealt\obj\Debug\RealtyParser.Rosrealt.csprojResolveAssemblyReference.cache
 D:\Projects\RealtyParser\RealtyParser.Rosrealt\obj\Debug\RealtyParser.Rosrealt.dll
 D:\Projects\RealtyParser\RealtyParser.Rosrealt\obj\Debug\RealtyParser.Rosrealt.pdb
+D:\Projects\RealtyParser\RealtyParser.Rosrealt\bin\Debug\EntityFramework.dll
+D:\Projects\RealtyParser\RealtyParser.Rosrealt\bin\Debug\EntityFramework.SqlServer.dll
+D:\Projects\RealtyParser\RealtyParser.Rosrealt\bin\Debug\ServiceStack.Common.dll
+D:\Projects\RealtyParser\RealtyParser.Rosrealt\bin\Debug\ServiceStack.Interfaces.dll
+D:\Projects\RealtyParser\RealtyParser.Rosrealt\bin\Debug\ServiceStack.OrmLite.dll
+D:\Projects\RealtyParser\RealtyParser.Rosrealt\bin\Debug\ServiceStack.OrmLite.SqliteNET.dll
+D:\Projects\RealtyParser\RealtyParser.Rosrealt\bin\Debug\System.Data.SQLite.EF6.dll
+D:\Projects\RealtyParser\RealtyParser.Rosrealt\bin\Debug\System.Data.SQLite.Linq.dll
+D:\Projects\RealtyParser\RealtyParser.Rosrealt\bin\Debug\EntityFramework.xml
+D:\Projects\RealtyParser\RealtyParser.Rosrealt\bin\Debug\EntityFramework.SqlServer.xml
+D:\Projects\RealtyParser\RealtyParser.Rosrealt\bin\Debug\ServiceStack.Common.xml
+D:\Projects\RealtyParser\RealtyParser.Rosrealt\bin\Debug\ServiceStack.Interfaces.xml

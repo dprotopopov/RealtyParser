@@ -4,7 +4,6 @@ using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using RealtyParser.Comparer;
-using ServiceStack;
 using Boolean = RealtyParser.Types.Boolean;
 using String = RealtyParser.Types.String;
 
@@ -26,10 +25,10 @@ namespace RealtyParser.Collections
             List<object> invoke = (from s in str.Split(',')
                 select s.Trim()
                 into s1
-                where !s1.IsNullOrEmpty()
+                where !string.IsNullOrEmpty(s1)
                 select Regex.Match(s1, StructurePatten)
                 into match
-                where !match.Groups["key"].Value.IsNullOrEmpty()
+                where !string.IsNullOrEmpty(match.Groups["key"].Value)
                 select methodInfo.Invoke(this, new object[] {match.Groups["key"].Value, match.Groups["value"].Value}))
                 .ToList();
         }

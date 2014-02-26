@@ -25,3 +25,15 @@ D:\Projects\RealtyParser\RealtyParser.Mirkvartir\bin\Debug\ServiceStack.Text.xml
 D:\Projects\RealtyParser\RealtyParser.Mirkvartir\obj\Debug\RealtyParser.Mirkvartir.csprojResolveAssemblyReference.cache
 D:\Projects\RealtyParser\RealtyParser.Mirkvartir\obj\Debug\RealtyParser.Mirkvartir.dll
 D:\Projects\RealtyParser\RealtyParser.Mirkvartir\obj\Debug\RealtyParser.Mirkvartir.pdb
+D:\Projects\RealtyParser\RealtyParser.Mirkvartir\bin\Debug\EntityFramework.dll
+D:\Projects\RealtyParser\RealtyParser.Mirkvartir\bin\Debug\EntityFramework.SqlServer.dll
+D:\Projects\RealtyParser\RealtyParser.Mirkvartir\bin\Debug\ServiceStack.Common.dll
+D:\Projects\RealtyParser\RealtyParser.Mirkvartir\bin\Debug\ServiceStack.Interfaces.dll
+D:\Projects\RealtyParser\RealtyParser.Mirkvartir\bin\Debug\ServiceStack.OrmLite.dll
+D:\Projects\RealtyParser\RealtyParser.Mirkvartir\bin\Debug\ServiceStack.OrmLite.SqliteNET.dll
+D:\Projects\RealtyParser\RealtyParser.Mirkvartir\bin\Debug\System.Data.SQLite.EF6.dll
+D:\Projects\RealtyParser\RealtyParser.Mirkvartir\bin\Debug\System.Data.SQLite.Linq.dll
+D:\Projects\RealtyParser\RealtyParser.Mirkvartir\bin\Debug\EntityFramework.xml
+D:\Projects\RealtyParser\RealtyParser.Mirkvartir\bin\Debug\EntityFramework.SqlServer.xml
+D:\Projects\RealtyParser\RealtyParser.Mirkvartir\bin\Debug\ServiceStack.Common.xml
+D:\Projects\RealtyParser\RealtyParser.Mirkvartir\bin\Debug\ServiceStack.Interfaces.xml
