@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using RealtyParser.Types;
 
 namespace RealtyParser.Collections

@@ -743,14 +743,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="RealtyParser.dll" size="202240">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="RealtyParser.dll" size="201728">
       <assemblyIdentity name="RealtyParser" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>ZKp9tGHpojONGv50SZkCKFlI8whFKrOApxZtVI74Zig=</dsig:DigestValue>
+        <dsig:DigestValue>2NJ2cB/jCgCsY8eLuoVDAzLTunaOXODHW6kIxFWQ/Lk=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -762,7 +762,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>7vnzC31AVTne38utHk4fkkMJ3gpdzuSQBgQQYrV2qhk=</dsig:DigestValue>
+        <dsig:DigestValue>0E1TSBQwZ2oJvlX+XhYI3RPrQMcg2xMQLZ6EEp0s0R0=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -774,7 +774,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>pB+DPyjtWkW1xbKdUyBnt4xfe5i2tgP/VyYolF6cwdo=</dsig:DigestValue>
+        <dsig:DigestValue>1XtcuNn36fpG5lB95udu+EyAWPfGI1BRR4wFt7JJBCY=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -786,7 +786,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>zkiVvhnTPhr03jn9mMdrfne74j/ElKGUiQdbaPg7SJk=</dsig:DigestValue>
+        <dsig:DigestValue>7clS+QX35kCYU731/IjQednA5pRLQ2vsa5XTJUJJ6mw=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -798,19 +798,19 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>yqtkqquWgKJDEB+pA5YBJg9s4LxlAMVLCgl/w2zu/vY=</dsig:DigestValue>
+        <dsig:DigestValue>UcQk+6dRAe+l413XKKfuToaHbuyAg82WX88NiQqFpz8=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="RT.ParsingLibs.dll" size="18432">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="RT.ParsingLibs.dll" size="18944">
       <assemblyIdentity name="RT.ParsingLibs" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>LuG4/1mctTN2FQybri9wAykNKvnDAG5Q+gztbJAPV5g=</dsig:DigestValue>
+        <dsig:DigestValue>IXlG5vLMCHVJuR+dekKcD5n4HvfVHRPeSa4ohh4+HFI=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -918,7 +918,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>WTj617AGRk5bGf2BxgAKWw+t3735rSXGPO/LUDZwGP0=</dsig:DigestValue>
+        <dsig:DigestValue>LUiX5Z+8poyzPpwASu+ja2v/U/DKAsSR/9wweTSUke4=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

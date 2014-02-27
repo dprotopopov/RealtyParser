@@ -40,7 +40,7 @@ namespace RealtyParserEditor.Children
             IParsingModule module = ((KeyValuePair<string, IParsingModule>) listBoxDll.SelectedItem).Value;
             propertyGridControlBind.SelectedObject = null;
             listBoxKeys.Items.Clear();
-            listBoxKeys.Items.AddRange(module.Keys().Cast<object>().ToArray());
+            //listBoxKeys.Items.AddRange(module.Keys().Cast<object>().ToArray());
         }
 
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)

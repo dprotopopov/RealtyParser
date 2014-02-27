@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace RealtyParser.Types
 {
@@ -17,7 +16,7 @@ namespace RealtyParser.Types
         {
             try
             {
-                return Parse(String.ParseAsList(list).Aggregate((i, j) => string.Format("{0}{1}", i, j)));
+                return Parse(string.Join("", String.ParseAsList(list)));
             }
             catch (Exception exception)
             {

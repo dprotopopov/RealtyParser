@@ -11,7 +11,7 @@ namespace RealtyParser
 
         public bool Equals(Link x, Link y)
         {
-            return string.CompareOrdinal(x.ToString().ToLower(), y.ToString().ToLower()) == 0;
+            return Compare(x, y) == 0;
         }
 
         public int GetHashCode(Link obj)

@@ -25,5 +25,3 @@ D:\Projects\RealtyParser\RealtyParserUnitTest\bin\Release\ICSharpCode.SharpZipLi
 D:\Projects\RealtyParser\RealtyParserUnitTest\bin\Release\MirkvartirParser.sqlite3
 D:\Projects\RealtyParser\RealtyParserUnitTest\bin\Release\RealtyParser.sqlite3
 D:\Projects\RealtyParser\RealtyParserUnitTest\bin\Release\RosrealtParser.sqlite3
-D:\Projects\RealtyParser\RealtyParserUnitTest\bin\Release\ServiceStack.Text.dll
-D:\Projects\RealtyParser\RealtyParserUnitTest\bin\Release\ServiceStack.Text.xml

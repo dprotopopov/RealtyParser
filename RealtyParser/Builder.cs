@@ -21,14 +21,10 @@ namespace RealtyParser
         private const string ReturnTitle = @"Title";
         private const string ReturnValue = @"Value";
 
-        private static readonly Dictionary<string, string> OptionPatches = new Dictionary<string, string>
-        {
-            {@"областьодедовский", @"область/Домодовский"},
-        };
+        private static readonly Dictionary<string, string> OptionPatches = new Dictionary<string, string>();
 
         private static readonly Dictionary<string, string> ValuePatches = new Dictionary<string, string>
         {
-            {@"областьодедовский", @"область/Домодовский"},
             {@"\A\/Санкт\-Петербург\Z", @"/Россия/Санкт-Петербург+город"},
             {@"\A\/Москва\Z", @"/Россия/Москва+город"},
             {@"\A\/(Москва|Санкт\-Петербург)\+город", @"/Россия/$1+город"},
@@ -80,10 +76,6 @@ namespace RealtyParser
 
         public string ModuleClassname { get; set; }
 
-        public ProgressCallback ProgressCallback { get; set; }
-        public AppendLineCallback AppendLineCallback { get; set; }
-        public CompliteCallback CompliteCallback { get; set; }
-
         public string CommandText { get; set; }
         public object TableName { get; set; }
 
@@ -106,6 +98,9 @@ namespace RealtyParser
         public KeyValuePair<Dictionary<object, string>, Dictionary<object, string>> TitleData { get; set; }
         public KeyValuePair<Dictionary<object, string>, Dictionary<object, string>> IndexData { get; set; }
         private ReturnFieldInfos ReturnFieldInfos { get; set; }
+        public ProgressCallback ProgressCallback { get; set; }
+        public AppendLineCallback AppendLineCallback { get; set; }
+        public CompliteCallback CompliteCallback { get; set; }
 
 
         public void BuildGridItems()

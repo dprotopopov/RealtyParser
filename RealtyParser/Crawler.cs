@@ -25,13 +25,13 @@ namespace RealtyParser
             Compression = "NoCompression";
         }
 
-        public ProgressCallback ProgressCallback { get; set; }
-        public AppendLineCallback AppendLineCallback { get; set; }
-        public CompliteCallback CompliteCallback { get; set; }
         public CompressionManager CompressionManager { get; set; }
         public string Method { get; set; }
         public string Encoding { get; set; }
         public string Compression { get; set; }
+        public ProgressCallback ProgressCallback { get; set; }
+        public AppendLineCallback AppendLineCallback { get; set; }
+        public CompliteCallback CompliteCallback { get; set; }
 
         /// <summary>
         ///     Запрос к сайту с использованием RT.Crawler

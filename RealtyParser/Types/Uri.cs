@@ -46,7 +46,7 @@ namespace RealtyParser.Types
         {
             try
             {
-                return Parse(String.ParseAsList(strings).Aggregate((i, j) => string.Format("{0}{1}", i, j)));
+                return Parse(string.Join("", String.ParseAsList(strings)));
             }
             catch (Exception exception)
             {

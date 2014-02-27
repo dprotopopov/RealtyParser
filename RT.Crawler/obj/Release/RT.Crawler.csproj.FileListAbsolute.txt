@@ -13,3 +13,4 @@ D:\Projects\RealtyParser\RT.Crawler\bin\Release\RT.Crawler.dll
 D:\Projects\RealtyParser\RT.Crawler\bin\Release\RT.Crawler.pdb
 D:\Projects\RealtyParser\RT.Crawler\obj\Release\RT.Crawler.dll
 D:\Projects\RealtyParser\RT.Crawler\obj\Release\RT.Crawler.pdb
+D:\Projects\RealtyParser\RT.Crawler\obj\Release\RT.Crawler.csprojResolveAssemblyReference.cache

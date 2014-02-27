@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using RealtyParser.Types;
 
 namespace RealtyParser.Collections
@@ -12,7 +11,7 @@ namespace RealtyParser.Collections
     {
         public override string ToString()
         {
-            return String.Parse(new Transformation().ParseTemplate(new Values(Keys,Values)));
+            return String.Parse(new Transformation().ParseTemplate(new Values(Keys, Values)));
         }
     }
 }

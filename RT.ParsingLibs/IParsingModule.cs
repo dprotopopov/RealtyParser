@@ -25,10 +25,22 @@ namespace RT.ParsingLibs
         IList<string> Sources(Bind bind);
 
         /// <summary>
-        /// Получить список биндов, обрабатываемая библиотекой
+        /// Получить список ИД рубрик, обрабатываемая библиотекой
         /// </summary>
-        /// <returns>Коллекция биндов</returns>
-        IList<Bind> Keys();
+        /// <returns>Коллекция ИД рубрик</returns>
+        IList<int> KeysRubrics();
+
+        /// <summary>
+        /// Получить список ИД регионов, обрабатываемая библиотекой
+        /// </summary>
+        /// <returns>Коллекция ИД регионов</returns>
+        IList<int> KeysRegions();
+
+        /// <summary>
+        /// Получить список ИД действий, обрабатываемая библиотекой
+        /// </summary>
+        /// <returns>Коллекция ИД действий</returns>
+        IList<int> KeysActions();
 
         /// <summary>
         /// Задача на парсинг

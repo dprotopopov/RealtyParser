@@ -79,7 +79,10 @@ namespace RT.ParsingLibs.Models
             foreach (var property in properties)
             {
                 stringBuilder.AppendLine();
-                stringBuilder.AppendFormat("{0} = {1}", property.Key, property.Value);
+                var val = property.Value;
+                if (property.Value is IEnumerable<Uri>)
+                    val = string.Join(",", property.Value as IEnumerable<Uri>);
+                stringBuilder.AppendFormat("{0} = {1}", property.Key, val);
             }
             return stringBuilder.ToString();
         }

@@ -24,14 +24,14 @@ namespace RealtyParser
         }
 
         public Transformation Transformation { get; set; }
-        public ProgressCallback ProgressCallback { get; set; }
-        public AppendLineCallback AppendLineCallback { get; set; }
-        public CompliteCallback CompliteCallback { get; set; }
         private object LastError { get; set; }
         public Database Database { get; set; }
         public Converter Converter { get; set; }
 
         public string ModuleNamespace { get; set; }
+        public ProgressCallback ProgressCallback { get; set; }
+        public AppendLineCallback AppendLineCallback { get; set; }
+        public CompliteCallback CompliteCallback { get; set; }
 
         /// <summary>
         ///     Создание инстанса WebPublication на основе разобранных текстровых полей объявления

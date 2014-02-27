@@ -44,11 +44,12 @@ namespace RT.ParsingLibs.Responses
             stringBuilder.AppendLine();
             stringBuilder.AppendLine("Publications:");
 
-            foreach (var pub in Publications)
-            {
-                stringBuilder.AppendFormat("Pub: \r\n{0}", pub);
-                stringBuilder.AppendLine();
-            }
+            if (Publications != null)
+                foreach (var pub in Publications)
+                {
+                    stringBuilder.AppendFormat("Pub: \r\n{0}", pub);
+                    stringBuilder.AppendLine();
+                }
 
             return stringBuilder.ToString();
         }

@@ -29,7 +29,7 @@ namespace RT.ParsingLibs.Responses
         /// <returns>Объект в виде строки</returns>
         public override string ToString()
         {
-            return string.Format("Info = {0}{3}Contacts = {1}{3}CopyRight = {2}", Info, Contacts, CopyRight, "\n");
+            return string.Format("Info = {0}{3}Contacts = {1}{3}CopyRight = {2}", Info, Contacts, CopyRight, Environment.NewLine);
         }
     }
 }

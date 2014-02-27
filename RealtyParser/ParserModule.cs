@@ -15,7 +15,6 @@ using RT.ParsingLibs;
 using RT.ParsingLibs.Models;
 using RT.ParsingLibs.Requests;
 using RT.ParsingLibs.Responses;
-using ServiceStack;
 using Boolean = RealtyParser.Types.Boolean;
 using Uri = RealtyParser.Types.Uri;
 
@@ -623,6 +622,63 @@ namespace RealtyParser
         }
 
         /// <summary>
+        ///     KeysRubrics – возвращает коллекцию «ИД рубрик» в структуре сервиса, которые умеет
+        ///     обрабатывать библиотека
+        /// </summary>
+        /// <returns></returns>
+        public IList<int> KeysRubrics()
+        {
+            Database.Connect();
+
+            object siteId = Database.GetScalar(ModuleClassname, Database.SiteIdColumn,
+                Database.ModuleClassnameColumn,
+                Database.SiteTable);
+
+            Mappings mappings = Database.GetMappings(siteId);
+
+            return (from rubric in mappings.Rubric.Keys
+                select Database.ConvertTo<int>(rubric)).ToList();
+        }
+
+        /// <summary>
+        ///     KeysRegions – возвращает коллекцию «ИД регионов» в структуре сервиса, которые умеет
+        ///     обрабатывать библиотека
+        /// </summary>
+        /// <returns></returns>
+        public IList<int> KeysRegions()
+        {
+            Database.Connect();
+
+            object siteId = Database.GetScalar(ModuleClassname, Database.SiteIdColumn,
+                Database.ModuleClassnameColumn,
+                Database.SiteTable);
+
+            Mappings mappings = Database.GetMappings(siteId);
+
+            return (from region in mappings.Region.Keys
+                select Database.ConvertTo<int>(region)).ToList();
+        }
+
+        /// <summary>
+        ///     KeysActions – возвращает коллекцию «ИД действий» в структуре сервиса, которые умеет
+        ///     обрабатывать библиотека
+        /// </summary>
+        /// <returns></returns>
+        public IList<int> KeysActions()
+        {
+            Database.Connect();
+
+            object siteId = Database.GetScalar(ModuleClassname, Database.SiteIdColumn,
+                Database.ModuleClassnameColumn,
+                Database.SiteTable);
+
+            Mappings mappings = Database.GetMappings(siteId);
+
+            return (from action in mappings.Action.Keys
+                select Database.ConvertTo<int>(action)).ToList();
+        }
+
+        /// <summary>
         ///     Получить список биндов, обрабатываемая библиотекой
         /// </summary>
         /// <returns>Коллекция биндов</returns>
@@ -643,72 +699,6 @@ namespace RealtyParser
                 {
                     RegionId = Database.ConvertTo<int>(region),
                     RubricId = Database.ConvertTo<int>(rubric),
-                    ActionId = Database.ConvertTo<int>(action)
-                }).ToList();
-        }
-
-        /// <summary>
-        ///     KeysRubrics – возвращает коллекцию «ИД рубрик» в структуре сервиса, которые умеет
-        ///     обрабатывать библиотека
-        /// </summary>
-        /// <returns></returns>
-        public IList<Bind> KeysRubrics()
-        {
-            Database.Connect();
-
-            object siteId = Database.GetScalar(ModuleClassname, Database.SiteIdColumn,
-                Database.ModuleClassnameColumn,
-                Database.SiteTable);
-
-            Mappings mappings = Database.GetMappings(siteId);
-
-            return (from rubric in mappings.Rubric.Keys
-                select new Bind
-                {
-                    RubricId = Database.ConvertTo<int>(rubric),
-                }).ToList();
-        }
-
-        /// <summary>
-        ///     KeysRegions – возвращает коллекцию «ИД регионов» в структуре сервиса, которые умеет
-        ///     обрабатывать библиотека
-        /// </summary>
-        /// <returns></returns>
-        public IList<Bind> KeysRegions()
-        {
-            Database.Connect();
-
-            object siteId = Database.GetScalar(ModuleClassname, Database.SiteIdColumn,
-                Database.ModuleClassnameColumn,
-                Database.SiteTable);
-
-            Mappings mappings = Database.GetMappings(siteId);
-
-            return (from region in mappings.Region.Keys
-                select new Bind
-                {
-                    RegionId = Database.ConvertTo<int>(region),
-                }).ToList();
-        }
-
-        /// <summary>
-        ///     KeysActions – возвращает коллекцию «ИД действий» в структуре сервиса, которые умеет
-        ///     обрабатывать библиотека
-        /// </summary>
-        /// <returns></returns>
-        public IList<Bind> KeysActions()
-        {
-            Database.Connect();
-
-            object siteId = Database.GetScalar(ModuleClassname, Database.SiteIdColumn,
-                Database.ModuleClassnameColumn,
-                Database.SiteTable);
-
-            Mappings mappings = Database.GetMappings(siteId);
-
-            return (from action in mappings.Action.Keys
-                select new Bind
-                {
                     ActionId = Database.ConvertTo<int>(action)
                 }).ToList();
         }

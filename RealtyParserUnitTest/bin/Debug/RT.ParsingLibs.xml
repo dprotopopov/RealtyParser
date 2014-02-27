@@ -52,11 +52,23 @@
             <param name="bind">Бинд запроса</param>
             <returns> Коллекция названий ресурсов (сайтов)</returns>
         </member>
-        <member name="M:RT.ParsingLibs.IParsingModule.Keys">
+        <member name="M:RT.ParsingLibs.IParsingModule.KeysRubrics">
             <summary>
-            Получить список биндов, обрабатываемая библиотекой
+            Получить список ИД рубрик, обрабатываемая библиотекой
             </summary>
-            <returns>Коллекция биндов</returns>
+            <returns>Коллекция ИД рубрик</returns>
+        </member>
+        <member name="M:RT.ParsingLibs.IParsingModule.KeysRegions">
+            <summary>
+            Получить список ИД регионов, обрабатываемая библиотекой
+            </summary>
+            <returns>Коллекция ИД регионов</returns>
+        </member>
+        <member name="M:RT.ParsingLibs.IParsingModule.KeysActions">
+            <summary>
+            Получить список ИД действий, обрабатываемая библиотекой
+            </summary>
+            <returns>Коллекция ИД действий</returns>
         </member>
         <member name="M:RT.ParsingLibs.IParsingModule.Result(RT.ParsingLibs.Requests.ParseRequest)">
             <summary>

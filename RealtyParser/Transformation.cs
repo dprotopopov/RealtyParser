@@ -10,8 +10,8 @@ namespace RealtyParser
     public class Transformation : ITrace
     {
         public const string NameGroup = @"name";
-        public const string KeyKey = @"Key";
-        public const string ValueKey = @"Value";
+        private const string KeyKey = @"Key";
+        private const string ValueKey = @"Value";
 
         public readonly string FieldPattern = String.Format("{0}(?<{1}>[^\\}}]*){2}", Regex.Escape(@"{{"),
             NameGroup,
@@ -38,12 +38,12 @@ namespace RealtyParser
                 for (int i = 0; i < (parts.Length & ~1); i += 2)
                 {
                     list1.Add(parts[i]);
-                    string key = String.Format("{0}", parts[i + 1]);
+                    string key = string.Format("{0}", parts[i + 1]);
                     if (values.ContainsKey(key) && values[key].Count() > index) list1.Add(values[key].ToList()[index]);
                 }
                 list1.Add(parts.Last());
-                string value = String.Join("", list1).Trim();
-                if (!String.IsNullOrEmpty(value)) list.Add(value);
+                string value = string.Join("", list1).Trim();
+                if (!string.IsNullOrEmpty(value)) list.Add(value);
                 if (ProgressCallback != null) ProgressCallback(++current, total);
             }
             if (CompliteCallback != null) CompliteCallback();
