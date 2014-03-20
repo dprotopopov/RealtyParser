@@ -1,6 +1,6 @@
 ﻿namespace RealtyParser
 {
-    public class Link
+    public class Link : IValueable
     {
         public Link(string s)
         {
@@ -8,6 +8,11 @@
         }
 
         private string Url { get; set; }
+
+        public Values ToValues()
+        {
+            return new Values(this);
+        }
 
         public override string ToString()
         {

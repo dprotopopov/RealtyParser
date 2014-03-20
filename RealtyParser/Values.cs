@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using RealtyParser.Collections;
@@ -13,24 +12,11 @@ namespace RealtyParser
     ///     Ключи словаря представляют собой строки, передаваемые в качестве регулярного выражения
     ///     в функцию Regex.Replace для замены полей в шаблоне на значения данного словаря
     /// </summary>
-    public class Values : DictionaryOfList
+    public class Values : DictionaryOfList, IValueable
     {
-        public Values(Values values)
+        public Values(IEnumerable<KeyValuePair<string, IEnumerable<string>>> list)
+            : base(list)
         {
-            InsertOrReplace(values);
-        }
-
-        public Values(Values values, int i)
-        {
-            InsertOrReplace(values.Slice(i));
-        }
-
-        public Values(ReturnFields returnFields)
-        {
-            foreach (var returnField in returnFields)
-            {
-                Add(string.Format("{0}", returnField.Key), returnField.Value);
-            }
         }
 
         public Values()
@@ -43,13 +29,18 @@ namespace RealtyParser
             Value = values;
         }
 
+        public Values(Object obj)
+            : base(obj)
+        {
+        }
+
         public IEnumerable<string> Option
         {
             get
             {
                 string propertyName =
                     MethodBase.GetCurrentMethod().Name.Substring(4);
-                if (!ContainsKey(propertyName)) Add(propertyName, new List<string>());
+                if (!ContainsKey(propertyName)) Add(propertyName, new StackListQueue<string>());
                 return this[propertyName];
             }
             set
@@ -69,7 +60,7 @@ namespace RealtyParser
             {
                 string propertyName =
                     MethodBase.GetCurrentMethod().Name.Substring(4);
-                if (!ContainsKey(propertyName)) Add(propertyName, new List<string>());
+                if (!ContainsKey(propertyName)) Add(propertyName, new StackListQueue<string>());
                 return this[propertyName];
             }
             set
@@ -89,7 +80,7 @@ namespace RealtyParser
             {
                 string propertyName =
                     MethodBase.GetCurrentMethod().Name.Substring(4);
-                if (!ContainsKey(propertyName)) Add(propertyName, new List<string>());
+                if (!ContainsKey(propertyName)) Add(propertyName, new StackListQueue<string>());
                 return this[propertyName];
             }
             set
@@ -109,7 +100,7 @@ namespace RealtyParser
             {
                 string propertyName =
                     MethodBase.GetCurrentMethod().Name.Substring(4);
-                if (!ContainsKey(propertyName)) Add(propertyName, new List<string>());
+                if (!ContainsKey(propertyName)) Add(propertyName, new StackListQueue<string>());
                 return this[propertyName];
             }
             set
@@ -129,7 +120,7 @@ namespace RealtyParser
             {
                 string propertyName =
                     MethodBase.GetCurrentMethod().Name.Substring(4);
-                if (!ContainsKey(propertyName)) Add(propertyName, new List<string>());
+                if (!ContainsKey(propertyName)) Add(propertyName, new StackListQueue<string>());
                 return this[propertyName];
             }
             set
@@ -149,7 +140,7 @@ namespace RealtyParser
             {
                 string propertyName =
                     MethodBase.GetCurrentMethod().Name.Substring(4);
-                if (!ContainsKey(propertyName)) Add(propertyName, new List<string>());
+                if (!ContainsKey(propertyName)) Add(propertyName, new StackListQueue<string>());
                 return this[propertyName];
             }
             set
@@ -169,7 +160,7 @@ namespace RealtyParser
             {
                 string propertyName =
                     MethodBase.GetCurrentMethod().Name.Substring(4);
-                if (!ContainsKey(propertyName)) Add(propertyName, new List<string>());
+                if (!ContainsKey(propertyName)) Add(propertyName, new StackListQueue<string>());
                 return this[propertyName];
             }
             set
@@ -189,7 +180,7 @@ namespace RealtyParser
             {
                 string propertyName =
                     MethodBase.GetCurrentMethod().Name.Substring(4);
-                if (!ContainsKey(propertyName)) Add(propertyName, new List<string>());
+                if (!ContainsKey(propertyName)) Add(propertyName, new StackListQueue<string>());
                 return this[propertyName];
             }
             set
@@ -209,7 +200,7 @@ namespace RealtyParser
             {
                 string propertyName =
                     MethodBase.GetCurrentMethod().Name.Substring(4);
-                if (!ContainsKey(propertyName)) Add(propertyName, new List<string>());
+                if (!ContainsKey(propertyName)) Add(propertyName, new StackListQueue<string>());
                 return this[propertyName];
             }
             set
@@ -229,7 +220,7 @@ namespace RealtyParser
             {
                 string propertyName =
                     MethodBase.GetCurrentMethod().Name.Substring(4);
-                if (!ContainsKey(propertyName)) Add(propertyName, new List<string>());
+                if (!ContainsKey(propertyName)) Add(propertyName, new StackListQueue<string>());
                 return this[propertyName];
             }
             set
@@ -249,7 +240,7 @@ namespace RealtyParser
             {
                 string propertyName =
                     MethodBase.GetCurrentMethod().Name.Substring(4);
-                if (!ContainsKey(propertyName)) Add(propertyName, new List<string>());
+                if (!ContainsKey(propertyName)) Add(propertyName, new StackListQueue<string>());
                 return this[propertyName];
             }
             set
@@ -263,32 +254,9 @@ namespace RealtyParser
             }
         }
 
-        public void InsertOrAppend(Values values)
+        public new Values Slice(int row)
         {
-            string methodName = MethodBase.GetCurrentMethod().Name;
-            Type[] types = {typeof (DictionaryOfList)};
-            MethodInfo methodInfo = GetType().GetMethod(methodName, types);
-            Debug.Assert(methodInfo != null);
-            object[] objects = {values};
-            methodInfo.Invoke(this, objects);
-        }
-
-        public void InsertOrReplace(Values values)
-        {
-            string methodName = MethodBase.GetCurrentMethod().Name;
-            Type[] types = {typeof (DictionaryOfList)};
-            MethodInfo methodInfo = GetType().GetMethod(methodName, types);
-            Debug.Assert(methodInfo != null);
-            object[] objects = {values};
-            methodInfo.Invoke(this, objects);
-        }
-
-        public new Values Slice(int i)
-        {
-            var values = new Values();
-            foreach (var pair in this.Where(pair => i < pair.Value.Count()))
-                values.Add(pair.Key, pair.Value.ToList()[i]);
-            return values;
+            return new Values(base.Slice(row));
         }
     }
 }

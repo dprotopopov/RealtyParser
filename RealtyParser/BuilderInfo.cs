@@ -2,7 +2,7 @@
 
 namespace RealtyParser
 {
-    public class BuilderInfo : Collections.Properties
+    public class BuilderInfo : Collections.Properties, IValueable
     {
         public object SiteId
         {
@@ -254,6 +254,11 @@ namespace RealtyParser
                 else
                     Add(propertyName, value);
             }
+        }
+
+        public new Values ToValues()
+        {
+            return new Values(this);
         }
     }
 }

@@ -6,7 +6,7 @@ namespace RealtyParser
     ///     Парамтры для процедуры возвращающей вычисленные поля при разборе страницы одного объявления
     ///     Данные хранятся в базе данных
     /// </summary>
-    public class ReturnFieldInfo : Collections.Properties
+    public class ReturnFieldInfo : Collections.Properties, IValueable
     {
         /// <summary>
         ///     Идентификатор сайта
@@ -136,25 +136,9 @@ namespace RealtyParser
             }
         }
 
-        /// <summary>
-        ///     Шаблон для выборки результатов
-        /// </summary>
-        public object ReturnFieldRegexMatchPattern
+        public new Values ToValues()
         {
-            get
-            {
-                string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
-                if (!ContainsKey(propertyName)) Add(propertyName, "");
-                return this[propertyName];
-            }
-            set
-            {
-                string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
-                if (ContainsKey(propertyName))
-                    this[propertyName] = value;
-                else
-                    Add(propertyName, value);
-            }
+            return new Values(this);
         }
 
         /// <summary>

@@ -13,12 +13,11 @@ namespace RealtyParser.Types
         public static System.Boolean Parse(string s)
         {
             bool yes = Yes.Aggregate(false,
-                (current, pattern) => current != System.Text.RegularExpressions.Regex.Matches(s, pattern).Count > 0);
+                (current, pattern) => current || System.Text.RegularExpressions.Regex.Matches(s, pattern).Count > 0);
             if (yes) return true;
             bool no = No.Aggregate(false,
-                (current, pattern) => current != System.Text.RegularExpressions.Regex.Matches(s, pattern).Count > 0);
-            if (no) return false;
-            return Convert.ToBoolean(s);
+                (current, pattern) => current || System.Text.RegularExpressions.Regex.Matches(s, pattern).Count > 0);
+            return !no && Convert.ToBoolean(s);
         }
 
         public static System.Boolean Parse(IEnumerable<string> list)

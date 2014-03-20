@@ -13,39 +13,224 @@ namespace RealtyParser
     /// <summary>
     ///     Класс для работы с базой данных
     /// </summary>
-    public class Database : ITrace
+    public class Database : ITrace, IValueable
     {
-        public const string SiteTable = "Site";
-        public const string MappingTable = "Mapping";
-        public const string HierarchicalTable = "Hierarchical";
-        public const string ReturnFieldTable = "ReturnField";
-        public const string BuilderTable = "Builder";
+        /// <summary>
+        ///     Семафор для блокирования одновременного доступа к данному классу
+        ///     из разных параллельных процессов
+        /// </summary>
+        public readonly object Semaphore = new Object();
 
-        public const string IdColumn = "Id";
-        public const string TitleColumn = "Title";
-        public const string TableNameColumn = "TableName";
-        public const string LevelColumn = "Level";
-        public const string ParentIdColumn = "Parent" + IdColumn;
-        public const string HasChildColumn = "HasChild";
-        public const string ModuleNamespaceColumn = "ModuleNameSpace";
-        public const string ModuleClassnameColumn = "ModuleClassName";
-        public readonly string SiteIdColumn = string.Format("{0}{1}", SiteTable, IdColumn);
 
         private readonly MethodInfo _stringFormatMethodInfo = typeof (string).GetMethod("Format",
             new[] {typeof (string), typeof (object[])});
+
+        public Database()
+        {
+            SiteTable = "Site";
+            MappingTable = "Mapping";
+            HierarchicalTable = "Hierarchical";
+            ReturnFieldTable = "ReturnField";
+            BuilderTable = "Builder";
+            ProxyTable = "Proxy";
+
+            IdColumn = "Id";
+            TitleColumn = "Title";
+            TableNameColumn = "TableName";
+            LevelColumn = "Level";
+            ParentIdColumn = "Parent" + IdColumn;
+            HasChildColumn = "HasChild";
+            ModuleNamespaceColumn = "ModuleNameSpace";
+            ModuleClassnameColumn = "ModuleClassName";
+            HostColumn = "Host";
+            PortColumn = "Port";
+            SiteIdColumn = string.Format("{0}{1}", SiteTable, IdColumn);
+
+            GetListProfiles = new Dictionary<Type[], string>
+            {
+                {
+                    new[] {typeof (string)},
+                    string.Format(
+                        "SELECT {{0}}{0} FROM {{0}}",
+                        IdColumn)
+                },
+                {
+                    new[] {typeof (string), typeof (string)},
+                    string.Format(
+                        "SELECT {{1}} FROM {{0}}")
+                },
+                {
+                    new[] {typeof (string), typeof (object)},
+                    string.Format(
+                        "SELECT {{0}}{0} FROM {{0}} WHERE ({1}=@{1})",
+                        IdColumn, ParentIdColumn)
+                },
+                {
+                    new[] {typeof (string), typeof (object), typeof (object)},
+                    string.Format(
+                        "SELECT {0}{{0}}{1} FROM {0}{{0}} WHERE ({0}{1}=@{0}{1}) AND ({2}=@{2})",
+                        SiteTable, IdColumn, ParentIdColumn)
+                },
+                {
+                    new[] {typeof (object), typeof (string), typeof (object)},
+                    string.Format(
+                        "SELECT {0}{{1}}{2} FROM {0}{{1}}{1} WHERE ({{1}}{2}=@{2}) AND ({0}{2}=@{0}{2})",
+                        SiteTable, MappingTable, IdColumn)
+                },
+                {
+                    new[] {typeof (string), typeof (long), typeof (long), typeof (object)},
+                    string.Format(
+                        "SELECT {{0}}{0} FROM {{0}} WHERE ({1}=@{1}) AND ({2}>=@Min{2}) AND ({2}<=@Max{2})",
+                        IdColumn, ParentIdColumn, LevelColumn)
+                },
+                {
+                    new[] {typeof (string), typeof (long), typeof (long), typeof (object), typeof (object)},
+                    string.Format(
+                        "SELECT {0}{{0}}{1} FROM {0}{{0}} WHERE ({0}{1}=@{0}{1}) AND ({2}=@{2}) AND ({3}>=@Min{3}) AND ({3}<=@Max{3})",
+                        SiteTable, IdColumn, ParentIdColumn, LevelColumn)
+                },
+            };
+
+            GetMappingProfiles = new Dictionary<Type[], string>
+            {
+                {
+                    new[] {typeof (string)},
+                    string.Format("SELECT {{0}}{0},{{0}}{1} FROM {{0}}", IdColumn, TitleColumn)
+                },
+                {
+                    new[] {typeof (string), typeof (object)},
+                    string.Format("SELECT {0}{{0}}{1},{0}{{0}}{2} FROM {0}{{0}} WHERE {0}{1}=@{0}{1}", SiteTable,
+                        IdColumn, TitleColumn)
+                },
+                {
+                    new[] {typeof (string), typeof (long), typeof (long)},
+                    string.Format("SELECT {{0}}{0},{{0}}{1} FROM {{0}} WHERE ({2}>=@Min{2}) AND ({2}<=@Max{2})",
+                        IdColumn,
+                        TitleColumn, LevelColumn)
+                },
+                {
+                    new[] {typeof (string), typeof (long), typeof (long), typeof (object)},
+                    string.Format(
+                        "SELECT {0}{{0}}{1},{0}{{0}}{2} FROM {0}{{0}} WHERE ({0}{1}=@{0}{1}) AND ({3}>=@{0}Min{3}) AND ({3}<=@{0}Max{3})",
+                        SiteTable,
+                        IdColumn, TitleColumn, LevelColumn)
+                },
+                {
+                    new[] {typeof (string), typeof (string), typeof (string)},
+                    string.Format("SELECT {{1}},{{2}} FROM {{0}}")
+                },
+                {
+                    new[] {typeof (string), typeof (string), typeof (string), typeof (object)},
+                    string.Format("SELECT {{1}},{{2}} FROM {{0}} WHERE {0}{1}=@{0}{1}", SiteTable, IdColumn)
+                },
+                {
+                    new[] {typeof (string), typeof (string), typeof (string), typeof (long), typeof (long)},
+                    string.Format("SELECT {{1}},{{2}} FROM {{0}} WHERE ({0}>=@Min{0}) AND ({0}<=@Max{0})", LevelColumn)
+                },
+                {
+                    new[]
+                    {typeof (string), typeof (string), typeof (string), typeof (long), typeof (long), typeof (object)},
+                    string.Format(
+                        "SELECT {{1}},{{2}} FROM {{0}} WHERE ({0}{1}=@{0}{1}) AND ({2}>=@{0}Min{2}) AND ({2}<=@{0}Max{2})",
+                        SiteTable, IdColumn, LevelColumn)
+                },
+                {
+                    new[]
+                    {
+                        typeof (string), typeof (long), typeof (long), typeof (long), typeof (long), typeof (object)
+                    },
+                    string.Format(
+                        "SELECT {0}{{0}}{1}.{{0}}{2},{0}{{0}}{1}.{0}{{0}}{2} FROM {0}{{0}}{1} JOIN {{0}} USING ({{0}}{2}) JOIN {0}{{0}} USING ({0}{{0}}{2}) WHERE ({0}{{0}}{1}.{0}{2}=@{0}{2}) AND ({{0}}.{3}>=@Min{3}) AND ({{0}}.{3}<=@Max{3}) AND ({0}{{0}}.{3}>=@{0}Min{3}) AND ({0}{{0}}.{3}<=@{0}Max{3})",
+                        SiteTable, MappingTable, IdColumn, LevelColumn)
+                },
+            };
+
+            GetUserFieldsFormatStrings = new[]
+            {
+                string.Format("SELECT * FROM {0}{{0}} WHERE {0}Id=@{0}{1} AND {0}{{0}}{1}=@{{0}}{1}", SiteTable,
+                    IdColumn),
+                string.Format(
+                    "SELECT * FROM {0}{{0}}{1} WHERE {0}{2}=@{0}{2} AND {0}{{0}}{2}=@{{0}}{2} AND {{0}}{2}=@{2}",
+                    SiteTable, MappingTable, IdColumn),
+                string.Format("SELECT * FROM {{0}} WHERE {{0}}{0}=@{0}", IdColumn)
+            };
+
+            GetScalarProfiles = new Dictionary<Type[], string>
+            {
+                {
+                    new[] {typeof (object), typeof (string)},
+                    string.Format("SELECT {{0}}{0} FROM {{0}} WHERE {{0}}{0}=@{0}", IdColumn)
+                },
+                {
+                    new[] {typeof (object), typeof (string), typeof (string)},
+                    string.Format("SELECT {{0}} FROM {{1}} WHERE {{1}}{0}=@{0}", IdColumn)
+                },
+                {
+                    new[] {typeof (object), typeof (string), typeof (string), typeof (string)},
+                    string.Format("SELECT {{0}} FROM {{2}} WHERE {{1}}=@{0}", IdColumn)
+                },
+                {
+                    new[] {typeof (object), typeof (string), typeof (object)},
+                    string.Format("SELECT {0}{{0}}{1} FROM {0}{{0}}{2} WHERE {{0}}{1}=@{1} AND {0}{1}=@{0}{1}",
+                        SiteTable, IdColumn, MappingTable)
+                },
+                {
+                    new[] {typeof (object), typeof (string), typeof (string), typeof (object)},
+                    string.Format("SELECT {{0}} FROM {0}{{1}} WHERE {0}{{1}}{1}=@{1} AND {0}{1}=@{0}{1}", SiteTable,
+                        IdColumn)
+                }
+            };
+        }
 
         public string ModuleClassname { get; set; }
 
         private string ConnectionString { get; set; }
 
-        public ProgressCallback ProgressCallback { get; set; }
-        public AppendLineCallback AppendLineCallback { get; set; }
-        public CompliteCallback CompliteCallback { get; set; }
-
         /// <summary>
         ///     Коннектор к базе данных
         /// </summary>
         public SQLiteConnection Connection { get; set; }
+
+        public ProgressCallback ProgressCallback { get; set; }
+        public AppendLineCallback AppendLineCallback { get; set; }
+        public CompliteCallback CompliteCallback { get; set; }
+
+        public Values ToValues()
+        {
+            return new Values(this);
+        }
+
+        #region
+
+        public string SiteTable { get; private set; }
+        public string MappingTable { get; private set; }
+        public string HierarchicalTable { get; private set; }
+        public string ReturnFieldTable { get; private set; }
+        public string BuilderTable { get; private set; }
+        public string ProxyTable { get; private set; }
+
+        public string IdColumn { get; private set; }
+        public string TitleColumn { get; private set; }
+        public string TableNameColumn { get; private set; }
+        public string LevelColumn { get; private set; }
+        public string ParentIdColumn { get; private set; }
+        public string HasChildColumn { get; private set; }
+        public string ModuleNamespaceColumn { get; private set; }
+        public string ModuleClassnameColumn { get; private set; }
+        public string HostColumn { get; private set; }
+        public string PortColumn { get; private set; }
+        public string SiteIdColumn { get; private set; }
+
+        #endregion
+
+        #region
+
+        private Dictionary<Type[], string> GetListProfiles { get; set; }
+        private Dictionary<Type[], string> GetMappingProfiles { get; set; }
+        private string[] GetUserFieldsFormatStrings { get; set; }
+        private Dictionary<Type[], string> GetScalarProfiles { get; set; }
+
+        #endregion
 
         public void Connect()
         {
@@ -235,53 +420,6 @@ namespace RealtyParser
             return builderInfos;
         }
 
-        #region
-
-        private readonly Dictionary<Type[], string> _getListProfiles = new Dictionary<Type[], string>
-        {
-            {
-                new[] {typeof (string)},
-                string.Format(
-                    "SELECT {{0}}{0} FROM {{0}}",
-                    IdColumn)
-            },
-            {
-                new[] {typeof (string), typeof (string)},
-                string.Format(
-                    "SELECT {{1}} FROM {{0}}")
-            },
-            {
-                new[] {typeof (string), typeof (object)},
-                string.Format(
-                    "SELECT {{0}}{0} FROM {{0}} WHERE ({1}=@{1})",
-                    IdColumn, ParentIdColumn)
-            },
-            {
-                new[] {typeof (string), typeof (object), typeof (object)},
-                string.Format(
-                    "SELECT {0}{{0}}{1} FROM {0}{{0}} WHERE ({0}{1}=@{0}{1}) AND ({2}=@{2})",
-                    SiteTable, IdColumn, ParentIdColumn)
-            },
-            {
-                new[] {typeof (object), typeof (string), typeof (object)},
-                string.Format(
-                    "SELECT {0}{{1}}{2} FROM {0}{{1}}{1} WHERE ({{1}}{2}=@{2}) AND ({0}{2}=@{0}{2})",
-                    SiteTable, MappingTable, IdColumn)
-            },
-            {
-                new[] {typeof (string), typeof (long), typeof (long), typeof (object)},
-                string.Format(
-                    "SELECT {{0}}{0} FROM {{0}} WHERE ({1}=@{1}) AND ({2}>=@Min{2}) AND ({2}<=@Max{2})",
-                    IdColumn, ParentIdColumn, LevelColumn)
-            },
-            {
-                new[] {typeof (string), typeof (long), typeof (long), typeof (object), typeof (object)},
-                string.Format(
-                    "SELECT {0}{{0}}{1} FROM {0}{{0}} WHERE ({0}{1}=@{0}{1}) AND ({2}=@{2}) AND ({3}>=@Min{3}) AND ({3}<=@Max{3})",
-                    SiteTable, IdColumn, ParentIdColumn, LevelColumn)
-            },
-        };
-
         /// <summary>
         ///     Загрузка из базы данных всех значений из указанной колонки указанной таблицы
         /// </summary>
@@ -290,9 +428,9 @@ namespace RealtyParser
             Type[] types = parameters.Select(parameter => parameter.GetType()).ToArray();
             long current = 0;
             long total = 1;
-            foreach (var pair in _getListProfiles.Where(pair => Types.Type.IsKindOf(types, pair.Key)))
+            foreach (var pair in GetListProfiles.Where(pair => Types.Type.IsKindOf(types, pair.Key)))
             {
-                var values = new List<object>();
+                var values = new StackListQueue<object>();
                 Connection.Open();
                 using (SQLiteCommand command = Connection.CreateCommand())
                 {
@@ -356,63 +494,6 @@ namespace RealtyParser
             throw new NotImplementedException();
         }
 
-        #endregion
-
-        #region
-
-        private readonly Dictionary<Type[], string> _getMappingProfiles = new Dictionary<Type[], string>
-        {
-            {
-                new[] {typeof (string)},
-                string.Format("SELECT {{0}}{0},{{0}}{1} FROM {{0}}", IdColumn, TitleColumn)
-            },
-            {
-                new[] {typeof (string), typeof (object)},
-                string.Format("SELECT {0}{{0}}{1},{0}{{0}}{2} FROM {0}{{0}} WHERE {0}{1}=@{0}{1}", SiteTable,
-                    IdColumn, TitleColumn)
-            },
-            {
-                new[] {typeof (string), typeof (long), typeof (long)},
-                string.Format("SELECT {{0}}{0},{{0}}{1} FROM {{0}} WHERE ({2}>=@Min{2}) AND ({2}<=@Max{2})",
-                    IdColumn,
-                    TitleColumn, LevelColumn)
-            },
-            {
-                new[] {typeof (string), typeof (long), typeof (long), typeof (object)},
-                string.Format(
-                    "SELECT {0}{{0}}{1},{0}{{0}}{2} FROM {0}{{0}} WHERE ({0}{1}=@{0}{1}) AND ({3}>=@{0}Min{3}) AND ({3}<=@{0}Max{3})",
-                    SiteTable,
-                    IdColumn, TitleColumn, LevelColumn)
-            },
-            {
-                new[] {typeof (string), typeof (string), typeof (string)},
-                string.Format("SELECT {{1}},{{2}} FROM {{0}}")
-            },
-            {
-                new[] {typeof (string), typeof (string), typeof (string), typeof (object)},
-                string.Format("SELECT {{1}},{{2}} FROM {{0}} WHERE {0}{1}=@{0}{1}", SiteTable, IdColumn)
-            },
-            {
-                new[] {typeof (string), typeof (string), typeof (string), typeof (long), typeof (long)},
-                string.Format("SELECT {{1}},{{2}} FROM {{0}} WHERE ({0}>=@Min{0}) AND ({0}<=@Max{0})", LevelColumn)
-            },
-            {
-                new[] {typeof (string), typeof (string), typeof (string), typeof (long), typeof (long), typeof (object)},
-                string.Format(
-                    "SELECT {{1}},{{2}} FROM {{0}} WHERE ({0}{1}=@{0}{1}) AND ({2}>=@{0}Min{2}) AND ({2}<=@{0}Max{2})",
-                    SiteTable, IdColumn, LevelColumn)
-            },
-            {
-                new[]
-                {
-                    typeof (string), typeof (long), typeof (long), typeof (long), typeof (long), typeof (object)
-                },
-                string.Format(
-                    "SELECT {0}{{0}}{1}.{{0}}{2},{0}{{0}}{1}.{0}{{0}}{2} FROM {0}{{0}}{1} JOIN {{0}} USING ({{0}}{2}) JOIN {0}{{0}} USING ({0}{{0}}{2}) WHERE ({0}{{0}}{1}.{0}{2}=@{0}{2}) AND ({{0}}.{3}>=@Min{3}) AND ({{0}}.{3}<=@Max{3}) AND ({0}{{0}}.{3}>=@{0}Min{3}) AND ({0}{{0}}.{3}<=@{0}Max{3})",
-                    SiteTable, MappingTable, IdColumn, LevelColumn)
-            },
-        };
-
         /// <summary>
         ///     Загрузка всех пар Ключ-Значение из таблицы базы данных для указанного siteId
         ///     Ключ в поле keyColumnName
@@ -421,7 +502,7 @@ namespace RealtyParser
         public Mapping GetMapping(params object[] parameters)
         {
             Type[] types = parameters.Select(arg => arg.GetType()).ToArray();
-            foreach (var pair in _getMappingProfiles.Where(pair => Types.Type.IsKindOf(types, pair.Key)))
+            foreach (var pair in GetMappingProfiles.Where(pair => Types.Type.IsKindOf(types, pair.Key)))
             {
                 var mapping = new Mapping();
                 Connection.Open();
@@ -483,20 +564,6 @@ namespace RealtyParser
             throw new NotImplementedException();
         }
 
-        #endregion
-
-        #region
-
-        private readonly string[] _getUserFieldsFormatStrings =
-        {
-            string.Format("SELECT * FROM {0}{{0}} WHERE {0}Id=@{0}{1} AND {0}{{0}}{1}=@{{0}}{1}", SiteTable,
-                IdColumn),
-            string.Format(
-                "SELECT * FROM {0}{{0}}{1} WHERE {0}{2}=@{0}{2} AND {0}{{0}}{2}=@{{0}}{2} AND {{0}}{2}=@{2}",
-                SiteTable, MappingTable, IdColumn),
-            string.Format("SELECT * FROM {{0}} WHERE {{0}}{0}=@{0}", IdColumn)
-        };
-
         public Collections.Properties GetUserFields(object id, object mappedId, string mappedTableName,
             object siteId)
         {
@@ -504,9 +571,8 @@ namespace RealtyParser
             Debug.Assert(mappedId != null && !string.IsNullOrEmpty(mappedId.ToString()));
             Debug.Assert(mappedTableName != null && !string.IsNullOrEmpty(mappedTableName));
             Debug.Assert(siteId != null && !string.IsNullOrEmpty(siteId.ToString()));
-            Debug.WriteLine("Begin {0}::{1}", GetType().Name, MethodBase.GetCurrentMethod().Name);
             var userFields = new Collections.Properties();
-            var internals = new List<string>
+            var internals = new StackListQueue<string>
             {
                 string.Format("{0}{1}", SiteTable, IdColumn),
                 string.Format("{0}{1}", mappedTableName, IdColumn),
@@ -517,8 +583,8 @@ namespace RealtyParser
             };
             Connection.Open();
             long current = 0;
-            long total = _getUserFieldsFormatStrings.Length;
-            foreach (string formatString in _getUserFieldsFormatStrings)
+            long total = GetUserFieldsFormatStrings.Length;
+            foreach (string formatString in GetUserFieldsFormatStrings)
             {
                 using (SQLiteCommand command = Connection.CreateCommand())
                 {
@@ -549,39 +615,8 @@ namespace RealtyParser
             }
             Connection.Close();
             if (CompliteCallback != null) CompliteCallback();
-            Debug.WriteLine("End {0}::{1}", GetType().Name, MethodBase.GetCurrentMethod().Name);
             return userFields;
         }
-
-        #endregion
-
-        #region
-
-        private readonly Dictionary<Type[], string> _getScalarProfiles = new Dictionary<Type[], string>
-        {
-            {
-                new[] {typeof (object), typeof (string)},
-                string.Format("SELECT {{0}}{0} FROM {{0}} WHERE {{0}}{0}=@{0}", IdColumn)
-            },
-            {
-                new[] {typeof (object), typeof (string), typeof (string)},
-                string.Format("SELECT {{0}} FROM {{1}} WHERE {{1}}{0}=@{0}", IdColumn)
-            },
-            {
-                new[] {typeof (object), typeof (string), typeof (string), typeof (string)},
-                string.Format("SELECT {{0}} FROM {{2}} WHERE {{1}}=@{0}", IdColumn)
-            },
-            {
-                new[] {typeof (object), typeof (string), typeof (object)},
-                string.Format("SELECT {0}{{0}}{1} FROM {0}{{0}}{2} WHERE {{0}}{1}=@{1} AND {0}{1}=@{0}{1}",
-                    SiteTable, IdColumn, MappingTable)
-            },
-            {
-                new[] {typeof (object), typeof (string), typeof (string), typeof (object)},
-                string.Format("SELECT {{0}} FROM {0}{{1}} WHERE {0}{{1}}{1}=@{1} AND {0}{1}=@{0}{1}", SiteTable,
-                    IdColumn)
-            }
-        };
 
         /// <summary>
         ///     Выборка скалярного значения из колонки таблицы по ключу == id
@@ -591,7 +626,7 @@ namespace RealtyParser
         public object GetScalar(params object[] parameters)
         {
             Type[] types = parameters.Select(arg => arg.GetType()).ToArray();
-            foreach (var pair in _getScalarProfiles.Where(pair => Types.Type.IsKindOf(types, pair.Key)))
+            foreach (var pair in GetScalarProfiles.Where(pair => Types.Type.IsKindOf(types, pair.Key)))
             {
                 Connection.Open();
                 using (SQLiteCommand command = Connection.CreateCommand())
@@ -617,7 +652,5 @@ namespace RealtyParser
             }
             throw new NotImplementedException();
         }
-
-        #endregion
     }
 }

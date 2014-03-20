@@ -1,13 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using RealtyParser.Collections;
 using RealtyParser.Trace;
 using RealtyParser.Types;
 using String = System.String;
 
 namespace RealtyParser
 {
-    public class Transformation : ITrace
+    public class Transformation : ITrace, IValueable
     {
         public const string NameGroup = @"name";
         private const string KeyKey = @"Key";
@@ -21,20 +22,25 @@ namespace RealtyParser
         public AppendLineCallback AppendLineCallback { get; set; }
         public CompliteCallback CompliteCallback { get; set; }
 
+        public Values ToValues()
+        {
+            return new Values(this);
+        }
+
         /// <summary>
         ///     Замена в строке-шаблоне идентификаторов-параметров на их значения
         /// </summary>
         public IEnumerable<string> ParseTemplate(string template, Values values)
         {
-            var list = new List<string>();
+            var list = new StackListQueue<string>();
             int maxCount = values.MaxCount;
             string[] parts = System.Text.RegularExpressions.Regex.Split(template, FieldPattern);
             Debug.Assert(parts.Length%2 == 1);
-            long current = 0;
-            long total = maxCount;
+            int current = 0;
+            int total = maxCount;
             for (int index = 0; index < maxCount; index++)
             {
-                var list1 = new List<string>();
+                var list1 = new StackListQueue<string>();
                 for (int i = 0; i < (parts.Length & ~1); i += 2)
                 {
                     list1.Add(parts[i]);

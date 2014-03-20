@@ -4,8 +4,13 @@ using RealtyParser.Types;
 
 namespace RealtyParser
 {
-    public class BuilderInfos : Dictionary<string, BuilderInfo>
+    public class BuilderInfos : Dictionary<string, BuilderInfo>, IValueable
     {
+        public Values ToValues()
+        {
+            return new Values(this);
+        }
+
         public override string ToString()
         {
             var values = new Values

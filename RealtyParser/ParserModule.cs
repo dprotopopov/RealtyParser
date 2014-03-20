@@ -22,31 +22,8 @@ namespace RealtyParser
 {
     [Export(typeof (IParsingModule))]
     [ExportMetadata("Name", "ParserModule")]
-    public class ParserModule : IParsingModule
+    public class ParserModule : IParsingModule, IValueable
     {
-        #region
-
-        public string ModuleClassname { get; set; }
-        public string ModuleNamespace { get; set; }
-        public Database Database { get; set; }
-        public Transformation Transformation { get; set; }
-        public Parser Parser { get; set; }
-        public ComparerManager ComparerManager { get; set; }
-        public CompressionManager CompressionManager { get; set; }
-        public Crawler Crawler { get; set; }
-
-        private ReturnFieldInfos ReturnFieldInfos { get; set; }
-        private IPublicationComparer PublicationComparer { get; set; }
-        private SiteProperties SiteProperties { get; set; }
-        private Converter Converter { get; set; }
-        private ResourceComparer ResourceComparer { get; set; }
-        private LinkComparer LinkComparer { get; set; }
-        private Dictionary<Link, WebPublication> PublicationHash { get; set; }
-        private ObjectComparer ObjectComparer { get; set; }
-        private IEnumerable<string> Mapping { get; set; }
-
-        #endregion
-
         private object _lastError;
 
         public ParserModule()
@@ -87,7 +64,7 @@ namespace RealtyParser
 
 
             int responseLevel = 4;
-            var responseCode = new List<ParseResponseCode>
+            var responseCode = new StackListQueue<ParseResponseCode>
             {
                 ParseResponseCode.NotAvailableResource, // Неправильные параметры
                 ParseResponseCode.NotFoundId, // Нет никаких данных
@@ -134,7 +111,7 @@ namespace RealtyParser
                     ResponseCode = responseCode[responseLevel],
                     LastPublicationId = string.Join("&", lastResources.Select(item => item.ToString())),
                     ModuleName = GetType().Name,
-                    Publications = new List<WebPublication>()
+                    Publications = new StackListQueue<WebPublication>()
                 };
             }
 
@@ -180,7 +157,7 @@ namespace RealtyParser
                     ResponseCode = responseCode[responseLevel],
                     LastPublicationId = string.Join("&", lastResources.Select(item => item.ToString())),
                     ModuleName = GetType().Name,
-                    Publications = new List<WebPublication>()
+                    Publications = new StackListQueue<WebPublication>()
                 };
             }
 
@@ -207,7 +184,7 @@ namespace RealtyParser
                 returnFieldInfos.Add(key, ReturnFieldInfos[key]);
 
             var dictionary = new Dictionary<Resource, KeyValuePair<Link, Values>>(ResourceComparer);
-            var resources = new StackListQueue<Resource>();
+            var resources = new SortedStackListQueue<Resource> {Comparer = ResourceComparer};
             foreach (RequestProperties mappedId in includeList)
             {
                 var mappedLevel = new RequestProperties
@@ -230,7 +207,7 @@ namespace RealtyParser
                         var pageValues = new Values(siteValues)
                         {
                             Page =
-                                new List<string> {((pageId > 1) ? pageId.ToString(CultureInfo.InvariantCulture) : @"")}
+                                new StackListQueue<string> {((pageId > 1) ? pageId.ToString(CultureInfo.InvariantCulture) : @"")}
                         };
                         Debug.WriteLine(pageValues.ToString());
                         foreach (
@@ -249,7 +226,7 @@ namespace RealtyParser
                                 };
                                 var urlValues = new Values(pageValues)
                                 {
-                                    Url = new List<string> {builder.Uri.ToString()}
+                                    Url = new StackListQueue<string> {builder.Uri.ToString()}
                                 };
                                 IEnumerable<HtmlDocument> documents =
                                     await
@@ -257,7 +234,7 @@ namespace RealtyParser
                                 Thread.Sleep(0);
                                 ReturnFields returnFields = Parser.BuildReturnFields(documents,
                                     urlValues, returnFieldInfos);
-                                returnFields.InsertOrAppend(urlValues);
+                                returnFields.Add(urlValues);
                                 int linkCount = returnFields.PublicationLink.Count();
 
                                 if (linkCount == 0)
@@ -318,7 +295,7 @@ namespace RealtyParser
                                             };
                                         var values = new Values(returnValues.Slice(i))
                                         {
-                                            Url = new List<string> {builder1.Uri.ToString()},
+                                            Url = new StackListQueue<string> {builder1.Uri.ToString()},
                                         };
                                         IEnumerable<HtmlDocument> htmlDocuments =
                                             await
@@ -327,7 +304,7 @@ namespace RealtyParser
                                         ReturnFields fields = Parser.BuildReturnFields(htmlDocuments,
                                             values, ReturnFieldInfos);
                                         var returnValues1 = new Values(fields);
-                                        returnValues1.InsertOrAppend(values);
+                                        returnValues1.Add(values);
                                         List<Resource> list =
                                             Transformation.ParseTemplate(SiteProperties.ResourceIdTemplate.ToString(),
                                                 returnValues1).Select(s => new Resource(s)).ToList();
@@ -403,7 +380,7 @@ namespace RealtyParser
                 {
                 }
                 Debug.WriteLine("resources.Count = " + resources.Count());
-                resources = StackListQueue<Resource>.DistinctSorted(resources, currentResources, ResourceComparer);
+                resources.AddRangeExcept(currentResources);
                 Debug.WriteLine("resources.Count = " + resources.Count());
             }
             try
@@ -426,7 +403,7 @@ namespace RealtyParser
                                     resources.Where(
                                         r => ObjectComparer.Equals(r, item, Mapping)));
 
-                    var value = new List<Resource>();
+                    var value = new StackListQueue<Resource>();
                     foreach (var pair in pairs)
                         if (lastResourceDictionary.ContainsKey(pair.Key))
                             value.AddRange(
@@ -434,7 +411,7 @@ namespace RealtyParser
                                     item => ResourceComparer.Compare(item, lastResourceDictionary[pair.Key]) >= 0));
                         else value.Add(pair.Value.Last());
 
-                    resources = new StackListQueue<Resource> {value};
+                    resources.ReplaceAll(new StackListQueue<Resource> {value});
                     resources.Sort(ResourceComparer);
                 }
 
@@ -515,7 +492,7 @@ namespace RealtyParser
                 _lastError = exception;
                 Debug.WriteLine(_lastError.ToString());
             }
-            var publications = new List<WebPublication>();
+            var publications = new StackListQueue<WebPublication>();
             foreach (Resource resource in resources)
             {
                 Link url = dictionary[resource].Key;
@@ -533,7 +510,7 @@ namespace RealtyParser
                     };
                     var urlValues = new Values(dictionary[resource].Value)
                     {
-                        Url = new List<string> {builder.Uri.ToString()}
+                        Url = new StackListQueue<string> {builder.Uri.ToString()}
                     };
                     IEnumerable<HtmlDocument> documents =
                         await
@@ -593,7 +570,7 @@ namespace RealtyParser
             }
 
             if (!requestId.Select(pair => pair.Value != null).Aggregate(Boolean.And))
-                return new List<string>();
+                return new StackListQueue<string>();
 
             Mapping sites = Database.GetMapping(Database.SiteTable);
 
@@ -677,6 +654,34 @@ namespace RealtyParser
             return (from action in mappings.Action.Keys
                 select Database.ConvertTo<int>(action)).ToList();
         }
+
+        public Values ToValues()
+        {
+            return new Values(this);
+        }
+
+        #region
+
+        public string ModuleClassname { get; set; }
+        public string ModuleNamespace { get; set; }
+        public Database Database { get; set; }
+        public Transformation Transformation { get; set; }
+        public Parser Parser { get; set; }
+        public ComparerManager ComparerManager { get; set; }
+        public CompressionManager CompressionManager { get; set; }
+        public Crawler Crawler { get; set; }
+
+        private ReturnFieldInfos ReturnFieldInfos { get; set; }
+        private IPublicationComparer PublicationComparer { get; set; }
+        private SiteProperties SiteProperties { get; set; }
+        private Converter Converter { get; set; }
+        private ResourceComparer ResourceComparer { get; set; }
+        private LinkComparer LinkComparer { get; set; }
+        private Dictionary<Link, WebPublication> PublicationHash { get; set; }
+        private ObjectComparer ObjectComparer { get; set; }
+        private IEnumerable<string> Mapping { get; set; }
+
+        #endregion
 
         /// <summary>
         ///     Получить список биндов, обрабатываемая библиотекой

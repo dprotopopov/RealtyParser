@@ -33,9 +33,7 @@ namespace RealtyParser.Types
         {
             try
             {
-                return
-                    Parse(ParseAsList(list)
-                        .Aggregate((i, j) => string.Format("{0}{1}{2}", i, Environment.NewLine, j)));
+                return Parse(string.Join(Environment.NewLine, ParseAsList(list)));
             }
             catch (Exception exception)
             {

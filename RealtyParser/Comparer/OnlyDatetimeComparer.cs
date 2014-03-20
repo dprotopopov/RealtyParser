@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
-using ServiceStack;
+using RealtyParser.Collections;
 
 namespace RealtyParser.Comparer
 {
@@ -12,12 +12,12 @@ namespace RealtyParser.Comparer
 
         public int Compare(string x, string y)
         {
-            var matches = new List<Match>
+            var matches = new StackListQueue<Match>
             {
                 Regex.Match(x, DateTimePatten),
                 Regex.Match(y, DateTimePatten)
             };
-            var values = new List<DateTime>();
+            var values = new StackListQueue<DateTime>();
             foreach (Match match in matches)
                 try
                 {

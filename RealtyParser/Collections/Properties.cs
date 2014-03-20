@@ -9,7 +9,7 @@ using String = RealtyParser.Types.String;
 
 namespace RealtyParser.Collections
 {
-    public class Properties : Dictionary<string, object>
+    public class Properties : Dictionary<string, object>, IValueable
     {
         private const string StructurePatten = @"(\[)?\s*(?<key>\w+)\s*\:\s*(?<value>[^\]]*)\s*(\])?";
         private static readonly ObjectComparer ObjectComparer = new ObjectComparer();
@@ -38,6 +38,11 @@ namespace RealtyParser.Collections
             Type type = obj.GetType();
             foreach (string key in propertyNames)
                 Add(key, type.GetProperty(key).GetValue(obj));
+        }
+
+        public Values ToValues()
+        {
+            return new Values(this);
         }
 
         public override string ToString()

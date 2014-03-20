@@ -14,24 +14,35 @@ namespace RealtyParser
     /// <summary>
     ///     Класс вспомогательных алгоритмов
     /// </summary>
-    public class Parser : ITrace
+    public class Parser : ITrace, IValueable
     {
         public const char SplitChar = '\\';
+
+        private readonly MethodInfo[] _methodInfos =
+        {
+            typeof (Parser).GetMethod("InvokeNodeProperty"),
+            typeof (Parser).GetMethod("AttributeValue")
+        };
 
         public Parser()
         {
             ModuleNamespace = GetType().Namespace;
         }
 
-        public Transformation Transformation { get; set; }
+        public Transformation Transformation { private get; set; }
         private object LastError { get; set; }
-        public Database Database { get; set; }
-        public Converter Converter { get; set; }
+        public Database Database { private get; set; }
+        public Converter Converter { private get; set; }
 
-        public string ModuleNamespace { get; set; }
+        public string ModuleNamespace { private get; set; }
         public ProgressCallback ProgressCallback { get; set; }
         public AppendLineCallback AppendLineCallback { get; set; }
         public CompliteCallback CompliteCallback { get; set; }
+
+        public Values ToValues()
+        {
+            return new Values(this);
+        }
 
         /// <summary>
         ///     Создание инстанса WebPublication на основе разобранных текстровых полей объявления
@@ -183,7 +194,7 @@ namespace RealtyParser
                                 .Where(nodes => nodes != null)
                                 .SelectMany(nodes => nodes))
                     {
-                        values.InsertOrAppend(BuildValues(returnFieldInfo.ReturnFieldResultTemplate.ToString(), htmlNode));
+                        values.Add(BuildValues(returnFieldInfo.ReturnFieldResultTemplate.ToString(), htmlNode));
                     }
 
                     foreach (var pair in values)
@@ -199,15 +210,14 @@ namespace RealtyParser
                     RegexOptions.IgnoreCase | RegexOptions.Singleline);
                 IEnumerable<string> list =
                     Transformation.ParseTemplate(returnFieldInfo.ReturnFieldResultTemplate.ToString(), agregated)
-                        .Select(
-                            input => regex.Replace(input, returnFieldInfo.ReturnFieldRegexReplacement.ToString()).Trim())
-                        .Where(replace => !string.IsNullOrEmpty(replace))
                         .SelectMany(
                             replace =>
                                 (from Match match in
                                     Regex.Matches(replace,
-                                        returnFieldInfo.ReturnFieldRegexMatchPattern.ToString())
+                                        returnFieldInfo.ReturnFieldRegexPattern.ToString())
                                     select match.Value.Trim()))
+                        .Select(
+                            input => regex.Replace(input, returnFieldInfo.ReturnFieldRegexReplacement.ToString()).Trim())
                         .Where(value => !string.IsNullOrEmpty(value));
                 returnFields.Add(returnFieldInfo.ReturnFieldId.ToString(), list);
                 if (ProgressCallback != null) ProgressCallback(++current, total);
@@ -252,7 +262,7 @@ namespace RealtyParser
                 List<string> keys =
                     userFields.Keys.Select(item => string.Format("{0}", item)).ToList();
                 List<string> list = userFields.Values.Select(item => item.ToString()).ToList();
-                values.InsertOrReplace(new Values {{keys, list}});
+                values.AddOrReplace(new Values {{keys, list}});
                 if (ProgressCallback != null) ProgressCallback(++current, total);
             }
 
@@ -283,12 +293,7 @@ namespace RealtyParser
                     select match.Groups[Transformation.NameGroup].Value)
             {
                 foreach (
-                    MethodInfo methodInfo in
-                        new[]
-                        {
-                            typeof (Parser).GetMethod("InvokeNodeProperty"),
-                            typeof (Parser).GetMethod("AttributeValue")
-                        })
+                    MethodInfo methodInfo in _methodInfos)
                 {
                     try
                     {

@@ -5,7 +5,7 @@ namespace RealtyParser
     /// <summary>
     ///     Настройки для сайта, хранимые в базе данных
     /// </summary>
-    public class SiteProperties : Collections.Properties
+    public class SiteProperties : Collections.Properties, IValueable
     {
         /// <summary>
         ///     Идентификатор сайта
@@ -297,6 +297,11 @@ namespace RealtyParser
                 else
                     Add(propertyName, value);
             }
+        }
+
+        public new Values ToValues()
+        {
+            return new Values(this);
         }
     }
 }

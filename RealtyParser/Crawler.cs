@@ -8,6 +8,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using HtmlAgilityPack;
+using RealtyParser.Collections;
 using RealtyParser.Compression;
 using RealtyParser.Managers;
 using RealtyParser.Trace;
@@ -16,7 +17,7 @@ using TidyManaged;
 
 namespace RealtyParser
 {
-    public class Crawler : ITrace
+    public class Crawler : ITrace, IValueable
     {
         public Crawler()
         {
@@ -33,6 +34,11 @@ namespace RealtyParser
         public AppendLineCallback AppendLineCallback { get; set; }
         public CompliteCallback CompliteCallback { get; set; }
 
+        public Values ToValues()
+        {
+            return new Values(this);
+        }
+
         /// <summary>
         ///     Запрос к сайту с использованием RT.Crawler
         /// </summary>
@@ -42,7 +48,7 @@ namespace RealtyParser
             Debug.WriteLine(uri.ToString());
             long current = 0;
             long total = 1;
-            var collection = new List<HtmlDocument>();
+            var collection = new StackListQueue<HtmlDocument>();
             try
             {
                 ICompression compression = CompressionManager.CreateCompression(Compression);
@@ -85,7 +91,7 @@ namespace RealtyParser
 
                 if (memoryStream != null)
                 {
-                    var memoryStreams = new List<MemoryStream> {memoryStream};
+                    var memoryStreams = new StackListQueue<MemoryStream> {memoryStream};
                     if (ProgressCallback != null) ProgressCallback(++current, ++total);
 
                     memoryStreams.First().Seek(0, SeekOrigin.Begin);

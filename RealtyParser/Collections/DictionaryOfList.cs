@@ -7,14 +7,39 @@ using String = RealtyParser.Types.String;
 
 namespace RealtyParser.Collections
 {
-    public class DictionaryOfList : Dictionary<string, IEnumerable<string>>
+    public class DictionaryOfList : Dictionary<string, IEnumerable<string>>, IValueable
     {
+        protected DictionaryOfList(IEnumerable<KeyValuePair<string, IEnumerable<string>>> list)
+        {
+            AddOrReplace(list);
+        }
+
+        protected DictionaryOfList()
+        {
+        }
+
+        protected DictionaryOfList(Object obj)
+        {
+            AddOrReplace(obj.GetType().GetProperties()
+                .Select(propertyInfo => new {key = propertyInfo, value = propertyInfo.GetValue(obj, null)})
+                .Where(@t => @t.value != null)
+                .Select(
+                    @t =>
+                        new KeyValuePair<string, IEnumerable<string>>(@t.key.ToString(),
+                            new StackListQueue<string> {@t.value.ToString()})));
+        }
+
         public int MaxCount
         {
             get
             {
                 return (from item in this where item.Value != null select item.Value.Count()).Concat(new[] {0}).Max();
             }
+        }
+
+        public Values ToValues()
+        {
+            return new Values(this);
         }
 
         public new void Add(string key, IEnumerable<string> list)
@@ -42,7 +67,7 @@ namespace RealtyParser.Collections
 
         public void Add(string key, string value)
         {
-            if (!ContainsKey(key)) Add(key, new List<string> {value});
+            if (!ContainsKey(key)) Add(key, new StackListQueue<string> {value});
             else
             {
                 List<string> list1 = this[key].ToList();
@@ -64,7 +89,7 @@ namespace RealtyParser.Collections
             var values = new Values();
             foreach (var item in this)
             {
-                values.InsertOrAppend(new Values
+                values.Add(new Values
                 {
                     Key = Enumerable.Repeat(item.Key, item.Value.Count()),
                     Value = item.Value,
@@ -84,34 +109,20 @@ namespace RealtyParser.Collections
             return viewItem;
         }
 
-        public void InsertOrAppend(DictionaryOfList dictionaryOfList)
+        public void AddOrReplace(IEnumerable<KeyValuePair<string, IEnumerable<string>>> list)
         {
-            foreach (var pair in dictionaryOfList)
-            {
-                if (!ContainsKey(pair.Key)) Add(pair.Key, pair.Value);
-                else
-                {
-                    List<string> list = this[pair.Key].ToList();
-                    list.AddRange(pair.Value);
-                    this[pair.Key] = list;
-                }
-            }
-        }
-
-        public void InsertOrReplace(DictionaryOfList dictionaryOfList)
-        {
-            foreach (var pair in dictionaryOfList)
+            foreach (var pair in list)
             {
                 if (!ContainsKey(pair.Key)) Add(pair.Key, pair.Value);
                 else this[pair.Key] = pair.Value;
             }
         }
 
-        public DictionaryOfList Slice(int i)
+        public DictionaryOfList Slice(int row)
         {
             var dictionaryOfList = new DictionaryOfList();
-            foreach (var pair in this.Where(pair => i < pair.Value.Count()))
-                dictionaryOfList.Add(pair.Key, pair.Value.ToList()[i]);
+            foreach (var pair in this.Where(pair => row < pair.Value.Count()))
+                dictionaryOfList.Add(pair.Key, pair.Value.ElementAt(row));
             return dictionaryOfList;
         }
     }

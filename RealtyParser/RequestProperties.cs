@@ -3,9 +3,10 @@ using System.Reflection;
 
 namespace RealtyParser
 {
-    public class RequestProperties : Collections.Properties
+    public class RequestProperties : Collections.Properties, IValueable
     {
-        public RequestProperties(string s) : base(s)
+        public RequestProperties(string s)
+            : base(s)
         {
         }
 
@@ -123,6 +124,11 @@ namespace RealtyParser
                 else
                     Add(propertyName, value);
             }
+        }
+
+        public new Values ToValues()
+        {
+            return new Values(this);
         }
 
         public void Add(Dictionary<string, object> dictionary)

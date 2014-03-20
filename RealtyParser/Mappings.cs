@@ -7,7 +7,7 @@ namespace RealtyParser
     ///     Вспомогательный класс
     ///     Используется для доступа к значениям словаря по ключу
     /// </summary>
-    public class Mappings : Collections.Mappings
+    public class Mappings : Collections.Mappings, IValueable
     {
         /// <summary>
         ///     Используется для доступа к значениям словаря по ключу
@@ -70,6 +70,11 @@ namespace RealtyParser
                 else
                     Add(propertyName, value);
             }
+        }
+
+        public new Values ToValues()
+        {
+            return new Values(this);
         }
     }
 }

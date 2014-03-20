@@ -2,7 +2,7 @@
 
 namespace RealtyParser
 {
-    public class LinkComparer : IEqualityComparer<Link>, IComparer<Link>
+    public class LinkComparer : IEqualityComparer<Link>, IComparer<Link>, IValueable
     {
         public int Compare(Link x, Link y)
         {
@@ -17,6 +17,11 @@ namespace RealtyParser
         public int GetHashCode(Link obj)
         {
             return obj.ToString().ToLower().GetHashCode();
+        }
+
+        public Values ToValues()
+        {
+            return new Values(this);
         }
     }
 }

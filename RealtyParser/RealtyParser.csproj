@@ -107,6 +107,7 @@
     <Compile Include="Collections\Mappings.cs" />
     <Compile Include="Collections\OptionsCollection.cs" />
     <Compile Include="Collections\Properties.cs" />
+    <Compile Include="Collections\SortedStackListQueue.cs" />
     <Compile Include="Collections\StackListQueue.cs" />
     <Compile Include="Comparer\IPublicationComparer.cs" />
     <Compile Include="Comparer\ObjectComparer.cs" />
@@ -123,6 +124,7 @@
     <Compile Include="Forms\AboutBox.Designer.cs">
       <DependentUpon>AboutBox.cs</DependentUpon>
     </Compile>
+    <Compile Include="IValueable.cs" />
     <Compile Include="Link.cs" />
     <Compile Include="LinkComparer.cs" />
     <Compile Include="Managers\ComparerManager.cs" />

@@ -9,14 +9,14 @@ namespace RealtyParser
     ///     Используется для доступа к значениям словаря по ключу
     ///     используется для храниния результатов разбора одной страницы на поля
     /// </summary>
-    public class ReturnFields : DictionaryOfList
+    public class ReturnFields : DictionaryOfList, IValueable
     {
         public IEnumerable<string> PublicationId
         {
             get
             {
                 string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
-                if (!ContainsKey(propertyName)) Add(propertyName, new List<string>());
+                if (!ContainsKey(propertyName)) Add(propertyName, new StackListQueue<string>());
                 return this[propertyName];
             }
             set
@@ -34,7 +34,7 @@ namespace RealtyParser
             get
             {
                 string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
-                if (!ContainsKey(propertyName)) Add(propertyName, new List<string>());
+                if (!ContainsKey(propertyName)) Add(propertyName, new StackListQueue<string>());
                 return this[propertyName];
             }
             set
@@ -52,7 +52,7 @@ namespace RealtyParser
             get
             {
                 string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
-                if (!ContainsKey(propertyName)) Add(propertyName, new List<string>());
+                if (!ContainsKey(propertyName)) Add(propertyName, new StackListQueue<string>());
                 return this[propertyName];
             }
             set
@@ -70,7 +70,7 @@ namespace RealtyParser
             get
             {
                 string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
-                if (!ContainsKey(propertyName)) Add(propertyName, new List<string>());
+                if (!ContainsKey(propertyName)) Add(propertyName, new StackListQueue<string>());
                 return this[propertyName];
             }
             set
@@ -88,7 +88,7 @@ namespace RealtyParser
             get
             {
                 string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
-                if (!ContainsKey(propertyName)) Add(propertyName, new List<string>());
+                if (!ContainsKey(propertyName)) Add(propertyName, new StackListQueue<string>());
                 return this[propertyName];
             }
             set
@@ -106,7 +106,7 @@ namespace RealtyParser
             get
             {
                 string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
-                if (!ContainsKey(propertyName)) Add(propertyName, new List<string>());
+                if (!ContainsKey(propertyName)) Add(propertyName, new StackListQueue<string>());
                 return this[propertyName];
             }
             set
@@ -124,7 +124,7 @@ namespace RealtyParser
             get
             {
                 string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
-                if (!ContainsKey(propertyName)) Add(propertyName, new List<string>());
+                if (!ContainsKey(propertyName)) Add(propertyName, new StackListQueue<string>());
                 return this[propertyName];
             }
             set
@@ -142,7 +142,7 @@ namespace RealtyParser
             get
             {
                 string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
-                if (!ContainsKey(propertyName)) Add(propertyName, new List<string>());
+                if (!ContainsKey(propertyName)) Add(propertyName, new StackListQueue<string>());
                 return this[propertyName];
             }
             set
@@ -160,7 +160,7 @@ namespace RealtyParser
             get
             {
                 string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
-                if (!ContainsKey(propertyName)) Add(propertyName, new List<string>());
+                if (!ContainsKey(propertyName)) Add(propertyName, new StackListQueue<string>());
                 return this[propertyName];
             }
             set
@@ -178,7 +178,7 @@ namespace RealtyParser
             get
             {
                 string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
-                if (!ContainsKey(propertyName)) Add(propertyName, new List<string>());
+                if (!ContainsKey(propertyName)) Add(propertyName, new StackListQueue<string>());
                 return this[propertyName];
             }
             set
@@ -196,7 +196,7 @@ namespace RealtyParser
             get
             {
                 string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
-                if (!ContainsKey(propertyName)) Add(propertyName, new List<string>());
+                if (!ContainsKey(propertyName)) Add(propertyName, new StackListQueue<string>());
                 return this[propertyName];
             }
             set
@@ -214,7 +214,7 @@ namespace RealtyParser
             get
             {
                 string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
-                if (!ContainsKey(propertyName)) Add(propertyName, new List<string>());
+                if (!ContainsKey(propertyName)) Add(propertyName, new StackListQueue<string>());
                 return this[propertyName];
             }
             set
@@ -232,7 +232,7 @@ namespace RealtyParser
             get
             {
                 string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
-                if (!ContainsKey(propertyName)) Add(propertyName, new List<string>());
+                if (!ContainsKey(propertyName)) Add(propertyName, new StackListQueue<string>());
                 return this[propertyName];
             }
             set
@@ -250,7 +250,7 @@ namespace RealtyParser
             get
             {
                 string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
-                if (!ContainsKey(propertyName)) Add(propertyName, new List<string>());
+                if (!ContainsKey(propertyName)) Add(propertyName, new StackListQueue<string>());
                 return this[propertyName];
             }
             set
@@ -268,7 +268,7 @@ namespace RealtyParser
             get
             {
                 string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
-                if (!ContainsKey(propertyName)) Add(propertyName, new List<string>());
+                if (!ContainsKey(propertyName)) Add(propertyName, new StackListQueue<string>());
                 return this[propertyName];
             }
             set
@@ -286,7 +286,7 @@ namespace RealtyParser
             get
             {
                 string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
-                if (!ContainsKey(propertyName)) Add(propertyName, new List<string>());
+                if (!ContainsKey(propertyName)) Add(propertyName, new StackListQueue<string>());
                 return this[propertyName];
             }
             set
@@ -304,7 +304,7 @@ namespace RealtyParser
             get
             {
                 string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
-                if (!ContainsKey(propertyName)) Add(propertyName, new List<string>());
+                if (!ContainsKey(propertyName)) Add(propertyName, new StackListQueue<string>());
                 return this[propertyName];
             }
             set
@@ -322,7 +322,7 @@ namespace RealtyParser
             get
             {
                 string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
-                if (!ContainsKey(propertyName)) Add(propertyName, new List<string>());
+                if (!ContainsKey(propertyName)) Add(propertyName, new StackListQueue<string>());
                 return this[propertyName];
             }
             set
@@ -340,7 +340,7 @@ namespace RealtyParser
             get
             {
                 string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
-                if (!ContainsKey(propertyName)) Add(propertyName, new List<string>());
+                if (!ContainsKey(propertyName)) Add(propertyName, new StackListQueue<string>());
                 return this[propertyName];
             }
             set
@@ -358,7 +358,7 @@ namespace RealtyParser
             get
             {
                 string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
-                if (!ContainsKey(propertyName)) Add(propertyName, new List<string>());
+                if (!ContainsKey(propertyName)) Add(propertyName, new StackListQueue<string>());
                 return this[propertyName];
             }
             set
@@ -376,7 +376,7 @@ namespace RealtyParser
             get
             {
                 string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
-                if (!ContainsKey(propertyName)) Add(propertyName, new List<string>());
+                if (!ContainsKey(propertyName)) Add(propertyName, new StackListQueue<string>());
                 return this[propertyName];
             }
             set
@@ -394,7 +394,7 @@ namespace RealtyParser
             get
             {
                 string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
-                if (!ContainsKey(propertyName)) Add(propertyName, new List<string>());
+                if (!ContainsKey(propertyName)) Add(propertyName, new StackListQueue<string>());
                 return this[propertyName];
             }
             set
@@ -412,7 +412,7 @@ namespace RealtyParser
             get
             {
                 string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
-                if (!ContainsKey(propertyName)) Add(propertyName, new List<string>());
+                if (!ContainsKey(propertyName)) Add(propertyName, new StackListQueue<string>());
                 return this[propertyName];
             }
             set
@@ -430,7 +430,7 @@ namespace RealtyParser
             get
             {
                 string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
-                if (!ContainsKey(propertyName)) Add(propertyName, new List<string>());
+                if (!ContainsKey(propertyName)) Add(propertyName, new StackListQueue<string>());
                 return this[propertyName];
             }
             set
@@ -448,7 +448,7 @@ namespace RealtyParser
             get
             {
                 string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
-                if (!ContainsKey(propertyName)) Add(propertyName, new List<string>());
+                if (!ContainsKey(propertyName)) Add(propertyName, new StackListQueue<string>());
                 return this[propertyName];
             }
             set
@@ -466,7 +466,7 @@ namespace RealtyParser
             get
             {
                 string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
-                if (!ContainsKey(propertyName)) Add(propertyName, new List<string>());
+                if (!ContainsKey(propertyName)) Add(propertyName, new StackListQueue<string>());
                 return this[propertyName];
             }
             set
@@ -484,7 +484,7 @@ namespace RealtyParser
             get
             {
                 string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
-                if (!ContainsKey(propertyName)) Add(propertyName, new List<string>());
+                if (!ContainsKey(propertyName)) Add(propertyName, new StackListQueue<string>());
                 return this[propertyName];
             }
             set
@@ -502,7 +502,7 @@ namespace RealtyParser
             get
             {
                 string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
-                if (!ContainsKey(propertyName)) Add(propertyName, new List<string>());
+                if (!ContainsKey(propertyName)) Add(propertyName, new StackListQueue<string>());
                 return this[propertyName];
             }
             set
@@ -520,7 +520,7 @@ namespace RealtyParser
             get
             {
                 string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
-                if (!ContainsKey(propertyName)) Add(propertyName, new List<string>());
+                if (!ContainsKey(propertyName)) Add(propertyName, new StackListQueue<string>());
                 return this[propertyName];
             }
             set
@@ -538,7 +538,7 @@ namespace RealtyParser
             get
             {
                 string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
-                if (!ContainsKey(propertyName)) Add(propertyName, new List<string>());
+                if (!ContainsKey(propertyName)) Add(propertyName, new StackListQueue<string>());
                 return this[propertyName];
             }
             set
@@ -556,7 +556,7 @@ namespace RealtyParser
             get
             {
                 string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
-                if (!ContainsKey(propertyName)) Add(propertyName, new List<string>());
+                if (!ContainsKey(propertyName)) Add(propertyName, new StackListQueue<string>());
                 return this[propertyName];
             }
             set
@@ -574,7 +574,7 @@ namespace RealtyParser
             get
             {
                 string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
-                if (!ContainsKey(propertyName)) Add(propertyName, new List<string>());
+                if (!ContainsKey(propertyName)) Add(propertyName, new StackListQueue<string>());
                 return this[propertyName];
             }
             set
@@ -592,7 +592,7 @@ namespace RealtyParser
             get
             {
                 string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
-                if (!ContainsKey(propertyName)) Add(propertyName, new List<string>());
+                if (!ContainsKey(propertyName)) Add(propertyName, new StackListQueue<string>());
                 return this[propertyName];
             }
             set
@@ -610,7 +610,7 @@ namespace RealtyParser
             get
             {
                 string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
-                if (!ContainsKey(propertyName)) Add(propertyName, new List<string>());
+                if (!ContainsKey(propertyName)) Add(propertyName, new StackListQueue<string>());
                 return this[propertyName];
             }
             set
@@ -628,7 +628,7 @@ namespace RealtyParser
             get
             {
                 string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
-                if (!ContainsKey(propertyName)) Add(propertyName, new List<string>());
+                if (!ContainsKey(propertyName)) Add(propertyName, new StackListQueue<string>());
                 return this[propertyName];
             }
             set
@@ -646,7 +646,7 @@ namespace RealtyParser
             get
             {
                 string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
-                if (!ContainsKey(propertyName)) Add(propertyName, new List<string>());
+                if (!ContainsKey(propertyName)) Add(propertyName, new StackListQueue<string>());
                 return this[propertyName];
             }
             set
@@ -664,7 +664,7 @@ namespace RealtyParser
             get
             {
                 string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
-                if (!ContainsKey(propertyName)) Add(propertyName, new List<string>());
+                if (!ContainsKey(propertyName)) Add(propertyName, new StackListQueue<string>());
                 return this[propertyName];
             }
             set
@@ -682,7 +682,7 @@ namespace RealtyParser
             get
             {
                 string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
-                if (!ContainsKey(propertyName)) Add(propertyName, new List<string>());
+                if (!ContainsKey(propertyName)) Add(propertyName, new StackListQueue<string>());
                 return this[propertyName];
             }
             set
@@ -700,7 +700,7 @@ namespace RealtyParser
             get
             {
                 string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
-                if (!ContainsKey(propertyName)) Add(propertyName, new List<string>());
+                if (!ContainsKey(propertyName)) Add(propertyName, new StackListQueue<string>());
                 return this[propertyName];
             }
             set
@@ -718,7 +718,7 @@ namespace RealtyParser
             get
             {
                 string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
-                if (!ContainsKey(propertyName)) Add(propertyName, new List<string>());
+                if (!ContainsKey(propertyName)) Add(propertyName, new StackListQueue<string>());
                 return this[propertyName];
             }
             set
@@ -736,7 +736,7 @@ namespace RealtyParser
             get
             {
                 string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
-                if (!ContainsKey(propertyName)) Add(propertyName, new List<string>());
+                if (!ContainsKey(propertyName)) Add(propertyName, new StackListQueue<string>());
                 return this[propertyName];
             }
             set
@@ -754,7 +754,7 @@ namespace RealtyParser
             get
             {
                 string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
-                if (!ContainsKey(propertyName)) Add(propertyName, new List<string>());
+                if (!ContainsKey(propertyName)) Add(propertyName, new StackListQueue<string>());
                 return this[propertyName];
             }
             set
@@ -772,7 +772,7 @@ namespace RealtyParser
             get
             {
                 string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
-                if (!ContainsKey(propertyName)) Add(propertyName, new List<string>());
+                if (!ContainsKey(propertyName)) Add(propertyName, new StackListQueue<string>());
                 return this[propertyName];
             }
             set
@@ -783,6 +783,11 @@ namespace RealtyParser
                 else
                     Add(propertyName, value);
             }
+        }
+
+        public new Values ToValues()
+        {
+            return new Values(this);
         }
     }
 }

@@ -2,7 +2,11 @@
 
 namespace RealtyParser.Collections
 {
-    public class Mapping : Dictionary<object, object>
+    public class Mapping : Dictionary<object, object>, IValueable
     {
+        public Values ToValues()
+        {
+            return new Values(this);
+        }
     }
 }

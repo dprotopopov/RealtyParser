@@ -16,7 +16,7 @@ using String = RealtyParser.Types.String;
 
 namespace RealtyParser
 {
-    public class Builder : ITrace
+    public sealed class Builder : ITrace, IValueable
     {
         private const string ReturnTitle = @"Title";
         private const string ReturnValue = @"Value";
@@ -32,39 +32,27 @@ namespace RealtyParser
 
         #region
 
-        public string ModuleNamespace { get; set; }
+        private string ModuleNamespace { get; set; }
         public Database Database { get; set; }
         private Transformation Transformation { get; set; }
-        public Parser Parser { get; set; }
-
+        private Parser Parser { get; set; }
         private ObjectComparer ObjectComparer { get; set; }
-        public CompressionManager CompressionManager { get; set; }
+        private CompressionManager CompressionManager { get; set; }
         private Converter Converter { get; set; }
-
-        public Crawler Crawler { get; set; }
-
-        #endregion
-
-        private object _lastError;
-
-        #region
-
-        private readonly MethodInfo _getListMethodInfo = typeof (Database).GetMethod("GetList");
-        private readonly MethodInfo _getMappingMethodInfo = typeof (Database).GetMethod("GetMapping");
-        private readonly MethodInfo _scalarMethodInfo = typeof (Database).GetMethod("GetScalar");
+        private Crawler Crawler { get; set; }
 
         #endregion
 
         public Builder()
         {
-            GridItems = new List<GridItem>();
+            GridItems = new StackListQueue<GridItem>();
             MinLevel = 0;
             MaxLevel = 1;
             SiteMinLevel = 0;
             SiteMaxLevel = 1;
             MaxDistance = Int32.MaxValue;
-            ModuleClassname = typeof (ParserModule).Namespace;
-            ModuleNamespace = typeof (ParserModule).Namespace;
+            ModuleClassname = GetType().Namespace;
+            ModuleNamespace = GetType().Namespace;
             Database = new Database {ModuleClassname = ModuleClassname};
             CompressionManager = new CompressionManager {ModuleNamespace = ModuleNamespace};
             Converter = new Converter {ModuleNamespace = ModuleNamespace};
@@ -73,6 +61,8 @@ namespace RealtyParser
             Crawler = new Crawler {CompressionManager = CompressionManager};
             ObjectComparer = new ObjectComparer();
         }
+
+        public object LastError { get; set; }
 
         public string ModuleClassname { get; set; }
 
@@ -98,9 +88,23 @@ namespace RealtyParser
         public KeyValuePair<Dictionary<object, string>, Dictionary<object, string>> TitleData { get; set; }
         public KeyValuePair<Dictionary<object, string>, Dictionary<object, string>> IndexData { get; set; }
         private ReturnFieldInfos ReturnFieldInfos { get; set; }
+
+        #region
+
+        private readonly MethodInfo _getListMethodInfo = typeof (Database).GetMethod("GetList");
+        private readonly MethodInfo _getMappingMethodInfo = typeof (Database).GetMethod("GetMapping");
+        private readonly MethodInfo _scalarMethodInfo = typeof (Database).GetMethod("GetScalar");
+
+        #endregion
+
         public ProgressCallback ProgressCallback { get; set; }
         public AppendLineCallback AppendLineCallback { get; set; }
         public CompliteCallback CompliteCallback { get; set; }
+
+        public Values ToValues()
+        {
+            return new Values(this);
+        }
 
 
         public void BuildGridItems()
@@ -215,17 +219,20 @@ namespace RealtyParser
             Mapping levelMapping;
             Mapping titleMapping;
 
-            lock (Database) titleMapping = (Mapping) _getMappingMethodInfo.Invoke(Database, new object[] {objects[0]});
-            lock (Database) levelMapping = (Mapping) _getMappingMethodInfo.Invoke(Database, new object[] {objects[1]});
-            lock (Database) parentMapping = (Mapping) _getMappingMethodInfo.Invoke(Database, new object[] {objects[2]});
+            lock (Database.Semaphore)
+                titleMapping = (Mapping) _getMappingMethodInfo.Invoke(Database, new object[] {objects[0]});
+            lock (Database.Semaphore)
+                levelMapping = (Mapping) _getMappingMethodInfo.Invoke(Database, new object[] {objects[1]});
+            lock (Database.Semaphore)
+                parentMapping = (Mapping) _getMappingMethodInfo.Invoke(Database, new object[] {objects[2]});
 
             IEnumerable<string> mapping;
             IEnumerable<string> hierarchical;
 
-            lock (Database)
+            lock (Database.Semaphore)
                 mapping = Database.GetList(Database.MappingTable, Database.TableNameColumn)
                     .Select(item => item.ToString());
-            lock (Database)
+            lock (Database.Semaphore)
                 hierarchical = Database.GetList(Database.HierarchicalTable, Database.TableNameColumn)
                     .Select(item => item.ToString());
 
@@ -308,7 +315,7 @@ namespace RealtyParser
             };
 
             Mapping[] items;
-            lock (Database)
+            lock (Database.Semaphore)
                 items =
                     objects1.Select(obj => (Mapping) _getMappingMethodInfo.Invoke(Database, new object[] {obj}))
                         .ToArray();
@@ -481,8 +488,12 @@ namespace RealtyParser
 
                         var keyValuePair =
                             new KeyValuePair<StackListQueue<object>, StackListQueue<object>>(
-                                StackListQueue<object>.IntersectSorted(pair.Key, data.Key, ObjectComparer),
-                                StackListQueue<object>.IntersectSorted(pair.Value, data.Value, ObjectComparer));
+                                (StackListQueue<object>)
+                                    (new SortedStackListQueue<object>(pair.Key) {Comparer = ObjectComparer}).Intersect(
+                                        data.Key),
+                                (StackListQueue<object>)
+                                    (new SortedStackListQueue<object>(pair.Value) {Comparer = ObjectComparer}).Intersect
+                                        (data.Value));
 
                         lock (progress) Current += pair.Key.Count + pair.Value.Count;
                         lock (progress) if (ProgressCallback != null) ProgressCallback(Current, Total);
@@ -661,8 +672,8 @@ namespace RealtyParser
 
             var baseValues = new Values
             {
-                Table = new List<string> {TableName.ToString()},
-                Url = new List<string> {baseBuilder.Uri.ToString()},
+                Table = new StackListQueue<string> {TableName.ToString()},
+                Url = new StackListQueue<string> {baseBuilder.Uri.ToString()},
             };
 
             var stackListQueue = new StackListQueue<KeyValuePair<int, Values>>
@@ -750,7 +761,6 @@ namespace RealtyParser
                             ReturnFieldResultTemplate = pair.Value[1],
                             ReturnFieldRegexPattern = pair.Value[2],
                             ReturnFieldRegexReplacement = pair.Value[3],
-                            ReturnFieldRegexMatchPattern = @".*",
                         });
                 }
                 Debug.WriteLine("returnFieldInfos {0}:{1}", currentLevel, returnFieldInfos);
@@ -766,7 +776,7 @@ namespace RealtyParser
                 {
                     Values slice = parentValues.Slice(i);
                     Uri uri = Types.Uri.Combine(baseBuilder.Uri.ToString(), slice.Url.First());
-                    slice.Url = new List<string> {uri.ToString()};
+                    slice.Url = new StackListQueue<string> {uri.ToString()};
 
                     IEnumerable<HtmlDocument> documents =
                         await
@@ -846,7 +856,7 @@ namespace RealtyParser
                         if (currentLevel < matches.Count)
                         {
                             currentValues.Value = currentOptions;
-                            currentValues.Title = new List<string>();
+                            currentValues.Title = new StackListQueue<string>();
                             currentValues.Url = Transformation.ParseTemplate(builderInfo.UrlTemplate.ToString(),
                                 currentValues).ToList();
                             stackListQueue.Enqueue(new KeyValuePair<int, Values>(currentLevel + 1, currentValues));
@@ -861,10 +871,10 @@ namespace RealtyParser
                         int titleCount = Math.Min(titles.Count() - keyCount, countRedirect);
                         List<string> redirectOptions = (optionCount > 0)
                             ? options.GetRange(keyCount, optionCount)
-                            : new List<string>();
+                            : new StackListQueue<string>();
                         List<string> redirectTitles = (titleCount > 0)
                             ? titles.GetRange(keyCount, titleCount)
-                            : new List<string>();
+                            : new StackListQueue<string>();
                         var redirectValues = new Values();
                         foreach (var pair in slice.Where(pair => pair.Value.Any()))
                             redirectValues.Add(pair.Key,

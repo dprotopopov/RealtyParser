@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using RealtyParser.Collections;
 using RealtyParser.Types;
 
 namespace RealtyParser
 {
-    public class ReturnFieldInfos : Dictionary<string, IEnumerable<ReturnFieldInfo>>
+    public class ReturnFieldInfos : Dictionary<string, IEnumerable<ReturnFieldInfo>>, IValueable
     {
         public IEnumerable<ReturnFieldInfo> OptionRedirect
         {
@@ -109,9 +110,14 @@ namespace RealtyParser
             }
         }
 
+        public Values ToValues()
+        {
+            return new Values(this);
+        }
+
         public List<ReturnFieldInfo> ToList()
         {
-            var list = new List<ReturnFieldInfo>();
+            var list = new StackListQueue<ReturnFieldInfo>();
             foreach (var value in Values)
                 list.AddRange(value.ToList());
             return list;
@@ -121,7 +127,7 @@ namespace RealtyParser
         {
             var values = new Values();
             foreach (var pair in this)
-                values.InsertOrAppend(new Values
+                values.Add(new Values
                 {
                     Key = Enumerable.Repeat(pair.Key, pair.Value.Count()),
                     Value = pair.Value.Select(item => item.ToString()),
@@ -132,7 +138,7 @@ namespace RealtyParser
         public void Add(ReturnFieldInfo returnFieldInfo)
         {
             string key = returnFieldInfo.ReturnFieldId.ToString();
-            if (!ContainsKey(key)) Add(key, new List<ReturnFieldInfo> {returnFieldInfo});
+            if (!ContainsKey(key)) Add(key, new StackListQueue<ReturnFieldInfo> {returnFieldInfo});
             else
             {
                 List<ReturnFieldInfo> list = this[key].ToList();

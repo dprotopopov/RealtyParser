@@ -5,7 +5,7 @@ using System.Reflection;
 
 namespace RealtyParser
 {
-    public class Converter
+    public class Converter : IValueable
     {
         private const string ParseMethodName = "Parse";
         private const string ParseAsListMethodName = "ParseAsList";
@@ -50,6 +50,11 @@ namespace RealtyParser
         }
 
         public string ModuleNamespace { get; set; }
+
+        public Values ToValues()
+        {
+            return new Values(this);
+        }
 
         public object Convert(object obj, Type toType)
         {
