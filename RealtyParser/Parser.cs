@@ -5,8 +5,9 @@ using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using HtmlAgilityPack;
+using MyLibrary;
+using MyLibrary.Trace;
 using RealtyParser.Collections;
-using RealtyParser.Trace;
 using RT.ParsingLibs.Models;
 
 namespace RealtyParser
@@ -220,6 +221,7 @@ namespace RealtyParser
                             input => regex.Replace(input, returnFieldInfo.ReturnFieldRegexReplacement.ToString()).Trim())
                         .Where(value => !string.IsNullOrEmpty(value));
                 returnFields.Add(returnFieldInfo.ReturnFieldId.ToString(), list);
+                Debug.WriteLine("{0}:{1}", returnFieldInfo.ReturnFieldId, string.Join(Environment.NewLine, list));
                 if (ProgressCallback != null) ProgressCallback(++current, total);
             }
 
@@ -290,7 +292,7 @@ namespace RealtyParser
             foreach (
                 string name in
                     from Match match in matches
-                    select match.Groups[Transformation.NameGroup].Value)
+                    select match.Groups[MyLibrary.Transformation.NameGroup].Value)
             {
                 foreach (
                     MethodInfo methodInfo in _methodInfos)

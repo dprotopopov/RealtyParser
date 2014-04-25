@@ -2,9 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
-using RealtyParser;
+using RealtyParser.BeBoss;
+using RealtyParser.Bn;
 using RealtyParser.Collections;
+using RealtyParser.Egent;
 using RealtyParser.Mirkvartir;
+using RealtyParser.NetAgenta;
 using RealtyParser.Rosrealt;
 using RT.ParsingLibs;
 using RT.ParsingLibs.Models;
@@ -24,6 +27,10 @@ namespace RealtyParser.Editor.Children
                     new ParserModule(),
                     new RosrealtParser(),
                     new MirkvartirParser(),
+                    new EgentParser(),
+                    new NetAgentaParser(),
+                    new BnParser(),
+                    new BeBossParser(),
                 }.Select(item => new KeyValuePair<string, IParsingModule>(item.ModuleClassname, item))
                     .Cast<object>().ToArray());
             propertyGridControlParseRequest.SelectedObject = new ParseRequest();

@@ -11,6 +11,8 @@
     <AssemblyName>RealtyParser.Rosrealt</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -36,11 +38,14 @@
     <Reference Include="EntityFramework.SqlServer">
       <HintPath>..\packages\EntityFramework.6.0.2\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="HtmlAgilityPack">
+      <HintPath>..\packages\HtmlAgilityPack.1.4.6\lib\Net45\HtmlAgilityPack.dll</HintPath>
+    </Reference>
     <Reference Include="ServiceStack.Common">
-      <HintPath>..\packages\ServiceStack.Common.3.9.71\lib\net35\ServiceStack.Common.dll</HintPath>
+      <HintPath>..\packages\ServiceStack.Common.3.9.11\lib\net35\ServiceStack.Common.dll</HintPath>
     </Reference>
     <Reference Include="ServiceStack.Interfaces">
-      <HintPath>..\packages\ServiceStack.Common.3.9.71\lib\net35\ServiceStack.Interfaces.dll</HintPath>
+      <HintPath>..\packages\ServiceStack.Common.3.9.11\lib\net35\ServiceStack.Interfaces.dll</HintPath>
     </Reference>
     <Reference Include="ServiceStack.OrmLite">
       <HintPath>..\packages\ServiceStack.OrmLite.Sqlite32.3.9.71\lib\net40\ServiceStack.OrmLite.dll</HintPath>
@@ -48,8 +53,7 @@
     <Reference Include="ServiceStack.OrmLite.SqliteNET">
       <HintPath>..\packages\ServiceStack.OrmLite.Sqlite32.3.9.71\lib\net40\ServiceStack.OrmLite.SqliteNET.dll</HintPath>
     </Reference>
-    <Reference Include="ServiceStack.Text, Version=3.9.71.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="ServiceStack.Text">
       <HintPath>..\packages\ServiceStack.Text.3.9.71\lib\net35\ServiceStack.Text.dll</HintPath>
     </Reference>
     <Reference Include="System" />
@@ -80,7 +84,9 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="libtidy.dll" />
+    <Content Include="libtidy.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="RosrealtAction.sql" />
     <Content Include="RosrealtActionMapping.sql" />
     <Content Include="RosrealtRegion.sql" />
@@ -91,19 +97,51 @@
     <Content Include="RosrealtRubricMapping.sql" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\MyLibrary\MyDatabase\MyDatabase.csproj">
+      <Project>{e929b421-2c04-4829-b4e1-7426d0a1b5c2}</Project>
+      <Name>MyDatabase</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\MyLibrary\MyLibrary\MyLibrary.csproj">
+      <Project>{e80cf993-5e07-4875-85fe-a2adcf76558d}</Project>
+      <Name>MyLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\MyParserLibrary\MyParser\MyParser.csproj">
+      <Project>{9e1db17a-a1e7-416b-b080-0d78bc926816}</Project>
+      <Name>MyParser</Name>
+    </ProjectReference>
     <ProjectReference Include="..\RealtyParser\RealtyParser.csproj">
       <Project>{8ac9f758-9ce0-4203-854e-2b17cdc65c01}</Project>
       <Name>RealtyParser</Name>
     </ProjectReference>
+    <ProjectReference Include="..\RT.Crawler\RT.Crawler.csproj">
+      <Project>{03624a95-b0fa-4115-a498-9e88e140956c}</Project>
+      <Name>RT.Crawler</Name>
+    </ProjectReference>
     <ProjectReference Include="..\RT.ParsingLibs\RT.ParsingLibs.csproj">
       <Project>{27cc5b61-3729-4f39-ad0c-d8ce99120fd4}</Project>
       <Name>RT.ParsingLibs</Name>
+    </ProjectReference>
+    <ProjectReference Include="Y:\Projects\TidyManaged-master\TidyManaged.csproj">
+      <Project>{d799633d-00ef-437c-b158-315557d930fc}</Project>
+      <Name>TidyManaged</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>
     </PreBuildEvent>
+  </PropertyGroup>
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>Данный проект ссылается на пакеты NuGet, отсутствующие на этом компьютере. Включите восстановление пакетов NuGet, чтобы загрузить их. Дополнительные сведения см. по адресу: http://go.microsoft.com/fwlink/?LinkID=322105. Отсутствует следующий файл: {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
+  </Target>
+  <PropertyGroup>
+    <PostBuildEvent>rem Create a single .dll that combines the all subassemblies.
+"$(SolutionDir)ILMerge.exe" /out:"$(SolutionDir)AllInOne\$(TargetName).dll"  "My*.dll" "RT*.dll" "EntityFramework*.dll" "ICSharpCode*.dll" "ServiceStack*.dll" "System*.dll" "TidyManaged.dll" "HtmlAgilityPack.dll" "RealtyParser*.dll" /target:library /targetplatform:v4,C:\Windows\Microsoft.NET\Framework64\v4.0.30319 /wildcards /zeroPeKind
+exit 0</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

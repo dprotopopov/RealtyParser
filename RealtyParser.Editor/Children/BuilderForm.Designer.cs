@@ -39,10 +39,10 @@
             this.MethodInfo = new DevExpress.XtraVerticalGrid.Rows.EditorRow();
             this.MaxLevel = new DevExpress.XtraVerticalGrid.Rows.EditorRow();
             this.MinLevel = new DevExpress.XtraVerticalGrid.Rows.EditorRow();
-            this.textBoxCommandText = new System.Windows.Forms.TextBox();
-            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.SiteMaxLevel = new DevExpress.XtraVerticalGrid.Rows.EditorRow();
             this.SiteMinLevel = new DevExpress.XtraVerticalGrid.Rows.EditorRow();
+            this.textBoxCommandText = new System.Windows.Forms.TextBox();
+            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -74,14 +74,17 @@
             // 
             // propertyGridControlWorkspace
             // 
+            this.propertyGridControlWorkspace.Cursor = System.Windows.Forms.Cursors.SizeWE;
             this.propertyGridControlWorkspace.Dock = System.Windows.Forms.DockStyle.Fill;
             this.propertyGridControlWorkspace.Location = new System.Drawing.Point(0, 0);
             this.propertyGridControlWorkspace.Name = "propertyGridControlWorkspace";
+            this.propertyGridControlWorkspace.RecordWidth = 167;
             this.propertyGridControlWorkspace.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
             this.repositoryItemComboBoxSite,
             this.repositoryItemComboBoxTableName,
             this.repositoryItemComboBoxMethodInfo,
             this.repositoryItemComboBoxLevel});
+            this.propertyGridControlWorkspace.RowHeaderWidth = 33;
             this.propertyGridControlWorkspace.Rows.AddRange(new DevExpress.XtraVerticalGrid.Rows.BaseRow[] {
             this.Site,
             this.TableName,
@@ -156,20 +159,6 @@
             this.MinLevel.Properties.FieldName = "MinLevel";
             this.MinLevel.Properties.RowEdit = this.repositoryItemComboBoxLevel;
             // 
-            // textBoxCommandText
-            // 
-            this.textBoxCommandText.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBoxCommandText.Location = new System.Drawing.Point(0, 0);
-            this.textBoxCommandText.Multiline = true;
-            this.textBoxCommandText.Name = "textBoxCommandText";
-            this.textBoxCommandText.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.textBoxCommandText.Size = new System.Drawing.Size(905, 361);
-            this.textBoxCommandText.TabIndex = 0;
-            // 
-            // saveFileDialog1
-            // 
-            this.saveFileDialog1.DefaultExt = "sql";
-            // 
             // SiteMaxLevel
             // 
             this.SiteMaxLevel.Name = "SiteMaxLevel";
@@ -183,6 +172,20 @@
             this.SiteMinLevel.Properties.Caption = "SiteMinLevel";
             this.SiteMinLevel.Properties.FieldName = "SiteMinLevel";
             this.SiteMinLevel.Properties.RowEdit = this.repositoryItemComboBoxLevel;
+            // 
+            // textBoxCommandText
+            // 
+            this.textBoxCommandText.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.textBoxCommandText.Location = new System.Drawing.Point(0, 0);
+            this.textBoxCommandText.Multiline = true;
+            this.textBoxCommandText.Name = "textBoxCommandText";
+            this.textBoxCommandText.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            this.textBoxCommandText.Size = new System.Drawing.Size(905, 361);
+            this.textBoxCommandText.TabIndex = 0;
+            // 
+            // saveFileDialog1
+            // 
+            this.saveFileDialog1.DefaultExt = "sql";
             // 
             // BuilderForm
             // 

@@ -6,12 +6,12 @@ namespace RealtyParser
     ///     Парамтры для процедуры возвращающей вычисленные поля при разборе страницы одного объявления
     ///     Данные хранятся в базе данных
     /// </summary>
-    public class ReturnFieldInfo : Collections.Properties, IValueable
+    public class ReturnFieldInfo : MyParser.ReturnFieldInfo, IValueable
     {
         /// <summary>
         ///     Идентификатор сайта
         /// </summary>
-        public object SiteId
+        public new object SiteId
         {
             get
             {
@@ -32,7 +32,7 @@ namespace RealtyParser
         /// <summary>
         ///     Идентификатор возвращаемого поля
         /// </summary>
-        public object ReturnFieldId
+        public new object ReturnFieldId
         {
             get
             {
@@ -53,7 +53,7 @@ namespace RealtyParser
         /// <summary>
         ///     Xpath для нахождения поля на загруженной странице
         /// </summary>
-        public object ReturnFieldXpathTemplate
+        public new object ReturnFieldXpathTemplate
         {
             get
             {
@@ -74,7 +74,7 @@ namespace RealtyParser
         /// <summary>
         ///     Шаблон возвращаемого найденого текста
         /// </summary>
-        public object ReturnFieldResultTemplate
+        public new object ReturnFieldResultTemplate
         {
             get
             {
@@ -96,7 +96,7 @@ namespace RealtyParser
         ///     Шаблон регулярного выражения,
         ///     используемого при замене найденого текста
         /// </summary>
-        public object ReturnFieldRegexPattern
+        public new object ReturnFieldRegexPattern
         {
             get
             {
@@ -118,7 +118,7 @@ namespace RealtyParser
         ///     Шаблон для замены у регулярного выражения,
         ///     используемого при замене найденого текста
         /// </summary>
-        public object ReturnFieldRegexReplacement
+        public new object ReturnFieldRegexReplacement
         {
             get
             {

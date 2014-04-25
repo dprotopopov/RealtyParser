@@ -51,6 +51,7 @@
             this.listBoxNode = new System.Windows.Forms.ListBox();
             this.propertyGridControlNode = new DevExpress.XtraVerticalGrid.PropertyGridControl();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
+            this.Request = new DevExpress.XtraVerticalGrid.Rows.EditorRow();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -98,20 +99,24 @@
             // 
             // propertyGridControlWorkspace
             // 
+            this.propertyGridControlWorkspace.Cursor = System.Windows.Forms.Cursors.SizeWE;
             this.propertyGridControlWorkspace.Dock = System.Windows.Forms.DockStyle.Fill;
             this.propertyGridControlWorkspace.Location = new System.Drawing.Point(0, 0);
             this.propertyGridControlWorkspace.Name = "propertyGridControlWorkspace";
+            this.propertyGridControlWorkspace.RecordWidth = 166;
             this.propertyGridControlWorkspace.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
             this.repositoryItemComboBoxMethod,
             this.repositoryItemComboBoxEncoding,
             this.repositoryItemComboBoxUrl,
             this.repositoryItemComboBoxCompression});
+            this.propertyGridControlWorkspace.RowHeaderWidth = 34;
             this.propertyGridControlWorkspace.Rows.AddRange(new DevExpress.XtraVerticalGrid.Rows.BaseRow[] {
             this.Url,
             this.Xpath,
             this.Method,
             this.Encoding,
-            this.Compression});
+            this.Compression,
+            this.Request});
             this.propertyGridControlWorkspace.Size = new System.Drawing.Size(790, 125);
             this.propertyGridControlWorkspace.TabIndex = 0;
             // 
@@ -314,6 +319,12 @@
             this.propertyGridControlNode.Size = new System.Drawing.Size(411, 180);
             this.propertyGridControlNode.TabIndex = 0;
             // 
+            // Request
+            // 
+            this.Request.Name = "Request";
+            this.Request.Properties.Caption = "Request";
+            this.Request.Properties.FieldName = "Request";
+            // 
             // HapForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -377,5 +388,6 @@
         private System.Windows.Forms.SaveFileDialog saveFileDialog1;
         private DevExpress.XtraEditors.Repository.RepositoryItemComboBox repositoryItemComboBoxCompression;
         private DevExpress.XtraVerticalGrid.Rows.EditorRow Compression;
+        private DevExpress.XtraVerticalGrid.Rows.EditorRow Request;
     }
 }

@@ -29,10 +29,16 @@
         private void InitializeComponent()
         {
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.listBoxDll = new System.Windows.Forms.ListBox();
+            this.listBoxControlDll = new DevExpress.XtraEditors.ListBoxControl();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
-            this.listBoxKeys = new System.Windows.Forms.ListBox();
+            this.xtraTabControl1 = new DevExpress.XtraTab.XtraTabControl();
+            this.xtraTabPage1 = new DevExpress.XtraTab.XtraTabPage();
+            this.listBoxControlKeysActions = new DevExpress.XtraEditors.ListBoxControl();
+            this.xtraTabPage2 = new DevExpress.XtraTab.XtraTabPage();
+            this.xtraTabPage3 = new DevExpress.XtraTab.XtraTabPage();
             this.propertyGridControlBind = new DevExpress.XtraVerticalGrid.PropertyGridControl();
+            this.listBoxControlKeysRubrics = new DevExpress.XtraEditors.ListBoxControl();
+            this.listBoxControlKeysRegions = new DevExpress.XtraEditors.ListBoxControl();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -41,7 +47,14 @@
             this.splitContainer2.Panel1.SuspendLayout();
             this.splitContainer2.Panel2.SuspendLayout();
             this.splitContainer2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.xtraTabControl1)).BeginInit();
+            this.xtraTabControl1.SuspendLayout();
+            this.xtraTabPage1.SuspendLayout();
+            this.xtraTabPage2.SuspendLayout();
+            this.xtraTabPage3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.propertyGridControlBind)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.listBoxControlKeysRubrics)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.listBoxControlKeysRegions)).BeginInit();
             this.SuspendLayout();
             // 
             // splitContainer1
@@ -52,7 +65,7 @@
             // 
             // splitContainer1.Panel1
             // 
-            this.splitContainer1.Panel1.Controls.Add(this.listBoxDll);
+            this.splitContainer1.Panel1.Controls.Add(this.listBoxControlDll);
             // 
             // splitContainer1.Panel2
             // 
@@ -61,15 +74,14 @@
             this.splitContainer1.SplitterDistance = 302;
             this.splitContainer1.TabIndex = 0;
             // 
-            // listBoxDll
+            // listBoxControlDll
             // 
-            this.listBoxDll.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.listBoxDll.FormattingEnabled = true;
-            this.listBoxDll.ItemHeight = 16;
-            this.listBoxDll.Location = new System.Drawing.Point(0, 0);
-            this.listBoxDll.Name = "listBoxDll";
-            this.listBoxDll.Size = new System.Drawing.Size(302, 467);
-            this.listBoxDll.TabIndex = 1;
+            this.listBoxControlDll.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.listBoxControlDll.ItemHeight = 16;
+            this.listBoxControlDll.Location = new System.Drawing.Point(0, 0);
+            this.listBoxControlDll.Name = "listBoxControlDll";
+            this.listBoxControlDll.Size = new System.Drawing.Size(302, 467);
+            this.listBoxControlDll.TabIndex = 1;
             // 
             // splitContainer2
             // 
@@ -80,33 +92,84 @@
             // 
             // splitContainer2.Panel1
             // 
-            this.splitContainer2.Panel1.Controls.Add(this.listBoxKeys);
+            this.splitContainer2.Panel1.Controls.Add(this.xtraTabControl1);
             // 
             // splitContainer2.Panel2
             // 
             this.splitContainer2.Panel2.Controls.Add(this.propertyGridControlBind);
             this.splitContainer2.Size = new System.Drawing.Size(398, 467);
-            this.splitContainer2.SplitterDistance = 132;
+            this.splitContainer2.SplitterDistance = 330;
             this.splitContainer2.TabIndex = 0;
             // 
-            // listBoxKeys
+            // xtraTabControl1
             // 
-            this.listBoxKeys.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.listBoxKeys.FormattingEnabled = true;
-            this.listBoxKeys.ItemHeight = 16;
-            this.listBoxKeys.Location = new System.Drawing.Point(0, 0);
-            this.listBoxKeys.Name = "listBoxKeys";
-            this.listBoxKeys.Size = new System.Drawing.Size(398, 132);
-            this.listBoxKeys.TabIndex = 1;
-            this.listBoxKeys.SelectedIndexChanged += new System.EventHandler(this.listBox1_SelectedIndexChanged);
+            this.xtraTabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.xtraTabControl1.Location = new System.Drawing.Point(0, 0);
+            this.xtraTabControl1.Name = "xtraTabControl1";
+            this.xtraTabControl1.SelectedTabPage = this.xtraTabPage1;
+            this.xtraTabControl1.Size = new System.Drawing.Size(398, 330);
+            this.xtraTabControl1.TabIndex = 0;
+            this.xtraTabControl1.TabPages.AddRange(new DevExpress.XtraTab.XtraTabPage[] {
+            this.xtraTabPage1,
+            this.xtraTabPage2,
+            this.xtraTabPage3});
+            // 
+            // xtraTabPage1
+            // 
+            this.xtraTabPage1.Controls.Add(this.listBoxControlKeysActions);
+            this.xtraTabPage1.Name = "xtraTabPage1";
+            this.xtraTabPage1.Size = new System.Drawing.Size(392, 299);
+            this.xtraTabPage1.Text = "Actions";
+            // 
+            // listBoxControlKeysActions
+            // 
+            this.listBoxControlKeysActions.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.listBoxControlKeysActions.ItemHeight = 16;
+            this.listBoxControlKeysActions.Location = new System.Drawing.Point(0, 0);
+            this.listBoxControlKeysActions.Name = "listBoxControlKeysActions";
+            this.listBoxControlKeysActions.Size = new System.Drawing.Size(392, 299);
+            this.listBoxControlKeysActions.TabIndex = 2;
+            this.listBoxControlKeysActions.SelectedIndexChanged += new System.EventHandler(this.listBox1_SelectedIndexChanged);
+            // 
+            // xtraTabPage2
+            // 
+            this.xtraTabPage2.Controls.Add(this.listBoxControlKeysRubrics);
+            this.xtraTabPage2.Name = "xtraTabPage2";
+            this.xtraTabPage2.Size = new System.Drawing.Size(392, 299);
+            this.xtraTabPage2.Text = "Rubrics";
+            // 
+            // xtraTabPage3
+            // 
+            this.xtraTabPage3.Controls.Add(this.listBoxControlKeysRegions);
+            this.xtraTabPage3.Name = "xtraTabPage3";
+            this.xtraTabPage3.Size = new System.Drawing.Size(392, 299);
+            this.xtraTabPage3.Text = "Regions";
             // 
             // propertyGridControlBind
             // 
             this.propertyGridControlBind.Dock = System.Windows.Forms.DockStyle.Fill;
             this.propertyGridControlBind.Location = new System.Drawing.Point(0, 0);
             this.propertyGridControlBind.Name = "propertyGridControlBind";
-            this.propertyGridControlBind.Size = new System.Drawing.Size(398, 331);
+            this.propertyGridControlBind.Size = new System.Drawing.Size(398, 133);
             this.propertyGridControlBind.TabIndex = 2;
+            // 
+            // listBoxControlKeysRubrics
+            // 
+            this.listBoxControlKeysRubrics.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.listBoxControlKeysRubrics.Location = new System.Drawing.Point(0, 0);
+            this.listBoxControlKeysRubrics.Name = "listBoxControlKeysRubrics";
+            this.listBoxControlKeysRubrics.Size = new System.Drawing.Size(392, 299);
+            this.listBoxControlKeysRubrics.TabIndex = 0;
+            this.listBoxControlKeysRubrics.SelectedIndexChanged += new System.EventHandler(this.listBoxControlKeysRubrics_SelectedIndexChanged);
+            // 
+            // listBoxControlKeysRegions
+            // 
+            this.listBoxControlKeysRegions.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.listBoxControlKeysRegions.Location = new System.Drawing.Point(0, 0);
+            this.listBoxControlKeysRegions.Name = "listBoxControlKeysRegions";
+            this.listBoxControlKeysRegions.Size = new System.Drawing.Size(392, 299);
+            this.listBoxControlKeysRegions.TabIndex = 0;
+            this.listBoxControlKeysRegions.SelectedIndexChanged += new System.EventHandler(this.listBoxControlKeysRegions_SelectedIndexChanged);
             // 
             // KeysForm
             // 
@@ -124,7 +187,14 @@
             this.splitContainer2.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
             this.splitContainer2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.xtraTabControl1)).EndInit();
+            this.xtraTabControl1.ResumeLayout(false);
+            this.xtraTabPage1.ResumeLayout(false);
+            this.xtraTabPage2.ResumeLayout(false);
+            this.xtraTabPage3.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.propertyGridControlBind)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.listBoxControlKeysRubrics)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.listBoxControlKeysRegions)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -133,9 +203,15 @@
 
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.SplitContainer splitContainer2;
-        private System.Windows.Forms.ListBox listBoxKeys;
         private DevExpress.XtraVerticalGrid.PropertyGridControl propertyGridControlBind;
-        private System.Windows.Forms.ListBox listBoxDll;
+        private DevExpress.XtraEditors.ListBoxControl listBoxControlDll;
+        private DevExpress.XtraTab.XtraTabControl xtraTabControl1;
+        private DevExpress.XtraTab.XtraTabPage xtraTabPage1;
+        private DevExpress.XtraEditors.ListBoxControl listBoxControlKeysActions;
+        private DevExpress.XtraTab.XtraTabPage xtraTabPage2;
+        private DevExpress.XtraTab.XtraTabPage xtraTabPage3;
+        private DevExpress.XtraEditors.ListBoxControl listBoxControlKeysRubrics;
+        private DevExpress.XtraEditors.ListBoxControl listBoxControlKeysRegions;
 
     }
 }

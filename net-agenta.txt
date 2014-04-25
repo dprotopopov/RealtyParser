@@ -1,0 +1,779 @@
+\//div[contains(@class,'select_box')][contains(@class,'popup_box')][contains(@class,'first_cat_elem')]//div[@class='group-title']\//div[contains(@class,'select_box')][contains(@class,'popup_box')][contains(@class,'first_cat_elem')]//div[@class='group-title'][contains(text(),'{{groupId}}')]/following-sibling::ul[1]/li/a\//div[contains(@class,'select_box')][contains(@class,'popup_box')][contains(@class,'first_cat_elem')]//div[@class='group-title'][contains(text(),'{{groupId}}')]/preceding-sibling::ul[1]//li/a[contains(text(),'{{rubricId}}')]/following-sibling::div[1]//li/a
+
+5	net-agenta.ru	http://net-agenta.ru	GET	NoCompression	http://net-agenta.ru/{{Region}}/{{Rubric}}/{{Action}}/{{Start}}.html	{{PublicationLink}}	[PublicationDatetime:##{{PublicationDatetime}}##,PublicationId:{{PublicationId}},Action:{{Action}},Rubric:{{Rubric}},Region:{{Region}}]	NULL	NULL	30	DatetimeFirstIdSecondComparer	utf-8	NetAgentaParser
+
+http://net-agenta.ru//.html
+5	Rubric	http://net-agenta.ru	...	\{{InnerText}}\{{href}}\{{href}}	\\\s*([^\(]*)\([^\)]*\)\s*\\.*\\.*	\\$1\\$&\\$&	{{InnerText}}	\s*([^\(]*)\([^\)]*\)\s*	$1	\{{groupId}}\{{rubricId}}\{{actionId}}	\!\!\!
+
+5	GET	Action	http://net-agenta.ru		\//div[contains(@class,'select_box')][contains(@class,'popup_box')][contains(@class,'first_cat_elem')]//div[@class='group-title']//nobr\//div[contains(@class,'select_box')][contains(@class,'popup_box')][contains(@class,'first_cat_elem')]//div[@class='group-title'][contains(text(),'{{groupId}}')]/preceding-sibling::ul[1]/li/a\//div[contains(@class,'select_box')][contains(@class,'popup_box')][contains(@class,'first_cat_elem')]//div[@class='group-title'][contains(text(),'{{groupId}}')]/preceding-sibling::ul[1]//li/a[contains(text(),'{{rubricId}}')]/following-sibling::div[1]//li/a	\//div[contains(@class,'select_box')][contains(@class,'popup_box')][contains(@class,'first_cat_elem')]//div[@class='group-title']//nobr\//div[contains(@class,'select_box')][contains(@class,'popup_box')][contains(@class,'first_cat_elem')]//div[@class='group-title'][contains(text(),'{{groupId}}')]/preceding-sibling::ul[1]/li/a//nobr\//div[contains(@class,'select_box')][contains(@class,'popup_box')][contains(@class,'first_cat_elem')]//div[@class='group-title'][contains(text(),'{{groupId}}')]/preceding-sibling::ul[1]//li/a[contains(text(),'{{rubricId}}')]/following-sibling::div[1]//li/a//nobr	\{{InnerText}}\{{href}}\{{href}}	\\\s*([^\(]*)\([^\)]*\)\s*\\.*\\.*	\\$1\\$&\\$&	{{InnerText}}	\s*([^\(]*)\([^\)]*\)\s*	$1	\{{groupId}}\{{rubricId}}\{{actionId}}	\!\!\!
+
+
+http://www.net-agenta.ru/index.php?option=com_adv&task=cityalias {"city_id":""}
+http://www.net-agenta.ru/index.php?option=com_adv&task=selectcity&data={ region_id:77 } 6A 73 6F 6E 3D 7B 22 72 65 67 69 6F 6E 5F 69 64 22 3A 22 30 31 22 7D 
+json={"region_id":"01"}
+http://www.net-agenta.ru/index.php?option=com_adv&task=selectcountry&data={ country_id: 1 }
+
+http://www.net-agenta.ru/index.php?option=com_adv&task=selectregcity&country_id=1
+
+http://www.net-agenta.ru/index.php?option=com_adv&task=getadvcontact {'adv_id':'1374765'}
+'1374765',this
+
+
+filter-numrooms
+filter-numrooms-last
+
+//div[contains(@class,'select_box')][contains(@class,'popup_box')]//div[@class='group-title']
+
+\//div[contains(@class,'select_box')][contains(@class,'popup_box')][contains(@class,'first_cat_elem')]//div[@class='group-title']//nobr\//div[contains(@class,'select_box')][contains(@class,'popup_box')][contains(@class,'first_cat_elem')]//div[@class='group-title'][contains(text(),'{{groupId}}')]/preceding-sibling::ul[1]/li/a//nobr\//div[contains(@class,'select_box')][contains(@class,'popup_box')][contains(@class,'first_cat_elem')]//div[@class='group-title'][contains(text(),'{{groupId}}')]/preceding-sibling::ul[1]//li/a[contains(text(),'{{rubricId}}')]/following-sibling::div[1]//li/a//nobr
+
+//table[@width='100%']/preceding-sibling::p[1][@class='leftp']/following-sibling::table[@width='100%']//h3/a[@href]
+
+//div[contains(@class,'select_box')][contains(@class,'popup_box')][contains(@class,'first_cat_elem')]//div[@class='subpath']//li/a
+//div[contains(@class,'select_box')][contains(@class,'popup_box')]//li/a
+
+
+			<table class="block" cellpadding="0" cellspacing="0">
+				<tr>
+					<td class="left-top" colspan="2">
+						<span class="arrow-top png24" style="left:99px;"></span>
+					</td>
+					<td class="right-top">
+					</td>
+				</tr>
+				<tr>
+					<td class="left-middle">
+					</td>
+					<td class="middle" style="background-color:#FFF;">
+						<div class="link_container" style="min-width:120px;">
+							<ul></ul><ul></ul><ul></ul><div class="group-title" style="margin-left:10px;">Жилая недвижимость (2020)</div><ul>											<li class="active">
+																									<span style="display:block;margin-left:30px;line-height:18px;padding-right:5px;"><nobr>Квартиры и комнаты (1822)</nobr></span>
+																							</li>
+																					<li class="not_active">
+																									<a title="Дома в Москве" style="margin-left:30px;" href="http://www.net-agenta.ru/kottedzhej.html">
+														<nobr>Дома, коттеджи (98)</nobr>													</a>
+																											<div class="subpath">
+
+															<table class="block" cellpadding="0" cellspacing="0">
+																<tr>
+																	<td class="left-top" colspan="2">
+																	</td>
+																	<td class="right-top">
+																	</td>
+																</tr>
+																<tr>
+																	<td class="left-middle">
+																	</td>
+																	<td class="middle" style="background-color:#FFF;">
+																		<span class="arrow-left png24"></span>
+																		<div class="link_container" style="min-width:150px;">
+
+																			<ul>
+																																											<li class="not_active">
+																																																	<a title="Дома в Москве" style="margin-left:10px;" href="http://www.net-agenta.ru/kottedzhej.html">
+																										<noindex><nobr>Продажа<span class='sep_corner1'>-</span>Предложение (65)</nobr></noindex>																									</a>
+																																															</li>
+																																													<li class="not_active">
+																																																	<a title="" style="margin-left:10px;" href="http://www.net-agenta.ru/kottedzhej/buy.html">
+																										<noindex><nobr><noindex>Продажа<span class='sep_corner1'>-</span>Спрос</noindex> (4)</nobr></noindex>																									</a>
+																																															</li>
+																																													<li class="not_active">
+																																																	<a title="Аренда домов в Москве" style="margin-left:10px;" href="http://www.net-agenta.ru/kottedzhej/arenda.html">
+																										<nobr>Аренда<span class='sep_corner1'>-</span>Предложение (17)</nobr>																									</a>
+																																															</li>
+																																													<li class="not_active">
+																																																	<a title="" style="margin-left:10px;" href="http://www.net-agenta.ru/kottedzhej/hire.html">
+																										<noindex><nobr><noindex>Аренда<span class='sep_corner1'>-</span>Спрос</noindex> (12)</nobr></noindex>																									</a>
+																																															</li>
+																																													<li class="not_active">
+																																																	<a title="" style="margin-left:10px;" href="http://www.net-agenta.ru/posutochno/kottedzhi-doma.html">
+																										<noindex><nobr>Посуточно (3)</nobr></noindex>																									</a>
+																																															</li>
+																																									</ul>
+																		</div>
+																	</td>
+																	<td class="right-middle">
+																	</td>
+																</tr>
+																<tr>
+																	<td class="left-bottom" colspan="2">
+																	</td>
+																	<td class="right-bottom">
+																	</td>
+																</tr>
+															</table>
+
+														</div>
+																																				</li>
+																					<li class="not_active">
+																									<a title="Посуточно в Москве" style="margin-left:30px;" href="http://www.net-agenta.ru/posutochno.html">
+														<nobr>Посуточная, почасовая, сезонная аренда (48)</nobr>													</a>
+																											<div class="subpath">
+
+															<table class="block" cellpadding="0" cellspacing="0">
+																<tr>
+																	<td class="left-top" colspan="2">
+																	</td>
+																	<td class="right-top">
+																	</td>
+																</tr>
+																<tr>
+																	<td class="left-middle">
+																	</td>
+																	<td class="middle" style="background-color:#FFF;">
+																		<span class="arrow-left png24"></span>
+																		<div class="link_container" style="min-width:150px;">
+
+																			<ul>
+																																											<li class="not_active">
+																																																	<a title="Посуточно в Москве" style="margin-left:10px;" href="http://www.net-agenta.ru/posutochno.html">
+																										<nobr>Квартиры (40)</nobr>																									</a>
+																																															</li>
+																																													<li class="not_active">
+																																																	<a title="Коттеджи посуточно в Москве" style="margin-left:10px;" href="http://www.net-agenta.ru/posutochno/kottedzhi-doma.html">
+																										<noindex><nobr>Дома, коттеджи (3)</nobr></noindex>																									</a>
+																																															</li>
+																																													<li class="not_active">
+																																																	<a title="Гостиницы в Москве" style="margin-left:10px;" href="http://www.net-agenta.ru/posutochno/hotel.html">
+																										<noindex><nobr>Гостиницы (5)</nobr></noindex>																									</a>
+																																															</li>
+																																									</ul>
+																		</div>
+																	</td>
+																	<td class="right-middle">
+																	</td>
+																</tr>
+																<tr>
+																	<td class="left-bottom" colspan="2">
+																	</td>
+																	<td class="right-bottom">
+																	</td>
+																</tr>
+															</table>
+
+														</div>
+																																				</li>
+																					<li class="not_active">
+																									<a title="Обмен квартир в Москве" style="margin-left:30px;" href="http://www.net-agenta.ru/obmen.html">
+														<noindex><nobr>Обмен жилья (92)</nobr></noindex>													</a>
+																																				</li>
+																					<li class="not_active">
+																									<a title="Загородная недвижимость в Москве" style="margin-left:10px;" href="http://www.net-agenta.ru/zagorodnaya-nedvizhimost.html">
+														<noindex><nobr>Загородная недвижимость (296)</nobr></noindex>													</a>
+																																				</li>
+																					<li class="not_active">
+																									<a title="Дачи, сады в Москве" style="margin-left:30px;" href="http://www.net-agenta.ru/dachi-sady.html">
+														<noindex><nobr>Дачи, сады (46)</nobr></noindex>													</a>
+																											<div class="subpath">
+
+															<table class="block" cellpadding="0" cellspacing="0">
+																<tr>
+																	<td class="left-top" colspan="2">
+																	</td>
+																	<td class="right-top">
+																	</td>
+																</tr>
+																<tr>
+																	<td class="left-middle">
+																	</td>
+																	<td class="middle" style="background-color:#FFF;">
+																		<span class="arrow-left png24"></span>
+																		<div class="link_container" style="min-width:150px;">
+
+																			<ul>
+																																											<li class="not_active">
+																																																	<a title="Дачи, сады в Москве" style="margin-left:10px;" href="http://www.net-agenta.ru/dachi-sady.html">
+																										<noindex><nobr>Продажа<span class='sep_corner1'>-</span>Предложение (45)</nobr></noindex>																									</a>
+																																															</li>
+																																													<li class="not_active">
+																																																	<a title="" style="margin-left:10px;" href="http://www.net-agenta.ru/dachi-sady/buy.html">
+																										<noindex><nobr><noindex>Продажа<span class='sep_corner1'>-</span>Спрос</noindex> (1)</nobr></noindex>																									</a>
+																																															</li>
+																																									</ul>
+																		</div>
+																	</td>
+																	<td class="right-middle">
+																	</td>
+																</tr>
+																<tr>
+																	<td class="left-bottom" colspan="2">
+																	</td>
+																	<td class="right-bottom">
+																	</td>
+																</tr>
+															</table>
+
+														</div>
+																																				</li>
+																					<li class="not_active">
+																									<a title="Земельные участки в Москве" style="margin-left:30px;" href="http://www.net-agenta.ru/uchastkov.html">
+														<noindex><nobr>Земельные участки (250)</nobr></noindex>													</a>
+																											<div class="subpath">
+
+															<table class="block" cellpadding="0" cellspacing="0">
+																<tr>
+																	<td class="left-top" colspan="2">
+																	</td>
+																	<td class="right-top">
+																	</td>
+																</tr>
+																<tr>
+																	<td class="left-middle">
+																	</td>
+																	<td class="middle" style="background-color:#FFF;">
+																		<span class="arrow-left png24"></span>
+																		<div class="link_container" style="min-width:150px;">
+
+																			<ul>
+																																											<li class="not_active">
+																																																	<a title="Земельные участки в Москве" style="margin-left:10px;" href="http://www.net-agenta.ru/uchastkov.html">
+																										<noindex><nobr>Продажа<span class='sep_corner1'>-</span>Предложение (249)</nobr></noindex>																									</a>
+																																															</li>
+																																													<li class="not_active">
+																																																	<a title="" style="margin-left:10px;" href="http://www.net-agenta.ru/uchastkov/buy.html">
+																										<noindex><nobr><noindex>Продажа<span class='sep_corner1'>-</span>Спрос</noindex> (1)</nobr></noindex>																									</a>
+																																															</li>
+																																									</ul>
+																		</div>
+																	</td>
+																	<td class="right-middle">
+																	</td>
+																</tr>
+																<tr>
+																	<td class="left-bottom" colspan="2">
+																	</td>
+																	<td class="right-bottom">
+																	</td>
+																</tr>
+															</table>
+
+														</div>
+																																				</li>
+																					<li class="not_active">
+																									<a title="Коммерческая недвижимость в Москве" style="margin-left:10px;" href="http://www.net-agenta.ru/kommercheskaya-nedvizhimost.html">
+														<noindex><nobr>Коммерческая недвижимость (250)</nobr></noindex>													</a>
+																																				</li>
+																					<li class="not_active">
+																									<a title="Офисы в Москве" style="margin-left:30px;" href="http://www.net-agenta.ru/ofis.html">
+														<noindex><nobr>Офисы (107)</nobr></noindex>													</a>
+																											<div class="subpath">
+
+															<table class="block" cellpadding="0" cellspacing="0">
+																<tr>
+																	<td class="left-top" colspan="2">
+																	</td>
+																	<td class="right-top">
+																	</td>
+																</tr>
+																<tr>
+																	<td class="left-middle">
+																	</td>
+																	<td class="middle" style="background-color:#FFF;">
+																		<span class="arrow-left png24"></span>
+																		<div class="link_container" style="min-width:150px;">
+
+																			<ul>
+																																											<li class="not_active">
+																																																	<a title="Офисы в Москве" style="margin-left:10px;" href="http://www.net-agenta.ru/ofis.html">
+																										<noindex><nobr>Аренда<span class='sep_corner1'>-</span>Предложение (71)</nobr></noindex>																									</a>
+																																															</li>
+																																													<li class="not_active">
+																																																	<a title="" style="margin-left:10px;" href="http://www.net-agenta.ru/ofis/hire.html">
+																										<noindex><nobr><noindex>Аренда<span class='sep_corner1'>-</span>Спрос</noindex> (15)</nobr></noindex>																									</a>
+																																															</li>
+																																													<li class="not_active">
+																																																	<a title="Продажа офисов в Москве" style="margin-left:10px;" href="http://www.net-agenta.ru/ofis/prodazha.html">
+																										<noindex><nobr>Продажа<span class='sep_corner1'>-</span>Предложение (21)</nobr></noindex>																									</a>
+																																															</li>
+																																													<li class="not_active">
+																																																	<a title="" style="margin-left:10px;" href="http://www.net-agenta.ru/ofis/buy.html">
+																										<noindex><nobr><noindex>Продажа<span class='sep_corner1'>-</span>Спрос</noindex> (0)</nobr></noindex>																									</a>
+																																															</li>
+																																									</ul>
+																		</div>
+																	</td>
+																	<td class="right-middle">
+																	</td>
+																</tr>
+																<tr>
+																	<td class="left-bottom" colspan="2">
+																	</td>
+																	<td class="right-bottom">
+																	</td>
+																</tr>
+															</table>
+
+														</div>
+																																				</li>
+																					<li class="not_active">
+																									<a title="Торговые помещения в Москве" style="margin-left:30px;" href="http://www.net-agenta.ru/torg.html">
+														<noindex><nobr>Торговые помещения (50)</nobr></noindex>													</a>
+																											<div class="subpath">
+
+															<table class="block" cellpadding="0" cellspacing="0">
+																<tr>
+																	<td class="left-top" colspan="2">
+																	</td>
+																	<td class="right-top">
+																	</td>
+																</tr>
+																<tr>
+																	<td class="left-middle">
+																	</td>
+																	<td class="middle" style="background-color:#FFF;">
+																		<span class="arrow-left png24"></span>
+																		<div class="link_container" style="min-width:150px;">
+
+																			<ul>
+																																											<li class="not_active">
+																																																	<a title="Торговые помещения в Москве" style="margin-left:10px;" href="http://www.net-agenta.ru/torg.html">
+																										<noindex><nobr>Аренда<span class='sep_corner1'>-</span>Предложение (20)</nobr></noindex>																									</a>
+																																															</li>
+																																													<li class="not_active">
+																																																	<a title="" style="margin-left:10px;" href="http://www.net-agenta.ru/torg/hire.html">
+																										<noindex><nobr>Аренда<span class='sep_corner1'>-</span>Спрос (8)</nobr></noindex>																									</a>
+																																															</li>
+																																													<li class="not_active">
+																																																	<a title="Продажа торговых помещений в Москве" style="margin-left:10px;" href="http://www.net-agenta.ru/torg/prodazha.html">
+																										<noindex><nobr>Продажа<span class='sep_corner1'>-</span>Предложение (20)</nobr></noindex>																									</a>
+																																															</li>
+																																													<li class="not_active">
+																																																	<a title="" style="margin-left:10px;" href="http://www.net-agenta.ru/torg/buy.html">
+																										<noindex><nobr>Продажа<span class='sep_corner1'>-</span>Спрос (2)</nobr></noindex>																									</a>
+																																															</li>
+																																									</ul>
+																		</div>
+																	</td>
+																	<td class="right-middle">
+																	</td>
+																</tr>
+																<tr>
+																	<td class="left-bottom" colspan="2">
+																	</td>
+																	<td class="right-bottom">
+																	</td>
+																</tr>
+															</table>
+
+														</div>
+																																				</li>
+																					<li class="not_active">
+																									<a title="Производственные помещения в Москве" style="margin-left:30px;" href="http://www.net-agenta.ru/production.html">
+														<noindex><nobr>Производственные помещения (16)</nobr></noindex>													</a>
+																											<div class="subpath">
+
+															<table class="block" cellpadding="0" cellspacing="0">
+																<tr>
+																	<td class="left-top" colspan="2">
+																	</td>
+																	<td class="right-top">
+																	</td>
+																</tr>
+																<tr>
+																	<td class="left-middle">
+																	</td>
+																	<td class="middle" style="background-color:#FFF;">
+																		<span class="arrow-left png24"></span>
+																		<div class="link_container" style="min-width:150px;">
+
+																			<ul>
+																																											<li class="not_active">
+																																																	<a title="Производственные помещения в Москве" style="margin-left:10px;" href="http://www.net-agenta.ru/production.html">
+																										<noindex><nobr>Аренда<span class='sep_corner1'>-</span>Предложение (4)</nobr></noindex>																									</a>
+																																															</li>
+																																													<li class="not_active">
+																																																	<a title="" style="margin-left:10px;" href="http://www.net-agenta.ru/production/hire.html">
+																										<noindex><nobr><noindex>Аренда<span class='sep_corner1'>-</span>Спрос</noindex> (6)</nobr></noindex>																									</a>
+																																															</li>
+																																													<li class="not_active">
+																																																	<a title="Продажа в Москве. Производственные помещения." style="margin-left:10px;" href="http://www.net-agenta.ru/production/prodazha.html">
+																										<noindex><nobr>Продажа<span class='sep_corner1'>-</span>Предложение (6)</nobr></noindex>																									</a>
+																																															</li>
+																																													<li class="not_active">
+																																																	<a title="" style="margin-left:10px;" href="http://www.net-agenta.ru/production/buy.html">
+																										<noindex><nobr><noindex>Продажа<span class='sep_corner1'>-</span>Спрос</noindex> (0)</nobr></noindex>																									</a>
+																																															</li>
+																																									</ul>
+																		</div>
+																	</td>
+																	<td class="right-middle">
+																	</td>
+																</tr>
+																<tr>
+																	<td class="left-bottom" colspan="2">
+																	</td>
+																	<td class="right-bottom">
+																	</td>
+																</tr>
+															</table>
+
+														</div>
+																																				</li>
+																					<li class="not_active">
+																									<a title="Склады в Москве" style="margin-left:30px;" href="http://www.net-agenta.ru/sklada.html">
+														<noindex><nobr>Склады (28)</nobr></noindex>													</a>
+																											<div class="subpath">
+
+															<table class="block" cellpadding="0" cellspacing="0">
+																<tr>
+																	<td class="left-top" colspan="2">
+																	</td>
+																	<td class="right-top">
+																	</td>
+																</tr>
+																<tr>
+																	<td class="left-middle">
+																	</td>
+																	<td class="middle" style="background-color:#FFF;">
+																		<span class="arrow-left png24"></span>
+																		<div class="link_container" style="min-width:150px;">
+
+																			<ul>
+																																											<li class="not_active">
+																																																	<a title="Склады в Москве" style="margin-left:10px;" href="http://www.net-agenta.ru/sklada.html">
+																										<noindex><nobr>Аренда<span class='sep_corner1'>-</span>Предложение (23)</nobr></noindex>																									</a>
+																																															</li>
+																																													<li class="not_active">
+																																																	<a title="" style="margin-left:10px;" href="http://www.net-agenta.ru/sklada/hire.html">
+																										<noindex><nobr><noindex>Аренда<span class='sep_corner1'>-</span>Спрос</noindex> (1)</nobr></noindex>																									</a>
+																																															</li>
+																																													<li class="not_active">
+																																																	<a title="Продажа складов в Москве" style="margin-left:10px;" href="http://www.net-agenta.ru/sklada/prodazha.html">
+																										<noindex><nobr>Продажа<span class='sep_corner1'>-</span>Предложение (4)</nobr></noindex>																									</a>
+																																															</li>
+																																													<li class="not_active">
+																																																	<a title="" style="margin-left:10px;" href="http://www.net-agenta.ru/sklada/buy.html">
+																										<noindex><nobr><noindex>Продажа<span class='sep_corner1'>-</span>Спрос</noindex> (0)</nobr></noindex>																									</a>
+																																															</li>
+																																									</ul>
+																		</div>
+																	</td>
+																	<td class="right-middle">
+																	</td>
+																</tr>
+																<tr>
+																	<td class="left-bottom" colspan="2">
+																	</td>
+																	<td class="right-bottom">
+																	</td>
+																</tr>
+															</table>
+
+														</div>
+																																				</li>
+																					<li class="not_active">
+																									<a title="" style="margin-left:30px;" href="http://www.net-agenta.ru/com-other.html">
+														<noindex><nobr>Прочая коммерческая недвижимость (49)</nobr></noindex>													</a>
+																											<div class="subpath">
+
+															<table class="block" cellpadding="0" cellspacing="0">
+																<tr>
+																	<td class="left-top" colspan="2">
+																	</td>
+																	<td class="right-top">
+																	</td>
+																</tr>
+																<tr>
+																	<td class="left-middle">
+																	</td>
+																	<td class="middle" style="background-color:#FFF;">
+																		<span class="arrow-left png24"></span>
+																		<div class="link_container" style="min-width:150px;">
+
+																			<ul>
+																																											<li class="not_active">
+																																																	<a title="" style="margin-left:10px;" href="http://www.net-agenta.ru/com-other.html">
+																										<noindex><nobr>Аренда<span class='sep_corner1'>-</span>Предложение (25)</nobr></noindex>																									</a>
+																																															</li>
+																																													<li class="not_active">
+																																																	<a title="" style="margin-left:10px;" href="http://www.net-agenta.ru/com-other/hire.html">
+																										<noindex><nobr>Аренда<span class='sep_corner1'>-</span>Спрос (3)</nobr></noindex>																									</a>
+																																															</li>
+																																													<li class="not_active">
+																																																	<a title="" style="margin-left:10px;" href="http://www.net-agenta.ru/com-other/sale.html">
+																										<noindex><nobr>Продажа<span class='sep_corner1'>-</span>Предложение (21)</nobr></noindex>																									</a>
+																																															</li>
+																																													<li class="not_active">
+																																																	<a title="" style="margin-left:10px;" href="http://www.net-agenta.ru/com-other/buy.html">
+																										<noindex><nobr>Продажа<span class='sep_corner1'>-</span>Спрос (0)</nobr></noindex>																									</a>
+																																															</li>
+																																									</ul>
+																		</div>
+																	</td>
+																	<td class="right-middle">
+																	</td>
+																</tr>
+																<tr>
+																	<td class="left-bottom" colspan="2">
+																	</td>
+																	<td class="right-bottom">
+																	</td>
+																</tr>
+															</table>
+
+														</div>
+																																				</li>
+										</ul><div class="group-title" style="margin-left:10px;">Зарубежная недвижимость (33)</div><ul>											<li class="not_active">
+																									<a title="" style="margin-left:30px;" href="http://www.net-agenta.ru/foreign-flat.html">
+														<noindex><nobr>Квартиры, апартаменты (18)</nobr></noindex>													</a>
+																											<div class="subpath">
+
+															<table class="block" cellpadding="0" cellspacing="0">
+																<tr>
+																	<td class="left-top" colspan="2">
+																	</td>
+																	<td class="right-top">
+																	</td>
+																</tr>
+																<tr>
+																	<td class="left-middle">
+																	</td>
+																	<td class="middle" style="background-color:#FFF;">
+																		<span class="arrow-left png24"></span>
+																		<div class="link_container" style="min-width:150px;">
+
+																			<ul>
+																																											<li class="not_active">
+																																																	<a title="" style="margin-left:10px;" href="http://www.net-agenta.ru/foreign-flat.html">
+																										<noindex><nobr>Аренда<span class='sep_corner1'>-</span>Предложение (2)</nobr></noindex>																									</a>
+																																															</li>
+																																													<li class="not_active">
+																																																	<a title="" style="margin-left:10px;" href="http://www.net-agenta.ru/foreign-flat/hire.html">
+																										<noindex><nobr>Аренда<span class='sep_corner1'>-</span>Спрос (1)</nobr></noindex>																									</a>
+																																															</li>
+																																													<li class="not_active">
+																																																	<a title="" style="margin-left:10px;" href="http://www.net-agenta.ru/foreign-flat/sale.html">
+																										<noindex><nobr>Продажа<span class='sep_corner1'>-</span>Предложение (14)</nobr></noindex>																									</a>
+																																															</li>
+																																													<li class="not_active">
+																																																	<a title="" style="margin-left:10px;" href="http://www.net-agenta.ru/foreign-flat/buy.html">
+																										<noindex><nobr>Продажа<span class='sep_corner1'>-</span>Спрос (1)</nobr></noindex>																									</a>
+																																															</li>
+																																									</ul>
+																		</div>
+																	</td>
+																	<td class="right-middle">
+																	</td>
+																</tr>
+																<tr>
+																	<td class="left-bottom" colspan="2">
+																	</td>
+																	<td class="right-bottom">
+																	</td>
+																</tr>
+															</table>
+
+														</div>
+																																				</li>
+																					<li class="not_active">
+																									<a title="" style="margin-left:30px;" href="http://www.net-agenta.ru/foreign-house.html">
+														<noindex><nobr>Дома, таунхаусы (5)</nobr></noindex>													</a>
+																											<div class="subpath">
+
+															<table class="block" cellpadding="0" cellspacing="0">
+																<tr>
+																	<td class="left-top" colspan="2">
+																	</td>
+																	<td class="right-top">
+																	</td>
+																</tr>
+																<tr>
+																	<td class="left-middle">
+																	</td>
+																	<td class="middle" style="background-color:#FFF;">
+																		<span class="arrow-left png24"></span>
+																		<div class="link_container" style="min-width:150px;">
+
+																			<ul>
+																																											<li class="not_active">
+																																																	<a title="" style="margin-left:10px;" href="http://www.net-agenta.ru/foreign-house.html">
+																										<noindex><nobr>Аренда<span class='sep_corner1'>-</span>Предложение (0)</nobr></noindex>																									</a>
+																																															</li>
+																																													<li class="not_active">
+																																																	<a title="" style="margin-left:10px;" href="http://www.net-agenta.ru/foreign-house/hire.html">
+																										<noindex><nobr>Аренда<span class='sep_corner1'>-</span>Спрос (1)</nobr></noindex>																									</a>
+																																															</li>
+																																													<li class="not_active">
+																																																	<a title="" style="margin-left:10px;" href="http://www.net-agenta.ru/foreign-house/prodazha.html">
+																										<noindex><nobr>Продажа<span class='sep_corner1'>-</span>Предложение (4)</nobr></noindex>																									</a>
+																																															</li>
+																																													<li class="not_active">
+																																																	<a title="" style="margin-left:10px;" href="http://www.net-agenta.ru/foreign-house/buy.html">
+																										<noindex><nobr>Продажа<span class='sep_corner1'>-</span>Спрос (0)</nobr></noindex>																									</a>
+																																															</li>
+																																									</ul>
+																		</div>
+																	</td>
+																	<td class="right-middle">
+																	</td>
+																</tr>
+																<tr>
+																	<td class="left-bottom" colspan="2">
+																	</td>
+																	<td class="right-bottom">
+																	</td>
+																</tr>
+															</table>
+
+														</div>
+																																				</li>
+																					<li class="not_active">
+																									<a title="" style="margin-left:30px;" href="http://www.net-agenta.ru/foreign-sector.html">
+														<noindex><nobr>Земельные участки (10)</nobr></noindex>													</a>
+																											<div class="subpath">
+
+															<table class="block" cellpadding="0" cellspacing="0">
+																<tr>
+																	<td class="left-top" colspan="2">
+																	</td>
+																	<td class="right-top">
+																	</td>
+																</tr>
+																<tr>
+																	<td class="left-middle">
+																	</td>
+																	<td class="middle" style="background-color:#FFF;">
+																		<span class="arrow-left png24"></span>
+																		<div class="link_container" style="min-width:150px;">
+
+																			<ul>
+																																											<li class="not_active">
+																																																	<a title="" style="margin-left:10px;" href="http://www.net-agenta.ru/foreign-sector.html">
+																										<noindex><nobr>Продажа<span class='sep_corner1'>-</span>Предложение (10)</nobr></noindex>																									</a>
+																																															</li>
+																																													<li class="not_active">
+																																																	<a title="" style="margin-left:10px;" href="http://www.net-agenta.ru/foreign-sector/buy.html">
+																										<noindex><nobr>Продажа<span class='sep_corner1'>-</span>Спрос (0)</nobr></noindex>																									</a>
+																																															</li>
+																																									</ul>
+																		</div>
+																	</td>
+																	<td class="right-middle">
+																	</td>
+																</tr>
+																<tr>
+																	<td class="left-bottom" colspan="2">
+																	</td>
+																	<td class="right-bottom">
+																	</td>
+																</tr>
+															</table>
+
+														</div>
+																																				</li>
+										</ul><div class="group-title" style="margin-left:10px;">Прочее (130)</div><ul>											<li class="not_active">
+																									<a title="Гаражи в Москве" style="margin-left:30px;" href="http://www.net-agenta.ru/garazhi.html">
+														<noindex><nobr>Гаражи, парковочные места, стоянки (85)</nobr></noindex>													</a>
+																											<div class="subpath">
+
+															<table class="block" cellpadding="0" cellspacing="0">
+																<tr>
+																	<td class="left-top" colspan="2">
+																	</td>
+																	<td class="right-top">
+																	</td>
+																</tr>
+																<tr>
+																	<td class="left-middle">
+																	</td>
+																	<td class="middle" style="background-color:#FFF;">
+																		<span class="arrow-left png24"></span>
+																		<div class="link_container" style="min-width:150px;">
+
+																			<ul>
+																																											<li class="not_active">
+																																																	<a title="Гаражи в Москве" style="margin-left:10px;" href="http://www.net-agenta.ru/garazhi.html">
+																										<noindex><nobr>Продажа<span class='sep_corner1'>-</span>Предложение (34)</nobr></noindex>																									</a>
+																																															</li>
+																																													<li class="not_active">
+																																																	<a title="" style="margin-left:10px;" href="http://www.net-agenta.ru/garazhi/buy.html">
+																										<noindex><nobr><noindex>Продажа<span class='sep_corner1'>-</span>Спрос</noindex> (0)</nobr></noindex>																									</a>
+																																															</li>
+																																													<li class="not_active">
+																																																	<a title="Аренда гаражей в Москве" style="margin-left:10px;" href="http://www.net-agenta.ru/garazhi/arenda.html">
+																										<noindex><nobr>Аренда<span class='sep_corner1'>-</span>Предложение (43)</nobr></noindex>																									</a>
+																																															</li>
+																																													<li class="not_active">
+																																																	<a title="" style="margin-left:10px;" href="http://www.net-agenta.ru/garazhi/hire.html">
+																										<noindex><nobr><noindex>Аренда<span class='sep_corner1'>-</span>Спрос</noindex> (8)</nobr></noindex>																									</a>
+																																															</li>
+																																									</ul>
+																		</div>
+																	</td>
+																	<td class="right-middle">
+																	</td>
+																</tr>
+																<tr>
+																	<td class="left-bottom" colspan="2">
+																	</td>
+																	<td class="right-bottom">
+																	</td>
+																</tr>
+															</table>
+
+														</div>
+																																				</li>
+																					<li class="not_active">
+																									<a title="Услуги в Москве" style="margin-left:30px;" href="http://www.net-agenta.ru/uslugi.html">
+														<noindex><nobr>Услуги (34)</nobr></noindex>													</a>
+																																				</li>
+																					<li class="not_active">
+																									<a rel="nofollow" title="" style="margin-left:30px;" href="http://www.net-agenta.ru/other.html">
+														<noindex><nobr>Другое (11)</nobr></noindex>													</a>
+																																				</li>
+																					<li class="not_active">
+																									<a title="" style="margin-left:10px;" href="http://www.net-agenta.ru/nedvizhimost.html">
+														<noindex><nobr>Вся недвижимость одной страницей (2704)</nobr></noindex>													</a>
+																											<div class="subpath">
+
+															<table class="block" cellpadding="0" cellspacing="0">
+																<tr>
+																	<td class="left-top" colspan="2">
+																	</td>
+																	<td class="right-top">
+																	</td>
+																</tr>
+																<tr>
+																	<td class="left-middle">
+																	</td>
+																	<td class="middle" style="background-color:#FFF;">
+																		<span class="arrow-left png24"></span>
+																		<div class="link_container" style="min-width:150px;">
+
+																			<ul>
+																																											<li class="not_active">
+																																																	<a title="Недвижимость в Москве" style="margin-left:10px;" href="http://www.net-agenta.ru/nedvizhimost.html">
+																										<noindex><nobr>В виде списка</nobr></noindex>																									</a>
+																																															</li>
+																																													<li class="not_active">
+																																																	<a title="" style="margin-left:10px;" href="http://www.net-agenta.ru/nedvizhimost/allonmap.html">
+																										<noindex><nobr>На карте</nobr></noindex>																									</a>
+																																															</li>
+																																									</ul>
+																		</div>
+																	</td>
+																	<td class="right-middle">
+																	</td>
+																</tr>
+																<tr>
+																	<td class="left-bottom" colspan="2">
+																	</td>
+																	<td class="right-bottom">
+																	</td>
+																</tr>
+															</table>
+
+														</div>
+																																				</li>
+										</ul>						</div>
+					</td>
+					<td class="right-middle">
+					</td>
+				</tr>
+				<tr>
+					<td class="left-bottom" colspan="2">
+					</td>
+					<td class="right-bottom">
+					</td>
+				</tr>
+			</table>
+		

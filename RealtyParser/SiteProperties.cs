@@ -5,12 +5,12 @@ namespace RealtyParser
     /// <summary>
     ///     Настройки для сайта, хранимые в базе данных
     /// </summary>
-    public class SiteProperties : Collections.Properties, IValueable
+    public class SiteProperties : MyParser.SiteProperties, IValueable
     {
         /// <summary>
         ///     Идентификатор сайта
         /// </summary>
-        public object SiteId
+        public new object SiteId
         {
             get
             {
@@ -31,7 +31,7 @@ namespace RealtyParser
         /// <summary>
         ///     Название сайта
         /// </summary>
-        public object SiteTitle
+        public new object SiteTitle
         {
             get
             {
@@ -52,7 +52,7 @@ namespace RealtyParser
         /// <summary>
         ///     Url сайта
         /// </summary>
-        public object Url
+        public new object Url
         {
             get
             {
@@ -73,7 +73,7 @@ namespace RealtyParser
         /// <summary>
         ///     Метод отправки запроса GET/POST
         /// </summary>
-        public object Method
+        public new object Method
         {
             get
             {
@@ -91,7 +91,7 @@ namespace RealtyParser
             }
         }
 
-        public object CompressionClassName
+        public new object CompressionClassName
         {
             get
             {
@@ -113,7 +113,7 @@ namespace RealtyParser
         /// <summary>
         ///     Шаблон формирования расширенного запроса
         /// </summary>
-        public object LookupTemplate
+        public new object LookupTemplate
         {
             get
             {
@@ -134,7 +134,7 @@ namespace RealtyParser
         /// <summary>
         ///     Шаблон формирования одиночного запроса
         /// </summary>
-        public object PublicationTemplate
+        public new object PublicationTemplate
         {
             get
             {
@@ -155,7 +155,7 @@ namespace RealtyParser
         /// <summary>
         ///     Иля пользователя при отправке запроса к сайту
         /// </summary>
-        public object UserName
+        public new object UserName
         {
             get
             {
@@ -176,7 +176,7 @@ namespace RealtyParser
         /// <summary>
         ///     Пароль пользователя при отправке запроса к сайту
         /// </summary>
-        public object Password
+        public new object Password
         {
             get
             {
@@ -197,7 +197,7 @@ namespace RealtyParser
         /// <summary>
         ///     Максимальное число возвращаемых обхявлений
         /// </summary>
-        public object CountAd
+        public new object CountAd
         {
             get
             {
@@ -218,7 +218,7 @@ namespace RealtyParser
         /// <summary>
         ///     Название класса из данной сборки, реализующего Icomparer для сравнения двух идентификаторов объявлений
         /// </summary>
-        public object PublicationComparerClassName
+        public new object PublicationComparerClassName
         {
             get
             {
@@ -239,7 +239,7 @@ namespace RealtyParser
         /// <summary>
         ///     Название класса данной сборки
         /// </summary>
-        public object ModuleClassName
+        public new object ModuleClassName
         {
             get
             {
@@ -263,7 +263,7 @@ namespace RealtyParser
         ///     utf-8
         ///     ...
         /// </summary>
-        public object Encoding
+        public new object Encoding
         {
             get
             {
@@ -281,7 +281,7 @@ namespace RealtyParser
             }
         }
 
-        public object ResourceIdTemplate
+        public new object ResourceIdTemplate
         {
             get
             {

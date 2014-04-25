@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using MyLibrary.Types;
 using RealtyParser.Collections;
-using RealtyParser.Types;
 
 namespace RealtyParser
 {

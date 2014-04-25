@@ -9,9 +9,9 @@ namespace RealtyParser
     ///     Используется для доступа к значениям словаря по ключу
     ///     используется для храниния результатов разбора одной страницы на поля
     /// </summary>
-    public class ReturnFields : DictionaryOfList, IValueable
+    public class ReturnFields : MyParser.ReturnFields, IValueable
     {
-        public IEnumerable<string> PublicationId
+        public new IEnumerable<string> PublicationId
         {
             get
             {
@@ -65,7 +65,7 @@ namespace RealtyParser
             }
         }
 
-        public IEnumerable<string> Subdomain
+        public new IEnumerable<string> Subdomain
         {
             get
             {
@@ -83,7 +83,7 @@ namespace RealtyParser
             }
         }
 
-        public IEnumerable<string> Option
+        public new IEnumerable<string> Option
         {
             get
             {
@@ -101,7 +101,7 @@ namespace RealtyParser
             }
         }
 
-        public IEnumerable<string> Title
+        public new IEnumerable<string> Title
         {
             get
             {
@@ -119,7 +119,7 @@ namespace RealtyParser
             }
         }
 
-        public IEnumerable<string> OptionRedirect
+        public new IEnumerable<string> OptionRedirect
         {
             get
             {
@@ -137,7 +137,7 @@ namespace RealtyParser
             }
         }
 
-        public IEnumerable<string> ValueRedirect
+        public new IEnumerable<string> ValueRedirect
         {
             get
             {
@@ -767,7 +767,7 @@ namespace RealtyParser
             }
         }
 
-        public IEnumerable<string> Value
+        public new IEnumerable<string> Value
         {
             get
             {

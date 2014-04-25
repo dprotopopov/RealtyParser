@@ -1,0 +1,441 @@
+egent.ru
+
+http://www.egent.ru/citylist-utf.txt
+http://www.egent.ru/ajax/get_regions/
+
+http://www.egent.ru/ajax/get_city_list/"+id+"/
+http://www.egent.ru/ajax/get_city_list/3223/
+
+
+4	PublicationDatetime	//div[contains(@class,'item detail')]//div[contains(.,'Актуально')]	{{InnerText}}	(\s*(краткосрочно|долгосрочно|посуточно|по часам)\s*(\<br\>)?)*(\s*Сдается с:\s*(\d+\s+\w+\s+\d+)\s*(\<br\>)?)?(\s*Актуально:\s*(\d+\s+\w+\s+\d+)\s*(\<br\>)?)?.*	$8
+4	WebPublicationAdditionalInfoRealtyAdditionalInfoKitchenSpace	//div[contains(@class,'item detail')]//span[contains(.,'Площадь кухни')]	{{InnerText}}	(\s*Общая площадь:\s*(\d+)\s*м(\<sup\>2\<\/sup\>)?\s*(\<br\>)?)?(\s*Жилая площадь:\s*(\d+)\s*м(\<sup\>2\<\/sup\>)?\s*(\<br\>)?)?(\s*Площадь кухни:\s*(\d+)\s*м(\<sup\>2\<\/sup\>)?\s*(\<br\>)?)?	$10
+
+4	Region	\http://www.egent.ru/ajax/get_regions/\http://www.egent.ru/ajax/get_city_list/{{regionId}}/	\//li[@id]\//li/a[@href]	\//li[@id]\//li/a[@href]	\{{id}}\{{href}}	.*	$&	{{InnerText}}	.*	$&	\{{regionId}}\{{cityId}}	\!\!
+
+<ul><li id="3160">Алтайский край</li><li id="3223">Амурская область</li><li id="3251">Архангельская область</li><li id="3282">Астраханская область</li><li id="3352">Белгородская область</li><li id="3371">Брянская область</li><li id="3437">Владимирская область</li><li id="3468">Волгоградская область</li><li id="3503">Вологодская область</li><li id="3529">Воронежская область</li><li id="3673">Еврейская область</li><li id="3675">Ивановская область</li><li id="3703">Иркутская область</li><li id="3751">Кабардино-Балкарская Республика</li><li id="3761">Калининградская область</li><li id="3841">Калужская область</li><li id="3872">Камчатский Край</li><li id="3921">Кемеровская область</li><li id="3952">Кировская область</li><li id="4026">Костромская область</li></ul><ul><li id="4052">Краснодарский край</li><li id="4105">Красноярский край</li><li id="4176">Курганская область</li><li id="4198">Курская область</li><li id="4227">Липецкая область</li><li id="4243">Магаданская область</li><li id="4312"><b>Московская область</b></li><li id="4481">Мурманская область</li><li id="3563">Нижегородская область</li><li id="4503">Новгородская область</li><li id="4528">Новосибирская область</li><li id="4561">Омская область</li><li id="4593">Оренбургская область</li><li id="4633">Орловская область</li><li id="4657">Пензенская область</li><li id="4689">Пермская область</li><li id="4734">Приморский край</li><li id="4773">Псковская область</li><li id="1998532">Республика Адыгея</li><li id="3296">Республика Башкортостан</li></ul><ul><li id="3407">Республика Бурятия</li><li id="3630">Республика Дагестан</li><li id="3827">Республика Калмыкия</li><li id="3892">Республика Карелия</li><li id="3994">Республика Коми</li><li id="4270">Республика Марий Эл</li><li id="4287">Республика Мордовия</li><li id="5011">Республика Саха (Якутия)</li><li id="5246">Республика Татарстан</li><li id="2316497">Республика Хакасия</li><li id="4800">Ростовская область</li><li id="4861">Рязанская область</li><li id="4891">Самарская область</li><li id="4925"><b>Санкт-Петербург и область</b></li><li id="4969">Саратовская область</li><li id="5052">Сахалинская область</li><li id="5080">Свердловская область</li><li id="5151">Северная Осетия</li><li id="5161">Смоленская область</li><li id="5191">Ставропольский край</li></ul><ul><li id="5225">Тамбовская область</li><li id="3784">Тверская область</li><li id="5291">Томская область</li><li id="5312">Тувинская Республика</li><li id="5326">Тульская область</li><li id="5356">Тюменская область</li><li id="5404">Удмуртская Республика</li><li id="5432">Ульяновская область</li><li id="5458">Уральская область</li><li id="5473">Хабаровский край</li><li id="2499002">Ханты-Мансийский автономный округ</li><li id="5507">Челябинская область</li><li id="5543">Чечено-Ингушетия</li><li id="5555">Читинская область</li><li id="5600">Чувашская республика</li><li id="2415585">Чукотский автономный округ</li><li id="5019394">Ямало-Ненецкий автономный округ</li><li id="5625">Ярославская область</li></ul>
+
+<ul><li id="281"><a href="http://barnaul.egent.ru">Барнаул</a></li></ul><ul></ul>
+
+http://barnaul.egent.ru/citylist-utf.txt
+
+4	egent.ru	http://egent.ru	GET	NoCompression	{{Region[2]}}{{Rubric[2]}}?p={{Page}}	{{PublicationLink}}	[PublicationDatetime:##{{PublicationDatetime}}##,PublicationId:{{PublicationId}},Action:{{Action}},Rubric:{{Rubric}},Region:{{Region}}]	NULL	NULL	30	DatetimeFirstIdSecondComparer	utf-8	EgentParser
+
+
+<div class="navigation">
+<ul class="main-menu">
+            <li><a href="/kvartira/">Квартиры</a></li>
+                <li><a href="/komnata/">Комнаты</a></li>
+                <li><a href="/koyko-mesta/">Койко-места</a></li>
+                <li><a href="/doma/">Дома</a></li>
+                <li><a href="/comercial/">Комм. недвижимость</a></li>
+    <li><a href="/yas/">Поиск</a></li>
+</ul>
+</div>
+
+
+<div class="topsubmenu">
+			<a href="/kvartira/1kom/">Однокомнатные</a> 
+			<a href="/kvartira/2kom/">Двухкомнатные</a> 
+			<a href="/kvartira/3kom/">Трехкомнатные</a> 
+			<a href="/kvartira/4kom/">4х и более</a> 
+			<a href="/kvartira-dolgosrochno/">На длительный срок</a> 
+			<a href="/kvartira-sutki/">Посуточно</a> 
+			<a href="/kvartira-po-chasam/">По часам</a> 
+			<a href="/kvartira-sosedi/">Ищу соседа</a></div>
+
+<div class="sf_action" id="sd">Сдам</div>
+
+http://www.egent.ru/search.html?sd=0&sn=0&r1=0&r2=0&r3=0&r4=1&opt1=0&opt2=1&opt3=0&is_searching=1&in_msk=0&in_mo=0&price_ot=0&price_do=0
+http://www.egent.ru/search.html?sd=1&sn=0&r1=0&r2=0&r3=0&r4=1&opt1=0&opt2=1&opt3=0&is_searching=1&in_msk=0&in_mo=0&price_ot=0&price_do=0
+http://blagoveshensk.egent.ru/search.html?sd=0&sn=1&r1=0&r2=0&r3=1&r4=0&opt1=0&opt2=0&opt3=1&is_searching=1&price_ot=0&price_do=0
+
+http://spb.egent.ru/kvartira/3kom/
+http://spb.egent.ru/kvartira/1kom/?p=2
+http://spb.egent.ru/kvartira/1kom/sdam-1916522.html
+
+4	Action	http://www.egent.ru	http://egent.ru	//div[@class='sf_action']	//div[@class='sf_action']	{{id}}	.*	$&	{{InnerText}}	.*	$&	\{{actionId}}	\!
+
+4	Rubric	http://www.egent.ru	http://egent.ru{{Mainmenu}}	\//ul[@class='main-menu']/li/a\//div[@class='topsubmenu']/a	\//ul[@class='main-menu']/li\//div[@class='topsubmenu']/a	{{href}}	.*	$&	{{InnerText}}	.*	$&	\{{Mainmenu}}\{{Submenu}}	\!\!
+
+4	Region	\http://egent.ru/ajax/get_regions/\http://egent.ru/ajax/get_city_list/{{regionId}}/	\//li[@id]\//li/a[@href]	\//li[@id]\//li/a[@href]	\{{id}}\{{href}}	.*	$&	{{InnerText}}	.*	$&	\{{regionId}}\{{cityId}}	\!\!
+
+
+3	Action	http://www.mirkvartir.ru/россия	\http://www.mirkvartir.ru/россия\http://{{actionId}}mirkvartir.ru/россия	//ul[@class='top_menu']/li/a[@href]	//ul[@class='top_menu']/li/a[@href]	{{href}}	(http(s)?:\/\/)?([^\.]+\.)mirkvartir\.ru.*	$3	{{InnerText}}	.*	$&	\{{actionId}}	\!
+
+<ul class="top_menu">
+				<li><a href="http://www.mirkvartir.ru/%d1%80%d0%be%d1%81%d1%81%d0%b8%d1%8f/" class="">Продажа<small></small></a></li>
+				<li><a href="http://arenda.mirkvartir.ru/%d1%80%d0%be%d1%81%d1%81%d0%b8%d1%8f/" class="current">Аренда<small></small></a></li>
+				<li><a href="http://new.mirkvartir.ru" class="">Новостройки<small></small></a></li>
+				<li><a href="http://ipoteka.mirkvartir.ru" class="">Ипотека<small></small></a></li>
+				<li><a href="http://journal.mirkvartir.ru">Журнал<small></small></a></li>
+			</ul>
+
+3	Rubric	http://www.mirkvartir.ru/россия	\http://www.mirkvartir.ru/россия\http://{{actionId}}mirkvartir.ru/россия{{choice_house_type}}	
+\//ul[@class='top_menu']/li/a[@href]\//ul[@class='choice_house_type']/li/a[@href]	\//ul[@class='top_menu//ul[@class='choice_house_type']/li/a[@href]/ul/li/a[@href]	{{href}}	\\(http(s)?:\/\/)?([^\.]+\.)mirkvartir\.ru.*\\(http(s)?\:\/\/)?([^\.]+\.)?mirkvartir\.ru(\/(россия|москва))?(.*)	\\$3\\$6	{{InnerText}}	.*	$&	\{{actionId}}\{{choice_house_type}}	\!\!
+
+<div class="dropdown" data-bind="style: { display: estateTypeDropdownVisible() ? 'block' : 'none' }" style="display: none;">
+		
+		<ul>
+			
+			<li class="">
+				<a href="http://arenda.mirkvartir.ru" onclick="headerViewModel.model.estateTypeSelectWrap({value: 'http://arenda.mirkvartir.ru'}); return false;">Квартира</a>
+			</li>
+			
+			<li class="">
+				<a href="http://arenda.mirkvartir.ru/%d0%a0%d0%be%d1%81%d1%81%d0%b8%d1%8f/%d0%9a%d0%be%d0%bc%d0%bd%d0%b0%d1%82%d1%8b/" onclick="headerViewModel.model.estateTypeSelectWrap({value: 'http://arenda.mirkvartir.ru/%d0%a0%d0%be%d1%81%d1%81%d0%b8%d1%8f/%d0%9a%d0%be%d0%bc%d0%bd%d0%b0%d1%82%d1%8b/'}); return false;">Комната</a>
+			</li>
+			
+			<li class="">
+				<a href="http://arendadoma.mirkvartir.ru" onclick="headerViewModel.model.estateTypeSelectWrap({value: 'http://arendadoma.mirkvartir.ru'}); return false;">Дом</a>
+			</li>
+			
+			<li class="">
+				<a href="http://arendadoma.mirkvartir.ru/%d0%a0%d0%be%d1%81%d1%81%d0%b8%d1%8f/%d0%a2%d0%b0%d1%83%d0%bd%d1%85%d0%b0%d1%83%d1%81%d1%8b/" onclick="headerViewModel.model.estateTypeSelectWrap({value: 'http://arendadoma.mirkvartir.ru/%d0%a0%d0%be%d1%81%d1%81%d0%b8%d1%8f/%d0%a2%d0%b0%d1%83%d0%bd%d1%85%d0%b0%d1%83%d1%81%d1%8b/'}); return false;">Таунхаус</a>
+			</li>
+			
+			<li class="after_delim">
+				<a href="http://arendacre.mirkvartir.ru/%d0%a0%d0%be%d1%81%d1%81%d0%b8%d1%8f/%d0%9e%d1%84%d0%b8%d1%81%d1%8b/" onclick="headerViewModel.model.estateTypeSelectWrap({value: 'http://arendacre.mirkvartir.ru/%d0%a0%d0%be%d1%81%d1%81%d0%b8%d1%8f/%d0%9e%d1%84%d0%b8%d1%81%d1%8b/'}); return false;">Офис</a>
+			</li>
+			
+			<li class="">
+				<a href="http://arendacre.mirkvartir.ru/%d0%a0%d0%be%d1%81%d1%81%d0%b8%d1%8f/%d0%a1%d0%ba%d0%bb%d0%b0%d0%b4%d1%8b/" onclick="headerViewModel.model.estateTypeSelectWrap({value: 'http://arendacre.mirkvartir.ru/%d0%a0%d0%be%d1%81%d1%81%d0%b8%d1%8f/%d0%a1%d0%ba%d0%bb%d0%b0%d0%b4%d1%8b/'}); return false;">Склад</a>
+			</li>
+			
+			<li class="">
+				<a href="http://arendacre.mirkvartir.ru/%d0%a0%d0%be%d1%81%d1%81%d0%b8%d1%8f/%d0%a2%d0%be%d1%80%d0%b3%d0%be%d0%b2%d1%8b%d0%b5%20%d0%bf%d0%be%d0%bc%d0%b5%d1%89%d0%b5%d0%bd%d0%b8%d1%8f/" onclick="headerViewModel.model.estateTypeSelectWrap({value: 'http://arendacre.mirkvartir.ru/%d0%a0%d0%be%d1%81%d1%81%d0%b8%d1%8f/%d0%a2%d0%be%d1%80%d0%b3%d0%be%d0%b2%d1%8b%d0%b5%20%d0%bf%d0%be%d0%bc%d0%b5%d1%89%d0%b5%d0%bd%d0%b8%d1%8f/'}); return false;">Магазин</a>
+			</li>
+			
+			<li class="">
+				<a href="http://arendacre.mirkvartir.ru/%d0%a0%d0%be%d1%81%d1%81%d0%b8%d1%8f/%d0%9f%d0%be%d0%bc%d0%b5%d1%89%d0%b5%d0%bd%d0%b8%d1%8f%20%d1%81%d0%b2%d0%be%d0%b1%d0%be%d0%b4%d0%bd%d0%be%d0%b3%d0%be%20%d0%bd%d0%b0%d0%b7%d0%bd%d0%b0%d1%87%d0%b5%d0%bd%d0%b8%d1%8f/" onclick="headerViewModel.model.estateTypeSelectWrap({value: 'http://arendacre.mirkvartir.ru/%d0%a0%d0%be%d1%81%d1%81%d0%b8%d1%8f/%d0%9f%d0%be%d0%bc%d0%b5%d1%89%d0%b5%d0%bd%d0%b8%d1%8f%20%d1%81%d0%b2%d0%be%d0%b1%d0%be%d0%b4%d0%bd%d0%be%d0%b3%d0%be%20%d0%bd%d0%b0%d0%b7%d0%bd%d0%b0%d1%87%d0%b5%d0%bd%d0%b8%d1%8f/'}); return false;">ПСН</a>
+			</li>
+			
+		</ul>
+	</div>
+
+3	Region	http://www.mirkvartir.ru/россия	\http://www.mirkvartir.ru/россия\http://www.mirkvartir.ru{{Value}}\http://www.mirkvartir.ru{{Value}}\http://www.mirkvartir.ru{{Value}}\http://www.mirkvartir.ru{{Value}}	//li[@class='t1']/a[@href][contains('{{Url}}','popup')]	//li[@class='t1']/a[@href][contains('{{Url}}','popup')]	{{href}}	(http(s)?\:\/\/)?([^\.]+\.)?mirkvartir\.ru)(.*)		{{InnerText}}	.*	$&	\{{region}}\{{province}}\{{city}}\{{town}}\{{district}}	\LL	NULL	NULL	NULL	NULL	NULL	NULL	NULL	NULL	NULL	NULL	NULL
+
+
+
+
+2	Region	http://rosrealt.ru/poisk.php?	http://rosrealt.ru/poisk.php?Region={{Region}}&City={{City}}&District={{District}}	//select[@name='{{Option}}']/option[@value]	//select[@name='{{Option}}']/option[@value]	{{value}}	.*	$&	{{NextSibling.InnerText}}	.*	$&	\{{Region}}\{{City}}\{{District}}	\!\!\!
+2	Rubric	http://rosrealt.ru/poisk.php?Sdelka=1	http://rosrealt.ru/poisk.php?Sdelka=1&Type_realty={{Type_realty}}&Kind_realty={{Kind_realty}}&Room={{Room}}	//select[@name='{{Option}}']/option[@value]	//select[@name='{{Option}}']/option[@value]	{{value}}	.*	$&	{{NextSibling.InnerText}}	.*	$&	\{{Type_realty}}\{{Kind_realty}}\{{Room}}	\!\!\!
+2	Action	http://rosrealt.ru/poisk.php?Type_realty=1	http://rosrealt.ru/poisk.php?Type_realty=1&Sdelka={{Sdelka}}	//select[@name='{{Option}}']/option[@value]	//select[@name='{{Option}}']/option[@value]	{{value}}	.*	$&	{{NextSibling.InnerText}}	.*	$&	\{{Sdelka}}	\!
+3	Region	http://www.mirkvartir.ru/россия	\http://www.mirkvartir.ru/россия\http://www.mirkvartir.ru{{Value}}\http://www.mirkvartir.ru{{Value}}\http://www.mirkvartir.ru{{Value}}\http://www.mirkvartir.ru{{Value}}	//li[@class='t1']/a[@href][contains('{{Url}}','popup')]	//li[@class='t1']/a[@href][contains('{{Url}}','popup')]	{{href}}	(http(s)?\:\/\/)?([^\.]+\.)?mirkvartir\.ru)(.*)	$4	{{InnerText}}	.*	$&	\{{region}}\{{province}}\{{city}}\{{town}}\{{district}}	\!\!\?\?\!
+3	Rubric	http://www.mirkvartir.ru/россия	\http://www.mirkvartir.ru/россия\http://{{actionId}}mirkvartir.ru/россия{{choice_house_type}}	\//ul[@class='top_menu']/li/a[@href]\//ul[@class='choice_house_type']/li/a[@href]	\//ul[@class='top_menu']/li/a[@href]\//ul[@class='choice_house_type']/li/a[@href]	{{href}}	\\(http(s)?:\/\/)?([^\.]+\.)mirkvartir\.ru.*\\(http(s)?\:\/\/)?([^\.]+\.)?mirkvartir\.ru(\/(россия|москва))?(.*)	\\$3\\$6	{{InnerText}}	.*	$&	\{{actionId}}\{{choice_house_type}}	\!\!
+3	Action	http://www.mirkvartir.ru/россия	\http://www.mirkvartir.ru/россия\http://{{actionId}}mirkvartir.ru/россия	//ul[@class='top_menu']/li/a[@href]	//ul[@class='top_menu']/li/a[@href]	{{href}}	(http(s)?:\/\/)?([^\.]+\.)mirkvartir\.ru.*	$3	{{InnerText}}	.*	$&	\{{actionId}}	\!
+4	Action	http://www.egent.ru	http://egent.ru	//div[@class='sf_action']	//div[@class='sf_action']	{{id}}	.*	$&	{{InnerText}}	.*	$&	\{{actionId}}	\!
+4	Rubric	http://www.egent.ru	http://egent.ru{{Mainmenu}}	\//ul[@class='main-menu']/li/a\//div[@class='topsubmenu']/a	\//ul[@class='main-menu']/li/a\//div[@class='topsubmenu']/a	{{href}}	.*	$&	{{InnerText}}	.*	$&	\{{Mainmenu}}\{{Submenu}}	\!\!
+NULL	NULL	NULL	NULL	NULL	NULL	NULL	NULL	NULL	NULL	NULL	NULL	NULL	NULL
+
+
+
+4	Action	http://egent.ru	//td/div[@class='sf_action']	//td/div[@class='sf_action']	{{id}}	.*	$&	{{InnerText}}	.*	$&	\{{actionId}}	\!
+
+
+<div class="header">
+                              <small style="color:#CC0000">
+          1875720          </small> <img alt="" src="http://www.egent.ru/img/coner2.gif">
+          
+                    
+                    <a href="http://www.egent.ru/komnata/sdam-1875720.html" class="item_link">
+          Сдается ком. 14 м кв в 3х ком.кв-ре. м. Новые Черемушки          </a>
+                    <br>
+        
+        </div>
+
+<div class="header">
+              
+        <div style="color: #CC0000; float: left; line-height: 23px;">№ 1902732</div>
+        <div style="float:left"><h1 class="item_title">Аренда квартиры от собственника</h1></div>
+    </div>
+
+<a href="/metro/74.html" class="metrourl">Савеловская</a>
+
+4	egent.ru	http://egent.ru	GET	NoCompression	{{Region}}{{Rubric}}?p={{Page}}	{{PublicationLink}}	[PublicationDatetime:##{{PublicationDatetime}}##,PublicationId:{{PublicationId}},Action:{{Action}},Rubric:{{Rubric}},Region:{{Region}}]	NULL	NULL	30	DatetimeFirstIdSecondComparer	windows-1251	EgentParser
+
+4	WebPublicationPublicationId	//div[@class='item detail']//div[@class='header']/div[contains(.,'№')]	{{InnerText}}	\D*(\d+)\D*	$1
+4	WebPublicationAdditionalInfoRealtyAdditionalInfoDistrict	//div[@class='item detail']//div[@class='adres']/a[@class='metrourl']	{{InnerText}}	.*	$&
+
+4	PublicationLink	//div[@class='header']/a[@href]	{{href}}	.*	$&
+4	PublicationId	//div[@class='ne']//div[@class='header']/small	{{InnerText}}	\D*(\d+)\D*	$1
+4	PublicationDatetime	//div[@class='item detail']//div[contains(.,'Актуально')]	{{InnerText}}	[^\>]+\s*Актуально:\s*(\d+)\s+(\w+)\s+(\d+)\s*.*	$1 $2 $3
+4	WebPublicationModifyDate	//div[@class='item detail']//div[contains(.,'Актуально')]	{{InnerText}}	[^\>]+\s*Актуально:\s*(\d+)\s+(\w+)\s+(\d+)\s*.*	$1 $2 $3
+
+4	WebPublicationUrl	/	{{Url}}	.*	$&
+4	WebPublicationSite	/	{{Url}}	((http(s)?:\/\/)?[^\/\?]+).*	$1
+4	WebPublicationDescription	//div[@class='item detail']//div[@class='desc']	{{InnerText}}	.*	$&
+4	WebPublicationContactContactName	//div[@class='userinfo']/div[@class='user']/span[@rel]	{{InnerText}}	.*	$&
+4	WebPublicationContactAuthor	//div[@class='item detail']//div[@class='user']	{{InnerText}}	.*	$&
+4	WebPublicationContactAuthorUrl	//div[@class='item detail']//div[@class='user']/span[@rel]	{{rel}}	.*	http://egent.ru$&
+4	WebPublicationContactPhone	//div[contains(@class,'userinfo')]/span	{{InnerText}}	.*	$&
+4	WebPublicationPhotos	//div[@id='mycarousel']//img[@src]	{{src}}	.*	http://egent.ru$&
+
+4	WebPublicationAdditionalInfoRealtyAdditionalInfoAddress	//div[@class='item detail']//div[@class='adres']/a	{{InnerText}}	.*	$&
+4	WebPublicationAdditionalInfoRealtyAdditionalInfoCostAll	//div[@class='item detail']//div[@class='price']/strong	{{InnerText}}	\D*(\d+)\D*	$1
+4	WebPublicationAdditionalInfoRealtyAdditionalInfoTotalSpace	//div[@class='item detail']//span[contains(.,'Общая площадь')]	{{InnerText}}	(\s*Общая площадь\:\s*(\d+)\s*м(\<sup\>2\<\/sup\>)?\s*(\<br\>)?)?(\s*Жилая площадь\:\s*(\d+)\s*м(\<sup\>2\<\/sup\>)?\s*(\<br\>)?)?(\s*Площадь кухни\:\s*(\d+)\s*м(\<sup\>2\<\/sup\>)?\s*(\<br\>)?)?	$2
+4	WebPublicationAdditionalInfoRealtyAdditionalInfoLivingSpace	//div[@class='item detail']//span[contains(.,'Жилая площадь')]	{{InnerText}}	(\s*Общая площадь\:\s*(\d+)\s*м(\<sup\>2\<\/sup\>)?\s*(\<br\>)?)?(\s*Жилая площадь\:\s*(\d+)\s*м(\<sup\>2\<\/sup\>)?\s*(\<br\>)?)?(\s*Площадь кухни\:\s*(\d+)\s*м(\<sup\>2\<\/sup\>)?\s*(\<br\>)?)?	$6
+4	WebPublicationAdditionalInfoRealtyAdditionalInfoKitchenSpace	//div[@class='item detail']//span[contains(.,'Площадь кухни')]	{{InnerText}}	(\s*Общая площадь\:\s*(\d+)\s*м(\<sup\>2\<\/sup\>)?\s*(\<br\>)?)?(\s*Жилая площадь\:\s*(\d+)\s*м(\<sup\>2\<\/sup\>)?\s*(\<br\>)?)?(\s*Площадь кухни\:\s*(\d+)\s*м(\<sup\>2\<\/sup\>)?\s*(\<br\>)?)?	$10
+
+4	WebPublicationAdditionalInfoRealtyAdditionalInfoFloorNumber	//div[@class='item detail']//span[contains(text(),'Этаж')]	{{InnerText}}	\D*(\d*)\S*\s*\/\s*(\d*)\S*\s*.*	$1
+4	WebPublicationAdditionalInfoRealtyAdditionalInfoFloor	//div[@class='item detail']//span[contains(.,'Этаж')]	{{InnerText}}	\D*(\d*)\S*\s*\/\s*(\d*)\S*\s*.*	$2
+
+4	WebPublicationAdditionalInfoRealtyAdditionalInfoAppointmentOfRoom //h1[@class='item_title']	{{InnerText}}	.*	$&
+
+(\s*Общая площадь:\s*(\d+)\s*м(\<sup\>2\<\/sup\>)?\s*(\<br\>)?)?(\s*Жилая площадь:\s*(\d+)\s*м(\<sup\>2\<\/sup\>)?\s*(\<br\>)?)?(\s*Площадь кухни:\s*(\d+)\s*м(\<sup\>2\<\/sup\>)?\s*(\<br\>)?)?
+
+<h1 class="item_title">Сдается 1 ком. квартира,  м. Марьино</h1>
+
+<span class="gray">Этаж/этажность: 3/5</span>
+<span class="gray">
+    Общая площадь: 80 м<sup>2</sup>
+    
+        
+        </span>
+<div class="price" style="float:right; color:#aaa;">
+<strong>500 <small style="font-size:12px;">руб/сут</small></strong>
+</div>
+
+//*[@id="main-content"]/div[2]/table/tbody/tr[1]/td/div[2]
+//*[@id="main-content"]/div[2]/table/tbody/tr[2]/td[1]/div[3]/span
+<span class="gray">
+    Общая площадь: 40 м<sup>2</sup>
+    
+        <br>Жилая площадь: 20 м<sup>2</sup> 
+        
+    <br>Площадь кухни: 10 м<sup>2</sup>    </span>
+
+<div id="mycarousel" class="jcarousel-container jcarousel-container-horizontal" style="width: 300px !important; position: relative; display: block;">
+<div class="jcarousel-clip jcarousel-clip-horizontal" style="overflow: hidden; position: relative;"><ul class="jcarousel-list jcarousel-list-horizontal" style="overflow: hidden; position: relative; top: 0px; margin: 0px; padding: 0px; left: 0px; width: 2890px;">
+
+<li class="jcarousel-item jcarousel-item-horizontal jcarousel-item-1 jcarousel-item-1-horizontal" jcarouselindex="1" style="float: left; list-style: none;"><img width="300" src="/uploads/notice-980316/gallery_1378711144.jpg" alt="Фото" rel="1/9" title="Фото: Сдам комнату на Павелецкой - Собственник"></li>
+
+
+
+<li class="jcarousel-item jcarousel-item-horizontal jcarousel-item-2 jcarousel-item-2-horizontal" jcarouselindex="2" style="float: left; list-style: none;"><img width="300" src="/uploads/notice-980316/gallery_1378711232.jpg" alt="Фото" rel="2/9" title="Фото: Сдам комнату на Павелецкой - Собственник"></li>
+
+
+
+<li class="jcarousel-item jcarousel-item-horizontal jcarousel-item-3 jcarousel-item-3-horizontal" jcarouselindex="3" style="float: left; list-style: none;"><img width="300" src="/uploads/notice-980316/gallery_1378711453.jpg" alt="Фото" rel="3/9" title="Фото: Сдам комнату на Павелецкой - Собственник"></li>
+
+
+
+<li class="jcarousel-item jcarousel-item-horizontal jcarousel-item-4 jcarousel-item-4-horizontal" jcarouselindex="4" style="float: left; list-style: none;"><img width="300" src="/uploads/notice-980316/gallery_1378711650.jpg" alt="Фото" rel="4/9" title="Фото: Сдам комнату на Павелецкой - Собственник"></li>
+
+
+
+<li class="jcarousel-item jcarousel-item-horizontal jcarousel-item-5 jcarousel-item-5-horizontal" jcarouselindex="5" style="float: left; list-style: none;"><img width="300" src="/uploads/notice-980316/gallery_1378885900.jpg" alt="Фото" rel="5/9" title="Фото: Сдам комнату на Павелецкой - Собственник"></li>
+
+
+
+<li class="jcarousel-item jcarousel-item-horizontal jcarousel-item-6 jcarousel-item-6-horizontal" jcarouselindex="6" style="float: left; list-style: none;"><img width="300" src="/uploads/notice-980316/gallery_1378886134.jpg" alt="Фото" rel="6/9" title="Фото: Сдам комнату на Павелецкой - Собственник"></li>
+
+
+
+<li class="jcarousel-item jcarousel-item-horizontal jcarousel-item-7 jcarousel-item-7-horizontal" jcarouselindex="7" style="float: left; list-style: none;"><img width="300" src="/uploads/notice-980316/gallery_1378886466.jpg" alt="Фото" rel="7/9" title="Фото: Сдам комнату на Павелецкой - Собственник"></li>
+
+
+
+<li class="jcarousel-item jcarousel-item-horizontal jcarousel-item-8 jcarousel-item-8-horizontal" jcarouselindex="8" style="float: left; list-style: none;"><img width="300" src="/uploads/notice-980316/gallery_1378886542.jpg" alt="Фото" rel="8/9" title="Фото: Сдам комнату на Павелецкой - Собственник"></li>
+
+
+
+<li class="jcarousel-item jcarousel-item-horizontal jcarousel-item-9 jcarousel-item-9-horizontal" jcarouselindex="9" style="float: left; list-style: none;"><img width="300" src="/uploads/notice-980316/gallery_1379101504.jpg" alt="Фото" rel="9/9" title="Фото: Сдам комнату на Павелецкой - Собственник"></li>
+
+
+    </ul></div>
+    <div class="jcarousel-scroll" style="margin-top:5px;">
+        <a href="#" id="mycarousel-prev"><img src="/images/str-l.gif"></a>
+        <a href="#" id="mycarousel-next"><img src="/images/str-r.gif"></a>
+    </div></div>
+
+<div class="item detail" style="position:relative">
+<table cellpadding="8" cellspacing="2" width="100%">
+<tbody><tr valign="top">
+<td colspan="2">
+    <div class="header">
+              
+        <div style="color: #CC0000; float: left; line-height: 23px;">№ 1875720</div>
+        <div style="float:left"><h1 class="item_title">Сдается ком. 14 м кв в 3х ком.кв-ре. м. Новые Черемушки</h1></div>
+    </div>
+    <div style="float:right; color:#999; font-size:10px; text-align:right;">
+    
+                        Сдается с: 06 Апреля 2014<br>        Актуально: 21 Апреля 2014                <br> просмотров 121    </div>
+</td>
+</tr>
+<tr valign="top">
+<td>
+<div class="adres">
+<div class="price" style="float:right; color:#aaa;">
+<strong>17000 <small style="font-size:12px;">руб/мес</small></strong>
+</div>
+    г. Москва    <br><a href="/metro/30.html" class="metrourl">Новые Черемушки</a> 
+    <br><small class="gray">5 мин. пешком</small><br>    <br><a href="/street/38364.html">Прфсоюзная, 43к2</a>    
+    
+            
+    
+</div>
+
+<hr class="white">
+
+<div class="desc">
+    Елена. БЕЗ ЗАЛОГА. Сдается ком. 14 м кв в 3х ком., КОММУНАЛЬНОЙ кв-ре, под ключ, в 2х других проживают 2е жен по 50 лет, кошка. Комната после добротного косметического ремонта, с/у разд. - плитка. В комнате новая мебель: диван-кровать, 2х ств. шкаф, стол, тумба+ТВ, хол-к, Интернет. СМ - НЕТ. Рассмотрим: 1 ДЕВ/ЖЕН, без в/п, славянку, от 30 лет. Оперативный показ и заселение.<br>
+    
+		        
+                <p><img src="/images/icons/internet.png" alt="интернет" title="интернет">
+		<img src="/images/icons/room-furniture.png" alt="мебель" title="мебель">
+		<img src="/images/icons/television.png" alt="телевизор" title="телевизор">
+		</p>
+            
+    
+    <br>
+    <span class="gray">
+    Общая площадь: 14 м<sup>2</sup>
+    
+        
+        </span>
+    <br>
+        
+    <br><span class="gray">Этаж/этажность: 3/13</span>    <br><span class="gray">Комиссия: 50%</span></div>
+
+<hr class="white">
+
+<div class="userinfo gray" style="float:left;">    
+
+        
+    
+    <img src="http://www.egent.ru/images/smile.png" align="left" title="Пользователь проверен">    
+    <div class="user" style="color:#576AA9; font-size:14px;">
+    <span class="hidden-link" rel="/user/frau251">Елена</span> 
+    
+   
+    
+        (агент)
+        </div>
+    <br>
+    <br>
+
+        	<span style="font-size:20px;">т. 8-926-402-70-21</span>
+        <div style="margin-top: 10px;">
+        <img src="http://egent.ru/img/coner2.gif" alt=""> <a href="/all-notice-1875720.html" rel="nofollow">все объявления автора</a>
+        </div>
+
+                <div class="trigger_send" id="item_1875720" rel="1875720" style="margin-top: 10px;">
+            <a href="#" onclick="return false" rel="nofollow">Отправить сообщение</a>
+        </div> 
+        
+        <div class="zhaloba_send" style="margin-bottom:8px; margin-top:8px;" id="item_1875720" rel="1875720">
+         <a href="#" onclick="return false" rel="nofollow">Пожаловаться</a>
+        </div>
+
+           
+         
+	</div>
+
+<br clear="all">
+
+
+<hr class="white">
+<div style="padding:0px; margin-top:0px; float:left;">
+<table border="0" align="center">
+<tbody><tr width="700" align="center"><td width="700" align="center">
+
+<!-- Яндекс.Директ -->
+<script type="text/javascript">
+//<![CDATA[
+yandex_partner_id = 53183;
+yandex_site_bg_color = 'EDEFF5';
+yandex_stat_id = 23;
+yandex_site_charset = 'windows-1251';
+yandex_ad_format = 'direct';
+yandex_font_size = 1.1;
+yandex_font_family = 'verdana';
+yandex_direct_type = 'flat';
+yandex_direct_limit = 1;
+yandex_direct_header_bg_color = 'FFFFFF';
+yandex_direct_title_color = '0066FF';
+yandex_direct_url_color = '666666';
+yandex_direct_all_color = '666666';
+yandex_direct_text_color = '666666';
+yandex_direct_hover_color = 'FF0000';
+yandex_direct_favicon = false;
+document.write('<sc'+'ript type="text/javascript" src="http://an.yandex.ru/system/context.js"></sc'+'ript>');
+//]]>
+</script><script type="text/javascript" src="http://an.yandex.ru/system/context.js"></script><div id="Ya_sync_0"><div id="ya_partner_Ya_sync_0-flat" style="background:transparent none no-repeat scroll 0 0 !important;border:none !important;border-radius:none !important;border-spacing:0 !important;border-collapse:collapse !important;-moz-box-sizing:content-box !important;box-sizing:content-box !important;clear:none !important;clip:auto !important;color:inherit !important;cursor:auto !important;empty-cells:show !important;float:none !important;font:inherit !important;font-variant:normal !important;font-weight:normal !important;height:auto !important;letter-spacing:normal !important;line-height:normal !important;margin:0 !important;max-height:none !important;max-width:none !important;min-height:0 !important;min-width:0 !important;outline:none !important;overflow:visible !important;padding:0 !important;position:static !important;table-layout:auto !important;text-align:left !important;text-decoration:none !important;text-indent:0 !important;text-transform:none !important;vertical-align:baseline !important;visibility:visible !important;white-space:normal !important;width:auto !important;word-spacing:normal !important;z-index:auto !important;display:block !important;"><yatag class="ya-partner_theme_flat ya-partner_border-type_none  ya-partner ya-partner_type_flat ya-partner_type_flat-simple"><yatag class="ya-partner__logo ya-partner__ads"><yatag class="ya-partner__logo-bg ya-partner__ads-l"><a href="http://direct.yandex.ru/?partner" class="ya-partner__logo-link ya-partner__ads-link-l" target="_blank">Яндекс.Директ</a></yatag></yatag><yatag class="ya-partner__list"><yatag class="ya-partner__item ya-partner__item-1 ya-partner__item_pic_yes ya-partner__item_piclayout_left ya-partner__item_sitelinks_yes ya-partner__item_pos_first ya-partner__item_pos_last ya-partner__item_single"><table cellpadding="0" cellspacing="0" class="ya-partner__l-table"><tbody><tr class="ya-partner__l-tr"><td class="ya-partner__l-td ya-partner__l-pic-td"><yatag class="ya-partner__pic-container"><a href="http://an.yandex.ru/count/JfIbQjTl1kW40000Zh1UUpK5XP_x39K2cm5kGxS2Am68k2bAnWQ9iBakQG6OH9wt0G0019sc4daCbhvyhYy1klh8pur2vk3F2gQ328gdcdNslQ_7skIg0QMlfeq2aRHIoKGAZxqh9Jq2dxI6wDiEauKDcM92ZA2MM0AWeBJ41A-WbbW2b9P62wUT5mAee32UYwIm0000ngnOhl8qCsZw6hNt1B2wKp7x0R41ie0IkQOIUGox-5eWeac5W781UHO0?test-tag=1281&amp;stat-id=1073741847" class="ya-partner__pic" target="_blank" title="bprum.ru" style="width:80px !important;height:80px !important;background-image:url('//avatars-fast.yandex.net/get-direct/MpdAyRfEGm65BOIz8JV-kA/y80') !important;"></a></yatag></td><td class="ya-partner__l-td"><a href="http://an.yandex.ru/count/JfIbQjTl1kW40000Zh1UUpK5XP_x39K2cm5kGxS2Am68k2bAnWQ9iBakQG6OH9wt0G0019sc4daCbhvyhYy1klh8pur2vk3F2gQ328gdcdNslQ_7skIg0QMlfeq2aRHIoKGAZxqh9Jq2dxI6wDiEauKDcM92ZA2MM0AWeBJ41A-WbbW2b9P62wUT5mAee32UYwIm0000ngnOhl8qCsZw6hNt1B2wKp7x0R41ie0IkQOIUGox-5eWeac5W781UHO0?test-tag=1281&amp;stat-id=1073741847" class="ya-partner__title-link" title="bprum.ru" target="_blank"><yatag class="ya-partner__title-link-text">Аренда помещений без&nbsp;посредников</yatag></a> <yatag class="ya-partner__text">Офисы, магазины, склады! Уникальные условия. ЮЗАО, БП «Румянцево» Аренда!</yatag><yatag class="ya-partner__sitelinks"><yatag class="ya-partner__sitelink ya-partner__sitelink-1"><a class="ya-partner__sitelinks-text" target="_blank" href="http://an.yandex.ru/count/JfIbQewkBg440000Zh1UUpK5XP_x39K2cm5kGxS2Am68k2bAnWQ9iBakQG6OH9wt0G0019sc4daCbhvyhYy1klh8pur2vk3F2gQ328gdcdNslQ_7skIg7wMlfeq2aRHIoKGAZxqh9Jq2dxI6wDiEauKDcM92ZA2MM0AWeBJ41A-WbbW2b9P62wUT5mAee32UYwIm0000ngnOhl8qCsZw6hNt1B2wKp7x0R41ie0IkQOIUGox-5eWeac5W781UHO0?test-tag=1281&amp;stat-id=1073741847">Помещения от&nbsp;собственника</a><yatag class="ya-partner__sitelinks-inline-delim">·</yatag></yatag><wbr><yatag class="ya-partner__sitelink ya-partner__sitelink-2"><a class="ya-partner__sitelinks-text" target="_blank" href="http://an.yandex.ru/count/JfIbQbxS7aq40000Zh1UUpK5XP_x39K2cm5kGxS2Am68k2bAnWQ9iBakQG6OH9wt0G0019sc4daCbhvyhYy1klh8pur2vk3F2gQ328gdcdNslQ_7skIg8QMlfeq2aRHIoKGAZxqh9Jq2dxI6wDiEauKDcM92ZA2MM0AWeBJ41A-WbbW2b9P62wUT5mAee32UYwIm0000ngnOhl8qCsZw6hNt1B2wKp7x0R41ie0IkQOIUGox-5eWeac5W781UHO0?test-tag=1281&amp;stat-id=1073741847">Фотогалерея</a><yatag class="ya-partner__sitelinks-inline-delim">·</yatag></yatag><wbr><yatag class="ya-partner__sitelink ya-partner__sitelink-3"><a class="ya-partner__sitelinks-text" target="_blank" href="http://an.yandex.ru/count/JfIbQZqiVZC40000Zh1UUpK5XP_x39K2cm5kGxS2Am68k2bAnWQ9iBakQG6OH9wt0G0019sc4daCbhvyhYy1klh8pur2vk3F2gQ328gdcdNslQ_7skIg8wMlfeq2aRHIoKGAZxqh9Jq2dxI6wDiEauKDcM92ZA2MM0AWeBJ41A-WbbW2b9P62wUT5mAee32UYwIm0000ngnOhl8qCsZw6hNt1B2wKp7x0R41ie0IkQOIUGox-5eWeac5W781UHO0?test-tag=1281&amp;stat-id=1073741847">Адрес бизнес-парка</a></yatag><wbr></yatag><yatag class="ya-partner__url"><a class="ya-partner__address" href="http://an.yandex.ru/count/JfIbQdD_fce40000Zh1UUpK5XP_x39K2cm5kGxS2Am68k2bAnWQ9iBakQG6OH9wt0G0019sc4daCbhvyhYy1klh8pur2vk3F2gQ328gdcdNslQ_7skIg1wMlfeq2aRHIoKGAZxqh9Jq2dxI6wDiEauKDcM92ZA2MM0AWeBJ41A-WbbW2b9P62wUT5mAee32UYwIm0000ngnOhl8qCsZw6hNt1B2wKp7x0R41ie0IkQOIUGox-5eWeac5W781UHO0?test-tag=1281&amp;stat-id=1073741847" target="_blank">Адрес&nbsp;и&nbsp;телефон</a>&nbsp;<yatag class="ya-partner__domain"><a class="ya-partner__domain-link" href="http://an.yandex.ru/count/JfIbQjTl1kW40000Zh1UUpK5XP_x39K2cm5kGxS2Am68k2bAnWQ9iBakQG6OH9wt0G0019sc4daCbhvyhYy1klh8pur2vk3F2gQ328gdcdNslQ_7skIg0QMlfeq2aRHIoKGAZxqh9Jq2dxI6wDiEauKDcM92ZA2MM0AWeBJ41A-WbbW2b9P62wUT5mAee32UYwIm0000ngnOhl8qCsZw6hNt1B2wKp7x0R41ie0IkQOIUGox-5eWeac5W781UHO0?test-tag=1281&amp;stat-id=1073741847" target="_blank">bprum.ru</a></yatag>&nbsp;<yatag class="ya-partner__region"></yatag></yatag></td></tr></tbody></table></yatag></yatag></yatag></div></div><script type="text/javascript" src="//an.yandex.ru/resource/context_static_r688.js" yandex_load_check="yes"></script><script type="text/javascript" charset="utf-8" src="//an.yandex.ru/page/53183?target-ref=http%3A%2F%2Fwww.egent.ru%2Fkomnata%2Fsdam-1875720.html&amp;page-ref=http%3A%2F%2Fwww.egent.ru%2Fkomnata%2F&amp;charset=utf-8&amp;stat-id=1073741847&amp;grab=dNCh0LTQsNC10YLRgdGPINC60L7QvC4gMTQg0Lwg0LrQsiDQsiAz0YUg0LrQvtC8LtC60LIt0YDQtS4g0LwuINCd0L7QstGL0LUg0KfQtdGA0LXQvNGD0YjQutC4INCyINCc0L7RgdC60LLQtS4KMdCh0LTQsNC10YLRgdGPINC60L7QvC4gMTQg0Lwg0LrQsiDQsiAz0YUg0LrQvtC8LtC60LIt0YDQtS4g0LwuINCd0L7QstGL0LUg0KfQtdGA0LXQvNGD0YjQutC4IAoy&amp;callback=Ya[1398257115585]"></script>
+
+</td></tr>
+</tbody></table>
+<br></div>
+
+<hr class="white">
+<noindex>
+Расскажи об этом объявлении:<br><br>
+
+
+<table cellpadding="0" cellspacing="0" border="0">
+<tbody><tr>
+<td>&nbsp;<a href="javascript:" onclick="PopupCenter('http://www.facebook.com/share.php?u=http://www.egent.ru/komnata/sdam-1875720.html&amp;st.cmd=addShare', 'myPop1',880,600);"><img src="http://www.egent.ru/images/fb.gif" height="20" width="20" alt="facebook" align="left">Facebook</a>&nbsp;&nbsp;</td>
+<td>&nbsp;<a href="javascript:" rel="nofollow" onclick="PopupCenter('http://twitter.com/share?url=http://www.egent.ru/komnata/sdam-1875720.html&amp;text=РЎРґР°РµС‚СЃСЏ РєРѕРј. 14 Рј РєРІ РІ 3С… РєРѕРј.РєРІ-СЂРµ. Рј. РќРѕРІС‹Рµ Р§РµСЂРµ', 'myPop1',880,600);"><img src="http://www.egent.ru/images/tw.gif" height="20" width="20" alt="twitter" align="left">Twitter</a>&nbsp;&nbsp;</td>
+<td>&nbsp;<a href="javascript:" rel="nofollow" onclick="PopupCenter('http://vkontakte.ru/share.php?url=http://www.egent.ru/komnata/sdam-1875720.html', 'myPop1',880,600);"><img src="http://www.egent.ru/images/vk.gif" height="20" width="20" alt="в контакте" align="left">В Контакте</a>&nbsp;&nbsp;</td>
+</tr></tbody></table>
+</noindex>
+</td>
+<td width="160" rowspan="2" align="center">
+    <script src="http://api-maps.yandex.ru/1.1/index.xml?key=AK_Wo0oBAAAAPS4kDwIAr-C_1ZQRdSC_PJ3J-7kJi7UoB6EAAAAAAAAAAABb_2hIpQ36_ngga84kKG1ep6hpvQ==" type="text/javascript"></script><link rel="stylesheet" href="http://api-maps.yandex.ru/1.1.21/_YMaps.css?v=1.1.21-20"><script type="text/javascript" charset="utf-8" src="http://api-maps.yandex.ru/1.1.21/_YMaps.js?v=1.1.21-20"></script><script type="text/javascript" charset="utf-8" src="http://api-maps.yandex.ru/1.1.21/xml/data.xml?v=3.161.04.16.3"></script>
+    <script type="text/javascript">
+        var map, geoResult;
+
+        window.onload = function () {
+            map = new YMaps.Map(document.getElementById("YMapsID"));
+            var geocoder = new YMaps.Geocoder("Москва, Прфсоюзная, 43к2", {results: 1, boundedBy: map.getBounds()});
+
+            YMaps.Events.observe(geocoder, geocoder.Events.Load, function () {
+                if (this.length()) {
+                    geoResult = this.get(0);
+                    map.addOverlay(geoResult);
+                    map.setBounds(geoResult.getBounds());
+                }else {
+                    //alert("Ничего не найдено")
+					map.setCenter(new YMaps.GeoPoint(37.64, 55.76), 10);					
+                }
+            });
+
+        }
+    </script>
+
+	<div id="YMapsID" style="width:300px;height:200px" class="YMaps YMaps-cursor-grab"><div class="YMaps-layer-container" style="z-index: 1;"><div class="YMaps-map-type-layer-container"><div class="YMaps-layer" style="z-index: 5; left: 0px; top: 0px;"><div style="z-index:6;" class="YMaps-tile-container"><img src="http://vec01.maps.yandex.net/tiles?l=map&amp;v=4.16.3&amp;x=9900&amp;y=5142&amp;z=14&amp;g=Ga" style="position: absolute; width: 256px; height: 256px; left: -159px; top: -236px;"><img src="http://vec03.maps.yandex.net/tiles?l=map&amp;v=4.16.3&amp;x=9901&amp;y=5142&amp;z=14&amp;g=Gagar" style="position: absolute; width: 256px; height: 256px; left: 97px; top: -236px;"><img src="http://vec01.maps.yandex.net/tiles?l=map&amp;v=4.16.3&amp;x=9902&amp;y=5142&amp;z=14&amp;g=" style="position: absolute; width: 256px; height: 256px; left: 353px; top: -236px;"><img src="http://vec02.maps.yandex.net/tiles?l=map&amp;v=4.16.3&amp;x=9900&amp;y=5143&amp;z=14&amp;g=Gag" style="position: absolute; width: 256px; height: 256px; left: -159px; top: 20px;"><img src="http://vec04.maps.yandex.net/tiles?l=map&amp;v=4.16.3&amp;x=9901&amp;y=5143&amp;z=14&amp;g=Gagari" style="position: absolute; width: 256px; height: 256px; left: 97px; top: 20px;"><img src="http://vec02.maps.yandex.net/tiles?l=map&amp;v=4.16.3&amp;x=9902&amp;y=5143&amp;z=14&amp;g=G" style="position: absolute; width: 256px; height: 256px; left: 353px; top: 20px;"></div></div></div><div class="YMaps-layer YMaps-common-object-layer" style="z-index: 50; left: 0px; top: 0px;"><div class="YMaps-placemark YMaps-Default YMaps-cursor-pointer" style="z-index: 110; left: 142.994140625px; top: 72.005859375px;"><img src="http://api-maps.yandex.ru/i/0.4/micro/pmlbs.png" style="width: 28px; height: 29px;"></div></div></div><div style="background-color: transparent !important;border: none !important;float: none !important;z-index: 1001 !important;position: absolute !important;overflow: undefined !important;padding: 0 !important;display: block !important;margin-top: 0 !important;margin-right: 0 !important;margin-bottom: 0 !important;margin-left: 0 !important;height: 20px !important;width: 51px !important;" class="YMaps-logo"><a href="http://maps.yandex.ru?origin=jsapi&amp;ll=37.55577748641373,55.66674627029391&amp;z=14&amp;l=map" target="_blank" class="YMaps-logo-link" style="background-color: transparent !important;border: none !important;float: none !important;z-index: 1001 !important;position: absolute !important;overflow: undefined !important;padding: 0 !important;display: block !important;margin-top: 0 !important;margin-right: 0 !important;margin-bottom: 0 !important;margin-left: 0 !important;height: 20px !important;width: 51px !important;"><i style="background-color: transparent !important;border: none !important;float: none !important;z-index: 1001 !important;position: absolute !important;overflow: undefined !important;padding: 0 !important;margin-top: 0 !important;margin-right: 0 !important;margin-bottom: 0 !important;margin-left: 0 !important;height: 106px !important;width: 56px !important;"></i></a></div><div class="YMaps-copyrights" style="background-color: transparent !important; border: none !important; float: none !important; z-index: 1001 !important; position: absolute !important; overflow: visible !important; padding: 0px !important; display: block !important; margin: 0px !important; height: auto !important; width: auto !important; color: rgb(68, 68, 68);"><span style="background-color: transparent !important; border: none !important; float: none !important; z-index: 1001 !important; position: static !important; padding: 0px !important; display: inline !important; font-family: Arial, sans-serif !important; font-size: 10px !important; text-indent: 0px !important; text-align: left !important; white-space: nowrap !important; line-height: normal !important; text-decoration: none !important; margin: 0px !important; height: auto !important; width: auto !important; color: rgb(68, 68, 68);">© 2013 NAVTEQ, © Яндекс&nbsp;–&nbsp;</span><a href="http://maps.yandex.ru/agreement.xml" target="_blank" style="background-color: transparent !important; border: none !important; float: none !important; z-index: 1001 !important; position: static !important; padding: 0px !important; display: inline !important; font-family: Arial, sans-serif !important; font-size: 10px !important; text-indent: 0px !important; text-align: left !important; white-space: nowrap !important; line-height: normal !important; text-decoration: underline !important; margin: 0px !important; height: auto !important; width: auto !important; color: rgb(68, 68, 68);">Условия использования</a></div></div><br>
+    
+
+    
+    
+
+</td></tr>
+</tbody></table>
+
+
+<div class="comments" style="padding:10px; margin:0;">
+
+<div class="item" style="padding:10px; margin:0;">
+<center>
+Комментариев нет. Вы можете добавить первый комментарий. <br>
+<a href="#" onclick="$('#comments_form').show(); $(this).parent().parent().hide(); return false;">Добавить комментарий</a>
+</center>
+</div>
+<div class="comments_form" id="comments_form" style="display:none; text-align:center;">
+<span class="red">
+</span>
+<form action="" method="post">
+    <label for="user">Ваше имя:</label>     	<input type="text" name="user" value="" id="user">         
+    <label for="mail">Ваш E-mail:</label>    	<input type="text" name="mail" value="" id="mail"><br>
+    <br>
+    	<label>Ваш комментарий</label><br>
+	<textarea name="comm" cols="90" rows="8" id="comm" style="width:98%; height:100px;"></textarea>	
+            
+<input type="hidden" name="id_list" value="1875720">
+<br>
+        
+
+	<center><input type="submit" name="add_comments" value=" Комментировать " id="submit" class="sf_button" style="width:150px"></center>
+
+</form>
+</div>
+</div></div>

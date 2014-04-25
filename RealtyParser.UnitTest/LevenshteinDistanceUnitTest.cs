@@ -1,21 +1,22 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using RealtyParser;
+using MyLibrary;
 
 namespace RealtyParser.UnitTest
 {
     /// <summary>
-    /// Сводное описание для LevenshteinDistanceUnitTest
+    ///     Сводное описание для LevenshteinDistanceUnitTest
     /// </summary>
     [TestClass]
     public class LevenshteinDistanceUnitTest
     {
         /// <summary>
-        ///Получает или устанавливает контекст теста, в котором предоставляются
-        ///сведения о текущем тестовом запуске и обеспечивается его функциональность.
-        ///</summary>
+        ///     Получает или устанавливает контекст теста, в котором предоставляются
+        ///     сведения о текущем тестовом запуске и обеспечивается его функциональность.
+        /// </summary>
         public TestContext TestContext { get; set; }
 
         #region Дополнительные атрибуты тестирования
+
         //
         // При написании тестов можно использовать следующие дополнительные атрибуты:
         //
@@ -35,6 +36,7 @@ namespace RealtyParser.UnitTest
         // [TestCleanup()]
         // public void MyTestCleanup() { }
         //
+
         #endregion
 
         [TestMethod]

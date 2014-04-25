@@ -2,9 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
-using RealtyParser;
+using RealtyParser.BeBoss;
+using RealtyParser.Bn;
 using RealtyParser.Collections;
+using RealtyParser.Egent;
 using RealtyParser.Mirkvartir;
+using RealtyParser.NetAgenta;
 using RealtyParser.Rosrealt;
 using RT.ParsingLibs;
 
@@ -15,12 +18,16 @@ namespace RealtyParser.Editor.Children
         public KeysForm()
         {
             InitializeComponent();
-            listBoxDll.Items.AddRange(
+            listBoxControlDll.Items.AddRange(
                 new StackListQueue<ParserModule>
                 {
                     new ParserModule(),
                     new RosrealtParser(),
                     new MirkvartirParser(),
+                    new EgentParser(),
+                    new NetAgentaParser(),
+                    new BnParser(),
+                    new BeBossParser(),
                 }.Select(item => new KeyValuePair<string, IParsingModule>(item.ModuleClassname, item))
                     .Cast<object>().ToArray());
         }
@@ -32,21 +39,37 @@ namespace RealtyParser.Editor.Children
         public void ClearResults()
         {
             propertyGridControlBind.SelectedObject = null;
-            listBoxKeys.Items.Clear();
+            listBoxControlKeysActions.Items.Clear();
+            listBoxControlKeysRubrics.Items.Clear();
+            listBoxControlKeysRegions.Items.Clear();
         }
 
         public void Execute()
         {
-            if (listBoxDll.SelectedItem == null) return;
-            IParsingModule module = ((KeyValuePair<string, IParsingModule>) listBoxDll.SelectedItem).Value;
+            if (listBoxControlDll.SelectedItem == null) return;
+            IParsingModule module = ((KeyValuePair<string, IParsingModule>) listBoxControlDll.SelectedItem).Value;
             propertyGridControlBind.SelectedObject = null;
-            listBoxKeys.Items.Clear();
-            //listBoxKeys.Items.AddRange(module.Keys().Cast<object>().ToArray());
+            listBoxControlKeysActions.Items.Clear();
+            listBoxControlKeysRubrics.Items.Clear();
+            listBoxControlKeysRegions.Items.Clear();
+            listBoxControlKeysActions.Items.AddRange(module.KeysActions().Cast<object>().ToArray());
+            listBoxControlKeysRubrics.Items.AddRange(module.KeysRubrics().Cast<object>().ToArray());
+            listBoxControlKeysRegions.Items.AddRange(module.KeysRegions().Cast<object>().ToArray());
         }
 
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            propertyGridControlBind.SelectedObject = listBoxKeys.SelectedItem;
+            propertyGridControlBind.SelectedObject = listBoxControlKeysActions.SelectedItem;
+        }
+
+        private void listBoxControlKeysRubrics_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            propertyGridControlBind.SelectedObject = listBoxControlKeysRubrics.SelectedItem;
+        }
+
+        private void listBoxControlKeysRegions_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            propertyGridControlBind.SelectedObject = listBoxControlKeysRegions.SelectedItem;
         }
     }
 }

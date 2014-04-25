@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Text.RegularExpressions;
 
 namespace RealtyParser.Comparer
@@ -16,19 +17,21 @@ namespace RealtyParser.Comparer
             Decimal value;
             try
             {
-                parse = Types.Decimal.Parse(_regex.Replace(x, @"").Trim());
+                parse = MyLibrary.Types.Decimal.Parse(_regex.Replace(x, @"").Trim());
             }
             catch (Exception exception)
             {
-                parse = Types.Decimal.Default;
+                Debug.WriteLine(exception.ToString());
+                parse = MyLibrary.Types.Decimal.Default;
             }
             try
             {
-                value = Types.Decimal.Parse(_regex.Replace(y, @"").Trim());
+                value = MyLibrary.Types.Decimal.Parse(_regex.Replace(y, @"").Trim());
             }
             catch (Exception exception)
             {
-                value = Types.Decimal.Default;
+                Debug.WriteLine(exception.ToString());
+                value = MyLibrary.Types.Decimal.Default;
             }
 
             return parse.CompareTo(value);
@@ -49,11 +52,12 @@ namespace RealtyParser.Comparer
             Decimal parse;
             try
             {
-                parse = Types.Decimal.Parse(_regex.Replace(obj, @"").Trim());
+                parse = MyLibrary.Types.Decimal.Parse(_regex.Replace(obj, @"").Trim());
             }
             catch (Exception exception)
             {
-                parse = Types.Decimal.Default;
+                Debug.WriteLine(exception.ToString());
+                parse = MyLibrary.Types.Decimal.Default;
             }
             return parse.GetHashCode();
         }

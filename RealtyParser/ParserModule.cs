@@ -8,15 +8,17 @@ using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using HtmlAgilityPack;
+using MyLibrary;
+using MyParser.Managers;
 using RealtyParser.Collections;
 using RealtyParser.Comparer;
-using RealtyParser.Managers;
 using RT.ParsingLibs;
 using RT.ParsingLibs.Models;
 using RT.ParsingLibs.Requests;
 using RT.ParsingLibs.Responses;
-using Boolean = RealtyParser.Types.Boolean;
-using Uri = RealtyParser.Types.Uri;
+using Boolean = MyLibrary.Types.Boolean;
+using ComparerManager = RealtyParser.Managers.ComparerManager;
+using Uri = MyLibrary.Types.Uri;
 
 namespace RealtyParser
 {
@@ -32,8 +34,8 @@ namespace RealtyParser
             ModuleNamespace = typeof (ParserModule).Namespace;
             Database = new Database {ModuleClassname = ModuleClassname};
             ComparerManager = new ComparerManager {ModuleNamespace = ModuleNamespace};
-            CompressionManager = new CompressionManager {ModuleNamespace = ModuleNamespace};
-            Converter = new Converter {ModuleNamespace = ModuleNamespace};
+            CompressionManager = new CompressionManager();
+            Converter = new Converter();
             Transformation = new Transformation();
             Parser = new Parser {Transformation = Transformation, Database = Database, Converter = Converter};
             Crawler = new Crawler {CompressionManager = CompressionManager};
@@ -175,6 +177,9 @@ namespace RealtyParser
                 Password = SiteProperties.Password.ToString(),
             };
 
+            // Устанавливаем uri используемый по-умолчанию при преобразовании строки
+            Uri.Default = BaseBuilder.Uri;
+
             var returnFieldInfos = new ReturnFieldInfos();
             foreach (
                 string key in
@@ -201,13 +206,16 @@ namespace RealtyParser
                 try
                 {
                     for (long pageId = 1;
-                        currentResources.Count < Database.ConvertTo<long>(SiteProperties.CountAd);
+                        currentResources.Count < MyDatabase.Database.ConvertTo<long>(SiteProperties.CountAd);
                         pageId++)
                     {
                         var pageValues = new Values(siteValues)
                         {
                             Page =
-                                new StackListQueue<string> {((pageId > 1) ? pageId.ToString(CultureInfo.InvariantCulture) : @"")}
+                                new StackListQueue<string>
+                                {
+                                    ((pageId > 1) ? pageId.ToString(CultureInfo.InvariantCulture) : @"")
+                                }
                         };
                         Debug.WriteLine(pageValues.ToString());
                         foreach (
@@ -331,31 +339,35 @@ namespace RealtyParser
                                     }
                                     catch (EndOfSearchDetectedException exception)
                                     {
+                                        Debug.WriteLine(exception.ToString());
                                         throw;
                                     }
                                     catch (LoopDetectedException exception)
                                     {
+                                        Debug.WriteLine(exception.ToString());
                                         throw;
                                     }
                                     catch (Exception exception)
                                     {
+                                        Debug.WriteLine(exception.ToString());
                                         _lastError = exception;
-                                        Debug.WriteLine(_lastError.ToString());
                                     }
                                 }
                             }
                             catch (EndOfSearchDetectedException exception)
                             {
+                                Debug.WriteLine(exception.ToString());
                                 throw;
                             }
                             catch (LoopDetectedException exception)
                             {
+                                Debug.WriteLine(exception.ToString());
                                 throw;
                             }
                             catch (Exception exception)
                             {
+                                Debug.WriteLine(exception.ToString());
                                 _lastError = exception;
-                                Debug.WriteLine(_lastError.ToString());
                             }
                         }
 
@@ -375,9 +387,11 @@ namespace RealtyParser
                 }
                 catch (EndOfSearchDetectedException exception)
                 {
+                    Debug.WriteLine(exception.ToString());
                 }
                 catch (LoopDetectedException exception)
                 {
+                    Debug.WriteLine(exception.ToString());
                 }
                 Debug.WriteLine("resources.Count = " + resources.Count());
                 resources.AddRangeExcept(currentResources);
@@ -465,7 +479,8 @@ namespace RealtyParser
                 }
 
 
-                if (lastResourceDictionary.Any() && (resources.Count > Database.ConvertTo<long>(SiteProperties.CountAd)) &&
+                if (lastResourceDictionary.Any() &&
+                    (resources.Count > MyDatabase.Database.ConvertTo<long>(SiteProperties.CountAd)) &&
                     lastResourceDictionary.Select(pair => resourceDictionary.ContainsKey(pair.Key) &&
                                                           ResourceComparer.Compare(
                                                               resourceDictionary[pair.Key].First(), pair.Value) > 0)
@@ -475,7 +490,7 @@ namespace RealtyParser
                     //объявлений (такая ситуация может получится, если размещенное объявление к следующей
                     //итерации будет удалено на ресурсе)
                     resources.RemoveRange(0,
-                        (int) (resources.Count - Database.ConvertTo<long>(SiteProperties.CountAd)));
+                        (int) (resources.Count - MyDatabase.Database.ConvertTo<long>(SiteProperties.CountAd)));
                 }
 
                 if (lastResourceDictionary.Any() && resources.Any() &&
@@ -489,8 +504,8 @@ namespace RealtyParser
             }
             catch (Exception exception)
             {
+                Debug.WriteLine(exception.ToString());
                 _lastError = exception;
-                Debug.WriteLine(_lastError.ToString());
             }
             var publications = new StackListQueue<WebPublication>();
             foreach (Resource resource in resources)
@@ -522,8 +537,8 @@ namespace RealtyParser
                 }
                 catch (Exception exception)
                 {
+                    Debug.WriteLine(exception.ToString());
                     _lastError = exception;
-                    Debug.WriteLine(_lastError.ToString());
                 }
             }
 
@@ -614,7 +629,7 @@ namespace RealtyParser
             Mappings mappings = Database.GetMappings(siteId);
 
             return (from rubric in mappings.Rubric.Keys
-                select Database.ConvertTo<int>(rubric)).ToList();
+                select MyDatabase.Database.ConvertTo<int>(rubric)).ToList();
         }
 
         /// <summary>
@@ -633,7 +648,7 @@ namespace RealtyParser
             Mappings mappings = Database.GetMappings(siteId);
 
             return (from region in mappings.Region.Keys
-                select Database.ConvertTo<int>(region)).ToList();
+                select MyDatabase.Database.ConvertTo<int>(region)).ToList();
         }
 
         /// <summary>
@@ -652,7 +667,7 @@ namespace RealtyParser
             Mappings mappings = Database.GetMappings(siteId);
 
             return (from action in mappings.Action.Keys
-                select Database.ConvertTo<int>(action)).ToList();
+                select MyDatabase.Database.ConvertTo<int>(action)).ToList();
         }
 
         public Values ToValues()
@@ -702,17 +717,17 @@ namespace RealtyParser
                 from action in mappings.Action.Keys
                 select new Bind
                 {
-                    RegionId = Database.ConvertTo<int>(region),
-                    RubricId = Database.ConvertTo<int>(rubric),
-                    ActionId = Database.ConvertTo<int>(action)
+                    RegionId = MyDatabase.Database.ConvertTo<int>(region),
+                    RubricId = MyDatabase.Database.ConvertTo<int>(rubric),
+                    ActionId = MyDatabase.Database.ConvertTo<int>(action)
                 }).ToList();
         }
 
-        public class EndOfSearchDetectedException : Exception
+        private class EndOfSearchDetectedException : Exception
         {
         }
 
-        public class LoopDetectedException : Exception
+        private class LoopDetectedException : Exception
         {
         }
     }

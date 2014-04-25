@@ -4,8 +4,8 @@ using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using RealtyParser.Comparer;
-using Boolean = RealtyParser.Types.Boolean;
-using String = RealtyParser.Types.String;
+using Boolean = MyLibrary.Types.Boolean;
+using String = MyLibrary.Types.String;
 
 namespace RealtyParser.Collections
 {

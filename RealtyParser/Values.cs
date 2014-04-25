@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
 using RealtyParser.Collections;
 
@@ -12,7 +11,7 @@ namespace RealtyParser
     ///     Ключи словаря представляют собой строки, передаваемые в качестве регулярного выражения
     ///     в функцию Regex.Replace для замены полей в шаблоне на значения данного словаря
     /// </summary>
-    public class Values : DictionaryOfList, IValueable
+    public class Values : DictionaryOfListOfString, IValueable
     {
         public Values(IEnumerable<KeyValuePair<string, IEnumerable<string>>> list)
             : base(list)

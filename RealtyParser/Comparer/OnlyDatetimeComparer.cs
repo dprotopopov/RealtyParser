@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text.RegularExpressions;
 using RealtyParser.Collections;
@@ -21,11 +22,12 @@ namespace RealtyParser.Comparer
             foreach (Match match in matches)
                 try
                 {
-                    values.Add(Types.DateTime.Parse(match.Groups["date"].Value.Trim()));
+                    values.Add(MyLibrary.Types.DateTime.Parse(match.Groups["date"].Value.Trim()));
                 }
                 catch (Exception exception)
                 {
-                    values.Add(Types.DateTime.Default);
+                    Debug.WriteLine(exception.ToString());
+                    values.Add(MyLibrary.Types.DateTime.Default);
                 }
             return values.First().CompareTo(values.Last());
         }
@@ -47,11 +49,12 @@ namespace RealtyParser.Comparer
             DateTime dateTime;
             try
             {
-                dateTime = Types.DateTime.Parse(match.Groups["date"].Value.Trim());
+                dateTime = MyLibrary.Types.DateTime.Parse(match.Groups["date"].Value.Trim());
             }
             catch (Exception exception)
             {
-                dateTime = Types.DateTime.Default;
+                Debug.WriteLine(exception.ToString());
+                dateTime = MyLibrary.Types.DateTime.Default;
             }
             return dateTime.GetHashCode();
         }

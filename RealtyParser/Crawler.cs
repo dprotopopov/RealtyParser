@@ -8,16 +8,15 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using HtmlAgilityPack;
+using MyLibrary.Trace;
+using MyParser.Compression;
 using RealtyParser.Collections;
-using RealtyParser.Compression;
-using RealtyParser.Managers;
-using RealtyParser.Trace;
 using RT.Crawler;
 using TidyManaged;
 
 namespace RealtyParser
 {
-    public class Crawler : ITrace, IValueable
+    public class Crawler : MyParser.Crawler, ITrace, IValueable
     {
         public Crawler()
         {
@@ -26,15 +25,7 @@ namespace RealtyParser
             Compression = "NoCompression";
         }
 
-        public CompressionManager CompressionManager { get; set; }
-        public string Method { get; set; }
-        public string Encoding { get; set; }
-        public string Compression { get; set; }
-        public ProgressCallback ProgressCallback { get; set; }
-        public AppendLineCallback AppendLineCallback { get; set; }
-        public CompliteCallback CompliteCallback { get; set; }
-
-        public Values ToValues()
+        public new Values ToValues()
         {
             return new Values(this);
         }
@@ -59,17 +50,45 @@ namespace RealtyParser
                     try
                     {
                         ICrawler crawler = new WebCrawler();
-                        HttpWebRequest requestWeb = WebRequest.CreateHttp(uri);
-                        requestWeb.KeepAlive = false;
-                        requestWeb.AutomaticDecompression = DecompressionMethods.None;
+                        var httpWebRequest = (HttpWebRequest) WebRequest.Create(uri);
+                        httpWebRequest.CookieContainer = new CookieContainer();
+                        httpWebRequest.AutomaticDecompression = DecompressionMethods.None;
+                        httpWebRequest.ContentType = string.Format(@"text/html; charset={0}", Encoding);
+                        httpWebRequest.Referer = @"http://yandex.ru";
+                        httpWebRequest.Accept = @"text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8";
+                        httpWebRequest.UserAgent =
+                            @"Mozilla/5.0 (Windows NT 6.1; WOW64; rv:20.0) Gecko/20100101 Firefox/20.0";
+                        httpWebRequest.KeepAlive = true;
+                        if (string.Compare(Method, "JSON", StringComparison.Ordinal) == 0)
+                        {
+                            httpWebRequest.ContentType = "application/json; charset=utf-8";
+                            httpWebRequest.Accept = "application/json, text/javascript, */*";
+                        }
+
+                        if (string.Compare(Method, "JSON", StringComparison.Ordinal) == 0 ||
+                            string.Compare(Method, "POST", StringComparison.Ordinal) == 0)
+                        {
+                            httpWebRequest.Method = "POST";
+
+                            using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
+                            {
+                                Debug.WriteLine("Request: {0}", Request);
+                                streamWriter.Write(Request);
+                                streamWriter.Flush();
+                                streamWriter.Close();
+                            }
+                        }
+                        else
+                            httpWebRequest.Method = Method;
+
                         WebResponse responce;
                         if (async)
                         {
-                            responce = await crawler.GetResponse(requestWeb);
+                            responce = await crawler.GetResponse(httpWebRequest);
                         }
                         else
                         {
-                            responce = requestWeb.GetResponse();
+                            responce = httpWebRequest.GetResponse();
                         }
                         var decompressedStream = new MemoryStream();
                         Stream responceStream = responce.GetResponseStream();
@@ -81,6 +100,9 @@ namespace RealtyParser
                     catch (WebException exception)
                     {
                         Debug.WriteLine(exception.ToString());
+                        Debug.WriteLine(exception.Message);
+                        Debug.WriteLine(exception.InnerException.ToString());
+                        Debug.WriteLine(exception.InnerException.InnerException.ToString());
                     }
                     catch (Exception exception)
                     {
@@ -94,6 +116,7 @@ namespace RealtyParser
                     var memoryStreams = new StackListQueue<MemoryStream> {memoryStream};
                     if (ProgressCallback != null) ProgressCallback(++current, ++total);
 
+                    Debug.WriteLine("Run Tydy.Document");
                     memoryStreams.First().Seek(0, SeekOrigin.Begin);
                     Document tidy = Document.FromStream(memoryStreams.First());
 

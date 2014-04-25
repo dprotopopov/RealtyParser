@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
-using RealtyParser;
+using MyParser;
 using RealtyParser.Collections;
-using Mappings = RealtyParser.Mappings;
 
 namespace RealtyParser.Editor.Children
 {
@@ -64,7 +63,9 @@ namespace RealtyParser.Editor.Children
             BuilderInfos builderInfos =
                 Database.GetBuilderInfos(((KeyValuePair<object, object>) comboBoxSites.SelectedItem).Key);
             Mappings mappings = Database.GetMappings(((KeyValuePair<object, object>) comboBoxSites.SelectedItem).Key);
-            var list = returnFieldInfos.ToList().Select(item => new KeyValuePair<string, ReturnFieldInfo>(item.ReturnFieldId.ToString(), item));
+            IEnumerable<KeyValuePair<string, ReturnFieldInfo>> list =
+                returnFieldInfos.ToList()
+                    .Select(item => new KeyValuePair<string, ReturnFieldInfo>(item.ReturnFieldId.ToString(), item));
             listBoxReturnFieldInfos.Items.AddRange(list.Cast<object>().ToArray());
             listBoxBuilderInfos.Items.AddRange(builderInfos.Cast<object>().ToArray());
             comboBoxMapping.Items.AddRange(mappings.Cast<object>().ToArray());
@@ -73,7 +74,7 @@ namespace RealtyParser.Editor.Children
         private void listBoxReturnFieldInfos_SelectedIndexChanged(object sender, EventArgs e)
         {
             propertyGridControlReturnFieldInfo.SelectedObject =
-                ((KeyValuePair<string, ReturnFieldInfo>)listBoxReturnFieldInfos.SelectedItem).Value;
+                ((KeyValuePair<string, ReturnFieldInfo>) listBoxReturnFieldInfos.SelectedItem).Value;
         }
 
         private void comboBoxMapping_SelectedIndexChanged(object sender, EventArgs e)

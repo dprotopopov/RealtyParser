@@ -1,27 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data.SQLite;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Reflection;
+using MyLibrary.Trace;
 using RealtyParser.Collections;
-using RealtyParser.Trace;
 
 namespace RealtyParser
 {
     /// <summary>
     ///     Класс для работы с базой данных
     /// </summary>
-    public class Database : ITrace, IValueable
+    public class Database : MyParser.Database, ITrace, IValueable
     {
-        /// <summary>
-        ///     Семафор для блокирования одновременного доступа к данному классу
-        ///     из разных параллельных процессов
-        /// </summary>
-        public readonly object Semaphore = new Object();
-
-
         private readonly MethodInfo _stringFormatMethodInfo = typeof (string).GetMethod("Format",
             new[] {typeof (string), typeof (object[])});
 
@@ -32,7 +25,6 @@ namespace RealtyParser
             HierarchicalTable = "Hierarchical";
             ReturnFieldTable = "ReturnField";
             BuilderTable = "Builder";
-            ProxyTable = "Proxy";
 
             IdColumn = "Id";
             TitleColumn = "Title";
@@ -42,7 +34,6 @@ namespace RealtyParser
             HasChildColumn = "HasChild";
             ModuleNamespaceColumn = "ModuleNameSpace";
             ModuleClassnameColumn = "ModuleClassName";
-            HostColumn = "Host";
             PortColumn = "Port";
             SiteIdColumn = string.Format("{0}{1}", SiteTable, IdColumn);
 
@@ -182,46 +173,21 @@ namespace RealtyParser
             };
         }
 
-        public string ModuleClassname { get; set; }
+        private string AssemblyDirectory
+        {
+            get
+            {
+                string codeBase = Assembly.GetExecutingAssembly().CodeBase;
+                var uri = new UriBuilder(codeBase);
+                string path = Uri.UnescapeDataString(uri.Path);
+                return Path.GetDirectoryName(path);
+            }
+        }
 
-        private string ConnectionString { get; set; }
-
-        /// <summary>
-        ///     Коннектор к базе данных
-        /// </summary>
-        public SQLiteConnection Connection { get; set; }
-
-        public ProgressCallback ProgressCallback { get; set; }
-        public AppendLineCallback AppendLineCallback { get; set; }
-        public CompliteCallback CompliteCallback { get; set; }
-
-        public Values ToValues()
+        public new Values ToValues()
         {
             return new Values(this);
         }
-
-        #region
-
-        public string SiteTable { get; private set; }
-        public string MappingTable { get; private set; }
-        public string HierarchicalTable { get; private set; }
-        public string ReturnFieldTable { get; private set; }
-        public string BuilderTable { get; private set; }
-        public string ProxyTable { get; private set; }
-
-        public string IdColumn { get; private set; }
-        public string TitleColumn { get; private set; }
-        public string TableNameColumn { get; private set; }
-        public string LevelColumn { get; private set; }
-        public string ParentIdColumn { get; private set; }
-        public string HasChildColumn { get; private set; }
-        public string ModuleNamespaceColumn { get; private set; }
-        public string ModuleClassnameColumn { get; private set; }
-        public string HostColumn { get; private set; }
-        public string PortColumn { get; private set; }
-        public string SiteIdColumn { get; private set; }
-
-        #endregion
 
         #region
 
@@ -232,22 +198,17 @@ namespace RealtyParser
 
         #endregion
 
-        public void Connect()
+        public new void Connect()
         {
             if (Connection != null) return;
-            ConnectionString = string.Format("data source={0}.sqlite3", ModuleClassname);
+            ConnectionString = string.Format("data source={0}.sqlite3", Path.Combine(AssemblyDirectory, ModuleClassname));
             Connection = new SQLiteConnection(ConnectionString);
-        }
-
-        public static T ConvertTo<T>(object obj)
-        {
-            return (T) TypeDescriptor.GetConverter(obj).ConvertTo(obj, typeof (T));
         }
 
         /// <summary>
         ///     Загрузка из базы данных настроек указанного сайта
         /// </summary>
-        public SiteProperties GetSiteProperties(object siteId)
+        public new SiteProperties GetSiteProperties(object siteId)
         {
             Debug.Assert(siteId != null && !string.IsNullOrEmpty(siteId.ToString()));
             var properties = new SiteProperties();
@@ -273,7 +234,7 @@ namespace RealtyParser
             return properties;
         }
 
-        public Mappings GetMappings(object siteId)
+        public new Mappings GetMappings(object siteId)
         {
             Debug.Assert(siteId != null && !string.IsNullOrEmpty(siteId.ToString()));
             var mappings = new Mappings();
@@ -356,7 +317,7 @@ namespace RealtyParser
         ///     Загрузка из базы данных описай возвращаемых полей для указанного сайта
         ///     Используется только при загрузке свойств сайта
         /// </summary>
-        public ReturnFieldInfos GetReturnFieldInfos(object siteId)
+        public new ReturnFieldInfos GetReturnFieldInfos(object siteId)
         {
             Debug.Assert(siteId != null && !string.IsNullOrEmpty(siteId.ToString()));
             var returnFieldInfos = new ReturnFieldInfos();
@@ -388,47 +349,15 @@ namespace RealtyParser
             return returnFieldInfos;
         }
 
-        public BuilderInfos GetBuilderInfos(object siteId)
-        {
-            Debug.Assert(siteId != null && !string.IsNullOrEmpty(siteId.ToString()));
-            var builderInfos = new BuilderInfos();
-            Connection.Open();
-            using (SQLiteCommand command = Connection.CreateCommand())
-            {
-                command.CommandText =
-                    string.Format("SELECT * FROM {0}{1}{2} JOIN {2} USING ({4}) WHERE {0}{1}{2}.{0}{3}=@{0}{3}",
-                        SiteTable, BuilderTable, MappingTable, IdColumn, TableNameColumn);
-                command.Parameters.Add(new SQLiteParameter(string.Format("@{0}{1}", SiteTable, IdColumn), siteId));
-                SQLiteDataReader reader = command.ExecuteReader();
-                while (reader.Read())
-                {
-                    var info = new BuilderInfo();
-                    long current = 0;
-                    long total = reader.FieldCount;
-                    for (int i = 0; i < reader.FieldCount; i++)
-                    {
-                        string key = reader.GetName(i);
-                        object value = reader[key];
-                        info.Add(key, value);
-                        if (ProgressCallback != null) ProgressCallback(++current, total);
-                    }
-                    builderInfos.Add(info);
-                }
-                Connection.Close();
-            }
-            if (CompliteCallback != null) CompliteCallback();
-            return builderInfos;
-        }
-
         /// <summary>
         ///     Загрузка из базы данных всех значений из указанной колонки указанной таблицы
         /// </summary>
-        public IEnumerable<object> GetList(params object[] parameters)
+        public new IEnumerable<object> GetList(params object[] parameters)
         {
             Type[] types = parameters.Select(parameter => parameter.GetType()).ToArray();
             long current = 0;
             long total = 1;
-            foreach (var pair in GetListProfiles.Where(pair => Types.Type.IsKindOf(types, pair.Key)))
+            foreach (var pair in GetListProfiles.Where(pair => MyLibrary.Types.Type.IsKindOf(types, pair.Key)))
             {
                 var values = new StackListQueue<object>();
                 Connection.Open();
@@ -499,10 +428,10 @@ namespace RealtyParser
         ///     Ключ в поле keyColumnName
         ///     Значение в поле valueColumnName
         /// </summary>
-        public Mapping GetMapping(params object[] parameters)
+        public new Mapping GetMapping(params object[] parameters)
         {
             Type[] types = parameters.Select(arg => arg.GetType()).ToArray();
-            foreach (var pair in GetMappingProfiles.Where(pair => Types.Type.IsKindOf(types, pair.Key)))
+            foreach (var pair in GetMappingProfiles.Where(pair => MyLibrary.Types.Type.IsKindOf(types, pair.Key)))
             {
                 var mapping = new Mapping();
                 Connection.Open();
@@ -564,7 +493,7 @@ namespace RealtyParser
             throw new NotImplementedException();
         }
 
-        public Collections.Properties GetUserFields(object id, object mappedId, string mappedTableName,
+        public new Collections.Properties GetUserFields(object id, object mappedId, string mappedTableName,
             object siteId)
         {
             Debug.Assert(id != null && !string.IsNullOrEmpty(id.ToString()));
@@ -623,10 +552,10 @@ namespace RealtyParser
         ///     Ключ в поле Название таблицы+"Id"
         ///     Значение в поле columnName
         /// </summary>
-        public object GetScalar(params object[] parameters)
+        public new object GetScalar(params object[] parameters)
         {
             Type[] types = parameters.Select(arg => arg.GetType()).ToArray();
-            foreach (var pair in GetScalarProfiles.Where(pair => Types.Type.IsKindOf(types, pair.Key)))
+            foreach (var pair in GetScalarProfiles.Where(pair => MyLibrary.Types.Type.IsKindOf(types, pair.Key)))
             {
                 Connection.Open();
                 using (SQLiteCommand command = Connection.CreateCommand())

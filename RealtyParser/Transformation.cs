@@ -1,26 +1,16 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Text.RegularExpressions;
 using RealtyParser.Collections;
-using RealtyParser.Trace;
-using RealtyParser.Types;
-using String = System.String;
 
 namespace RealtyParser
 {
-    public class Transformation : ITrace, IValueable
+    public class Transformation : MyLibrary.Transformation, IValueable
     {
-        public const string NameGroup = @"name";
         private const string KeyKey = @"Key";
         private const string ValueKey = @"Value";
 
-        public readonly string FieldPattern = String.Format("{0}(?<{1}>[^\\}}]*){2}", Regex.Escape(@"{{"),
-            NameGroup,
-            Regex.Escape(@"}}"));
-
-        public ProgressCallback ProgressCallback { get; set; }
-        public AppendLineCallback AppendLineCallback { get; set; }
-        public CompliteCallback CompliteCallback { get; set; }
 
         public Values ToValues()
         {
@@ -34,7 +24,7 @@ namespace RealtyParser
         {
             var list = new StackListQueue<string>();
             int maxCount = values.MaxCount;
-            string[] parts = System.Text.RegularExpressions.Regex.Split(template, FieldPattern);
+            string[] parts = Regex.Split(template, FieldPattern);
             Debug.Assert(parts.Length%2 == 1);
             int current = 0;
             int total = maxCount;

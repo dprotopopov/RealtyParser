@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Boolean = RealtyParser.Types.Boolean;
+using Boolean = MyLibrary.Types.Boolean;
 
 namespace RealtyParser.Comparer
 {

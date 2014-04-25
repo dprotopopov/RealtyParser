@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
-using RealtyParser.Types;
+using MyLibrary.Types;
+using String = MyLibrary.Types.String;
 
 namespace RealtyParser.Collections
 {

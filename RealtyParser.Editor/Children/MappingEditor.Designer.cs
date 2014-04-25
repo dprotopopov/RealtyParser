@@ -39,6 +39,7 @@
             this.MaxLevel = new DevExpress.XtraVerticalGrid.Rows.EditorRow();
             this.SiteMinLevel = new DevExpress.XtraVerticalGrid.Rows.EditorRow();
             this.SiteMaxLevel = new DevExpress.XtraVerticalGrid.Rows.EditorRow();
+            this.MaxDistance = new DevExpress.XtraVerticalGrid.Rows.EditorRow();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.gridControlMapping = new DevExpress.XtraGrid.GridControl();
             this.gridView1 = new DevExpress.XtraGrid.Views.Grid.GridView();
@@ -48,7 +49,6 @@
             this.repositoryItemComboBoxRight = new DevExpress.XtraEditors.Repository.RepositoryItemComboBox();
             this.textBoxCommandText = new System.Windows.Forms.TextBox();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
-            this.MaxDistance = new DevExpress.XtraVerticalGrid.Rows.EditorRow();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -87,13 +87,16 @@
             // 
             // propertyGridControlWorkspace
             // 
+            this.propertyGridControlWorkspace.Cursor = System.Windows.Forms.Cursors.SizeWE;
             this.propertyGridControlWorkspace.Dock = System.Windows.Forms.DockStyle.Fill;
             this.propertyGridControlWorkspace.Location = new System.Drawing.Point(0, 0);
             this.propertyGridControlWorkspace.Name = "propertyGridControlWorkspace";
+            this.propertyGridControlWorkspace.RecordWidth = 160;
             this.propertyGridControlWorkspace.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
             this.repositoryItemComboBoxSite,
             this.repositoryItemComboBoxTableName,
             this.repositoryItemComboBoxLevel});
+            this.propertyGridControlWorkspace.RowHeaderWidth = 40;
             this.propertyGridControlWorkspace.Rows.AddRange(new DevExpress.XtraVerticalGrid.Rows.BaseRow[] {
             this.Site,
             this.TableName,
@@ -167,6 +170,12 @@
             this.SiteMaxLevel.Properties.Caption = "SiteMaxLevel";
             this.SiteMaxLevel.Properties.FieldName = "SiteMaxLevel";
             this.SiteMaxLevel.Properties.RowEdit = this.repositoryItemComboBoxLevel;
+            // 
+            // MaxDistance
+            // 
+            this.MaxDistance.Name = "MaxDistance";
+            this.MaxDistance.Properties.Caption = "MaxDistance";
+            this.MaxDistance.Properties.FieldName = "MaxDistance";
             // 
             // splitContainer2
             // 
@@ -253,12 +262,6 @@
             // saveFileDialog1
             // 
             this.saveFileDialog1.DefaultExt = "sql";
-            // 
-            // MaxDistance
-            // 
-            this.MaxDistance.Name = "MaxDistance";
-            this.MaxDistance.Properties.Caption = "MaxDistance";
-            this.MaxDistance.Properties.FieldName = "MaxDistance";
             // 
             // MappingEditor
             // 

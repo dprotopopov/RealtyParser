@@ -3,16 +3,27 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
-using RealtyParser;
-using RealtyParser.Collections;
-using RealtyParser.Trace;
+using MyLibrary.Collections;
+using MyLibrary.Trace;
+using MyParser;
 
 namespace RealtyParser.Editor.Children
 {
     public partial class MappingEditor : Form, IChildForm
     {
-        private static readonly Builder Builder = new Builder();
-        private static readonly Database Database = Builder.Database;
+        private static readonly string ModuleClassname = typeof (ParserModule).Namespace;
+
+        private static readonly IDatabase Database = new Database
+        {
+            ModuleClassname = ModuleClassname,
+        };
+
+        private static readonly Builder Builder = new Builder
+        {
+            ModuleClassname = ModuleClassname,
+            Database = Database
+        };
+
         private readonly ProgressForm _progressForm = new ProgressForm();
 
         public MappingEditor()

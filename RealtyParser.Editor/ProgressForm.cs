@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Threading;
 using System.Windows.Forms;
-using RealtyParser;
-using RealtyParser.Trace;
+using MyLibrary.Trace;
+using MyParser;
 
 namespace RealtyParser.Editor
 {
@@ -27,7 +27,7 @@ namespace RealtyParser.Editor
             else
             {
                 progressBar1.Maximum = (int) Math.Min(total, 10000);
-                progressBar1.Value = (int) (current*progressBar1.Maximum/total);
+                progressBar1.Value = (int) Math.Min(current*progressBar1.Maximum/total, 10000);
             }
         }
 

@@ -1,0 +1,293 @@
+7	WebPublicationPublicationId	//div[contains(@class,'content')]//p[contains(.,'Объявление №')]	{{InnerText}}	\D*(\d+)\D*	$1
+7	PublicationDatetime	//div[contains(@class,'content')]//span[contains(.,'Обновлено')]	{{InnerText}}	\s*Обновлено\s*(\d+\D+\d+\D+\d+\D+\d+\D+\d+)\s*.*	$1
+7	WebPublicationModifyDate	//div[contains(@class,'content')]//span[contains(.,'Обновлено')]	{{InnerText}}	\s*Обновлено\s*(\d+\D+\d+\D+\d+)\D+(\d+\D+\d+)\s*.*	$1 $2
+7	PublicationLink	//div[@class='obj-info']/p[@class='title']/a[@href]	{{href}}	.*	$&
+7	WebPublicationUrl	/	{{Url}}	.*	$&
+7	WebPublicationSite	/	{{Url}}	((http(s)?:\/\/)?[^\/\?]+).*	$1
+7	WebPublicationDescription	//div[contains(@class,'content')]//p[@itemprop='description']	{{InnerText}}	.*	$&
+
+7	WebPublicationContactAuthor	//div[@itemtype='http://schema.org/Brand']/b	{{InnerText}}	.*	$&
+7	WebPublicationPhotos	//div[contains(@class,'content')]//img[@itemprop='image'][@src]	{{src}}	.*	$&
+
+7	WebPublicationAdditionalInfoRealtyAdditionalInfoAddress	//div[contains(@class,'content')]//p[@class='object-addresses']	{{InnerText}}	.*	$&
+7	WebPublicationAdditionalInfoRealtyAdditionalInfoCostAll	//div[@itemtype='http://schema.org/Offer']/font[@itemprop='price']/b	{{InnerText}}	\D*(\d+)\D*	$1
+7	WebPublicationAdditionalInfoRealtyAdditionalInfoCostPerMeter	//div[@itemtype='http://schema.org/Offer']/span	{{InnerText}}	\D*(\d+)\D*	$1
+7	WebPublicationAdditionalInfoRealtyAdditionalInfoTotalSpace	//div[@itemtype='http://schema.org/Offer']/b[1]	{{InnerText}}	\D*(\d+)\D*.*	$1
+7	WebPublicationAdditionalInfoRealtyAdditionalInfoLeasableSpace	//div[@itemtype='http://schema.org/Offer']/font[@itemprop='price'][contains(.,'аренд')]/../b[1]	{{InnerText}}	\D*(\d+)\D*.*	$1
+
+7	WebPublicationAdditionalInfoRealtyAdditionalInfoAppointmentOfRoom	//h2/span[@itemprop='name']	{{InnerText}}	.*	$&
+
+<div class="obj-info">
+<p class="title"><a href="http://atmosfera-msk.beboss.ru">Атмосфера, офисный центр</a></p>
+<p class="object-info-map"><strong>Общая площадь: 20700 м?</strong><br><strong>Арендные площади 
+                                    
+                                        от 24 м?
+                                    
+                                        до 3000 м?
+                                    </strong><br></p>
+<p>Сущевская, 27/2<br></p>
+<p class="desc">Новый концептуальный бизнес-квартал в престижном Тверском деловом районе с особой рабочей атмосферой, где офисная часть гармонично переплелась с пространством для отдыха. Находясь в любом из трех уютных двориков комплекса, вы ощутите особое очарование сочетания истории и современности.</p>
+</div>
+
+7	beboss.ru	http://www.beboss.ru	GET	NoCompression	{{Region}}{{Rubric}}{{Action}}?page={{Page}}
+	{{PublicationLink}}	[PublicationDatetime:##{{PublicationDatetime}}##,PublicationId:{{PublicationId}},Action:{{Action}},Rubric:{{Rubric}},Region:{{Region}}]	NULL	NULL	30	DatetimeFirstIdSecondComparer	utf-8	BeBossParser
+
+<div class="filter-tabs">
+<span class="tab1 current rent tab"><a href="http://www.beboss.ru/kn/msk">Аренда</a></span><span class="tab2 sell tab"><a href="http://www.beboss.ru/kn/msk">Продажа</a></span>
+</div>
+
+rent Аренда
+sell Продажа
+
+
+7	GET	Rubric	http://www.beboss.ru/kn/msk		//select[@id='type']/option[@value]	//select[@id='type']/option[@value]	{{value}}	.*	/$&	{{InnerText}}	.*	$&	\{{Rubric}}	\!
+
+<select id="type"><option value="office" selected="">Офисы</option>
+<option value="retail">Торговая недвижимость</option>
+<option value="stock">Склады и логистические центры</option>
+<option value="industry">Производственные помещения</option>
+<option value="spec">Помещения спец. назначения</option>
+<option value="land">Земля</option></select>
+
+7	GET	Region	http://www.beboss.ru/kn?change		//div[@id='select_city_list']//a[@href]	{{href}}	([^\?]+).*	$1	{{InnerText}}	.*	$&	\{{Region}}	\!
+
+http://www.beboss.ru/kn?change
+
+<div class="panel_select_city" id="select_city_list" style="display: block">
+<div class="country_select"><ul>
+<li class="active">Россия</li>
+<li><a href="http://www.beboss.ru/kn/ua/">Украина</a></li>
+<li><a href="http://www.beboss.ru/kn/by/">Беларусь</a></li>
+</ul></div>
+<h3 style="margin-top:20px;padding-bottom:5px;">
+<a href="http://www.beboss.ru/kn/ru/"> Вся Россия</a>
+                        &nbsp;
+                        <a href="http://www.beboss.ru/kn/msk?new_city">
+                            Москва</a>
+                        &nbsp;
+                        <a href="http://www.beboss.ru/kn/spb?new_city">
+                            Санкт-Петербург</a>
+</h3>
+<h3 style="margin-top:20px;padding-bottom:5px;">Города</h3>
+<ul class="locations-block" style="margin-top:5px;">
+<li class="locations-cell"><ul class="locations-row" style="margin-left:20px;overflow:visible;">
+<li class="row-character first" style="margin-left:-20px;float:left;margin-top:0;">А</li>
+<li class="row-region"><a href="http://www.beboss.ru/kn/astrakhan?new_city">Астрахань</a></li>
+<li style="margin-bottom:20px;clear:both;">
+</li><li class="row-character" style="margin-left:-20px;float:left;margin-top:0;">Б</li>
+<li class="row-region"><a href="http://www.beboss.ru/kn/barnaul?new_city">Барнаул</a></li>
+<li style="margin-bottom:20px;clear:both;">
+</li><li class="row-character" style="margin-left:-20px;float:left;margin-top:0;">В</li>
+<li class="row-region"><a href="http://www.beboss.ru/kn/vladivostok?new_city">Владивосток</a></li>
+<li class="row-region"><a href="http://www.beboss.ru/kn/volgograd?new_city">Волгоград</a></li>
+<li class="row-region"><a href="http://www.beboss.ru/kn/vrn?new_city">Воронеж</a></li>
+<li style="margin-bottom:20px;clear:both;">
+</li><li class="row-character" style="margin-left:-20px;float:left;margin-top:0;">Е</li>
+<li class="row-region"><a href="http://www.beboss.ru/kn/ekb?new_city">Екатеринбург</a></li>
+<li style="margin-bottom:20px;clear:both;">
+</li><li class="row-character" style="margin-left:-20px;float:left;margin-top:0;">И</li>
+<li class="row-region"><a href="http://www.beboss.ru/kn/izh?new_city">Ижевск</a></li>
+<li class="row-region"><a href="http://www.beboss.ru/kn/irk?new_city">Иркутск</a></li>
+<li style="margin-bottom:20px;clear:both;">
+</li></ul></li>
+<li class="locations-cell"><ul class="locations-row" style="margin-left:20px;overflow:visible;">
+<li class="row-character first" style="margin-left:-20px;float:left;margin-top:0;">К</li>
+<li class="row-region"><a href="http://www.beboss.ru/kn/kzn?new_city">Казань</a></li>
+<li class="row-region"><a href="http://www.beboss.ru/kn/klgd?new_city">Калининград</a></li>
+<li class="row-region"><a href="http://www.beboss.ru/kn/kaluga?new_city">Калуга</a></li>
+<li class="row-region"><a href="http://www.beboss.ru/kn/kemer?new_city">Кемерово</a></li>
+<li class="row-region"><a href="http://www.beboss.ru/kn/kirov?new_city">Киров</a></li>
+<li class="row-region"><a href="http://www.beboss.ru/kn/krd?new_city">Краснодар</a></li>
+<li class="row-region"><a href="http://www.beboss.ru/kn/krsk?new_city">Красноярск</a></li>
+<li style="margin-bottom:20px;clear:both;">
+</li><li class="row-character" style="margin-left:-20px;float:left;margin-top:0;">Л</li>
+<li class="row-region"><a href="http://www.beboss.ru/kn/lipetsk?new_city">Липецк</a></li>
+<li style="margin-bottom:20px;clear:both;">
+</li><li class="row-character" style="margin-left:-20px;float:left;margin-top:0;">М</li>
+<li class="row-region"><a href="http://www.beboss.ru/kn/msk?new_city">Москва</a></li>
+<li style="margin-bottom:20px;clear:both;">
+</li><li class="row-character" style="margin-left:-20px;float:left;margin-top:0;">Н</li>
+<li class="row-region"><a href="http://www.beboss.ru/kn/chelny?new_city">Набережные Челны</a></li>
+<li class="row-region"><a href="http://www.beboss.ru/kn/nn?new_city">Нижний Новгород</a></li>
+<li class="row-region"><a href="http://www.beboss.ru/kn/nkz?new_city">Новокузнецк</a></li>
+<li class="row-region"><a href="http://www.beboss.ru/kn/nsk?new_city">Новосибирск</a></li>
+<li style="margin-bottom:20px;clear:both;">
+</li><li class="row-character" style="margin-left:-20px;float:left;margin-top:0;">О</li>
+<li class="row-region"><a href="http://www.beboss.ru/kn/omsk?new_city">Омск</a></li>
+<li class="row-region"><a href="http://www.beboss.ru/kn/oren?new_city">Оренбург</a></li>
+<li style="margin-bottom:20px;clear:both;">
+</li></ul></li>
+<li class="locations-cell"><ul class="locations-row" style="margin-left:20px;overflow:visible;">
+<li class="row-character first" style="margin-left:-20px;float:left;margin-top:0;">П</li>
+<li class="row-region"><a href="http://www.beboss.ru/kn/pnz?new_city">Пенза</a></li>
+<li class="row-region"><a href="http://www.beboss.ru/kn/perm?new_city">Пермь</a></li>
+<li style="margin-bottom:20px;clear:both;">
+</li><li class="row-character" style="margin-left:-20px;float:left;margin-top:0;">Р</li>
+<li class="row-region"><a href="http://www.beboss.ru/kn/rnd?new_city">Ростов-на-Дону</a></li>
+<li class="row-region"><a href="http://www.beboss.ru/kn/ryazan?new_city">Рязань</a></li>
+<li style="margin-bottom:20px;clear:both;">
+</li><li class="row-character" style="margin-left:-20px;float:left;margin-top:0;">С</li>
+<li class="row-region"><a href="http://www.beboss.ru/kn/samara?new_city">Самара</a></li>
+<li class="row-region"><a href="http://www.beboss.ru/kn/spb?new_city">Санкт-Петербург</a></li>
+<li class="row-region"><a href="http://www.beboss.ru/kn/sar?new_city">Саратов</a></li>
+<li class="row-region"><a href="http://www.beboss.ru/kn/sochi?new_city">Сочи</a></li>
+<li class="row-region"><a href="http://www.beboss.ru/kn/stv?new_city">Ставрополь</a></li>
+<li style="margin-bottom:20px;clear:both;">
+</li><li class="row-character" style="margin-left:-20px;float:left;margin-top:0;">Т</li>
+<li class="row-region"><a href="http://www.beboss.ru/kn/tver?new_city">Тверь</a></li>
+<li class="row-region"><a href="http://www.beboss.ru/kn/tlt?new_city">Тольятти</a></li>
+<li class="row-region"><a href="http://www.beboss.ru/kn/tula?new_city">Тула</a></li>
+<li class="row-region"><a href="http://www.beboss.ru/kn/tmn?new_city">Тюмень</a></li>
+<li style="margin-bottom:20px;clear:both;">
+</li><li class="row-character" style="margin-left:-20px;float:left;margin-top:0;">У</li>
+<li class="row-region"><a href="http://www.beboss.ru/kn/ulsk?new_city">Ульяновск</a></li>
+<li class="row-region"><a href="http://www.beboss.ru/kn/ufa?new_city">Уфа</a></li>
+<li style="margin-bottom:20px;clear:both;">
+</li></ul></li>
+<li class="locations-cell"><ul class="locations-row" style="margin-left:20px;overflow:visible;">
+<li class="row-character first" style="margin-left:-20px;float:left;margin-top:0;">Х</li>
+<li class="row-region"><a href="http://www.beboss.ru/kn/khb?new_city">Хабаровск</a></li>
+<li style="margin-bottom:20px;clear:both;">
+</li><li class="row-character" style="margin-left:-20px;float:left;margin-top:0;">Ч</li>
+<li class="row-region"><a href="http://www.beboss.ru/kn/chel?new_city">Челябинск</a></li>
+<li style="margin-bottom:20px;clear:both;">
+</li><li class="row-character" style="margin-left:-20px;float:left;margin-top:0;">Я</li>
+<li class="row-region"><a href="http://www.beboss.ru/kn/yar?new_city">Ярославль</a></li>
+<li style="margin-bottom:20px;clear:both;">
+</li></ul></li>
+</ul>
+<div class="clear"></div>
+<h3 style="margin-top:20px;padding-bottom:5px;">Регионы</h3>
+<ul class="locations-block" style="margin-top:5px;">
+<li class="locations-cell"><ul class="locations-row" style="margin-left:20px;overflow:visible;">
+<li class="row-character first" style="margin-left:-20px;float:left;margin-top:0;">А</li>
+<li class="row-region"><a href="http://www.beboss.ru/kn/adygeya?new_region">Адыгея</a></li>
+<li class="row-region"><a href="http://www.beboss.ru/kn/altay?new_region">Алтай</a></li>
+<li class="row-region"><a href="http://www.beboss.ru/kn/altayskiy-kray?new_region">Алтайский край</a></li>
+<li class="row-region"><a href="http://www.beboss.ru/kn/amur-obl?new_region">Амурская обл.</a></li>
+<li class="row-region"><a href="http://www.beboss.ru/kn/arkhangelsk-obl?new_region">Архангельская обл.</a></li>
+<li class="row-region"><a href="http://www.beboss.ru/kn/astrakhan-obl?new_region">Астраханская обл.</a></li>
+<li style="margin-bottom:20px;clear:both;">
+</li><li class="row-character" style="margin-left:-20px;float:left;margin-top:0;">Б</li>
+<li class="row-region"><a href="http://www.beboss.ru/kn/bashkortostan?new_region">Башкортостан</a></li>
+<li class="row-region"><a href="http://www.beboss.ru/kn/belgorod-obl?new_region">Белгородская обл.</a></li>
+<li class="row-region"><a href="http://www.beboss.ru/kn/bryansk-obl?new_region">Брянская обл.</a></li>
+<li class="row-region"><a href="http://www.beboss.ru/kn/buryatiya?new_region">Бурятия</a></li>
+<li style="margin-bottom:20px;clear:both;">
+</li><li class="row-character" style="margin-left:-20px;float:left;margin-top:0;">В</li>
+<li class="row-region"><a href="http://www.beboss.ru/kn/vladimir-obl?new_region">Владимирская обл.</a></li>
+<li class="row-region"><a href="http://www.beboss.ru/kn/volgograd-obl?new_region">Волгоградская обл.</a></li>
+<li class="row-region"><a href="http://www.beboss.ru/kn/vologodsk-obl?new_region">Вологодская обл.</a></li>
+<li class="row-region"><a href="http://www.beboss.ru/kn/voronezh-obl?new_region">Воронежская обл.</a></li>
+<li style="margin-bottom:20px;clear:both;">
+</li><li class="row-character" style="margin-left:-20px;float:left;margin-top:0;">Д</li>
+<li class="row-region"><a href="http://www.beboss.ru/kn/dagestan?new_region">Дагестан</a></li>
+<li style="margin-bottom:20px;clear:both;">
+</li><li class="row-character" style="margin-left:-20px;float:left;margin-top:0;">Е</li>
+<li class="row-region"><a href="http://www.beboss.ru/kn/eao?new_region">Еврейская АО</a></li>
+<li style="margin-bottom:20px;clear:both;">
+</li></ul></li>
+<li class="locations-cell"><ul class="locations-row" style="margin-left:20px;overflow:visible;">
+<li class="row-character first" style="margin-left:-20px;float:left;margin-top:0;">З</li>
+<li class="row-region"><a href="http://www.beboss.ru/kn/zabaykalskiy-kray?new_region">Забайкальский край</a></li>
+<li style="margin-bottom:20px;clear:both;">
+</li><li class="row-character" style="margin-left:-20px;float:left;margin-top:0;">И</li>
+<li class="row-region"><a href="http://www.beboss.ru/kn/ivanovo-obl?new_region">Ивановская обл.</a></li>
+<li class="row-region"><a href="http://www.beboss.ru/kn/ingushetiya?new_region">Ингушетия</a></li>
+<li class="row-region"><a href="http://www.beboss.ru/kn/irkutsk-obl?new_region">Иркутская обл.</a></li>
+<li style="margin-bottom:20px;clear:both;">
+</li><li class="row-character" style="margin-left:-20px;float:left;margin-top:0;">К</li>
+<li class="row-region"><a href="http://www.beboss.ru/kn/kabardino-balkariya?new_region">Кабардино-Балкария</a></li>
+<li class="row-region"><a href="http://www.beboss.ru/kn/kaliningrad-obl?new_region">Калининградская обл.</a></li>
+<li class="row-region"><a href="http://www.beboss.ru/kn/kalmykiya?new_region">Калмыкия</a></li>
+<li class="row-region"><a href="http://www.beboss.ru/kn/kaluga-obl?new_region">Калужская обл.</a></li>
+<li class="row-region"><a href="http://www.beboss.ru/kn/kamchatskiy-kray?new_region">Камчатский край</a></li>
+<li class="row-region"><a href="http://www.beboss.ru/kn/cherkessiya?new_region">Карачаево-Черкессия</a></li>
+<li class="row-region"><a href="http://www.beboss.ru/kn/kareliya?new_region">Карелия</a></li>
+<li class="row-region"><a href="http://www.beboss.ru/kn/kemerovo-obl?new_region">Кемеровская обл.</a></li>
+<li class="row-region"><a href="http://www.beboss.ru/kn/kirov-obl?new_region">Кировская обл.</a></li>
+<li class="row-region"><a href="http://www.beboss.ru/kn/komi-obl?new_region">Коми</a></li>
+<li class="row-region"><a href="http://www.beboss.ru/kn/kostroma-obl?new_region">Костромская обл.</a></li>
+<li class="row-region"><a href="http://www.beboss.ru/kn/krasnodarsk-kray?new_region">Краснодарский край</a></li>
+<li class="row-region"><a href="http://www.beboss.ru/kn/krasnoyarsk-kray?new_region">Красноярский край</a></li>
+<li class="row-region"><a href="http://www.beboss.ru/kn/kurgan-obl?new_region">Курганская обл.</a></li>
+<li class="row-region"><a href="http://www.beboss.ru/kn/kursk-obl?new_region">Курская обл.</a></li>
+<li style="margin-bottom:20px;clear:both;">
+</li><li class="row-character" style="margin-left:-20px;float:left;margin-top:0;">Л</li>
+<li class="row-region"><a href="http://www.beboss.ru/kn/leningrad-obl?new_region">Ленинградская обл.</a></li>
+<li class="row-region"><a href="http://www.beboss.ru/kn/lipetsk-obl?new_region">Липецкая обл.</a></li>
+<li style="margin-bottom:20px;clear:both;">
+</li><li class="row-character" style="margin-left:-20px;float:left;margin-top:0;">М</li>
+<li class="row-region"><a href="http://www.beboss.ru/kn/magadan-obl?new_region">Магаданская обл.</a></li>
+<li class="row-region"><a href="http://www.beboss.ru/kn/mariy-el?new_region">Марий-Эл</a></li>
+<li class="row-region"><a href="http://www.beboss.ru/kn/mordoviya?new_region">Мордовия</a></li>
+<li class="row-region"><a href="http://www.beboss.ru/kn/moscow-obl?new_region">Московская обл.</a></li>
+<li class="row-region"><a href="http://www.beboss.ru/kn/murmansk-obl?new_region">Мурманская обл.</a></li>
+<li style="margin-bottom:20px;clear:both;">
+</li></ul></li>
+<li class="locations-cell"><ul class="locations-row" style="margin-left:20px;overflow:visible;">
+<li class="row-character first" style="margin-left:-20px;float:left;margin-top:0;">Н</li>
+<li class="row-region"><a href="http://www.beboss.ru/kn/nao?new_region">Ненецкий АО</a></li>
+<li class="row-region"><a href="http://www.beboss.ru/kn/nizhegorod-obl?new_region">Нижегородская обл.</a></li>
+<li class="row-region"><a href="http://www.beboss.ru/kn/novgorod-obl?new_region">Новгородская обл.</a></li>
+<li class="row-region"><a href="http://www.beboss.ru/kn/novosibirsk-obl?new_region">Новосибирская обл.</a></li>
+<li style="margin-bottom:20px;clear:both;">
+</li><li class="row-character" style="margin-left:-20px;float:left;margin-top:0;">О</li>
+<li class="row-region"><a href="http://www.beboss.ru/kn/omsk-obl?new_region">Омская обл.</a></li>
+<li class="row-region"><a href="http://www.beboss.ru/kn/orenburg-obl?new_region">Оренбургская обл.</a></li>
+<li class="row-region"><a href="http://www.beboss.ru/kn/orlovskaya-obl?new_region">Орловская обл.</a></li>
+<li style="margin-bottom:20px;clear:both;">
+</li><li class="row-character" style="margin-left:-20px;float:left;margin-top:0;">П</li>
+<li class="row-region"><a href="http://www.beboss.ru/kn/penza-obl?new_region">Пензенская обл.</a></li>
+<li class="row-region"><a href="http://www.beboss.ru/kn/perm-kray?new_region">Пермский край</a></li>
+<li class="row-region"><a href="http://www.beboss.ru/kn/primorskiy-kray?new_region">Приморский край</a></li>
+<li class="row-region"><a href="http://www.beboss.ru/kn/pskov-obl?new_region">Псковская обл.</a></li>
+<li style="margin-bottom:20px;clear:both;">
+</li><li class="row-character" style="margin-left:-20px;float:left;margin-top:0;">Р</li>
+<li class="row-region"><a href="http://www.beboss.ru/kn/rostov-obl?new_region">Ростовская обл.</a></li>
+<li class="row-region"><a href="http://www.beboss.ru/kn/ryazan-obl?new_region">Рязанская обл.</a></li>
+<li style="margin-bottom:20px;clear:both;">
+</li><li class="row-character" style="margin-left:-20px;float:left;margin-top:0;">С</li>
+<li class="row-region"><a href="http://www.beboss.ru/kn/samara-obl?new_region">Самарская обл.</a></li>
+<li class="row-region"><a href="http://www.beboss.ru/kn/saratov-obl?new_region">Саратовская обл.</a></li>
+<li class="row-region"><a href="http://www.beboss.ru/kn/saha?new_region">Саха</a></li>
+<li class="row-region"><a href="http://www.beboss.ru/kn/sahalin-obl?new_region">Сахалинская обл.</a></li>
+<li class="row-region"><a href="http://www.beboss.ru/kn/sverdlovsk-obl?new_region">Свердловская обл.</a></li>
+<li class="row-region"><a href="http://www.beboss.ru/kn/alaniya?new_region">Северная Осетия-Алания</a></li>
+<li class="row-region"><a href="http://www.beboss.ru/kn/smolensk-obl?new_region">Смоленская обл.</a></li>
+<li class="row-region"><a href="http://www.beboss.ru/kn/stavropolskiy-kray?new_region">Ставропольский край</a></li>
+<li style="margin-bottom:20px;clear:both;">
+</li></ul></li>
+<li class="locations-cell"><ul class="locations-row" style="margin-left:20px;overflow:visible;">
+<li class="row-character first" style="margin-left:-20px;float:left;margin-top:0;">Т</li>
+<li class="row-region"><a href="http://www.beboss.ru/kn/tambov-obl?new_region">Тамбовская обл.</a></li>
+<li class="row-region"><a href="http://www.beboss.ru/kn/tatarstan?new_region">Татарстан</a></li>
+<li class="row-region"><a href="http://www.beboss.ru/kn/tver-obl?new_region">Тверская обл.</a></li>
+<li class="row-region"><a href="http://www.beboss.ru/kn/tomsk-obl?new_region">Томская обл.</a></li>
+<li class="row-region"><a href="http://www.beboss.ru/kn/tula-obl?new_region">Тульская обл.</a></li>
+<li class="row-region"><a href="http://www.beboss.ru/kn/tyva?new_region">Тыва</a></li>
+<li class="row-region"><a href="http://www.beboss.ru/kn/tumen-obl?new_region">Тюменская обл.</a></li>
+<li style="margin-bottom:20px;clear:both;">
+</li><li class="row-character" style="margin-left:-20px;float:left;margin-top:0;">У</li>
+<li class="row-region"><a href="http://www.beboss.ru/kn/udmurtiya?new_region">Удмуртия</a></li>
+<li class="row-region"><a href="http://www.beboss.ru/kn/ulyanovsk-obl?new_region">Ульяновская обл.</a></li>
+<li style="margin-bottom:20px;clear:both;">
+</li><li class="row-character" style="margin-left:-20px;float:left;margin-top:0;">Х</li>
+<li class="row-region"><a href="http://www.beboss.ru/kn/khabarovsk-kray?new_region">Хабаровский край</a></li>
+<li class="row-region"><a href="http://www.beboss.ru/kn/hakasiya?new_region">Хакасия</a></li>
+<li class="row-region"><a href="http://www.beboss.ru/kn/hmao?new_region">Ханты-Мансийский АО</a></li>
+<li style="margin-bottom:20px;clear:both;">
+</li><li class="row-character" style="margin-left:-20px;float:left;margin-top:0;">Ч</li>
+<li class="row-region"><a href="http://www.beboss.ru/kn/chelyabinsk-obl?new_region">Челябинская обл.</a></li>
+<li class="row-region"><a href="http://www.beboss.ru/kn/chechnya?new_region">Чечня</a></li>
+<li class="row-region"><a href="http://www.beboss.ru/kn/chuvashiya?new_region">Чувашия</a></li>
+<li class="row-region"><a href="http://www.beboss.ru/kn/chao?new_region">Чукотский АО</a></li>
+<li style="margin-bottom:20px;clear:both;">
+</li><li class="row-character" style="margin-left:-20px;float:left;margin-top:0;">Я</li>
+<li class="row-region"><a href="http://www.beboss.ru/kn/yamao?new_region">Ямало-Ненецкий АО</a></li>
+<li class="row-region"><a href="http://www.beboss.ru/kn/yaroslavl-obl?new_region">Ярославская обл.</a></li>
+<li style="margin-bottom:20px;clear:both;">
+</li></ul></li>
+</ul>
+<div class="clear"></div>
+</div>

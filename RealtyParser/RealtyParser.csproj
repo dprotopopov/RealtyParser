@@ -12,6 +12,8 @@
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\MyParserLibrary\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -41,32 +43,31 @@
     <AssemblyOriginatorKeyFile>RealtyParser.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="EntityFramework">
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\EntityFramework.6.0.2\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
-    <Reference Include="EntityFramework.SqlServer">
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\EntityFramework.6.0.2\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="HtmlAgilityPack">
       <HintPath>..\packages\HtmlAgilityPack.1.4.6\lib\Net45\HtmlAgilityPack.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="ICSharpCode.SharpZipLib">
       <HintPath>..\packages\SharpZipLib.0.86.0\lib\20\ICSharpCode.SharpZipLib.dll</HintPath>
     </Reference>
-    <Reference Include="ServiceStack.Common, Version=3.9.71.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\ServiceStack.Common.3.9.71\lib\net35\ServiceStack.Common.dll</HintPath>
+    <Reference Include="ServiceStack.Common">
+      <HintPath>..\packages\ServiceStack.Common.3.9.11\lib\net35\ServiceStack.Common.dll</HintPath>
     </Reference>
-    <Reference Include="ServiceStack.Interfaces, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\ServiceStack.Common.3.9.71\lib\net35\ServiceStack.Interfaces.dll</HintPath>
+    <Reference Include="ServiceStack.Interfaces">
+      <HintPath>..\packages\ServiceStack.Common.3.9.11\lib\net35\ServiceStack.Interfaces.dll</HintPath>
     </Reference>
-    <Reference Include="ServiceStack.OrmLite, Version=3.9.71.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="ServiceStack.OrmLite">
       <HintPath>..\packages\ServiceStack.OrmLite.Sqlite32.3.9.71\lib\net40\ServiceStack.OrmLite.dll</HintPath>
     </Reference>
-    <Reference Include="ServiceStack.OrmLite.SqliteNET, Version=3.9.71.0, Culture=neutral, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="ServiceStack.OrmLite.SqliteNET">
       <HintPath>..\packages\ServiceStack.OrmLite.Sqlite32.3.9.71\lib\net40\ServiceStack.OrmLite.SqliteNET.dll</HintPath>
     </Reference>
     <Reference Include="ServiceStack.Text, Version=3.9.71.0, Culture=neutral, processorArchitecture=MSIL">
@@ -82,7 +83,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\System.Data.SQLite.x86.1.0.91.3\lib\net45\System.Data.SQLite.dll</HintPath>
     </Reference>
-    <Reference Include="System.Data.SQLite.EF6">
+    <Reference Include="System.Data.SQLite.EF6, Version=1.0.91.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\System.Data.SQLite.x86.1.0.91.3\lib\net45\System.Data.SQLite.EF6.dll</HintPath>
     </Reference>
     <Reference Include="System.Data.SQLite.Linq, Version=1.0.91.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
@@ -97,9 +99,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BuilderInfo.cs" />
-    <Compile Include="BuilderInfos.cs" />
-    <Compile Include="Collections\DictionaryOfList.cs" />
+    <Compile Include="Collections\DictionaryOfListOfString.cs" />
     <Compile Include="Collections\HierarchicalItem.cs" />
     <Compile Include="Collections\HierarchicalItemCollection.cs" />
     <Compile Include="Collections\LinksCollection.cs" />
@@ -112,11 +112,6 @@
     <Compile Include="Comparer\IPublicationComparer.cs" />
     <Compile Include="Comparer\ObjectComparer.cs" />
     <Compile Include="Comparer\ResourceComparer.cs" />
-    <Compile Include="Compression\DeflateStream.cs" />
-    <Compile Include="Compression\GZipStream.cs" />
-    <Compile Include="Compression\ICompression.cs" />
-    <Compile Include="Compression\NoCompression.cs" />
-    <Compile Include="Converter.cs" />
     <Compile Include="Crawler.cs" />
     <Compile Include="Forms\AboutBox.cs">
       <SubType>Form</SubType>
@@ -128,7 +123,6 @@
     <Compile Include="Link.cs" />
     <Compile Include="LinkComparer.cs" />
     <Compile Include="Managers\ComparerManager.cs" />
-    <Compile Include="Managers\CompressionManager.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -137,23 +131,8 @@
     <Compile Include="RequestProperties.cs" />
     <Compile Include="Resource.cs" />
     <Compile Include="ReturnFieldInfos.cs" />
-    <Compile Include="Builder.cs" />
-    <Compile Include="Trace\AppendLineCallback.cs" />
-    <Compile Include="Trace\CompliteCallback.cs" />
-    <Compile Include="Trace\ITrace.cs" />
-    <Compile Include="Trace\ProgressCallback.cs" />
-    <Compile Include="Types\Boolean.cs" />
-    <Compile Include="Types\DateTime.cs" />
-    <Compile Include="Types\Decimal.cs" />
-    <Compile Include="Types\Int32.cs" />
-    <Compile Include="Types\Regex.cs" />
-    <Compile Include="Types\String.cs" />
-    <Compile Include="Types\Type.cs" />
-    <Compile Include="Types\UInt32.cs" />
     <Compile Include="Transformation.cs" />
-    <Compile Include="Types\Uri.cs" />
     <Compile Include="Values.cs" />
-    <Compile Include="LevenshteinDistance.cs" />
     <Compile Include="Mappings.cs" />
     <Compile Include="Comparer\DatetimeFirstIdSecondComparer.cs" />
     <Compile Include="Comparer\OnlyDatetimeComparer.cs" />
@@ -173,6 +152,18 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Include="App.config" />
+    <Content Include="BeBossParser.sqlite3">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="BnParser.sqlite3">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EgentParser.sqlite3">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NetAgentaParser.sqlite3">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="packages.config" />
     <Content Include="libtidy.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -184,12 +175,27 @@
     <Content Include="RosrealtParser.sqlite3">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="RealtyParserMerge.bat">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="Алгоритм.doc" />
     <None Include="Структура базы данных.docx" />
     <None Include="Техническое задание на разработку парсера v10.pdf" />
     <None Include="Техническое задание на разработку парсера v4.pdf" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\MyLibrary\MyDatabase\MyDatabase.csproj">
+      <Project>{e929b421-2c04-4829-b4e1-7426d0a1b5c2}</Project>
+      <Name>MyDatabase</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\MyLibrary\MyLibrary\MyLibrary.csproj">
+      <Project>{e80cf993-5e07-4875-85fe-a2adcf76558d}</Project>
+      <Name>MyLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\MyParserLibrary\MyParser\MyParser.csproj">
+      <Project>{9e1db17a-a1e7-416b-b080-0d78bc926816}</Project>
+      <Name>MyParser</Name>
+    </ProjectReference>
     <ProjectReference Include="..\RT.Crawler\RT.Crawler.csproj">
       <Project>{03624a95-b0fa-4115-a498-9e88e140956c}</Project>
       <Name>RT.Crawler</Name>
@@ -198,7 +204,7 @@
       <Project>{27cc5b61-3729-4f39-ad0c-d8ce99120fd4}</Project>
       <Name>RT.ParsingLibs</Name>
     </ProjectReference>
-    <ProjectReference Include="..\TidyManaged-master\TidyManaged.csproj">
+    <ProjectReference Include="Y:\Projects\TidyManaged-master\TidyManaged.csproj">
       <Project>{d799633d-00ef-437c-b158-315557d930fc}</Project>
       <Name>TidyManaged</Name>
     </ProjectReference>
@@ -217,6 +223,18 @@
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>Данный проект ссылается на пакеты NuGet, отсутствующие на этом компьютере. Включите восстановление пакетов NuGet, чтобы загрузить их. Дополнительные сведения см. по адресу: http://go.microsoft.com/fwlink/?LinkID=322105. Отсутствует следующий файл: {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
+  </Target>
+  <PropertyGroup>
+    <PostBuildEvent>rem Create a single .dll that combines the all subassemblies.
+"$(SolutionDir)ILMerge.exe" /out:"$(SolutionDir)AllInOne\$(TargetName).dll"  "My*.dll" "RT*.dll" "EntityFramework*.dll" "ICSharpCode*.dll" "ServiceStack*.dll" "System*.dll" "TidyManaged.dll" "HtmlAgilityPack.dll" "RealtyParser*.dll" /target:library /targetplatform:v4,C:\Windows\Microsoft.NET\Framework64\v4.0.30319 /wildcards /zeroPeKind
+exit 0</PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

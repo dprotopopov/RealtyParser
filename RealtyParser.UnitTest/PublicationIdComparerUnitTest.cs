@@ -93,7 +93,7 @@ namespace RealtyParser.UnitTest
             MatchCollection matchesX = Regex.Matches("[888,##11.03.2014 14:37:42##]",
                 RealtyParser.Comparer.OnlyDatetimeComparer.DateTimePatten);
             DateTime dateTimeX = (matchesX.Count > 0)
-                ? RealtyParser.Types.DateTime.Parse(matchesX[0].Groups["date"].Value)
+                ? MyLibrary.Types.DateTime.Parse(matchesX[0].Groups["date"].Value)
                 : DateTime.Now;
             Console.WriteLine(dateTimeX);
         }

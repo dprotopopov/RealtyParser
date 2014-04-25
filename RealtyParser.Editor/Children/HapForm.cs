@@ -1,11 +1,11 @@
-﻿using System;
+﻿// compile with: /reference:HtmlAgilityPack=HtmlAgilityPack.dll
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Windows.Forms;
 using HtmlAgilityPack;
-using RealtyParser;
 using RT.Crawler;
 using HtmlDocument = HtmlAgilityPack.HtmlDocument;
 
@@ -69,6 +69,7 @@ namespace RealtyParser.Editor.Children
                 Crawler.Method = _workspace.Method;
                 Crawler.Encoding = _workspace.Encoding;
                 Crawler.Compression = _workspace.Compression;
+                Crawler.Request = _workspace.Request;
                 IEnumerable<HtmlDocument> documents =
                     await
                         Crawler.WebRequestHtmlDocument(builder.Uri);
@@ -115,6 +116,7 @@ namespace RealtyParser.Editor.Children
             public string Method { get; set; }
             public string Encoding { get; set; }
             public string Compression { get; set; }
+            public string Request { get; set; }
         }
     }
 }

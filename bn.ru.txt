@@ -1,0 +1,169 @@
+bn.ru
+
+http://www.bn.ru/arhangelskaya-oblast/sale/city/flats/?rooms[]=1
+
+http://www.bn.ru/kemerovskaya-oblast/sale/city/flats/?sort=address&sortorder=ASC&price%5Bfrom%5D=&price%5Bto%5D=&area_id%5B%5D=0&city_id%5B%5D=3&place_id%5B%5D=0&district_id%5B%5D=0
+http://www.bn.ru?sort=address&sortorder=ASC&area_id%5B%5D=0&city_id%5B%5D=3&place_id%5B%5D=0&price%5Bfrom%5D=&price%5Bto%5D=&rooms%5B%5D=2&rooms%5B%5D=4&square_total%5Bfrom%5D=&square_total%5Bto%5D=&square_living%5Bfrom%5D=&square_living%5Bto%5D=&square_kitchen%5Bfrom%5D=&square_kitchen%5Bto%5D=&floor%5Bfrom%5D=&floor%5Bto%5D=&date_create=0&firm_name=&description=&text=
+
+
+6	bn.ru	http://www.bn.ru	GET	NoCompression	{{Region[1]}}/{{Action}}/{{Rubric}}/?rooms[]={{Room}} {{PublicationLink}}	[PublicationDatetime:##{{PublicationDatetime}}##,PublicationId:{{PublicationId}},Action:{{Action}},Rubric:{{Rubric}},Region:{{Region}}]	NULL	NULL	30	DatetimeFirstIdSecondComparer	windows-1251	BnParser
+
+http://www.bn.ru/ajax/geo/init/moskovskaya-oblast/
+http://www.bn.ru/ajax/geo/list/{{Value}}/
+http://www.bn.ru/ajax/geo/title/{{Value}}/
+http://www.bn.ru/ajax/geo/crumbs/{{Value}}/
+
+<input type="checkbox" name="select_geo[]" region_id="77" area_id="0" city_id="0" place_id="0" district_id="1" onclick="change_select(this)">
+
+3	GET	Region	\http://www.mirkvartir.ru/россия\http://www.mirkvartir.ru{{Value}}\http://www.mirkvartir.ru{{Value}}\http://www.mirkvartir.ru{{Value}}\http://www.mirkvartir.ru{{Value}}		//li[@class='t1']/a[@href][contains('{{Url}}','popup')]	//li[@class='t1']/a[@href][contains('{{Url}}','popup')]	{{href}}	(http(s)?\:\/\/)?([^\.]+\.)?mirkvartir\.ru)(.*)	$4	{{InnerText}}	.*	$&	\{{region}}\{{province}}\{{city}}\{{town}}\{{district}}	\!\!\?\?\!
+
+6	GET	Region	http://www.bn.ru/ajax/geo/list/{{Value}}	//a[@class='next_geo']	//a[@class='next_geo']	{{onclick}}	\s*getGeoList\((\')?([^\']+)(\')?\)\s*	$2	{{InnerText}}	.*	$&	\{{region_id}}\{{area_id}}\{{city_id}}\{{place_id}}\{{district_id}}	\!\?\?\?\?
+
+
+6	GET	Rubric	http://www.bn.ru/moskva/		//select[@name='type']/option[@value] //select[@name='type']/option[@value]	{{value}}	.*	$&	{{InnerText}}	.*	$&	{{Rubric}}	!
+
+6	GET	Action	http://www.bn.ru/moskva/		//ul[@class='tabs']/li[@action] //ul[@class='tabs']/li[@action]	{{action}}	.*	$&	{{InnerText}}	.*	$&	{{Action}}	!
+
+
+
+
+            var img_url = 'http://static2.bn.ru/images/menu';
+            $.getScript('http://static2.bn.ru/js/menu_region_generate.js?v3.5', function(){
+                $.getScript('http://static2.bn.ru/js/menu_region.js?v3.5', function(){
+                  $('#menu_region').bind('click', function() {
+                      open_menu_region();
+                      return false;
+                  });
+                });
+            });
+            
+
+
+<ul class="tabs">
+		<li class="action active" action="sale">Продажа</li>
+		<li class="action" action="rent">Аренда</li>	</ul>
+
+
+<select id="sct2" name="type" class="styled" style="display: none; position: absolute; left: -9999px;">
+                        <option disabled="disabled">жилая</option>                                    <option value="city/flats" selected="">квартиры (вторичка)</option>                        <option value="city/rooms">комнаты</option>                        <option value="city/elite">элитная недвижимость</option>                        <option value="city/newflats">новостройки</option>                        <option value="city/low_rise">комплексы малоэтажной застройки</option>                        <option disabled="disabled">загородная</option>                                    <option value="country/houses">дома</option>                        <option value="country/cottages">коттеджи</option>                        <option value="country/lands">участки</option>                        <option disabled="disabled">коммерческая</option>                                    <option value="commerce/offices">офисы</option>                        <option value="commerce/comm_new">помещения в строящихся домах</option>                        <option value="commerce/service">помещения в сфере услуг</option>                        <option value="commerce/different">помещения различного назначения</option>                        <option value="commerce/freestanding">отдельно стоящие здания</option>                        <option value="commerce/storage">производственно-складские помещения</option>                        <option value="commerce/comm_lands">земельные участки</option>            		</select>
+
+http://www.bn.ru/portal/
+http://www.bn.ru/moskovskaya-oblast/
+<div class="city">
+    <dl>
+      <dd>
+                        <span class="let">А</span>      <span><a href="/regions/adygea/">республика Адыгея</a>(47)</span> 
+                        <span><a href="/regions/altai/">республика Алтай</a>(2)</span> 
+                        <span><a href="/altayskii-krai/">Алтайский край</a>(1847)</span> 
+                        <span><a href="/amurskaya-oblast/">Амурская область</a>(4972)</span> 
+                        <span><a href="/arhangelskaya-oblast/">Архангельская область</a>(3478)</span> 
+                        <span><a href="/regions/astrakhan-oblast/">Астраханская область</a>(62)</span> 
+                  <span class="let">Б</span>      <span><a href="/bashkortostan/">республика Башкортостан</a>(4938)</span> 
+                        <span><a href="/belgorodskaya-oblast/">Белгородская область</a>(21905)</span> 
+                        <span><a href="/bryanskaya-oblast/">Брянская область</a>(5288)</span> 
+                        <span><a href="/buryatiya/">республика Бурятия</a>(5842)</span> 
+                  <span class="let">В</span>      <span><a href="/vladimirskaya-oblast/">Владимирская область</a>(21926)</span> 
+                        <span><a href="/volgogradskaya-oblast/">Волгоградская область</a>(2722)</span> 
+                        <span><a href="/vologodskaya-oblast/">Вологодская область</a>(3845)</span> 
+                        <span><a href="/voronezhskaya-oblast/">Воронежская область</a>(27027)</span> 
+                  <span class="let">З</span>      <span><a href="/regions/zabaykalsky-krai/">Забайкальский край</a>(2)</span> 
+                  <span class="let">И</span>      <span><a href="/ivanovskaya-oblast/">Ивановская область</a>(5401)</span> 
+                        <span><a href="/irkutskaya-oblast/">Иркутская область</a>(16356)</span> 
+                  <span class="let">К</span>      <span><a href="/regions/kabardino-balkaria/">республика Кабардино-Балкария</a>(1)</span> 
+                        <span><a href="/kaliningradskaya-oblast/">Калининградская область</a>(22156)</span> 
+                        <span><a href="/kaluzhskaya-oblast/">Калужская область</a>(17723)</span> 
+                        <span><a href="/regions/kamchatka-krai/">Камчатский край</a>(2)</span> 
+                        <span><a href="/regions/karachay-cherkessia/">республика Карачаево-Черкесия</a>(7)</span> 
+                        <span><a href="/kareliya/">республика Карелия</a>(1995)</span> 
+                        <span><a href="/kemerovskaya-oblast/">Кемеровская область</a>(10810)</span> 
+                        <span><a href="/kirovskaya-oblast/">Кировская область</a>(18316)</span> 
+                        <span><a href="/komi/">республика Коми</a>(719)</span> 
+                        <span><a href="/kostromskaya-oblast/">Костромская область</a>(4660)</span> 
+                        <span><a href="/krasnodarskii-krai/">Краснодарский край</a>(69506)</span> 
+                        <span><a href="/krasnoyarskii-krai/">Красноярский край</a>(19784)</span> 
+                        <span><a href="/kurskaya-oblast/">Курская область</a>(3463)</span> 
+                  <span class="let">Л</span>      <span><a href="/lipetskaya-oblast/">Липецкая область</a>(7200)</span> 
+                  <span class="let">М</span>      <span><a href="/regions/magadan-oblast/">Магаданская область</a>(2)</span> 
+                        <span><a href="/regions/mari-el/">республика Марий Эл</a>(1)</span> 
+                        <span><a href="/regions/mordovia/">республика Мордовия</a>(1)</span> 
+                        <span><a href="/moskva/">Москва</a>(105031)</span> 
+                        <span><a href="/moskovskaya-oblast/">Московская область</a>(129695)</span> 
+                        <span><a href="/murmanskaya-oblast/">Мурманская область</a>(1677)</span> 
+                  </dd><dd><span class="let">Н</span>      <span><a href="/nizhegorodskaya-oblast/">Нижегородская область</a>(29816)</span> 
+                        <span><a href="/novgorodskaya-oblast/">Новгородская область</a>(6281)</span> 
+                        <span><a href="/novosibirskaya-oblast/">Новосибирская область</a>(46533)</span> 
+                  <span class="let">О</span>      <span><a href="/omskaya-oblast/">Омская область</a>(30120)</span> 
+                        <span><a href="/orenburgskaya-oblast/">Оренбургская область</a>(433)</span> 
+                        <span><a href="/orlovskaya-oblast/">Орловская область</a>(1016)</span> 
+                  <span class="let">П</span>      <span><a href="/penzenskaya-oblast/">Пензенская область</a>(2225)</span> 
+                        <span><a href="/permskii-krai/">Пермский край</a>(14036)</span> 
+                        <span><a href="/primorskii-krai/">Приморский край</a>(4588)</span> 
+                        <span><a href="/pskovskaya-oblast/">Псковская область</a>(2299)</span> 
+                  <span class="let">Р</span>      <span><a href="/rostovskaya-oblast/">Ростовская область</a>(102473)</span> 
+                        <span><a href="/ryazanskaya-oblast/">Рязанская область</a>(1448)</span> 
+                  <span class="let">С</span>      <span><a href="/samarskaya-oblast/">Самарская область</a>(28901)</span> 
+                        <span><a href="/spb/">Санкт-Петербург и Ленинградская область</a>(38879)</span> 
+                        <span><a href="/saratovskaya-oblast/">Саратовская область</a>(11803)</span> 
+                        <span><a href="/regions/sakhalin-oblast/">Сахалинская область</a>(1)</span> 
+                        <span><a href="/sverdlovskaya-oblast/">Свердловская область</a>(32450)</span> 
+                        <span><a href="/regions/north-ossetia/">республика Северная Осетия</a>(6)</span> 
+                        <span><a href="/smolenskaya-oblast/">Смоленская область</a>(4580)</span> 
+                        <span><a href="/stavropolskii-krai/">Ставропольский край</a>(5349)</span> 
+                  <span class="let">Т</span>      <span><a href="/tambovskaya-oblast/">Тамбовская область</a>(943)</span> 
+                        <span><a href="/tatarstan/">республика Татарстан</a>(20133)</span> 
+                        <span><a href="/tverskaya-oblast/">Тверская область</a>(2509)</span> 
+                        <span><a href="/tomskaya-oblast/">Томская область</a>(11423)</span> 
+                        <span><a href="/tulskaya-oblast/">Тульская область</a>(1674)</span> 
+                        <span><a href="/tyumenskaya-oblast/">Тюменская область</a>(42341)</span> 
+                  <span class="let">У</span>      <span><a href="/udmurtiya/">республика Удмуртия</a>(1795)</span> 
+                        <span><a href="/ulyanovskaya-oblast/">Ульяновская область</a>(2043)</span> 
+                  <span class="let">Х</span>      <span><a href="/habarovskii-krai/">Хабаровский край</a>(8605)</span> 
+                        <span><a href="/regions/khanty-mansi-ao/">Ханты-Мансийский АО</a>(6)</span> 
+                  <span class="let">Ч</span>      <span><a href="/chelyabinskaya-oblast/">Челябинская область</a>(3737)</span> 
+                        <span><a href="/chuvashiya/">республика Чувашия</a>(4001)</span> 
+                  <span class="let">Я</span>      <span><a href="/regions/yamalo-nenets-ao/">Ямало-Ненецкий АО</a>(1)</span> 
+                        <span><a href="/yaroslavskaya-oblast/">Ярославская область</a>(6853)</span> 
+                  </dd>
+    </dl>
+  </div>
+
+<a class="next_geo" onclick="getGeoList('77;0;0;0;1')">Восточный АО</a>
+
+<table class="upper-menu  menu1 up">
+              <tbody><tr>
+                <td class="first"><ul class="menu">
+                    <li><span>Жилая недвижимость</span>
+                      <ul class="submenu">
+                        <li><a href="/zap_fl_w.phtml">продажа квартир</a></li>
+                        <li><a href="/zap_rm_w.phtml">продажа комнат</a></li>
+                        <li><a href="/zap_bd_w.phtml">новостройки</a></li>
+                        <li><a href="/zap_kmz_w.phtml">малоэтажное строительство</a></li>
+                        <li><a href="/zap_ar_w.phtml">аренда квартир и комнат</a></li>
+                        <li><a href="/zap_ars_w.phtml">аренда посуточная</a></li>
+                        <li><a href="/zap_fla.phtml">заявки на аренду</a></li>
+                      </ul>
+                    </li>
+                  </ul></td>
+                   <td><ul class="menu">
+                    <li><span>Загородная недвижимость</span>
+                      <ul class="submenu sp1">
+                        <li><a href="/zap_ct_w.phtml">Продажа/аренда</a></li>
+                        <li><a href="/zap_ctb.phtml">Покупка</a></li>
+                        <!--<li><a href="/zap_ar.phtml?type[]=4">В аренду</a></li>-->
+                      </ul>
+                    </li>
+                  </ul></td>
+                   <td class="last-item"><ul class="menu">
+                    <li><span>Коммерческая недвижимость</span>
+                      <ul class="submenu sp2">
+                        <li><a href="/zap_fd_of.phtml">офисные помещения</a></li>
+                        <li><a href="/zap_fd_of.phtml">торговые помещения</a></li>
+                        <li><a href="/zap_fd_sk.phtml">складские помещения</a></li>
+                        <li><a href="/zap_fd_sk.phtml">производственные помещения</a></li>
+                        <li><a href="/zap_fd_uch.phtml">земельные участки</a></li>
+                        <li><a href="/zap_fd_osz.phtml">ОСЗ</a></li>
+                      </ul>
+                    </li>
+                  </ul></td>
+                           </tr>
+            </tbody></table>
