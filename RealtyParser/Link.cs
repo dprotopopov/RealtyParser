@@ -1,22 +1,14 @@
 ﻿namespace RealtyParser
 {
-    public class Link : IValueable
+    public class Link : MyParser.Link, IValueable
     {
-        public Link(string s)
+        public Link(string s) : base(s)
         {
-            Url = s;
         }
 
-        private string Url { get; set; }
-
-        public Values ToValues()
+        public new Values ToValues()
         {
             return new Values(this);
-        }
-
-        public override string ToString()
-        {
-            return Url;
         }
     }
 }

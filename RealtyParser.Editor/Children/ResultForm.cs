@@ -24,7 +24,7 @@ namespace RealtyParser.Editor.Children
             listBoxDll.Items.AddRange(
                 new StackListQueue<ParserModule>
                 {
-                    new ParserModule(),
+//                    new ParserModule(),
                     new RosrealtParser(),
                     new MirkvartirParser(),
                     new EgentParser(),

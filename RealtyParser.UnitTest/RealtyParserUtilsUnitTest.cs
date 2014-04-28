@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using HtmlAgilityPack;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using RealtyParser;
 
 namespace RealtyParser.UnitTest
 {
@@ -56,7 +55,7 @@ namespace RealtyParser.UnitTest
             Crawler.Compression = "NoCompression";
             IEnumerable<HtmlDocument> documents = await Crawler.WebRequestHtmlDocument(uri);
             Assert.IsNotNull(documents);
-            Assert.IsFalse(string.IsNullOrEmpty(documents.First().DocumentNode.InnerText));
+            Assert.IsFalse(string.IsNullOrWhiteSpace(documents.First().DocumentNode.InnerText));
         }
     }
 }

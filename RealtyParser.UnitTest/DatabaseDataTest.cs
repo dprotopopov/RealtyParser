@@ -4,9 +4,9 @@ using System.Linq;
 using System.Reflection;
 using HtmlAgilityPack;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using MyParser.Managers;
 using RealtyParser;
 using RealtyParser.Collections;
-using RealtyParser.Managers;
 using Mappings = RealtyParser.Mappings;
 
 namespace RealtyParser.UnitTest

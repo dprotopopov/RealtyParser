@@ -147,6 +147,7 @@ namespace RealtyParser
             }
             catch (WebException exception)
             {
+                Debug.WriteLine(exception.ToString());
             }
             if (CompliteCallback != null) CompliteCallback();
             Debug.WriteLine("End {0}::{1}", GetType().Name, MethodBase.GetCurrentMethod().Name);

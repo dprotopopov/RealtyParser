@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Reflection;
+using MyLibrary.Attribute;
 using RealtyParser.Collections;
 
 namespace RealtyParser
@@ -11,6 +12,7 @@ namespace RealtyParser
     /// </summary>
     public class ReturnFields : MyParser.ReturnFields, IValueable
     {
+        [Value]
         public new IEnumerable<string> PublicationId
         {
             get
@@ -29,6 +31,7 @@ namespace RealtyParser
             }
         }
 
+        [Value]
         public IEnumerable<string> PublicationDatetime
         {
             get
@@ -47,6 +50,7 @@ namespace RealtyParser
             }
         }
 
+        [Value]
         public IEnumerable<string> PublicationLink
         {
             get
@@ -65,6 +69,7 @@ namespace RealtyParser
             }
         }
 
+        [Value]
         public new IEnumerable<string> Subdomain
         {
             get
@@ -83,6 +88,7 @@ namespace RealtyParser
             }
         }
 
+        [Value]
         public new IEnumerable<string> Option
         {
             get
@@ -101,6 +107,7 @@ namespace RealtyParser
             }
         }
 
+        [Value]
         public new IEnumerable<string> Title
         {
             get
@@ -119,6 +126,7 @@ namespace RealtyParser
             }
         }
 
+        [Value]
         public new IEnumerable<string> OptionRedirect
         {
             get
@@ -137,6 +145,7 @@ namespace RealtyParser
             }
         }
 
+        [Value]
         public new IEnumerable<string> ValueRedirect
         {
             get
@@ -155,6 +164,7 @@ namespace RealtyParser
             }
         }
 
+        [Value]
         public IEnumerable<string> WebPublicationSite
         {
             get
@@ -173,6 +183,7 @@ namespace RealtyParser
             }
         }
 
+        [Value]
         public IEnumerable<string> WebPublicationUrl
         {
             get
@@ -191,6 +202,7 @@ namespace RealtyParser
             }
         }
 
+        [Value]
         public IEnumerable<string> WebPublicationAdditionalInfoRealtyAdditionalInfoAddress
         {
             get
@@ -209,6 +221,7 @@ namespace RealtyParser
             }
         }
 
+        [Value]
         public IEnumerable<string> WebPublicationAdditionalInfoRealtyAdditionalInfoDistrict
         {
             get
@@ -227,6 +240,7 @@ namespace RealtyParser
             }
         }
 
+        [Value]
         public IEnumerable<string> WebPublicationAdditionalInfoRealtyAdditionalInfoAppointmentOfRoom
         {
             get
@@ -245,6 +259,7 @@ namespace RealtyParser
             }
         }
 
+        [Value]
         public IEnumerable<string> WebPublicationAdditionalInfoRealtyAdditionalInfoCostAll
         {
             get
@@ -263,6 +278,7 @@ namespace RealtyParser
             }
         }
 
+        [Value]
         public IEnumerable<string> WebPublicationAdditionalInfoRealtyAdditionalInfoTotalSpace
         {
             get
@@ -281,6 +297,7 @@ namespace RealtyParser
             }
         }
 
+        [Value]
         public IEnumerable<string> WebPublicationAdditionalInfoRealtyAdditionalInfoFloorNumber
         {
             get
@@ -299,6 +316,7 @@ namespace RealtyParser
             }
         }
 
+        [Value]
         public IEnumerable<string> WebPublicationAdditionalInfoRealtyAdditionalInfoFloor
         {
             get
@@ -317,6 +335,7 @@ namespace RealtyParser
             }
         }
 
+        [Value]
         public IEnumerable<string> WebPublicationAdditionalInfoRealtyAdditionalInfoRoomNumber
         {
             get
@@ -335,6 +354,7 @@ namespace RealtyParser
             }
         }
 
+        [Value]
         public IEnumerable<string> WebPublicationAdditionalInfoRealtyAdditionalInfoRealEstateType
         {
             get
@@ -353,6 +373,7 @@ namespace RealtyParser
             }
         }
 
+        [Value]
         public IEnumerable<string> WebPublicationAdditionalInfoRealtyAdditionalInfoWallМaterial
         {
             get
@@ -371,6 +392,7 @@ namespace RealtyParser
             }
         }
 
+        [Value]
         public IEnumerable<string> WebPublicationAdditionalInfoRealtyAdditionalInfoFurnish
         {
             get
@@ -389,6 +411,7 @@ namespace RealtyParser
             }
         }
 
+        [Value]
         public IEnumerable<string> WebPublicationAdditionalInfoRealtyAdditionalInfoLivingSpace
         {
             get
@@ -407,6 +430,7 @@ namespace RealtyParser
             }
         }
 
+        [Value]
         public IEnumerable<string> WebPublicationAdditionalInfoRealtyAdditionalInfoKitchenSpace
         {
             get
@@ -425,6 +449,7 @@ namespace RealtyParser
             }
         }
 
+        [Value]
         public IEnumerable<string> WebPublicationAdditionalInfoRealtyAdditionalInfoCostPerMeter
         {
             get
@@ -443,6 +468,7 @@ namespace RealtyParser
             }
         }
 
+        [Value]
         public IEnumerable<string> WebPublicationAdditionalInfoRealtyAdditionalInfoIsLoggia
         {
             get
@@ -461,6 +487,7 @@ namespace RealtyParser
             }
         }
 
+        [Value]
         public IEnumerable<string> WebPublicationAdditionalInfoRealtyAdditionalInfoWc
         {
             get
@@ -479,6 +506,7 @@ namespace RealtyParser
             }
         }
 
+        [Value]
         public IEnumerable<string> WebPublicationAdditionalInfoRealtyAdditionalInfoViewFromProperty
         {
             get
@@ -497,6 +525,7 @@ namespace RealtyParser
             }
         }
 
+        [Value]
         public IEnumerable<string> WebPublicationAdditionalInfoRealtyAdditionalInfoIsParking
         {
             get
@@ -515,6 +544,7 @@ namespace RealtyParser
             }
         }
 
+        [Value]
         public IEnumerable<string> WebPublicationAdditionalInfoRealtyAdditionalInfoTenancy
         {
             get
@@ -533,6 +563,7 @@ namespace RealtyParser
             }
         }
 
+        [Value]
         public IEnumerable<string> WebPublicationAdditionalInfoRealtyAdditionalInfoLeasableSpace
         {
             get
@@ -551,6 +582,7 @@ namespace RealtyParser
             }
         }
 
+        [Value]
         public IEnumerable<string> WebPublicationAdditionalInfoRealtyAdditionalInfoLandSpace
         {
             get
@@ -569,6 +601,7 @@ namespace RealtyParser
             }
         }
 
+        [Value]
         public IEnumerable<string> WebPublicationContactAuthor
         {
             get
@@ -587,6 +620,7 @@ namespace RealtyParser
             }
         }
 
+        [Value]
         public IEnumerable<string> WebPublicationContactAuthorUrl
         {
             get
@@ -605,6 +639,7 @@ namespace RealtyParser
             }
         }
 
+        [Value]
         public IEnumerable<string> WebPublicationContactContactName
         {
             get
@@ -623,6 +658,7 @@ namespace RealtyParser
             }
         }
 
+        [Value]
         public IEnumerable<string> WebPublicationContactEmail
         {
             get
@@ -641,6 +677,7 @@ namespace RealtyParser
             }
         }
 
+        [Value]
         public IEnumerable<string> WebPublicationContactIcq
         {
             get
@@ -659,6 +696,7 @@ namespace RealtyParser
             }
         }
 
+        [Value]
         public IEnumerable<string> WebPublicationContactPhone
         {
             get
@@ -677,6 +715,7 @@ namespace RealtyParser
             }
         }
 
+        [Value]
         public IEnumerable<string> WebPublicationContactSkype
         {
             get
@@ -695,6 +734,7 @@ namespace RealtyParser
             }
         }
 
+        [Value]
         public IEnumerable<string> WebPublicationDescription
         {
             get
@@ -713,6 +753,7 @@ namespace RealtyParser
             }
         }
 
+        [Value]
         public IEnumerable<string> WebPublicationModifyDate
         {
             get
@@ -731,6 +772,7 @@ namespace RealtyParser
             }
         }
 
+        [Value]
         public IEnumerable<string> WebPublicationPhotos
         {
             get
@@ -749,6 +791,7 @@ namespace RealtyParser
             }
         }
 
+        [Value]
         public IEnumerable<string> WebPublicationPublicationId
         {
             get
@@ -767,6 +810,7 @@ namespace RealtyParser
             }
         }
 
+        [Value]
         public new IEnumerable<string> Value
         {
             get

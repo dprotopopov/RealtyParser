@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
@@ -15,34 +16,26 @@ namespace RealtyParser
     /// <summary>
     ///     Класс вспомогательных алгоритмов
     /// </summary>
-    public class Parser : ITrace, IValueable
+    public class Parser : MyParser.Parser, ITrace, IValueable
     {
-        public const char SplitChar = '\\';
-
-        private readonly MethodInfo[] _methodInfos =
-        {
-            typeof (Parser).GetMethod("InvokeNodeProperty"),
-            typeof (Parser).GetMethod("AttributeValue")
-        };
-
         public Parser()
         {
             ModuleNamespace = GetType().Namespace;
         }
 
-        public Transformation Transformation { private get; set; }
-        private object LastError { get; set; }
         public Database Database { private get; set; }
         public Converter Converter { private get; set; }
 
         public string ModuleNamespace { private get; set; }
-        public ProgressCallback ProgressCallback { get; set; }
-        public AppendLineCallback AppendLineCallback { get; set; }
-        public CompliteCallback CompliteCallback { get; set; }
 
-        public Values ToValues()
+        public new Values ToValues()
         {
             return new Values(this);
+        }
+
+        public new Values BuildValues(string template, HtmlNode node)
+        {
+            return new Values(base.BuildValues(template, node));
         }
 
         /// <summary>
@@ -109,8 +102,8 @@ namespace RealtyParser
                         Debug.WriteLine(exception.ToString());
                         Debug.WriteLine("Try assign {0}->{1}", propertyFullName, propertyName);
                         Debug.WriteLine("Try convert {0}{1}->{2}{3}", returnPropertyType.Name,
-                            (returnPropertyType.IsArray ? " As Array" : ""), propertyType.Name,
-                            (propertyType.IsArray ? " As Array" : ""));
+                            (returnPropertyType.IsArray ? " As Array" : string.Empty), propertyType.Name,
+                            (propertyType.IsArray ? " As Array" : string.Empty));
                     }
                 }
             }
@@ -127,7 +120,7 @@ namespace RealtyParser
                 if (propertyInfo == null) continue;
                 try
                 {
-                    propertyInfo.SetValue(webPublication, Database.ConvertTo<long>(pair.Value));
+                    propertyInfo.SetValue(webPublication, MyDatabase.Database.ConvertTo<long>(pair.Value));
                 }
                 catch (Exception exception)
                 {
@@ -219,7 +212,7 @@ namespace RealtyParser
                                     select match.Value.Trim()))
                         .Select(
                             input => regex.Replace(input, returnFieldInfo.ReturnFieldRegexReplacement.ToString()).Trim())
-                        .Where(value => !string.IsNullOrEmpty(value));
+                        .Where(value => !string.IsNullOrWhiteSpace(value));
                 returnFields.Add(returnFieldInfo.ReturnFieldId.ToString(), list);
                 Debug.WriteLine("{0}:{1}", returnFieldInfo.ReturnFieldId, string.Join(Environment.NewLine, list));
                 if (ProgressCallback != null) ProgressCallback(++current, total);
@@ -245,112 +238,73 @@ namespace RealtyParser
 
             long current = 0;
             long total = mapping.Count();
-            foreach (string mappingTable in mapping)
+            foreach (string table in mapping)
             {
-                Debug.Assert(requestId[mappingTable] != null &&
-                             !string.IsNullOrEmpty(requestId[mappingTable].ToString()));
-                Debug.Assert(mappedId[mappingTable] != null &&
-                             !string.IsNullOrEmpty(mappedId[mappingTable].ToString()));
+                Debug.Assert(requestId[table] != null &&
+                             !string.IsNullOrWhiteSpace(requestId[table].ToString()));
+                Debug.Assert(mappedId[table] != null &&
+                             !string.IsNullOrWhiteSpace(mappedId[table].ToString()));
 
-                string[] parents = mappedId[mappingTable].ToString().Split(SplitChar);
-                values.Add(string.Format("{0}", mappingTable),
-                    parents[Database.ConvertTo<long>(mappedLevel[mappingTable])]);
+                string[] parents = mappedId[table].ToString().Split(SplitChar);
+                values.Add(string.Format("{0}", table),
+                    parents[Math.Min(MyDatabase.Database.ConvertTo<long>(mappedLevel[table]), parents.Length - 1)]);
                 for (int i = 0; i < parents.Count(); i++)
-                    values.Add(string.Format("{0}[{1}]", mappingTable, i), parents[i]);
+                    values.Add(string.Format("{0}[{1}]", table, i), parents[Math.Min(i, parents.Length - 1)]);
 
-                Collections.Properties userFields = Database.GetUserFields(requestId[mappingTable],
-                    mappedId[mappingTable],
-                    mappingTable, requestId.Site);
-                List<string> keys =
-                    userFields.Keys.Select(item => string.Format("{0}", item)).ToList();
-                List<string> list = userFields.Values.Select(item => item.ToString()).ToList();
-                values.AddOrReplace(new Values {{keys, list}});
-                if (ProgressCallback != null) ProgressCallback(++current, total);
-            }
-
-            Debug.WriteLine("values {0}", values);
-            if (CompliteCallback != null) CompliteCallback();
-            Debug.WriteLine("End {0}::{1}", GetType().Name, MethodBase.GetCurrentMethod().Name);
-            return values;
-        }
-
-        /// <summary>
-        ///     Формирование пар идентификатор параметра - значение параметра
-        ///     для замены в строке-шаблоне
-        /// </summary>
-        /// <param name="template"></param>
-        /// <param name="node"></param>
-        /// <returns></returns>
-        private Values BuildValues(string template, HtmlNode node)
-        {
-            Debug.Assert(node != null);
-            Debug.WriteLine("Begin {0}::{1}", GetType().Name, MethodBase.GetCurrentMethod().Name);
-            var values = new Values();
-            MatchCollection matches = Regex.Matches(template, Transformation.FieldPattern);
-            long current = 0;
-            long total = matches.Count;
-            foreach (
-                string name in
-                    from Match match in matches
-                    select match.Groups[MyLibrary.Transformation.NameGroup].Value)
-            {
-                foreach (
-                    MethodInfo methodInfo in _methodInfos)
-                {
+                Collections.Properties fields = Database.GetUserFields(requestId[table],
+                    mappedId[table],
+                    table, requestId.Site);
+                values.Add(fields.Keys.Select(item => item.ToString()), fields.Values.Select(item => item.ToString()));
+                foreach (var field in fields)
                     try
                     {
-                        string key = string.Format("{0}", name);
-                        if (values.ContainsKey(key)) continue;
-                        object value = methodInfo.Invoke(null, new object[] {node, name});
-                        if (value != null) values.Add(key, value.ToString());
+                        values.Add(string.Format("{0}-1", field.Key),
+                            (MyDatabase.Database.ConvertTo<long>(field.Value) - 1).ToString(CultureInfo.InvariantCulture));
                     }
                     catch (Exception exception)
                     {
-                        LastError = exception;
-                        Debug.WriteLine(LastError.ToString());
+                        Debug.WriteLine(exception.ToString());
                     }
-                }
+
                 if (ProgressCallback != null) ProgressCallback(++current, total);
             }
+
+            {
+                var tables = new[] {"Rubric", "Action"};
+                List<string[]> parentses = tables.Select(table => mappedId[table].ToString().Split(SplitChar)).ToList();
+                try
+                {
+                    IEnumerable<string> list =
+                        parentses.Select(
+                            (v, i) =>
+                                v[Math.Min(MyDatabase.Database.ConvertTo<long>(mappedLevel[tables[i]]), v.Length - 1)]);
+                    values.Add(string.Join(string.Empty, tables),
+                        Database.GetScalar(list, tables, requestId.Site).ToString());
+                }
+                catch (Exception exception)
+                {
+                    Debug.WriteLine(exception);
+                    LastError = exception;
+                }
+                for (int i = 0; i < parentses[0].Count(); i++)
+                    for (int j = 0; j < parentses[1].Count(); j++)
+                        try
+                        {
+                            IEnumerable<string> list = new List<string> {parentses[0][i], parentses[1][j]};
+                            values.Add(string.Format("{0}[{1},{2}]", string.Join(string.Empty, tables), i, j),
+                                Database.GetScalar(list, tables, requestId.Site).ToString());
+                        }
+                        catch (Exception exception)
+                        {
+                            Debug.WriteLine(exception);
+                            LastError = exception;
+                        }
+            }
+
             Debug.WriteLine("values {0}", values);
             if (CompliteCallback != null) CompliteCallback();
             Debug.WriteLine("End {0}::{1}", GetType().Name, MethodBase.GetCurrentMethod().Name);
             return values;
         }
-
-        #region Получение значения параметра
-
-        /// <summary>
-        ///     Получение значения указанного аттрибута указанного нода
-        /// </summary>
-        /// <param name="node"></param>
-        /// <param name="attributeName"></param>
-        /// <returns></returns>
-        public static string AttributeValue(HtmlNode node, string attributeName)
-        {
-            HtmlAttribute attribute = node.Attributes[attributeName];
-            string value = (attribute != null) ? attribute.Value : null;
-            return (value != null) ? Uri.UnescapeDataString(value) : null;
-        }
-
-        /// <summary>
-        ///     Получение значения указанного свойства указанного нода
-        /// </summary>
-        /// <param name="node"></param>
-        /// <param name="propertyName"></param>
-        /// <returns></returns>
-        public static string InvokeNodeProperty(HtmlNode node, string propertyName)
-        {
-            string[] names = propertyName.Split('.');
-            object value = node;
-            foreach (PropertyInfo propertyInfo in names.Select(name => typeof (HtmlNode).GetProperty(name)))
-            {
-                value = propertyInfo != null ? propertyInfo.GetValue(value, null) : null;
-                if (value == null) return null;
-            }
-            return (string) value;
-        }
-
-        #endregion
     }
 }

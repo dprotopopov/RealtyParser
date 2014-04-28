@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
+using MyLibrary.Attribute;
 using RealtyParser.Collections;
 
 namespace RealtyParser
@@ -11,7 +12,7 @@ namespace RealtyParser
     ///     Ключи словаря представляют собой строки, передаваемые в качестве регулярного выражения
     ///     в функцию Regex.Replace для замены полей в шаблоне на значения данного словаря
     /// </summary>
-    public class Values : DictionaryOfListOfString, IValueable
+    public class Values : MyParser.Values, IValueable
     {
         public Values(IEnumerable<KeyValuePair<string, IEnumerable<string>>> list)
             : base(list)
@@ -33,7 +34,8 @@ namespace RealtyParser
         {
         }
 
-        public IEnumerable<string> Option
+        [Value]
+        public new IEnumerable<string> Option
         {
             get
             {
@@ -53,7 +55,8 @@ namespace RealtyParser
             }
         }
 
-        public IEnumerable<string> Value
+        [Value]
+        public new IEnumerable<string> Value
         {
             get
             {
@@ -73,7 +76,8 @@ namespace RealtyParser
             }
         }
 
-        public IEnumerable<string> Key
+        [Value]
+        public new IEnumerable<string> Key
         {
             get
             {
@@ -93,7 +97,8 @@ namespace RealtyParser
             }
         }
 
-        public IEnumerable<string> Page
+        [Value]
+        public new IEnumerable<string> Page
         {
             get
             {
@@ -113,7 +118,8 @@ namespace RealtyParser
             }
         }
 
-        public IEnumerable<string> Url
+        [Value]
+        public IEnumerable<string> PageStart
         {
             get
             {
@@ -133,6 +139,28 @@ namespace RealtyParser
             }
         }
 
+        [Value]
+        public new IEnumerable<string> Url
+        {
+            get
+            {
+                string propertyName =
+                    MethodBase.GetCurrentMethod().Name.Substring(4);
+                if (!ContainsKey(propertyName)) Add(propertyName, new StackListQueue<string>());
+                return this[propertyName];
+            }
+            set
+            {
+                string propertyName =
+                    MethodBase.GetCurrentMethod().Name.Substring(4);
+                if (ContainsKey(propertyName))
+                    this[propertyName] = value;
+                else
+                    Add(propertyName, value);
+            }
+        }
+
+        [Value]
         public IEnumerable<string> Region
         {
             get
@@ -153,6 +181,7 @@ namespace RealtyParser
             }
         }
 
+        [Value]
         public IEnumerable<string> Rubric
         {
             get
@@ -173,6 +202,28 @@ namespace RealtyParser
             }
         }
 
+        [Value]
+        public IEnumerable<string> RubricAction
+        {
+            get
+            {
+                string propertyName =
+                    MethodBase.GetCurrentMethod().Name.Substring(4);
+                if (!ContainsKey(propertyName)) Add(propertyName, new StackListQueue<string>());
+                return this[propertyName];
+            }
+            set
+            {
+                string propertyName =
+                    MethodBase.GetCurrentMethod().Name.Substring(4);
+                if (ContainsKey(propertyName))
+                    this[propertyName] = value;
+                else
+                    Add(propertyName, value);
+            }
+        }
+
+        [Value]
         public IEnumerable<string> Action
         {
             get
@@ -193,6 +244,7 @@ namespace RealtyParser
             }
         }
 
+        [Value]
         public IEnumerable<string> PublicationId
         {
             get
@@ -213,7 +265,8 @@ namespace RealtyParser
             }
         }
 
-        public IEnumerable<string> Title
+        [Value]
+        public new IEnumerable<string> Title
         {
             get
             {
@@ -233,7 +286,8 @@ namespace RealtyParser
             }
         }
 
-        public IEnumerable<string> Table
+        [Value]
+        public new IEnumerable<string> Table
         {
             get
             {
@@ -256,6 +310,11 @@ namespace RealtyParser
         public new Values Slice(int row)
         {
             return new Values(base.Slice(row));
+        }
+
+        public new Values ToValues()
+        {
+            return new Values(this);
         }
     }
 }

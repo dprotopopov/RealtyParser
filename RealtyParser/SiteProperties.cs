@@ -1,4 +1,5 @@
 ﻿using System.Reflection;
+using MyLibrary.Attribute;
 
 namespace RealtyParser
 {
@@ -10,12 +11,51 @@ namespace RealtyParser
         /// <summary>
         ///     Идентификатор сайта
         /// </summary>
+        [Value]
         public new object SiteId
         {
             get
             {
                 string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
-                if (!ContainsKey(propertyName)) Add(propertyName, "");
+                if (!ContainsKey(propertyName)) Add(propertyName, string.Empty);
+                return this[propertyName];
+            }
+            set
+            {
+                string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
+                if (ContainsKey(propertyName))
+                    this[propertyName] = value;
+                else
+                    Add(propertyName, value);
+            }
+        }
+
+        [Value]
+        public new object PageSize
+        {
+            get
+            {
+                string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
+                if (!ContainsKey(propertyName)) Add(propertyName, string.Empty);
+                return this[propertyName];
+            }
+            set
+            {
+                string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
+                if (ContainsKey(propertyName))
+                    this[propertyName] = value;
+                else
+                    Add(propertyName, value);
+            }
+        }
+
+        [Value]
+        public new object RubricActionLock
+        {
+            get
+            {
+                string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
+                if (!ContainsKey(propertyName)) Add(propertyName, string.Empty);
                 return this[propertyName];
             }
             set
@@ -31,12 +71,13 @@ namespace RealtyParser
         /// <summary>
         ///     Название сайта
         /// </summary>
+        [Value]
         public new object SiteTitle
         {
             get
             {
                 string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
-                if (!ContainsKey(propertyName)) Add(propertyName, "");
+                if (!ContainsKey(propertyName)) Add(propertyName, string.Empty);
                 return this[propertyName];
             }
             set
@@ -52,12 +93,13 @@ namespace RealtyParser
         /// <summary>
         ///     Url сайта
         /// </summary>
+        [Value]
         public new object Url
         {
             get
             {
                 string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
-                if (!ContainsKey(propertyName)) Add(propertyName, "");
+                if (!ContainsKey(propertyName)) Add(propertyName, string.Empty);
                 return this[propertyName];
             }
             set
@@ -73,12 +115,13 @@ namespace RealtyParser
         /// <summary>
         ///     Метод отправки запроса GET/POST
         /// </summary>
+        [Value]
         public new object Method
         {
             get
             {
                 string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
-                if (!ContainsKey(propertyName)) Add(propertyName, "");
+                if (!ContainsKey(propertyName)) Add(propertyName, string.Empty);
                 return this[propertyName];
             }
             set
@@ -91,12 +134,13 @@ namespace RealtyParser
             }
         }
 
+        [Value]
         public new object CompressionClassName
         {
             get
             {
                 string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
-                if (!ContainsKey(propertyName)) Add(propertyName, "");
+                if (!ContainsKey(propertyName)) Add(propertyName, string.Empty);
                 return this[propertyName];
             }
             set
@@ -113,12 +157,13 @@ namespace RealtyParser
         /// <summary>
         ///     Шаблон формирования расширенного запроса
         /// </summary>
+        [Value]
         public new object LookupTemplate
         {
             get
             {
                 string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
-                if (!ContainsKey(propertyName)) Add(propertyName, "");
+                if (!ContainsKey(propertyName)) Add(propertyName, string.Empty);
                 return this[propertyName];
             }
             set
@@ -134,12 +179,13 @@ namespace RealtyParser
         /// <summary>
         ///     Шаблон формирования одиночного запроса
         /// </summary>
+        [Value]
         public new object PublicationTemplate
         {
             get
             {
                 string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
-                if (!ContainsKey(propertyName)) Add(propertyName, "");
+                if (!ContainsKey(propertyName)) Add(propertyName, string.Empty);
                 return this[propertyName];
             }
             set
@@ -155,12 +201,13 @@ namespace RealtyParser
         /// <summary>
         ///     Иля пользователя при отправке запроса к сайту
         /// </summary>
+        [Value]
         public new object UserName
         {
             get
             {
                 string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
-                if (!ContainsKey(propertyName)) Add(propertyName, "");
+                if (!ContainsKey(propertyName)) Add(propertyName, string.Empty);
                 return this[propertyName];
             }
             set
@@ -176,12 +223,13 @@ namespace RealtyParser
         /// <summary>
         ///     Пароль пользователя при отправке запроса к сайту
         /// </summary>
+        [Value]
         public new object Password
         {
             get
             {
                 string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
-                if (!ContainsKey(propertyName)) Add(propertyName, "");
+                if (!ContainsKey(propertyName)) Add(propertyName, string.Empty);
                 return this[propertyName];
             }
             set
@@ -197,12 +245,13 @@ namespace RealtyParser
         /// <summary>
         ///     Максимальное число возвращаемых обхявлений
         /// </summary>
+        [Value]
         public new object CountAd
         {
             get
             {
                 string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
-                if (!ContainsKey(propertyName)) Add(propertyName, "");
+                if (!ContainsKey(propertyName)) Add(propertyName, string.Empty);
                 return this[propertyName];
             }
             set
@@ -218,12 +267,13 @@ namespace RealtyParser
         /// <summary>
         ///     Название класса из данной сборки, реализующего Icomparer для сравнения двух идентификаторов объявлений
         /// </summary>
+        [Value]
         public new object PublicationComparerClassName
         {
             get
             {
                 string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
-                if (!ContainsKey(propertyName)) Add(propertyName, "");
+                if (!ContainsKey(propertyName)) Add(propertyName, string.Empty);
                 return this[propertyName];
             }
             set
@@ -239,12 +289,13 @@ namespace RealtyParser
         /// <summary>
         ///     Название класса данной сборки
         /// </summary>
+        [Value]
         public new object ModuleClassName
         {
             get
             {
                 string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
-                if (!ContainsKey(propertyName)) Add(propertyName, "");
+                if (!ContainsKey(propertyName)) Add(propertyName, string.Empty);
                 return this[propertyName];
             }
             set
@@ -263,12 +314,13 @@ namespace RealtyParser
         ///     utf-8
         ///     ...
         /// </summary>
+        [Value]
         public new object Encoding
         {
             get
             {
                 string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
-                if (!ContainsKey(propertyName)) Add(propertyName, "");
+                if (!ContainsKey(propertyName)) Add(propertyName, string.Empty);
                 return this[propertyName];
             }
             set
@@ -281,12 +333,13 @@ namespace RealtyParser
             }
         }
 
-        public new object ResourceIdTemplate
+        [Value]
+        public new object ResourceTemplate
         {
             get
             {
                 string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
-                if (!ContainsKey(propertyName)) Add(propertyName, "");
+                if (!ContainsKey(propertyName)) Add(propertyName, string.Empty);
                 return this[propertyName];
             }
             set

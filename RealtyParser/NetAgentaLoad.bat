@@ -1,0 +1,12 @@
+rem sqlite3 RealtyParser.sqlite3 < NetAgentaAction.sql
+rem sqlite3 RealtyParser.sqlite3 < NetAgentaRubric.sql
+rem sqlite3 RealtyParser.sqlite3 < NetAgentaRubricActionMapping.sql
+rem sqlite3 RealtyParser.sqlite3 < NetAgentaActionMapping.sql
+rem sqlite3 RealtyParser.sqlite3 < NetAgentaRubricMapping.sql
+rem sqlite3 RealtyParser.sqlite3 < NetAgentaRegion1.sql
+rem sqlite3 RealtyParser.sqlite3 < NetAgentaRegion2.sql
+rem sqlite3 RealtyParser.sqlite3 < NetAgentaRegion3.sql
+rem sqlite3 RealtyParser.sqlite3 < NetAgentaRegionMapping1.sql
+rem sqlite3 RealtyParser.sqlite3 < NetAgentaRegionMapping1Delete.sql
+rem sqlite3 RealtyParser.sqlite3 < NetAgentaRegionMapping2.sql
+rem sqlite3 RealtyParser.sqlite3 < NetAgentaRegionDelete.sql

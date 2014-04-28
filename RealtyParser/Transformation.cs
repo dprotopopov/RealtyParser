@@ -11,7 +11,6 @@ namespace RealtyParser
         private const string KeyKey = @"Key";
         private const string ValueKey = @"Value";
 
-
         public Values ToValues()
         {
             return new Values(this);
@@ -38,8 +37,8 @@ namespace RealtyParser
                     if (values.ContainsKey(key) && values[key].Count() > index) list1.Add(values[key].ToList()[index]);
                 }
                 list1.Add(parts.Last());
-                string value = string.Join("", list1).Trim();
-                if (!string.IsNullOrEmpty(value)) list.Add(value);
+                string value = string.Join(string.Empty, list1).Trim();
+                if (!string.IsNullOrWhiteSpace(value)) list.Add(value);
                 if (ProgressCallback != null) ProgressCallback(++current, total);
             }
             if (CompliteCallback != null) CompliteCallback();

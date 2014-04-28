@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Reflection;
+using MyLibrary.Attribute;
 
 namespace RealtyParser
 {
-    public class RequestProperties : Collections.Properties, IValueable
+    public class RequestProperties : MyParser.RequestProperties, IValueable
     {
         public RequestProperties(string s)
             : base(s)
@@ -18,24 +19,8 @@ namespace RealtyParser
         {
         }
 
-        public object Site
-        {
-            get
-            {
-                string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
-                if (!ContainsKey(propertyName)) Add(propertyName, 0);
-                return this[propertyName];
-            }
-            set
-            {
-                string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
-                if (ContainsKey(propertyName))
-                    this[propertyName] = value;
-                else
-                    Add(propertyName, value);
-            }
-        }
 
+        [Value]
         public object Action
         {
             get
@@ -54,6 +39,7 @@ namespace RealtyParser
             }
         }
 
+        [Value]
         public object Rubric
         {
             get
@@ -72,6 +58,7 @@ namespace RealtyParser
             }
         }
 
+        [Value]
         public object Region
         {
             get
@@ -90,54 +77,10 @@ namespace RealtyParser
             }
         }
 
-        public object PublicationDatetime
-        {
-            get
-            {
-                string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
-                if (!ContainsKey(propertyName)) Add(propertyName, 0);
-                return this[propertyName];
-            }
-            set
-            {
-                string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
-                if (ContainsKey(propertyName))
-                    this[propertyName] = value;
-                else
-                    Add(propertyName, value);
-            }
-        }
-
-        public object PublicationId
-        {
-            get
-            {
-                string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
-                if (!ContainsKey(propertyName)) Add(propertyName, 0);
-                return this[propertyName];
-            }
-            set
-            {
-                string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
-                if (ContainsKey(propertyName))
-                    this[propertyName] = value;
-                else
-                    Add(propertyName, value);
-            }
-        }
 
         public new Values ToValues()
         {
             return new Values(this);
-        }
-
-        public void Add(Dictionary<string, object> dictionary)
-        {
-            foreach (var pair in dictionary)
-            {
-                if (ContainsKey(pair.Key)) this[pair.Key] = pair.Value;
-                else Add(pair.Key, pair.Value);
-            }
         }
     }
 }

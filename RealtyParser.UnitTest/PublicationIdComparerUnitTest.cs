@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Text.RegularExpressions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using RealtyParser.Comparer;
+using MyParser.Comparer;
+using DateTime = MyLibrary.Types.DateTime;
+using Regex = System.Text.RegularExpressions.Regex;
 
 namespace RealtyParser.UnitTest
 {
@@ -47,6 +49,7 @@ namespace RealtyParser.UnitTest
             //
             // TODO: добавьте здесь логику теста
             //
+            DateTime.Default = System.DateTime.Now;
             var comparer = new OnlyDatetimeComparer();
             Assert.IsTrue(comparer.Compare("##11.03.2013 14:37:42##", "##10.04.2013 14:37:42##") < 0);
             Assert.IsTrue(comparer.Compare("[888,##11.03.2014 14:37:42##]", "##10.04.2013 14:37:42##") > 0);
@@ -59,6 +62,7 @@ namespace RealtyParser.UnitTest
             //
             // TODO: добавьте здесь логику теста
             //
+            DateTime.Default = System.DateTime.Now;
             var comparer = new DatetimeFirstIdSecondComparer();
             Assert.IsTrue(
                 comparer.Compare("[PublicationId:888,PublicationDatetime:##11.03.2014 14:37:42##]",
@@ -70,6 +74,7 @@ namespace RealtyParser.UnitTest
                 comparer.Compare("[PublicationDatetime:##11.03.2013 14:37:42##,PublicationId:1111]",
                     "[PublicationId:1111,PublicationDatetime:##11.03.2013 14:37:42##]") == 0);
         }
+
         [TestMethod]
         public void DatetimeFirstIdSecondIsValidTest()
         {
@@ -78,9 +83,11 @@ namespace RealtyParser.UnitTest
             //
             var comparer = new DatetimeFirstIdSecondComparer();
             Assert.IsTrue(
-                comparer.IsValid(@"[PublicationDatetime:##18.02.2014 10:07:04##,PublicationId:1551212,Action:\1,Rubric:\1\2\3,Region:\22\\]"));
+                comparer.IsValid(
+                    @"[PublicationDatetime:##18.02.2014 10:07:04##,PublicationId:1551212,Action:\1,Rubric:\1\2\3,Region:\22\\]"));
             Assert.IsFalse(
-                comparer.IsValid(@"[PublicationDatetime:####,PublicationId:109436880,Action:\www.,Rubric:\www.\,Region:\/дагестан+республика\\\\]"));
+                comparer.IsValid(
+                    @"[PublicationDatetime:####,PublicationId:109436880,Action:\www.,Rubric:\www.\,Region:\/дагестан+республика\\\\]"));
         }
 
         [TestMethod]
@@ -89,12 +96,13 @@ namespace RealtyParser.UnitTest
             //
             // TODO: добавьте здесь логику теста
             //
+            DateTime.Default = System.DateTime.Now;
             var comparer = new OnlyDatetimeComparer();
             MatchCollection matchesX = Regex.Matches("[888,##11.03.2014 14:37:42##]",
-                RealtyParser.Comparer.OnlyDatetimeComparer.DateTimePatten);
-            DateTime dateTimeX = (matchesX.Count > 0)
-                ? MyLibrary.Types.DateTime.Parse(matchesX[0].Groups["date"].Value)
-                : DateTime.Now;
+                MyParser.Comparer.OnlyDatetimeComparer.DateTimePatten);
+            System.DateTime dateTimeX = (matchesX.Count > 0)
+                ? DateTime.Parse(matchesX[0].Groups["date"].Value)
+                : System.DateTime.Now;
             Console.WriteLine(dateTimeX);
         }
     }

@@ -1,11 +1,11 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data.SQLite;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using MyLibrary.Trace;
 using RealtyParser.Collections;
 
 namespace RealtyParser
@@ -13,7 +13,7 @@ namespace RealtyParser
     /// <summary>
     ///     Класс для работы с базой данных
     /// </summary>
-    public class Database : MyParser.Database, ITrace, IValueable
+    public class Database : MyParser.Database, IValueable
     {
         private readonly MethodInfo _stringFormatMethodInfo = typeof (string).GetMethod("Format",
             new[] {typeof (string), typeof (object[])});
@@ -171,6 +171,24 @@ namespace RealtyParser
                         IdColumn)
                 }
             };
+            GetScalarManyProfiles = new Dictionary<Type[], string>
+            {
+                {
+                    new[] {typeof (IEnumerable<object>), typeof (IEnumerable<string>), typeof (object)},
+                    string.Format("SELECT {0}{{0}}{1} FROM {0}{{0}}{2} WHERE {0}{1}=@{0}{1} AND {{1}}",
+                        SiteTable, IdColumn, MappingTable)
+                },
+                {
+                    new[] {typeof (IList<object>), typeof (IList<string>), typeof (object)},
+                    string.Format("SELECT {0}{{0}}{1} FROM {0}{{0}}{2} WHERE {0}{1}=@{0}{1} AND {{1}}",
+                        SiteTable, IdColumn, MappingTable)
+                },
+                {
+                    new[] {typeof (List<object>), typeof (List<string>), typeof (object)},
+                    string.Format("SELECT {0}{{0}}{1} FROM {0}{{0}}{2} WHERE {0}{1}=@{0}{1} AND {{1}}",
+                        SiteTable, IdColumn, MappingTable)
+                },
+            };
         }
 
         private string AssemblyDirectory
@@ -195,6 +213,7 @@ namespace RealtyParser
         private Dictionary<Type[], string> GetMappingProfiles { get; set; }
         private string[] GetUserFieldsFormatStrings { get; set; }
         private Dictionary<Type[], string> GetScalarProfiles { get; set; }
+        private Dictionary<Type[], string> GetScalarManyProfiles { get; set; }
 
         #endregion
 
@@ -210,7 +229,7 @@ namespace RealtyParser
         /// </summary>
         public new SiteProperties GetSiteProperties(object siteId)
         {
-            Debug.Assert(siteId != null && !string.IsNullOrEmpty(siteId.ToString()));
+            Debug.Assert(siteId != null && !string.IsNullOrWhiteSpace(siteId.ToString()));
             var properties = new SiteProperties();
             Connection.Open();
             using (SQLiteCommand command = Connection.CreateCommand())
@@ -236,7 +255,7 @@ namespace RealtyParser
 
         public new Mappings GetMappings(object siteId)
         {
-            Debug.Assert(siteId != null && !string.IsNullOrEmpty(siteId.ToString()));
+            Debug.Assert(siteId != null && !string.IsNullOrWhiteSpace(siteId.ToString()));
             var mappings = new Mappings();
             object[] mapping = GetList(MappingTable, TableNameColumn).ToArray();
             long current = 0;
@@ -319,7 +338,7 @@ namespace RealtyParser
         /// </summary>
         public new ReturnFieldInfos GetReturnFieldInfos(object siteId)
         {
-            Debug.Assert(siteId != null && !string.IsNullOrEmpty(siteId.ToString()));
+            Debug.Assert(siteId != null && !string.IsNullOrWhiteSpace(siteId.ToString()));
             var returnFieldInfos = new ReturnFieldInfos();
             Connection.Open();
             using (SQLiteCommand command = Connection.CreateCommand())
@@ -496,10 +515,10 @@ namespace RealtyParser
         public new Collections.Properties GetUserFields(object id, object mappedId, string mappedTableName,
             object siteId)
         {
-            Debug.Assert(id != null && !string.IsNullOrEmpty(id.ToString()));
-            Debug.Assert(mappedId != null && !string.IsNullOrEmpty(mappedId.ToString()));
-            Debug.Assert(mappedTableName != null && !string.IsNullOrEmpty(mappedTableName));
-            Debug.Assert(siteId != null && !string.IsNullOrEmpty(siteId.ToString()));
+            Debug.Assert(id != null && !string.IsNullOrWhiteSpace(id.ToString()));
+            Debug.Assert(mappedId != null && !string.IsNullOrWhiteSpace(mappedId.ToString()));
+            Debug.Assert(mappedTableName != null && !string.IsNullOrWhiteSpace(mappedTableName));
+            Debug.Assert(siteId != null && !string.IsNullOrWhiteSpace(siteId.ToString()));
             var userFields = new Collections.Properties();
             var internals = new StackListQueue<string>
             {
@@ -568,6 +587,47 @@ namespace RealtyParser
                     command.Parameters.Add(new SQLiteParameter(string.Format("@{0}", IdColumn), parameters[0]));
                     command.Parameters.Add(new SQLiteParameter(string.Format("@{0}{1}", SiteTable, IdColumn),
                         parameters[parameters.Length - 1]));
+                    SQLiteDataReader reader = command.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        object value = reader[0];
+                        Connection.Close();
+                        return value;
+                    }
+                    Connection.Close();
+                    return null;
+                }
+            }
+
+            foreach (var pair in GetScalarManyProfiles.Where(pair => MyLibrary.Types.Type.IsKindOf(types, pair.Key)))
+            {
+                Connection.Open();
+                using (SQLiteCommand command = Connection.CreateCommand())
+                {
+                    Debug.Assert((parameters[0] as IEnumerable<object>).Count() ==
+                                 (parameters[1] as IEnumerable<string>).Count());
+                    command.CommandText =
+                        (string)
+                            _stringFormatMethodInfo.Invoke(null,
+                                new object[]
+                                {
+                                    pair.Value,
+                                    new[]
+                                    {
+                                        string.Join(string.Empty, (parameters[1] as IEnumerable<string>)),
+                                        string.Join(" AND ", (from object p in (parameters[1] as IEnumerable<string>)
+                                            select string.Format("{0}{1}{2}=@{0}{1}{2}", SiteTable, p, IdColumn)))
+                                    }
+                                });
+                    Debug.WriteLine(command.CommandText);
+                    command.Parameters.Add(new SQLiteParameter(string.Format("@{0}{1}", SiteTable, IdColumn),
+                        parameters[parameters.Length - 1]));
+                    for (int index = 0; index < (parameters[1] as IEnumerable<string>).Count(); index++)
+                    {
+                        string p = (parameters[1] as IEnumerable<string>).ElementAt(index);
+                        command.Parameters.Add(new SQLiteParameter(string.Format("@{0}{1}{2}", SiteTable, p, IdColumn),
+                            (parameters[0] as IEnumerable<object>).ElementAt(index)));
+                    }
                     SQLiteDataReader reader = command.ExecuteReader();
                     while (reader.Read())
                     {

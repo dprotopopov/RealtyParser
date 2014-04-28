@@ -1,4 +1,5 @@
 ﻿using System.Reflection;
+using MyLibrary.Attribute;
 
 namespace RealtyParser
 {
@@ -11,12 +12,13 @@ namespace RealtyParser
         /// <summary>
         ///     Идентификатор сайта
         /// </summary>
+        [Value]
         public new object SiteId
         {
             get
             {
                 string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
-                if (!ContainsKey(propertyName)) Add(propertyName, "");
+                if (!ContainsKey(propertyName)) Add(propertyName, string.Empty);
                 return this[propertyName];
             }
             set
@@ -32,12 +34,13 @@ namespace RealtyParser
         /// <summary>
         ///     Идентификатор возвращаемого поля
         /// </summary>
+        [Value]
         public new object ReturnFieldId
         {
             get
             {
                 string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
-                if (!ContainsKey(propertyName)) Add(propertyName, "");
+                if (!ContainsKey(propertyName)) Add(propertyName, string.Empty);
                 return this[propertyName];
             }
             set
@@ -53,12 +56,13 @@ namespace RealtyParser
         /// <summary>
         ///     Xpath для нахождения поля на загруженной странице
         /// </summary>
+        [Value]
         public new object ReturnFieldXpathTemplate
         {
             get
             {
                 string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
-                if (!ContainsKey(propertyName)) Add(propertyName, "");
+                if (!ContainsKey(propertyName)) Add(propertyName, string.Empty);
                 return this[propertyName];
             }
             set
@@ -74,12 +78,13 @@ namespace RealtyParser
         /// <summary>
         ///     Шаблон возвращаемого найденого текста
         /// </summary>
+        [Value]
         public new object ReturnFieldResultTemplate
         {
             get
             {
                 string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
-                if (!ContainsKey(propertyName)) Add(propertyName, "");
+                if (!ContainsKey(propertyName)) Add(propertyName, string.Empty);
                 return this[propertyName];
             }
             set
@@ -96,12 +101,13 @@ namespace RealtyParser
         ///     Шаблон регулярного выражения,
         ///     используемого при замене найденого текста
         /// </summary>
+        [Value]
         public new object ReturnFieldRegexPattern
         {
             get
             {
                 string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
-                if (!ContainsKey(propertyName)) Add(propertyName, "");
+                if (!ContainsKey(propertyName)) Add(propertyName, string.Empty);
                 return this[propertyName];
             }
             set
@@ -118,12 +124,13 @@ namespace RealtyParser
         ///     Шаблон для замены у регулярного выражения,
         ///     используемого при замене найденого текста
         /// </summary>
+        [Value]
         public new object ReturnFieldRegexReplacement
         {
             get
             {
                 string propertyName = MethodBase.GetCurrentMethod().Name.Substring(4);
-                if (!ContainsKey(propertyName)) Add(propertyName, "");
+                if (!ContainsKey(propertyName)) Add(propertyName, string.Empty);
                 return this[propertyName];
             }
             set
@@ -139,16 +146,6 @@ namespace RealtyParser
         public new Values ToValues()
         {
             return new Values(this);
-        }
-
-        /// <summary>
-        ///     Стандартный конвертер содержания в строку
-        /// </summary>
-        /// <returns></returns>
-        public override string ToString()
-        {
-            return string.Format("{0}\t{1}\t{2}\t{3}\t{4}\t{5}", SiteId, ReturnFieldId, ReturnFieldXpathTemplate,
-                ReturnFieldResultTemplate, ReturnFieldRegexPattern, ReturnFieldRegexReplacement);
         }
     }
 }

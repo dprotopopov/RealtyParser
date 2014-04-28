@@ -48,7 +48,7 @@ namespace RealtyParser.Editor.Children
             if (Builder.TableName == null || Builder.SiteId == null) return;
             Builder.Total = 0;
             Builder.Current = 0;
-            textBoxCommandText.Text = "";
+            textBoxCommandText.Text = string.Empty;
             Builder.CompliteCallback = _progressForm.CompliteCallback;
             Builder.ProgressCallback = _progressForm.ProgressCallback;
 
@@ -81,7 +81,7 @@ namespace RealtyParser.Editor.Children
             Builder.Current = 0;
             repositoryItemComboBoxLeft.Items.Clear();
             repositoryItemComboBoxRight.Items.Clear();
-            textBoxCommandText.Text = "";
+            textBoxCommandText.Text = string.Empty;
             Builder.CompliteCallback = _progressForm.CompliteCallback;
             Builder.ProgressCallback = _progressForm.ProgressCallback;
 
@@ -114,7 +114,7 @@ namespace RealtyParser.Editor.Children
             Builder.Current = 0;
             repositoryItemComboBoxLeft.Items.Clear();
             repositoryItemComboBoxRight.Items.Clear();
-            textBoxCommandText.Text = "";
+            textBoxCommandText.Text = string.Empty;
 
             Builder.CompliteCallback = _progressForm.CompliteCallback;
             Builder.ProgressCallback = _progressForm.ProgressCallback;

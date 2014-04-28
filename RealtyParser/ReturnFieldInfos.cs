@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using MyLibrary.Attribute;
 using MyLibrary.Types;
 using RealtyParser.Collections;
 
@@ -8,6 +9,7 @@ namespace RealtyParser
 {
     public class ReturnFieldInfos : Dictionary<string, IEnumerable<ReturnFieldInfo>>, IValueable
     {
+        [Value]
         public IEnumerable<ReturnFieldInfo> OptionRedirect
         {
             get
@@ -25,6 +27,7 @@ namespace RealtyParser
             }
         }
 
+        [Value]
         public IEnumerable<ReturnFieldInfo> ValueRedirect
         {
             get
@@ -42,6 +45,7 @@ namespace RealtyParser
             }
         }
 
+        [Value]
         public IEnumerable<ReturnFieldInfo> Subdomain
         {
             get
@@ -59,6 +63,7 @@ namespace RealtyParser
             }
         }
 
+        [Value]
         public IEnumerable<ReturnFieldInfo> PublicationId
         {
             get
@@ -76,6 +81,7 @@ namespace RealtyParser
             }
         }
 
+        [Value]
         public IEnumerable<ReturnFieldInfo> PublicationDatetime
         {
             get
@@ -93,6 +99,7 @@ namespace RealtyParser
             }
         }
 
+        [Value]
         public IEnumerable<ReturnFieldInfo> PublicationLink
         {
             get
@@ -141,9 +148,7 @@ namespace RealtyParser
             if (!ContainsKey(key)) Add(key, new StackListQueue<ReturnFieldInfo> {returnFieldInfo});
             else
             {
-                List<ReturnFieldInfo> list = this[key].ToList();
-                list.Add(returnFieldInfo);
-                this[key] = list;
+                this[key] = new StackListQueue<ReturnFieldInfo>(this[key]) {returnFieldInfo};
             }
         }
     }
