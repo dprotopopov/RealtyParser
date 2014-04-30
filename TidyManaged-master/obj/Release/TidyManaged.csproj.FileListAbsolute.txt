@@ -1,3 +1,0 @@
-D:\Projects\RealtyParser\TidyManaged-master\bin\Release\TidyManaged.xml
-D:\Projects\RealtyParser\TidyManaged-master\bin\Release\TidyManaged.dll
-D:\Projects\RealtyParser\TidyManaged-master\obj\Release\TidyManaged.dll
