@@ -1,0 +1,662 @@
+8	arenda88.info	http://www.arenda88.info	GET	NoCompression	
+/index.php?option=com_content&layout=default&search=1&view=category&Itemid={{Action}}&id={{Rubric}}&city={{Region}}&{{count}}&limitstart={{PageStart}}	{{PublicationLink}}	[PublicationDatetime:##{{PublicationDatetime}}##,PublicationId:{{PublicationId}},Action:{{Action}},Rubric:{{Rubric}},Region:{{Region}}]	NULL	NULL	30	DatetimeFirstIdSecondComparer	utf-8	20	0	Arenda88Parser
+
+http://www.arenda88.info/index.php?option=com_content&layout=default&search=1&view=category&Itemid={{Action}}&id={{Rubric}}&city={{Region}}&{{count}}&limitstart={{PageStart}}
+
+http://www.arenda88.info/index.php?option=com_content&layout=default&search=1&view=category&Itemid=83&id=54&asmSelect0=любую&count%5B%5D=1&city=2&asmSelect1=в+районе&cost_from=&cost_to=
+http://www.arenda88.info/index.php?option=com_content&layout=default&search=1&view=category&Itemid=83&id=54&asmSelect0=любую&count%5B%5D=1&city=1&asmSelect1=в+районе&cost_from=&cost_to=
+http://www.arenda88.info/index.php?option=com_content&layout=default&search=1&view=category&Itemid=83&id=54&asmSelect0=любую&count%5B%5D=1&count%5B%5D=3&city=1&asmSelect1=в+районе&cost_from=&cost_to=
+http://www.arenda88.info/index.php?option=com_content&layout=default&search=1&view=category&Itemid=59&id=48&asmSelect0=любую&count%5B%5D=8%2B&city=1&asmSelect1=в+районе&cost_from=&cost_to=
+
+http://bn.ru{{Region}}{{Action}}{{Rubric}}/?start={{PageStart}}{{rooms}}&result_tpl=table&print_page=1
+http://net-agenta.ru{{Region}}{{RubricAction}}/{{PageStart}}.html?rooms={{roomsFrom-1}}&rooms_last={{roomsTo-1}}
+
+
+8	GET	Region	http://www.arenda88.info		//select[@name='{{Option}}']/option[@value]	//select[@name='{{Option}}']/option[@value]	{{value}}	.*	$&	{{NextSibling.InnerText}}	.*	$&	\{{city}}	\!
+8	GET	Rubric	http://www.arenda88.info		//select[@name='{{Option}}']/option[@value]	//select[@name='{{Option}}']/option[@value]	{{value}}	.*	$&	{{NextSibling.InnerText}}	.*	$&	\{{id}}	\!
+8	GET	Action	http://www.arenda88.info		//select[@name='{{Option}}']/option[@value]	//select[@name='{{Option}}']/option[@value]	{{value}}	.*	$&	{{NextSibling.InnerText}}	.*	$&	\{{Itemid}}	\!
+
+
+
+
+
+8	PublicationLink	//table[@class='advTable']//td[@class='item']/a	{{href}}	.*	$&
+8	PublicationId	//table[@class='advTable']//td[@class='item']/a	{{href}}	[^\?]*\?id=(\d+).*	$1
+8	PublicationDatetime	//table[@class='advTable']//td[@class='date']	{{InnerText}}	.*	$&
+8	WebPublicationUrl	/	{{Url}}	.*	$&
+8	WebPublicationSite	/	{{Url}}	((http(s)?:\/\/)?[^\/\?]+).*	$1
+8	WebPublicationPublicationId	/	{{Url}}	[^\?]*\?id=(\d+).*	$1
+8	WebPublicationModifyDate	//div[@class='dateIco']	{{InnerText}}	.*	$&
+8	WebPublicationContactContactName	//td[contains(.,'Контактное лицо')]/following-sibling::td[1]	{{InnerText}}	.*	$&
+8	WebPublicationContactPhone	//td[contains(.,'Телефон')]/following-sibling::td[1]	{{InnerText}}	.*	$&
+8	WebPublicationPhotos	//div[contains(@class,'gallery')]//a/img[@src]	{{src}}	.*	$&
+8	WebPublicationAdditionalInfoRealtyAdditionalInfoCostAll	//td[contains(.,'Цена')]/following-sibling::td[1]	{{InnerText}}	\D*(\d+)\D*	$1
+8	WebPublicationAdditionalInfoRealtyAdditionalInfoFloor	//td[contains(.,'Этаж')]/following-sibling::td[1]	{{InnerText}}	\D*(\d*)(\D*(\d*))?.*	$1
+8	WebPublicationAdditionalInfoRealtyAdditionalInfoFloorNumber	//td[contains(.,'Этаж')]/following-sibling::td[1]	{{InnerText}}	\D*(\d*)(\D*(\d*))?.*	$3
+8	WebPublicationAdditionalInfoRealtyAdditionalInfoAppointmentOfRoom	//h2	{{InnerText}}	.*	$&
+8	WebPublicationAdditionalInfoRealtyAdditionalInfoAddress	//td[contains(.,'Город')]/following-sibling::td[1]|//td[contains(.,'Район')]/following-sibling::td[1]|//td[contains(.,'Адрес')]/following-sibling::td[1]|//span[contains(@class,'breadcrumbs')]/a	{{InnerText}}	.*	$&
+8	WebPublicationAdditionalInfoRealtyAdditionalInfoDistrict	//td[contains(.,'Район')]/following-sibling::td[1]	{{InnerText}}	.*	$&
+8	WebPublicationAdditionalInfoRealtyAdditionalInfoTotalSpace	//td[contains(.,'Площадь')]/following-sibling::td[1]	{{InnerText}}	\D*(\d+)(\.\d+)?.*	$1
+8	WebPublicationAdditionalInfoRealtyAdditionalInfoRoomNumber	//td[contains(.,'Количество комнат')]/following-sibling::td[1]	{{InnerText}}	.*	$&
+8	WebPublicationAdditionalInfoRealtyAdditionalInfoWc	//td[contains(.,'Сан узел')]/following-sibling::td[1]	{{InnerText}}	.*	$&
+8	WebPublicationAdditionalInfoRealtyAdditionalInfoIsLoggia	//td[contains(.,'Балкон/лоджия')]/following-sibling::td[1]	{{InnerText}}	.*	$&
+8	WebPublicationDescription	//div[@class='flatCardTablePad2']/text()	{{InnerText}}	.*	$&
+
+
+<table class="flatCardTable">
+                <tbody><tr>
+                    <td>
+                        <div class="flatCardTablePad1">
+                            <h3>Общая информация</h3>
+                        <table class="cardInfoTable">
+                            <tbody>
+                        <tr>
+                <td class="col1">Количество комнат</td>
+        <td class="col2"><b>2</b></td>
+                </tr>
+                                <tr>
+                <td class="col1">Количество смежных комнат</td>
+        <td class="col2"><b>ни одной</b></td>
+                </tr>
+                                <tr>
+                <td class="col1">Этаж</td>
+        <td class="col2"><b>5/14</b></td>
+                </tr>
+                                <tr>
+                <td class="col1">Мебель</td>
+        <td class="col2"><b>Есть</b></td>
+                </tr>
+                                <tr>
+                <td class="col1">Техника</td>
+        <td class="col2"><b>Есть</b></td>
+                </tr>
+                                <tr>
+                <td class="col1">Наличие телефона</td>
+        <td class="col2"><b>Да</b></td>
+                </tr>
+                                <tr>
+                <td class="col1">Сан узел</td>
+        <td class="col2"><b>Совмещенный</b></td>
+                </tr>
+                                <tr>
+                <td class="col1">Отделка санузла</td>
+        <td class="col2"><b>Кафель</b></td>
+                </tr>
+                                <tr>
+                <td class="col1">Балкон/лоджия</td>
+        <td class="col2"><b>Лоджия</b></td>
+                </tr>
+                        <tr>
+        <td class="col1">Коммунальные платежи</td>
+        <td class="col2"><b>Включены в стоимость</b></td>
+        </tr>
+        <tr>
+        <td class="col1">
+        Цена        </td>
+        <td class="col2">
+        <em>13 000</em>
+        </td>
+        </tr>
+                                <tr>
+                <td class="col1">Торг</td>
+        <td class="col2"><b>Возможен</b></td>
+                </tr>
+                                <tr>
+        <td class="col1">
+        Площадь
+        </td>
+        <td class="col2">
+        <b>58</b>
+        </td>
+        </tr>
+                        <tr>
+        <td class="col1">
+        Город
+        </td>
+        <td class="col2">
+        <b>Екатеринбург</b>
+        </td>
+        </tr>
+        <tr>
+                <td class="col1">
+        Район:
+        </td>
+        <td class="col2">
+        <b>	Ботанический</b>
+        </td>
+                </tr>
+        </tbody></table>
+				<h3>Объект на карте</h3>
+		<div class="map">
+			<div id="map_canvas" style="width:340px;height:163px" class="YMaps YMaps-cursor-grab"><div class="YMaps-layer-container" style="z-index: 1;"><div class="YMaps-map-type-layer-container"><div class="YMaps-layer" style="z-index: 5; left: 0px; top: 0px;"><div style="z-index:6;" class="YMaps-tile-container"><img src="http://vec03.maps.yandex.net/tiles?l=map&amp;v=4.16.3&amp;x=21901&amp;y=10100&amp;z=15&amp;g=Gag" style="position: absolute; width: 256px; height: 256px; left: -248px; top: -275px;"><img src="http://vec01.maps.yandex.net/tiles?l=map&amp;v=4.16.3&amp;x=21902&amp;y=10100&amp;z=15&amp;g=Gagari" style="position: absolute; width: 256px; height: 256px; left: 8px; top: -275px;"><img src="http://vec03.maps.yandex.net/tiles?l=map&amp;v=4.16.3&amp;x=21903&amp;y=10100&amp;z=15&amp;g=G" style="position: absolute; width: 256px; height: 256px; left: 264px; top: -275px;"><img src="http://vec04.maps.yandex.net/tiles?l=map&amp;v=4.16.3&amp;x=21901&amp;y=10101&amp;z=15&amp;g=Gaga" style="position: absolute; width: 256px; height: 256px; left: -248px; top: -19px;"><img src="http://vec02.maps.yandex.net/tiles?l=map&amp;v=4.16.3&amp;x=21902&amp;y=10101&amp;z=15&amp;g=Gagarin" style="position: absolute; width: 256px; height: 256px; left: 8px; top: -19px;"><img src="http://vec04.maps.yandex.net/tiles?l=map&amp;v=4.16.3&amp;x=21903&amp;y=10101&amp;z=15&amp;g=Ga" style="position: absolute; width: 256px; height: 256px; left: 264px; top: -19px;"></div></div></div><div class="YMaps-layer YMaps-common-object-layer" style="z-index: 50; left: 0px; top: 0px;"><div class="YMaps-placemark YMaps-Default YMaps-cursor-pointer" style="z-index: 110; left: 160px; top: 57px;"><img src="http://api-maps.yandex.ru/i/0.4/icons/house.png" style="width: 27px; height: 26px;"></div></div></div><div style="background-color: transparent !important;border: none !important;float: none !important;z-index: 1001 !important;position: absolute !important;overflow: undefined !important;padding: 0 !important;display: block !important;margin-top: 0 !important;margin-right: 0 !important;margin-bottom: 0 !important;margin-left: 0 !important;height: 20px !important;width: 51px !important;" class="YMaps-logo"><a href="http://maps.yandex.ru?origin=jsapi&amp;ll=60.629508029669545,56.8000739664126&amp;z=15&amp;l=map" target="_blank" class="YMaps-logo-link" style="background-color: transparent !important;border: none !important;float: none !important;z-index: 1001 !important;position: absolute !important;overflow: undefined !important;padding: 0 !important;display: block !important;margin-top: 0 !important;margin-right: 0 !important;margin-bottom: 0 !important;margin-left: 0 !important;height: 20px !important;width: 51px !important;"><i style="background-color: transparent !important;border: none !important;float: none !important;z-index: 1001 !important;position: absolute !important;overflow: undefined !important;padding: 0 !important;margin-top: 0 !important;margin-right: 0 !important;margin-bottom: 0 !important;margin-left: 0 !important;height: 106px !important;width: 56px !important;"></i></a></div><div class="YMaps-copyrights" style="background-color: transparent !important; border: none !important; float: none !important; z-index: 1001 !important; position: absolute !important; overflow: visible !important; padding: 0px !important; display: block !important; margin: 0px !important; height: auto !important; width: auto !important; color: rgb(68, 68, 68);"><span style="background-color: transparent !important; border: none !important; float: none !important; z-index: 1001 !important; position: static !important; padding: 0px !important; display: inline !important; font-family: Arial, sans-serif !important; font-size: 10px !important; text-indent: 0px !important; text-align: left !important; white-space: nowrap !important; line-height: normal !important; text-decoration: none !important; margin: 0px !important; height: auto !important; width: auto !important; color: rgb(68, 68, 68);">© Яндекс&nbsp;–&nbsp;</span><a href="http://maps.yandex.ru/agreement.xml" target="_blank" style="background-color: transparent !important; border: none !important; float: none !important; z-index: 1001 !important; position: static !important; padding: 0px !important; display: inline !important; font-family: Arial, sans-serif !important; font-size: 10px !important; text-indent: 0px !important; text-align: left !important; white-space: nowrap !important; line-height: normal !important; text-decoration: underline !important; margin: 0px !important; height: auto !important; width: auto !important; color: rgb(68, 68, 68);">Условия использования</a></div><div class="YMaps-slider" style="z-index: 1000; left: 5px; top: 75px;"><a class="YMaps-slider-minus" href="javascript:void(0)"><i class="YMaps-slider-btn"><i></i></i></a><a class="YMaps-slider-plus" href="javascript:void(0)"><i class="YMaps-slider-btn"><i></i></i></a></div></div>
+						<script src="http://api-maps.yandex.ru/1.1/index.xml?key=AC3w7k0BAAAAfmeobQIAcfWAOeVm00ETBoybRADPN2un91cAAAAAAAAAAAAyMAf2TiCBQ0_3-6XLiCEUj4aPvA==" type="text/javascript"></script><link rel="stylesheet" href="http://api-maps.yandex.ru/1.1.21/_YMaps.css?v=1.1.21-20"><script type="text/javascript" charset="utf-8" src="http://api-maps.yandex.ru/1.1.21/_YMaps.js?v=1.1.21-20"></script><script type="text/javascript" charset="utf-8" src="http://api-maps.yandex.ru/1.1.21/xml/data.xml?v=3.163.04.16.3"></script>
+			<script type="text/javascript">
+			// Создает обработчик события window.onLoad
+			YMaps.jQuery(function () {
+				var map = new YMaps.Map(YMaps.jQuery("#map_canvas")[0]);
+				var map_p = new YMaps.GeoPoint(60.629508, 56.800074);
+				map.addControl(new YMaps.SmallZoom());
+				map.setCenter(map_p, 15);
+				map.addOverlay(new YMaps.Placemark(map_p, {style: "default#houseIcon", hasBalloon:false}));
+			})
+			</script>
+					</div>
+				<h3>Контактная информация</h3>
+		<table class="cardInfoTable"><tbody>
+        <tr>
+        <td class="col1">
+        Контактное лицо
+        </td>
+        <td class="col2">
+        <b>Евгения</b>
+        </td>
+        </tr>
+        <tr>
+        <td class="col1">
+        Телефон
+        </td>
+        <td class="col2">
+        <b>89090183806</b>
+        </td>
+        </tr>
+                            </tbody></table>
+                                                    </div>
+                    </td>
+                    <td>
+                        <div class="flatCardTablePad2">
+                            <div class="gallery clearfix">
+                                                                    <a href="http://arenda66.s3.amazonaws.com/photos/u14164/488993_1.jpg" rel="gal" class="nyroModal" title=""><img src="http://arenda66.s3.amazonaws.com/photos/u14164/t_488993_1.jpg" alt=""></a>
+                                                                    <a href="http://arenda66.s3.amazonaws.com/photos/u14164/488993_2.jpg" rel="gal" class="nyroModal" title=""><img src="http://arenda66.s3.amazonaws.com/photos/u14164/t_488993_2.jpg" alt=""></a>
+                                                                    <a href="http://arenda66.s3.amazonaws.com/photos/u14164/488993_3.jpg" rel="gal" class="nyroModal" title=""><img src="http://arenda66.s3.amazonaws.com/photos/u14164/t_488993_3.jpg" alt=""></a>
+                                                                    <a href="http://arenda66.s3.amazonaws.com/photos/u14164/488993_4.jpg" rel="gal" class="nyroModal" title=""><img src="http://arenda66.s3.amazonaws.com/photos/u14164/t_488993_4.jpg" alt=""></a>
+                                                                    <a href="http://arenda66.s3.amazonaws.com/photos/u14164/488993_5.jpg" rel="gal" class="nyroModal" title=""><img src="http://arenda66.s3.amazonaws.com/photos/u14164/t_488993_5.jpg" alt=""></a>
+                                                                    <a href="http://arenda66.s3.amazonaws.com/photos/u14164/488993_6.jpg" rel="gal" class="nyroModal" title=""><img src="http://arenda66.s3.amazonaws.com/photos/u14164/t_488993_6.jpg" alt=""></a>
+                                                                    <a href="http://arenda66.s3.amazonaws.com/photos/u14164/488993_7.jpg" rel="gal" class="nyroModal" title=""><img src="http://arenda66.s3.amazonaws.com/photos/u14164/t_488993_7.jpg" alt=""></a>
+                                                                    <a href="http://arenda66.s3.amazonaws.com/photos/u14164/488993_8.jpg" rel="gal" class="nyroModal" title=""><img src="http://arenda66.s3.amazonaws.com/photos/u14164/t_488993_8.jpg" alt=""></a>
+                                                                    <a href="http://arenda66.s3.amazonaws.com/photos/u14164/488993_9.jpg" rel="gal" class="nyroModal" title=""><img src="http://arenda66.s3.amazonaws.com/photos/u14164/t_488993_9.jpg" alt=""></a>
+                                                            </div>
+                                                                                    Срочно! СДАМ В АРЕНДУ БЛАГОУСТРОЕННУЮ КВАРТИРУ!
+
+                                                             </div>
+
+                                               <div style="font-size:12px;font-weight:bold;" class="complaint-block">
+                            <a href="#complaint-form" class="wCommLeft">[ Пожаловаться на объявление ]</a>
+                        </div>
+                                            </td>
+                </tr>
+            </tbody></table>
+
+<div class="gallery clearfix">
+                                                                    <a href="http://arenda66.s3.amazonaws.com/photos/u14164/488993_1.jpg" rel="gal" class="nyroModal" title=""><img src="http://arenda66.s3.amazonaws.com/photos/u14164/t_488993_1.jpg" alt=""></a>
+                                                                    <a href="http://arenda66.s3.amazonaws.com/photos/u14164/488993_2.jpg" rel="gal" class="nyroModal" title=""><img src="http://arenda66.s3.amazonaws.com/photos/u14164/t_488993_2.jpg" alt=""></a>
+                                                                    <a href="http://arenda66.s3.amazonaws.com/photos/u14164/488993_3.jpg" rel="gal" class="nyroModal" title=""><img src="http://arenda66.s3.amazonaws.com/photos/u14164/t_488993_3.jpg" alt=""></a>
+                                                                    <a href="http://arenda66.s3.amazonaws.com/photos/u14164/488993_4.jpg" rel="gal" class="nyroModal" title=""><img src="http://arenda66.s3.amazonaws.com/photos/u14164/t_488993_4.jpg" alt=""></a>
+                                                                    <a href="http://arenda66.s3.amazonaws.com/photos/u14164/488993_5.jpg" rel="gal" class="nyroModal" title=""><img src="http://arenda66.s3.amazonaws.com/photos/u14164/t_488993_5.jpg" alt=""></a>
+                                                                    <a href="http://arenda66.s3.amazonaws.com/photos/u14164/488993_6.jpg" rel="gal" class="nyroModal" title=""><img src="http://arenda66.s3.amazonaws.com/photos/u14164/t_488993_6.jpg" alt=""></a>
+                                                                    <a href="http://arenda66.s3.amazonaws.com/photos/u14164/488993_7.jpg" rel="gal" class="nyroModal" title=""><img src="http://arenda66.s3.amazonaws.com/photos/u14164/t_488993_7.jpg" alt=""></a>
+                                                                    <a href="http://arenda66.s3.amazonaws.com/photos/u14164/488993_8.jpg" rel="gal" class="nyroModal" title=""><img src="http://arenda66.s3.amazonaws.com/photos/u14164/t_488993_8.jpg" alt=""></a>
+                                                                    <a href="http://arenda66.s3.amazonaws.com/photos/u14164/488993_9.jpg" rel="gal" class="nyroModal" title=""><img src="http://arenda66.s3.amazonaws.com/photos/u14164/t_488993_9.jpg" alt=""></a>
+                                                            </div>
+
+<div class="dateIco"><i></i>30.04.2014 18:38:37                            </div>
+
+<table class="advTable">
+<tbody><tr>
+	<th class="cost">
+		<a href="javascript:tableOrdering('a.price','desc','');" title="Кликните мышью для сортировки по этой колонке">Цена</a>
+			</th>
+	<th>
+			</th>
+ 	<th>
+		Адрес	</th>
+	<th>
+		Город	</th>
+ 	<th>
+ 		Комнат	</th>
+	<th>
+		Площадь	</th>
+	<th>
+		Район	</th>
+	<th class="date">
+		<a href="javascript:tableOrdering('a.created','desc','');" title="Кликните мышью для сортировки по этой колонке">Дата</a>	</th>
+</tr>
+<tr>
+	<td class="cost">
+					13 000 Р
+	</td>
+	<td class="itemPic">
+				<a href="/index.php?id=488993:sdam-kvartiru-v-ekaterinburge-belinskogo-222&amp;option=com_content&amp;view=article&amp;catid=48:sdam-kvartiru-v-ekaterinburge&amp;Itemid=59">
+						<img src="http://arenda88.s3.amazonaws.com/photos/u14184/m_488993_1.jpg" alt="">        			</a>
+			</td>
+	<td class="item">
+		<a href="/index.php?id=488993:sdam-kvartiru-v-ekaterinburge-belinskogo-222&amp;option=com_content&amp;view=article&amp;catid=48:sdam-kvartiru-v-ekaterinburge&amp;Itemid=59">Белинского 222</a>
+			</td>
+	<td>
+			Екатеринбург	</td>
+	<td>
+		2	</td>
+	<td>
+			58	</td>
+	<td>
+					Ботанический			</td>
+	<td class="date">
+		30.04.2014	</td>
+</tr>
+<tr>
+	<td class="cost">
+					13 000 Р
+	</td>
+	<td class="itemPic">
+				<a href="/index.php?id=488992:sdayu-kvartiru-v-ekaterinburge-krasnolesya-151&amp;option=com_content&amp;view=article&amp;catid=48:sdam-kvartiru-v-ekaterinburge&amp;Itemid=59">
+						<img src="http://arenda88.s3.amazonaws.com/photos/u14184/m_488992_1.jpg" alt="">        			</a>
+			</td>
+	<td class="item">
+		<a href="/index.php?id=488992:sdayu-kvartiru-v-ekaterinburge-krasnolesya-151&amp;option=com_content&amp;view=article&amp;catid=48:sdam-kvartiru-v-ekaterinburge&amp;Itemid=59">Краснолесья 151</a>
+			</td>
+	<td>
+			Екатеринбург	</td>
+	<td>
+		1	</td>
+	<td>
+			47	</td>
+	<td>
+					Краснолесье			</td>
+	<td class="date">
+		30.04.2014	</td>
+</tr>
+<tr>
+	<td class="cost">
+					14 000 Р
+	</td>
+	<td class="itemPic">
+				<a href="/index.php?id=488991:sdam-kvartiru-v-ekaterinburge-8-marta-171&amp;option=com_content&amp;view=article&amp;catid=48:sdam-kvartiru-v-ekaterinburge&amp;Itemid=59">
+						<img src="http://arenda88.s3.amazonaws.com/photos/u14184/m_488991_1.png" alt="">        			</a>
+			</td>
+	<td class="item">
+		<a href="/index.php?id=488991:sdam-kvartiru-v-ekaterinburge-8-marta-171&amp;option=com_content&amp;view=article&amp;catid=48:sdam-kvartiru-v-ekaterinburge&amp;Itemid=59">8 Марта 171</a>
+			</td>
+	<td>
+			Екатеринбург	</td>
+	<td>
+		2	</td>
+	<td>
+			42	</td>
+	<td>
+					Автовокзал			</td>
+	<td class="date">
+		30.04.2014	</td>
+</tr>
+<tr>
+	<td class="cost">
+					12 000 Р
+	</td>
+	<td class="itemPic">
+				<a href="/index.php?id=488989:sdayu-kvartiru-v-ekaterinburge-bisertskaya-32&amp;option=com_content&amp;view=article&amp;catid=48:sdam-kvartiru-v-ekaterinburge&amp;Itemid=59">
+						<img src="http://arenda88.s3.amazonaws.com/photos/u13298/m_488989_1.jpg" alt="">        			</a>
+			</td>
+	<td class="item">
+		<a href="/index.php?id=488989:sdayu-kvartiru-v-ekaterinburge-bisertskaya-32&amp;option=com_content&amp;view=article&amp;catid=48:sdam-kvartiru-v-ekaterinburge&amp;Itemid=59">Бисертская 32</a>
+			</td>
+	<td>
+			Екатеринбург	</td>
+	<td>
+		1	</td>
+	<td>
+			55	</td>
+	<td>
+					Елизавет			</td>
+	<td class="date">
+		30.04.2014	</td>
+</tr>
+<tr>
+	<td class="cost">
+					12 000 Р
+	</td>
+	<td class="itemPic">
+				<a href="/index.php?id=488988:sdam-kvartiru-v-ekaterinburge-pavlodarskaya-48a&amp;option=com_content&amp;view=article&amp;catid=48:sdam-kvartiru-v-ekaterinburge&amp;Itemid=59">
+						<img src="http://arenda88.s3.amazonaws.com/photos/u14184/m_488988_1.png" alt="">        			</a>
+			</td>
+	<td class="item">
+		<a href="/index.php?id=488988:sdam-kvartiru-v-ekaterinburge-pavlodarskaya-48a&amp;option=com_content&amp;view=article&amp;catid=48:sdam-kvartiru-v-ekaterinburge&amp;Itemid=59">Павлодарская 48А</a>
+			</td>
+	<td>
+			Екатеринбург	</td>
+	<td>
+		2	</td>
+	<td>
+			58	</td>
+	<td>
+					Уктус			</td>
+	<td class="date">
+		30.04.2014	</td>
+</tr>
+<tr>
+	<td class="cost">
+					14 000 Р
+	</td>
+	<td class="itemPic">
+				<a href="/index.php?id=488987:sdam-kvartiru-v-ekaterinburge-csherbakova-39&amp;option=com_content&amp;view=article&amp;catid=48:sdam-kvartiru-v-ekaterinburge&amp;Itemid=59">
+						<img src="http://arenda88.s3.amazonaws.com/photos/u14184/m_488987_1.png" alt="">        			</a>
+			</td>
+	<td class="item">
+		<a href="/index.php?id=488987:sdam-kvartiru-v-ekaterinburge-csherbakova-39&amp;option=com_content&amp;view=article&amp;catid=48:sdam-kvartiru-v-ekaterinburge&amp;Itemid=59">Щербакова 39</a>
+			</td>
+	<td>
+			Екатеринбург	</td>
+	<td>
+		1	</td>
+	<td>
+			50	</td>
+	<td>
+					Уктус			</td>
+	<td class="date">
+		30.04.2014	</td>
+</tr>
+<tr>
+	<td class="cost">
+					9 500 Р
+	</td>
+	<td class="itemPic">
+				<a href="/index.php?id=488988:sdayu-kvartiru-v-ekaterinburge-dekabristov-75&amp;option=com_content&amp;view=article&amp;catid=48:sdam-kvartiru-v-ekaterinburge&amp;Itemid=59">
+						<img src="http://arenda88.s3.amazonaws.com/photos/u14184/m_488988_1.png" alt="">        			</a>
+			</td>
+	<td class="item">
+		<a href="/index.php?id=488988:sdayu-kvartiru-v-ekaterinburge-dekabristov-75&amp;option=com_content&amp;view=article&amp;catid=48:sdam-kvartiru-v-ekaterinburge&amp;Itemid=59">Декабристов 75</a>
+			</td>
+	<td>
+			Екатеринбург	</td>
+	<td>
+		1	</td>
+	<td>
+			48	</td>
+	<td>
+					Автовокзал			</td>
+	<td class="date">
+		30.04.2014	</td>
+</tr>
+<tr>
+	<td class="cost">
+					15 000 Р
+	</td>
+	<td class="itemPic">
+				<a href="/index.php?id=488982:sdam-kvartiru-v-ekaterinburge-kujbysheva-98&amp;option=com_content&amp;view=article&amp;catid=48:sdam-kvartiru-v-ekaterinburge&amp;Itemid=59">
+						<img src="http://arenda88.s3.amazonaws.com/photos/u14184/m_488982_1.png" alt="">        			</a>
+			</td>
+	<td class="item">
+		<a href="/index.php?id=488982:sdam-kvartiru-v-ekaterinburge-kujbysheva-98&amp;option=com_content&amp;view=article&amp;catid=48:sdam-kvartiru-v-ekaterinburge&amp;Itemid=59">Куйбышева 98</a>
+			</td>
+	<td>
+			Екатеринбург	</td>
+	<td>
+		2	</td>
+	<td>
+			80	</td>
+	<td>
+					Шарташский рынок			</td>
+	<td class="date">
+		30.04.2014	</td>
+</tr>
+<tr>
+	<td class="cost">
+					15 000 Р
+	</td>
+	<td class="itemPic">
+				<a href="/index.php?id=488979:sdayu-kvartiru-v-ekaterinburge-tkachej-8&amp;option=com_content&amp;view=article&amp;catid=48:sdam-kvartiru-v-ekaterinburge&amp;Itemid=59">
+						<img src="http://arenda88.s3.amazonaws.com/photos/u14184/m_488979_1.jpg" alt="">        			</a>
+			</td>
+	<td class="item">
+		<a href="/index.php?id=488979:sdayu-kvartiru-v-ekaterinburge-tkachej-8&amp;option=com_content&amp;view=article&amp;catid=48:sdam-kvartiru-v-ekaterinburge&amp;Itemid=59">Ткачей 8</a>
+			</td>
+	<td>
+			Екатеринбург	</td>
+	<td>
+		2	</td>
+	<td>
+			58	</td>
+	<td>
+					Парковый			</td>
+	<td class="date">
+		30.04.2014	</td>
+</tr>
+<tr>
+	<td class="cost">
+					10 000 Р
+	</td>
+	<td class="itemPic">
+				<a href="/index.php?id=488978:sdam-kvartiru-v-ekaterinburge-shaumyana-111&amp;option=com_content&amp;view=article&amp;catid=48:sdam-kvartiru-v-ekaterinburge&amp;Itemid=59">
+						<img src="http://arenda88.s3.amazonaws.com/photos/u14184/m_488978_1.jpg" alt="">        			</a>
+			</td>
+	<td class="item">
+		<a href="/index.php?id=488978:sdam-kvartiru-v-ekaterinburge-shaumyana-111&amp;option=com_content&amp;view=article&amp;catid=48:sdam-kvartiru-v-ekaterinburge&amp;Itemid=59">Шаумяна 111</a>
+			</td>
+	<td>
+			Екатеринбург	</td>
+	<td>
+		1	</td>
+	<td>
+			47	</td>
+	<td>
+					Юго-Западный			</td>
+	<td class="date">
+		30.04.2014	</td>
+</tr>
+<tr>
+	<td class="cost">
+					9 000 Р
+	</td>
+	<td class="itemPic">
+				<a href="/index.php?id=488977:sdayu-kvartiru-v-ekaterinburge-stepana-razina-95&amp;option=com_content&amp;view=article&amp;catid=48:sdam-kvartiru-v-ekaterinburge&amp;Itemid=59">
+						<img src="http://arenda88.s3.amazonaws.com/photos/u14184/m_488977_1.jpg" alt="">        			</a>
+			</td>
+	<td class="item">
+		<a href="/index.php?id=488977:sdayu-kvartiru-v-ekaterinburge-stepana-razina-95&amp;option=com_content&amp;view=article&amp;catid=48:sdam-kvartiru-v-ekaterinburge&amp;Itemid=59">Степана Разина 95</a>
+			</td>
+	<td>
+			Екатеринбург	</td>
+	<td>
+		1	</td>
+	<td>
+			45	</td>
+	<td>
+					Автовокзал			</td>
+	<td class="date">
+		30.04.2014	</td>
+</tr>
+<tr>
+	<td class="cost">
+					11 000 Р
+	</td>
+	<td class="itemPic">
+				<a href="/index.php?id=488978:sdam-kvartiru-v-ekaterinburge-vysotskogo-18d&amp;option=com_content&amp;view=article&amp;catid=48:sdam-kvartiru-v-ekaterinburge&amp;Itemid=59">
+						<img src="http://arenda88.s3.amazonaws.com/photos/u14184/m_488978_1.jpg" alt="">        			</a>
+			</td>
+	<td class="item">
+		<a href="/index.php?id=488978:sdam-kvartiru-v-ekaterinburge-vysotskogo-18d&amp;option=com_content&amp;view=article&amp;catid=48:sdam-kvartiru-v-ekaterinburge&amp;Itemid=59">Высоцкого 18Д</a>
+			</td>
+	<td>
+			Екатеринбург	</td>
+	<td>
+		1	</td>
+	<td>
+			45	</td>
+	<td>
+					ЖБИ			</td>
+	<td class="date">
+		30.04.2014	</td>
+</tr>
+<tr>
+	<td class="cost">
+					9 000 Р
+	</td>
+	<td class="itemPic">
+				<a href="/index.php?id=488975:sdam-kvartiru-v-ekaterinburge-martovskaya-5&amp;option=com_content&amp;view=article&amp;catid=48:sdam-kvartiru-v-ekaterinburge&amp;Itemid=59">
+						<img src="http://arenda88.s3.amazonaws.com/photos/u14184/m_488975_1.jpg" alt="">        			</a>
+			</td>
+	<td class="item">
+		<a href="/index.php?id=488975:sdam-kvartiru-v-ekaterinburge-martovskaya-5&amp;option=com_content&amp;view=article&amp;catid=48:sdam-kvartiru-v-ekaterinburge&amp;Itemid=59">Мартовская 5</a>
+			</td>
+	<td>
+			Екатеринбург	</td>
+	<td>
+		1	</td>
+	<td>
+			45	</td>
+	<td>
+					Елизавет			</td>
+	<td class="date">
+		30.04.2014	</td>
+</tr>
+<tr>
+	<td class="cost">
+					9 000 Р
+	</td>
+	<td class="itemPic">
+				<a href="/index.php?id=488974:sdayu-kvartiru-v-ekaterinburge-bisertskaya-29&amp;option=com_content&amp;view=article&amp;catid=48:sdam-kvartiru-v-ekaterinburge&amp;Itemid=59">
+						<img src="http://arenda88.s3.amazonaws.com/photos/u14184/m_488974_1.jpg" alt="">        			</a>
+			</td>
+	<td class="item">
+		<a href="/index.php?id=488974:sdayu-kvartiru-v-ekaterinburge-bisertskaya-29&amp;option=com_content&amp;view=article&amp;catid=48:sdam-kvartiru-v-ekaterinburge&amp;Itemid=59">Бисертская  29</a>
+			</td>
+	<td>
+			Екатеринбург	</td>
+	<td>
+		1	</td>
+	<td>
+			45	</td>
+	<td>
+					Елизавет			</td>
+	<td class="date">
+		30.04.2014	</td>
+</tr>
+<tr>
+	<td class="cost">
+					23 000 Р
+	</td>
+	<td class="itemPic">
+				<div style="witdh:48px;">&nbsp;</div>
+        	</td>
+	<td class="item">
+		<a href="/index.php?id=488973:sdam-kvartiru-v-ekaterinburge-vikulova-35&amp;option=com_content&amp;view=article&amp;catid=48:sdam-kvartiru-v-ekaterinburge&amp;Itemid=59">Викулова 35</a>
+			</td>
+	<td>
+			Екатеринбург	</td>
+	<td>
+		2	</td>
+	<td>
+			43	</td>
+	<td>
+					ВИЗ			</td>
+	<td class="date">
+		30.04.2014	</td>
+</tr>
+<tr>
+	<td class="cost">
+					11 000 Р
+	</td>
+	<td class="itemPic">
+				<a href="/index.php?id=488972:sdayu-kvartiru-v-ekaterinburge-taticsheva-90&amp;option=com_content&amp;view=article&amp;catid=48:sdam-kvartiru-v-ekaterinburge&amp;Itemid=59">
+						<img src="http://arenda88.s3.amazonaws.com/photos/u14184/m_488972_1.jpg" alt="">        			</a>
+			</td>
+	<td class="item">
+		<a href="/index.php?id=488972:sdayu-kvartiru-v-ekaterinburge-taticsheva-90&amp;option=com_content&amp;view=article&amp;catid=48:sdam-kvartiru-v-ekaterinburge&amp;Itemid=59">Татищева 90</a>
+			</td>
+	<td>
+			Екатеринбург	</td>
+	<td>
+		1	</td>
+	<td>
+			47	</td>
+	<td>
+					ВИЗ			</td>
+	<td class="date">
+		30.04.2014	</td>
+</tr>
+<tr>
+	<td class="cost">
+					13 000 Р
+	</td>
+	<td class="itemPic">
+				<a href="/index.php?id=488971:sdayu-kvartiru-v-ekaterinburge-belinskogo-137&amp;option=com_content&amp;view=article&amp;catid=48:sdam-kvartiru-v-ekaterinburge&amp;Itemid=59">
+						<img src="http://arenda88.s3.amazonaws.com/photos/u14184/m_488971_1.jpg" alt="">        			</a>
+			</td>
+	<td class="item">
+		<a href="/index.php?id=488971:sdayu-kvartiru-v-ekaterinburge-belinskogo-137&amp;option=com_content&amp;view=article&amp;catid=48:sdam-kvartiru-v-ekaterinburge&amp;Itemid=59">Белинского 137</a>
+			</td>
+	<td>
+			Екатеринбург	</td>
+	<td>
+		1	</td>
+	<td>
+			47	</td>
+	<td>
+					Ботанический			</td>
+	<td class="date">
+		30.04.2014	</td>
+</tr>
+<tr>
+	<td class="cost">
+					12 000 Р
+	</td>
+	<td class="itemPic">
+				<a href="/index.php?id=488989:sdayu-kvartiru-v-ekaterinburge-luganskaya-8&amp;option=com_content&amp;view=article&amp;catid=48:sdam-kvartiru-v-ekaterinburge&amp;Itemid=59">
+						<img src="http://arenda88.s3.amazonaws.com/photos/u14184/m_488989_1.jpg" alt="">        			</a>
+			</td>
+	<td class="item">
+		<a href="/index.php?id=488989:sdayu-kvartiru-v-ekaterinburge-luganskaya-8&amp;option=com_content&amp;view=article&amp;catid=48:sdam-kvartiru-v-ekaterinburge&amp;Itemid=59">Луганская 8</a>
+			</td>
+	<td>
+			Екатеринбург	</td>
+	<td>
+		1	</td>
+	<td>
+			45	</td>
+	<td>
+					Ботанический			</td>
+	<td class="date">
+		30.04.2014	</td>
+</tr>
+<tr>
+	<td class="cost">
+					7 000 Р
+	</td>
+	<td class="itemPic">
+				<a href="/index.php?id=488980:sdayu-kvartiru-v-ekaterinburge-volchanskij-8&amp;option=com_content&amp;view=article&amp;catid=48:sdam-kvartiru-v-ekaterinburge&amp;Itemid=59">
+						<img src="http://arenda88.s3.amazonaws.com/photos/u13298/m_488980_1.jpg" alt="">        			</a>
+			</td>
+	<td class="item">
+		<a href="/index.php?id=488980:sdayu-kvartiru-v-ekaterinburge-volchanskij-8&amp;option=com_content&amp;view=article&amp;catid=48:sdam-kvartiru-v-ekaterinburge&amp;Itemid=59">Волчанский 8</a>
+			</td>
+	<td>
+			Екатеринбург	</td>
+	<td>
+		1	</td>
+	<td>
+			40	</td>
+	<td>
+					Шинный			</td>
+	<td class="date">
+		30.04.2014	</td>
+</tr>
+<tr>
+	<td class="cost">
+					7 000 Р
+	</td>
+	<td class="itemPic">
+				<a href="/index.php?id=488959:sdayu-kvartiru-v-ekaterinburge-volchanskij-8&amp;option=com_content&amp;view=article&amp;catid=48:sdam-kvartiru-v-ekaterinburge&amp;Itemid=59">
+						<img src="http://arenda88.s3.amazonaws.com/photos/u13298/m_488959_1.jpg" alt="">        			</a>
+			</td>
+	<td class="item">
+		<a href="/index.php?id=488959:sdayu-kvartiru-v-ekaterinburge-volchanskij-8&amp;option=com_content&amp;view=article&amp;catid=48:sdam-kvartiru-v-ekaterinburge&amp;Itemid=59">Волчанский 8</a>
+			</td>
+	<td>
+			Екатеринбург	</td>
+	<td>
+		1	</td>
+	<td>
+			40	</td>
+	<td>
+					Шинный			</td>
+	<td class="date">
+		30.04.2014	</td>
+</tr>
+</tbody></table>

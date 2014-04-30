@@ -1,0 +1,113 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{A07950E2-E56A-4E25-B0FA-1E4888710C17}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>RealtyParser.Arenda66</RootNamespace>
+    <AssemblyName>RealtyParser.Arenda66</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="HtmlAgilityPack">
+      <HintPath>..\packages\HtmlAgilityPack.1.4.6\lib\Net45\HtmlAgilityPack.dll</HintPath>
+    </Reference>
+    <Reference Include="ICSharpCode.SharpZipLib">
+      <HintPath>..\packages\SharpZipLib.0.86.0\lib\20\ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Arenda66Parser.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\MyLibrary\MyDatabase\MyDatabase.csproj">
+      <Project>{e929b421-2c04-4829-b4e1-7426d0a1b5c2}</Project>
+      <Name>MyDatabase</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\MyLibrary\MyLibrary\MyLibrary.csproj">
+      <Project>{e80cf993-5e07-4875-85fe-a2adcf76558d}</Project>
+      <Name>MyLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\MyParserLibrary\MyParser\MyParser.csproj">
+      <Project>{9e1db17a-a1e7-416b-b080-0d78bc926816}</Project>
+      <Name>MyParser</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RealtyParser\RealtyParser.csproj">
+      <Project>{8ac9f758-9ce0-4203-854e-2b17cdc65c01}</Project>
+      <Name>RealtyParser</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RT.Crawler\RT.Crawler.csproj">
+      <Project>{03624a95-b0fa-4115-a498-9e88e140956c}</Project>
+      <Name>RT.Crawler</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RT.ParsingLibs\RT.ParsingLibs.csproj">
+      <Project>{27cc5b61-3729-4f39-ad0c-d8ce99120fd4}</Project>
+      <Name>RT.ParsingLibs</Name>
+    </ProjectReference>
+    <ProjectReference Include="Y:\Projects\TidyManaged-master\TidyManaged.csproj">
+      <Project>{d799633d-00ef-437c-b158-315557d930fc}</Project>
+      <Name>TidyManaged</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Arenda66Action.sql" />
+    <Content Include="Arenda66Parser.sqlite3">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Arenda66Region.sql" />
+    <Content Include="Arenda66Rubric.sql" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>Данный проект ссылается на пакеты NuGet, отсутствующие на этом компьютере. Включите восстановление пакетов NuGet, чтобы загрузить их. Дополнительные сведения см. по адресу: http://go.microsoft.com/fwlink/?LinkID=322105. Отсутствует следующий файл: {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
+  </Target>
+  <PropertyGroup>
+    <PostBuildEvent>rem Create a single .dll that combines the all subassemblies.
+"$(SolutionDir)ILMerge.exe" /out:"$(SolutionDir)AllInOne\$(TargetName).dll"  "My*.dll" "EntityFramework*.dll" "ICSharpCode*.dll" "System*.dll" "TidyManaged.dll" "HtmlAgilityPack.dll" "RealtyParser*.dll" /target:library /targetplatform:v4,C:\Windows\Microsoft.NET\Framework64\v4.0.30319 /wildcards /zeroPeKind
+exit 0</PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

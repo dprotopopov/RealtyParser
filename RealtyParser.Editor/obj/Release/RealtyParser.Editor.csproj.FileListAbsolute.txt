@@ -7,6 +7,7 @@ D:\Projects\RealtyParser\RealtyParser.Editor\bin\Release\NetAgentaParser.sqlite3
 D:\Projects\RealtyParser\RealtyParser.Editor\bin\Release\RealtyParser.sqlite3
 D:\Projects\RealtyParser\RealtyParser.Editor\bin\Release\RosrealtParser.sqlite3
 D:\Projects\RealtyParser\RealtyParser.Editor\bin\Release\RealtyParserMerge.bat
+D:\Projects\RealtyParser\RealtyParser.Editor\bin\Release\Arenda66Parser.sqlite3
 D:\Projects\RealtyParser\RealtyParser.Editor\bin\Release\RealtyParserEditor.exe.config
 D:\Projects\RealtyParser\RealtyParser.Editor\bin\Release\RealtyParserEditor.exe.manifest
 D:\Projects\RealtyParser\RealtyParser.Editor\bin\Release\RealtyParserEditor.application
@@ -19,6 +20,7 @@ D:\Projects\RealtyParser\RealtyParser.Editor\bin\Release\ICSharpCode.SharpZipLib
 D:\Projects\RealtyParser\RealtyParser.Editor\bin\Release\MyDatabase.dll
 D:\Projects\RealtyParser\RealtyParser.Editor\bin\Release\MyLibrary.dll
 D:\Projects\RealtyParser\RealtyParser.Editor\bin\Release\MyParser.dll
+D:\Projects\RealtyParser\RealtyParser.Editor\bin\Release\RealtyParser.Arenda66.dll
 D:\Projects\RealtyParser\RealtyParser.Editor\bin\Release\RealtyParser.BeBoss.dll
 D:\Projects\RealtyParser\RealtyParser.Editor\bin\Release\RealtyParser.Bn.dll
 D:\Projects\RealtyParser\RealtyParser.Editor\bin\Release\RealtyParser.dll
@@ -40,6 +42,7 @@ D:\Projects\RealtyParser\RealtyParser.Editor\bin\Release\TidyManaged.dll
 D:\Projects\RealtyParser\RealtyParser.Editor\bin\Release\MyDatabase.pdb
 D:\Projects\RealtyParser\RealtyParser.Editor\bin\Release\MyLibrary.pdb
 D:\Projects\RealtyParser\RealtyParser.Editor\bin\Release\MyParser.pdb
+D:\Projects\RealtyParser\RealtyParser.Editor\bin\Release\RealtyParser.Arenda66.pdb
 D:\Projects\RealtyParser\RealtyParser.Editor\bin\Release\RealtyParser.BeBoss.pdb
 D:\Projects\RealtyParser\RealtyParser.Editor\bin\Release\RealtyParser.Bn.pdb
 D:\Projects\RealtyParser\RealtyParser.Editor\bin\Release\RealtyParser.Egent.pdb

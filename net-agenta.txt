@@ -1,3 +1,34 @@
+5	net-agenta.ru	http://net-agenta.ru	GET	NoCompression	http://net-agenta.ru{{Region}}{{RubricAction}}/{{PageStart}}.html?rooms={{roomsFrom-1}}&rooms_last={{roomsTo-1}}	{{PublicationLink}}	[PublicationDatetime:##{{PublicationDatetime}}##,PublicationId:{{PublicationId}},Action:{{Action}},Rubric:{{Rubric}},Region:{{Region}}]	NULL	NULL	30	DatetimeFirstIdSecondComparer	utf-8	30	1	NetAgentaParser
+
+5	PublicationLink	//a[@class='adv_more' or @class='adv-more']	{{href}}	.*	$&
+5	PublicationId	//div[@id='hplink']/span[contains(.,'№')]	{{InnerText}}	\D*(\d+)\D*	$1
+5	PublicationDatetime	//tr[1]/td[2]//table[@class='adv_main_info' or @class='adv-main-info']//td[contains(.,'Дата')]/span[@class='p-data']	{{InnerText}}	.*	$&
+5	WebPublicationModifyDate	//tr[1]/td[2]//table[@class='adv_main_info' or @class='adv-main-info']//td[contains(.,'Дата')]/span[@class='p-data']	{{InnerText}}	.*	$&
+5	WebPublicationUrl	/	{{Url}}	.*	$&
+5	WebPublicationSite	/	{{Url}}	((http(s)?:\/\/)?[^\/\?]+).*	$1
+5	WebPublicationDescription	//tr[1]/td[3]//table[@class='adv_main_info' or @class='adv-main-info']//tr[1]/td	{{InnerText}}	.*	$&
+5	WebPublicationPublicationId	//div[@id='hplink']/span[contains(.,'№')]	{{InnerText}}	\D*(\d+)\D*	$1
+5	WebPublicationContactContactName	//tr[1]/td[2]//table[@class='adv_main_info' or @class='adv-main-info']//td[contains(.,'Имя')]/span[@class='p-data']	{{InnerText}}	.*	$&
+5	WebPublicationContactAuthor	//tr[1]/td[2]//table[@class='adv_main_info' or @class='adv-main-info']//td[contains(.,'Имя')]/span[@class='p-data']	{{InnerText}}	.*	$&
+5	WebPublicationPhotos	//tr[1]/td[1]//div[@class='show_photo']//img[@src]	{{src}}	.*	$&
+5	WebPublicationAdditionalInfoRealtyAdditionalInfoAddress	//tr[1]/td[2]//table[@class='adv_main_info' or @class='adv-main-info']//td[contains(.,'Город')]/span[@class='p-data']|//tr[1]/td[2]//table[@class='adv_main_info' or @class='adv-main-info']//td[contains(.,'Адрес')]/span[@class='p-data']	{{InnerText}}	.*	$&
+5	WebPublicationAdditionalInfoRealtyAdditionalInfoCostAll	//tr[1]/td[2]//table[@class='adv_main_info' or @class='adv-main-info']//td[contains(.,'Цена')]/span[@class='p-data']	{{InnerText}}	\D*(\d+)\D*	$1
+5	WebPublicationAdditionalInfoRealtyAdditionalInfoDistrict	//tr[1]/td[2]//table[@class='adv_main_info' or @class='adv-main-info']//td[contains(.,'Метро')]/span[@class='p-data']	{{InnerText}}	.*	$&
+5	WebPublicationAdditionalInfoRealtyAdditionalInfoAppointmentOfRoom	//div[@class='param-elem'][contains(.,'Помещение')]/span[@class='p-data']	{{InnerText}}	.*	$&
+5	WebPublicationAdditionalInfoRealtyAdditionalInfoRoomNumber	//div[@class='param-elem'][contains(.,'Комнат')]/span[@class='p-data']	{{InnerText}}	.*	$&
+5	WebPublicationAdditionalInfoRealtyAdditionalInfoRealEstateType	//div[@class='param-elem'][contains(.,'Помещение')]/span[@class='p-data']	{{InnerText}}	.*	$&
+5	WebPublicationAdditionalInfoRealtyAdditionalInfoWallМaterial	//div[@class='param-elem'][contains(.,'Тип дома')]/span[@class='p-data']	{{InnerText}}	.*	$&
+5	WebPublicationAdditionalInfoRealtyAdditionalInfoFloor	//div[@class='param-elem'][contains(.,'Этаж:')]/span[@class='p-data']	{{InnerText}}	\D*(\d*)\D*.*	$1
+5	WebPublicationAdditionalInfoRealtyAdditionalInfoFloorNumber	//div[@class='param-elem'][contains(.,'Этажность:')]/span[@class='p-data']	{{InnerText}}	\D*(\d*)\D*.*	$1
+5	WebPublicationAdditionalInfoRealtyAdditionalInfoTotalSpace	//div[@class='param-elem'][contains(.,'Площадь')]/span[@class='p-data']	{{InnerText}}	\D*(\d+)(\.\d+)?\s*\/\D*(\d+)(\.\d+)?\s*.*	$3
+5	WebPublicationAdditionalInfoRealtyAdditionalInfoLivingSpace	//div[@class='param-elem'][contains(.,'Площадь')]/span[@class='p-data']	{{InnerText}}	\D*(\d+)(\.\d+)?\s*\/\D*(\d+)(\.\d+)?\s*.*	$1
+5	WebPublicationAdditionalInfoRealtyAdditionalInfoKitchenSpace	//div[@class='param-elem'][contains(.,'Кухня')]/span[@class='p-data']	{{InnerText}}	\D*(\d+)\D+.*	$1
+5	WebPublicationAdditionalInfoRealtyAdditionalInfoWc	//div[@class='param-elem'][contains(.,'Сан. узел')]/span[@class='p-data']	{{InnerText}}	.*	$&
+5	WebPublicationAdditionalInfoRealtyAdditionalInfoTenancy	//div[@class='param-elem'][contains(.,'Срок аренды')]/span[@class='p-data']	{{InnerText}}	.*	$&
+5	WebPublicationAdditionalInfoRealtyAdditionalInfoIsLoggia	//div[@class='param-elem'][contains(.,'Балкон / лоджия')]/span[@class='p-data']	{{InnerText}}	\D*(\d+)\D*	$1
+5	WebPublicationContactPhone	//tr[1]/td[2]//table[@class='adv_main_info' or @class='adv-main-info']//td[contains(.,'Телефон')]/span[@class='p-data']	{{InnerText}}	.*	$&
+5	WebPublicationContactEmail	//tr[1]/td[2]//table[@class='adv_main_info' or @class='adv-main-info']//td[contains(.,'E-Mail')]/span[@class='p-data']	{{InnerText}}	.*	$&
+
 ?rooms={{roomFrom-1}}&rooms_last={{roomTo-1}}
 
 5	net-agenta.ru	http://net-agenta.ru	GET	NoCompression	http://net-agenta.ru{{Region}}{{RubricAction}}/{{PageStart}}.html?rooms={{roomsFrom-1}}&rooms_last={{roomsTo-1}}	{{PublicationLink}}	[PublicationDatetime:##{{PublicationDatetime}}##,PublicationId:{{PublicationId}},Action:{{Action}},Rubric:{{Rubric}},Region:{{Region}}]	NULL	NULL	30	DatetimeFirstIdSecondComparer	utf-8	30	1	NetAgentaParser
@@ -10,7 +41,7 @@
 
 3	GET	Region	\http://www.mirkvartir.ru/россия\http://www.mirkvartir.ru{{Value}}		//li[@class='t1']/a[@href][contains('{{Url}}','popup')]	//li[@class='t1']/a[@href][contains('{{Url}}','popup')]	{{href}}	(http(s)?\:\/\/)?([^\.]+\.)?mirkvartir\.ru)(.*)	$4	{{InnerText}}	.*	$&	\{{region}}\{{province}}\{{city}}\{{town}}\{{district}}	\!\!\?\?\!
 
-5	WebPublicationContactEmail	//tr[1]/td[2]//table[@class='adv_main_info']//td[contains(.,'E-Mail')]/span[@class='p-data']	{{InnerText}}	.*	$&
+5	WebPublicationContactEmail	//tr[1]/td[2]//table[@class='adv_main_info' or @class='adv-main-info']//td[contains(.,'E-Mail')]/span[@class='p-data']	{{InnerText}}	.*	$&
 <td>
                                 E-Mail: <span class="p-data">-                                </span>
                             </td>
@@ -79,19 +110,19 @@
                                     Помещение: <span class="p-data">квартира</span>
                                 </div>
 
-5	WebPublicationAdditionalInfoRealtyAdditionalInfoDistrict	//tr[1]/td[2]//table[@class='adv_main_info']//td[contains(.,'Метро')]/span[@class='p-data']	{{InnerText}}	.*	$&
+5	WebPublicationAdditionalInfoRealtyAdditionalInfoDistrict	//tr[1]/td[2]//table[@class='adv_main_info' or @class='adv-main-info']//td[contains(.,'Метро')]/span[@class='p-data']	{{InnerText}}	.*	$&
 
-5	WebPublicationAdditionalInfoRealtyAdditionalInfoCostAll	//tr[1]/td[2]//table[@class='adv_main_info']//td[contains(.,'Цена')]/span[@class='p-data']	{{InnerText}}	\D*(\d+)\D*	$1
-5	WebPublicationAdditionalInfoRealtyAdditionalInfoAddress	//tr[1]/td[2]//table[@class='adv_main_info']//td[contains(.,'Адрес')]/span[@class='p-data']	{{InnerText}}	.*	$&
+5	WebPublicationAdditionalInfoRealtyAdditionalInfoCostAll	//tr[1]/td[2]//table[@class='adv_main_info' or @class='adv-main-info']//td[contains(.,'Цена')]/span[@class='p-data']	{{InnerText}}	\D*(\d+)\D*	$1
+5	WebPublicationAdditionalInfoRealtyAdditionalInfoAddress	//tr[1]/td[2]//table[@class='adv_main_info' or @class='adv-main-info']//td[contains(.,'Адрес')]/span[@class='p-data']	{{InnerText}}	.*	$&
 5	WebPublicationPhotos	//tr[1]/td[1]//div[@class='show_photo']//img[@src]	{{src}}	.*	$&
 
-5	WebPublicationContactAuthor	//tr[1]/td[2]//table[@class='adv_main_info']//td[contains(.,'Имя')]/span[@class='p-data']	{{InnerText}}	.*	$&
-5	WebPublicationDescription	//tr[1]/td[3]//table[@class='adv_main_info']//tr[1]/td	{{InnerText}}	.*	$&
+5	WebPublicationContactAuthor	//tr[1]/td[2]//table[@class='adv_main_info' or @class='adv-main-info']//td[contains(.,'Имя')]/span[@class='p-data']	{{InnerText}}	.*	$&
+5	WebPublicationDescription	//tr[1]/td[3]//table[@class='adv_main_info' or @class='adv-main-info']//tr[1]/td	{{InnerText}}	.*	$&
 
 5	WebPublicationSite	/	{{Url}}	((http(s)?:\/\/)?[^\/\?]+).*	$1
 5	WebPublicationUrl	/	{{Url}}	.*	$&
-5	WebPublicationModifyDate	//tr[1]/td[2]//table[@class='adv_main_info']//td[contains(.,'Дата')]/span[@class='p-data']	{{InnerText}}	.*	$&
-5	PublicationDatetime	//tr[1]/td[2]//table[@class='adv_main_info']//td[contains(.,'Дата')]/span[@class='p-data']	{{InnerText}}	.*	$&
+5	WebPublicationModifyDate	//tr[1]/td[2]//table[@class='adv_main_info' or @class='adv-main-info']//td[contains(.,'Дата')]/span[@class='p-data']	{{InnerText}}	.*	$&
+5	PublicationDatetime	//tr[1]/td[2]//table[@class='adv_main_info' or @class='adv-main-info']//td[contains(.,'Дата')]/span[@class='p-data']	{{InnerText}}	.*	$&
 
 <table class="adv_main_info" cellpadding="0" cellspacing="0">
                                     <tbody>
@@ -150,7 +181,7 @@
 					        						        <span>№ 1414908</span>
 					        				        </div>
 
-5	PublicationLink	//a[@class='adv_more']	{{href}}	.*	$&
+5	PublicationLink	//a[@class='adv_more' or @class='adv-more']	{{href}}	.*	$&
 
 <a class="adv_more" href="/show/offer/1414908.html" title="Открыть объявление на отдельной странице">
                                                                 Подробнее

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
+using RealtyParser.Arenda66;
 using RealtyParser.BeBoss;
 using RealtyParser.Bn;
 using RealtyParser.Collections;
@@ -31,6 +32,7 @@ namespace RealtyParser.Editor.Children
                     new NetAgentaParser(),
                     new BnParser(),
                     new BeBossParser(),
+                    new Arenda66Parser(),
                 }.Select(item => new KeyValuePair<string, IParsingModule>(item.ModuleClassname, item))
                     .Cast<object>().ToArray());
             propertyGridControlParseRequest.SelectedObject = new ParseRequest();

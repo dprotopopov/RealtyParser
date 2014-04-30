@@ -246,6 +246,9 @@
     <Content Include="NetAgentaParser.sqlite3">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Arenda66Parser.sqlite3">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -275,6 +278,10 @@
     <ProjectReference Include="..\..\MyParserLibrary\MyParser\MyParser.csproj">
       <Project>{9e1db17a-a1e7-416b-b080-0d78bc926816}</Project>
       <Name>MyParser</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RealtyParser.Arenda66\RealtyParser.Arenda66.csproj">
+      <Project>{a07950e2-e56a-4e25-b0fa-1e4888710c17}</Project>
+      <Name>RealtyParser.Arenda66</Name>
     </ProjectReference>
     <ProjectReference Include="..\RealtyParser.BeBoss\RealtyParser.BeBoss.csproj">
       <Project>{04c3e834-e284-4f62-9293-7840552b74d7}</Project>

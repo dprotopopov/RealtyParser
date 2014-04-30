@@ -83,6 +83,12 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="BnAction.sql" />
+    <Content Include="BnActionMapping.sql" />
+    <Content Include="BnRegion.sql" />
+    <Content Include="BnRegionMapping.sql" />
+    <Content Include="BnRubric.sql" />
+    <Content Include="BnRubricMapping.sql" />
     <Content Include="libtidy.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

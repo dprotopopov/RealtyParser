@@ -14,14 +14,14 @@
     <framework targetVersion="4.5" profile="Full" supportedRuntime="4.0.30319" />
   </compatibleFrameworks>
   <dependency>
-    <dependentAssembly dependencyType="install" codebase="RealtyParserEditor.exe.manifest" size="63929">
+    <dependentAssembly dependencyType="install" codebase="RealtyParserEditor.exe.manifest" size="64992">
       <assemblyIdentity name="RealtyParserEditor.exe" version="1.0.0.22" publicKeyToken="0000000000000000" language="neutral" processorArchitecture="msil" type="win32" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>6JSKDTUdBCC7BB//HrlqzdvS4+ZfMFfE1L+B6SrkS4c=</dsig:DigestValue>
+        <dsig:DigestValue>zS/sUJc/mcnvlAEQlk+ssRE/6dnaMihSpUGYtXHrBuk=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

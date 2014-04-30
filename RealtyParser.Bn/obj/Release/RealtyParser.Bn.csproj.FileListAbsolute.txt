@@ -34,5 +34,6 @@ D:\Projects\RealtyParser\RealtyParser.Bn\bin\Release\HtmlAgilityPack.pdb
 D:\Projects\RealtyParser\RealtyParser.Bn\bin\Release\HtmlAgilityPack.xml
 D:\Projects\RealtyParser\RealtyParser.Bn\bin\Release\System.Data.SQLite.xml
 D:\Projects\RealtyParser\RealtyParser.Bn\bin\Release\EntityFramework.xml
+D:\Projects\RealtyParser\RealtyParser.Bn\obj\Release\RealtyParser.Bn.csprojResolveAssemblyReference.cache
 D:\Projects\RealtyParser\RealtyParser.Bn\obj\Release\RealtyParser.Bn.dll
 D:\Projects\RealtyParser\RealtyParser.Bn\obj\Release\RealtyParser.Bn.pdb
