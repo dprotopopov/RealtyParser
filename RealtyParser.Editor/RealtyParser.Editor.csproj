@@ -262,6 +262,9 @@
     <Content Include="RosrealtParser.sqlite3">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="UpnParser.sqlite3">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -306,6 +309,10 @@
     <ProjectReference Include="..\RealtyParser.Rosrealt\RealtyParser.Rosrealt.csproj">
       <Project>{57de8459-4895-490b-a412-e9b7b6f0441b}</Project>
       <Name>RealtyParser.Rosrealt</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RealtyParser.Upn\RealtyParser.Upn.csproj">
+      <Project>{1e08810d-0b17-4fa4-8e89-b927f8b6131b}</Project>
+      <Name>RealtyParser.Upn</Name>
     </ProjectReference>
     <ProjectReference Include="..\RealtyParser\RealtyParser.csproj">
       <Project>{8ac9f758-9ce0-4203-854e-2b17cdc65c01}</Project>

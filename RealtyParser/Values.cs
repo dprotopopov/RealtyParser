@@ -224,6 +224,27 @@ namespace RealtyParser
         }
 
         [Value]
+        public IEnumerable<string> RegionRubric
+        {
+            get
+            {
+                string propertyName =
+                    MethodBase.GetCurrentMethod().Name.Substring(4);
+                if (!ContainsKey(propertyName)) Add(propertyName, new StackListQueue<string>());
+                return this[propertyName];
+            }
+            set
+            {
+                string propertyName =
+                    MethodBase.GetCurrentMethod().Name.Substring(4);
+                if (ContainsKey(propertyName))
+                    this[propertyName] = value;
+                else
+                    Add(propertyName, value);
+            }
+        }
+
+        [Value]
         public IEnumerable<string> Action
         {
             get
@@ -307,14 +328,14 @@ namespace RealtyParser
             }
         }
 
-        public new Values Slice(int row)
-        {
-            return new Values(base.Slice(row));
-        }
-
         public new Values ToValues()
         {
             return new Values(this);
+        }
+
+        public new Values Slice(int row)
+        {
+            return new Values(base.Slice(row));
         }
     }
 }

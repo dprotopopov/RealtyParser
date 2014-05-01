@@ -9,6 +9,7 @@ using RealtyParser.Egent;
 using RealtyParser.Mirkvartir;
 using RealtyParser.NetAgenta;
 using RealtyParser.Rosrealt;
+using RealtyParser.Upn;
 using RT.ParsingLibs;
 using RT.ParsingLibs.Models;
 
@@ -22,7 +23,7 @@ namespace RealtyParser.Editor.Children
             listBoxDll.Items.AddRange(
                 new StackListQueue<ParserModule>
                 {
-                    new ParserModule(),
+//                    new ParserModule(),
                     new RosrealtParser(),
                     new MirkvartirParser(),
                     new EgentParser(),
@@ -30,6 +31,7 @@ namespace RealtyParser.Editor.Children
                     new BnParser(),
                     new BeBossParser(),
                     new Arenda66Parser(),
+                    new UpnParser(),
                 }.Select(item => new KeyValuePair<string, IParsingModule>(item.ModuleClassname, item))
                     .Cast<object>().ToArray());
             propertyGridControlBind.SelectedObject = new Bind();

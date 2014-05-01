@@ -206,8 +206,13 @@ namespace RealtyParser
 
                     Values siteValues = Parser.BuildValues(requestId, mappedId, mappedLevel);
 
-                    if (!siteValues.RubricAction.Any() &&
-                        MyDatabase.Database.ConvertTo<long>(SiteProperties.RubricActionLock) != 0)
+                    if ((from name in new[] {"RubricAction", "RegionRubric"}
+                        let property = siteValues.GetType().GetProperty(name)
+                        let propertyLock = SiteProperties.GetType().GetProperty(string.Format("{0}Lock", name))
+                        let enumerable = property.GetValue(siteValues, null) as IEnumerable<string>
+                        let value = MyDatabase.Database.ConvertTo<long>(propertyLock.GetValue(SiteProperties, null))
+                        where !enumerable.Any() && value != 0
+                        select enumerable).Any())
                         throw new NotAvailableDetectedException();
 
                     var requestProperties = new RequestProperties(mappedId, Mapping);

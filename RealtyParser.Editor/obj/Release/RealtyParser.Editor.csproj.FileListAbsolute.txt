@@ -1,3 +1,4 @@
+D:\Projects\RealtyParser\RealtyParser.Editor\bin\Release\RealtyParserEditor.exe.config
 D:\Projects\RealtyParser\RealtyParser.Editor\bin\Release\libtidy.dll
 D:\Projects\RealtyParser\RealtyParser.Editor\bin\Release\MirkvartirParser.sqlite3
 D:\Projects\RealtyParser\RealtyParser.Editor\bin\Release\BeBossParser.sqlite3
@@ -8,7 +9,7 @@ D:\Projects\RealtyParser\RealtyParser.Editor\bin\Release\RealtyParser.sqlite3
 D:\Projects\RealtyParser\RealtyParser.Editor\bin\Release\RosrealtParser.sqlite3
 D:\Projects\RealtyParser\RealtyParser.Editor\bin\Release\RealtyParserMerge.bat
 D:\Projects\RealtyParser\RealtyParser.Editor\bin\Release\Arenda66Parser.sqlite3
-D:\Projects\RealtyParser\RealtyParser.Editor\bin\Release\RealtyParserEditor.exe.config
+D:\Projects\RealtyParser\RealtyParser.Editor\bin\Release\UpnParser.sqlite3
 D:\Projects\RealtyParser\RealtyParser.Editor\bin\Release\RealtyParserEditor.exe.manifest
 D:\Projects\RealtyParser\RealtyParser.Editor\bin\Release\RealtyParserEditor.application
 D:\Projects\RealtyParser\RealtyParser.Editor\bin\Release\RealtyParserEditor.exe
@@ -28,6 +29,7 @@ D:\Projects\RealtyParser\RealtyParser.Editor\bin\Release\RealtyParser.Egent.dll
 D:\Projects\RealtyParser\RealtyParser.Editor\bin\Release\RealtyParser.Mirkvartir.dll
 D:\Projects\RealtyParser\RealtyParser.Editor\bin\Release\RealtyParser.NetAgenta.dll
 D:\Projects\RealtyParser\RealtyParser.Editor\bin\Release\RealtyParser.Rosrealt.dll
+D:\Projects\RealtyParser\RealtyParser.Editor\bin\Release\RealtyParser.Upn.dll
 D:\Projects\RealtyParser\RealtyParser.Editor\bin\Release\RT.Crawler.dll
 D:\Projects\RealtyParser\RealtyParser.Editor\bin\Release\RT.ParsingLibs.dll
 D:\Projects\RealtyParser\RealtyParser.Editor\bin\Release\ServiceStack.Common.dll
@@ -49,6 +51,7 @@ D:\Projects\RealtyParser\RealtyParser.Editor\bin\Release\RealtyParser.Egent.pdb
 D:\Projects\RealtyParser\RealtyParser.Editor\bin\Release\RealtyParser.Mirkvartir.pdb
 D:\Projects\RealtyParser\RealtyParser.Editor\bin\Release\RealtyParser.NetAgenta.pdb
 D:\Projects\RealtyParser\RealtyParser.Editor\bin\Release\RealtyParser.Rosrealt.pdb
+D:\Projects\RealtyParser\RealtyParser.Editor\bin\Release\RealtyParser.Upn.pdb
 D:\Projects\RealtyParser\RealtyParser.Editor\bin\Release\RealtyParser.pdb
 D:\Projects\RealtyParser\RealtyParser.Editor\bin\Release\RT.Crawler.pdb
 D:\Projects\RealtyParser\RealtyParser.Editor\bin\Release\RT.Crawler.xml

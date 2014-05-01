@@ -1,0 +1,457 @@
+upn.ru
+
+9	upn.ru	http://upn.ru	GET	NoCompression	{{RegionRubric}}{{RubricPath}}{{ActionPath}}{{RubricPage}}.htm?f=1&vm=3&deal={{Action}}&type={{Rubric}}0&city={{Region}}&id={{Page}}{{roomN}}	{{PublicationLink}}	[PublicationId:{{PublicationId}},Action:{{Action}},Rubric:{{Rubric}},Region:{{Region}}]	NULL	NULL	30	IdComparer	windows-1251	20	1	0	UpnParser
+
+//div[@id='panel_search']
+
+8	\46	\59	46
+8	\48	\59	48
+8	\50	\59	50
+8	\46	\63	54
+8	\48	\63	55
+8	\50	\63	56
+8	\46	\86	70
+8	\48	\86	71
+8	\46	\58	45
+8	\48	\58	47
+8	\50	\58	49
+8	\46	\62	51
+8	\48	\62	52
+8	\50	\62	53
+
+9	1382	\\\
+9	1383	\Жилая\\
+9	1384	\Жилая\Вторичное (готовое) жилье\
+9	1385	\Жилая\Вторичное (готовое) жилье\3
+9	1386	\Жилая\Вторичное (готовое) жилье\2
+9	1387	\Жилая\Вторичное (готовое) жилье\2
+9	1388	\Жилая\Вторичное (готовое) жилье\2
+9	1389	\Жилая\Вторичное (готовое) жилье\2
+9	1390	\Жилая\Вторичное (готовое) жилье\2
+9	1392	\Жилая\Строящееся жилье\
+9	1393	\Жилая\Строящееся жилье\2
+9	1394	\Жилая\Строящееся жилье\2
+9	1395	\Жилая\Строящееся жилье\2
+9	1396	\Жилая\Строящееся жилье\2
+9	1397	\Жилая\Строящееся жилье\2
+9	1398	\Жилая\Строящееся жилье\2
+9	1399	\Жилая\Строящееся жилье\4
+9	1400	\Жилая\Строящееся жилье\4
+9	1403	\Коммерческая\10\
+9	1404	\Коммерческая\11\
+9	1405	\Коммерческая\9\
+9	1405	\Коммерческая\8\
+9	1406	\Коммерческая\11\
+9	1407	\Земельные участки\\
+9	4223	\Гараж\\
+
+9	\Жилая\\	Жилая	\\\	1	_flat	
+9	\Жилая\Вторичное (готовое) жилье\	Вторичное (готовое) жилье	\\\	2	_flat	
+9	\Жилая\Вторичное (готовое) жилье\2	Квартиру	\Жилая\Вторичное (готовое) жилье\	3	_flat	
+9	\Жилая\Вторичное (готовое) жилье\3	Комнату	\Жилая\Вторичное (готовое) жилье\	3	_flat	/komnaty
+9	\Жилая\Вторичное (готовое) жилье\-1	Долю	\Жилая\Вторичное (готовое) жилье\	3	_flat	
+9	\Жилая\Вторичное (готовое) жилье\4	Дом/коттедж	\Жилая\Вторичное (готовое) жилье\	3	_houses	
+9	\Коммерческая\\	Коммерческая	\\\	1	_commercials	
+9	\Коммерческая\11\	Офис/Магазин	\Коммерческая\\	2	_offices	
+9	\Коммерческая\10\	Коммерческую	\Коммерческая\\	2	_commercials	
+9	\Коммерческая\9\	Производственную	\Коммерческая\\	2	_industrials	
+9	\Коммерческая\8\	Склад	\Коммерческая\\	2	_stores	
+9	\Жилая\Строящееся жилье\2	Квартиру	\Жилая\Строящееся жилье\	3	_flat	
+9	\Жилая\Строящееся жилье\3	Комнату	\Жилая\Строящееся жилье\	3	_flat	/komnaty
+9	\Жилая\Строящееся жилье\-1	Долю	\Жилая\Строящееся жилье\	3	_flat	
+9	\Жилая\Строящееся жилье\4	Дом/коттедж	\Жилая\Строящееся жилье\	3	_houses	
+9	\Земельные участки\\	Земельные участки	\\\	1	_land	
+9	\Гараж\\	Гараж	\\\	1	_garages	
+
+
+
+9	WebPublicationContactAuthor	//table[@id='printFirm']//td[contains(.,'Выставлен')]/following-sibling::td[1]	{{InnerText}}	.*	$&
+9	WebPublicationContactAuthorUrl	//table[@id='printFirm']//td[contains(.,'WWW')]/following-sibling::td[1]	{{InnerText}}	.*	$&
+9	WebPublicationContactContactName	//table[@id='printFirm']//td[contains(.,'Фирма')]/following-sibling::td[1]	{{InnerText}}	.*	$&
+9	WebPublicationContactPhone	//table[@id='printFirm']//td[contains(.,'Телефон')]/following-sibling::td[1]	{{InnerText}}	.*	$&
+9	WebPublicationContactEmail	//table[@id='printFirm']//td[contains(.,'EMail')]/following-sibling::td[1]	{{InnerText}}	.*	$&
+
+
+9	WebPublicationPhotos	//div[@id='galleria']//img[@src]	{{src}}	.*	$&
+
+9	WebPublicationAdditionalInfoRealtyAdditionalInfoAppointmentOfRoom	//table[@class='search_result']//td[contains(.,'Обьект')]/following-sibling::td[1]|//table[@class='search_result']//td[contains(.,'Дом')]/following-sibling::td[1]	{{InnerText}}	.*	$&
+9	WebPublicationAdditionalInfoRealtyAdditionalInfoAddress	//table[@class='search_result']//td[contains(.,'Адрес')]/following-sibling::td[1]	{{InnerText}}	.*	$&
+9	WebPublicationAdditionalInfoRealtyAdditionalInfoTotalSpace	//table[@class='search_result']//td[contains(.,'Площадь')]/following-sibling::td[1]	{{InnerText}}	\D*(\d+)?\s*\/\D*(\d+)?\s*\/\D*(\d+)?.*	$1
+9	WebPublicationAdditionalInfoRealtyAdditionalInfoLivingSpace	//table[@class='search_result']//td[contains(.,'Площадь')]/following-sibling::td[1]	{{InnerText}}	\D*(\d+)?\s*\/\D*(\d+)?\s*\/\D*(\d+)?.*	$2
+9	WebPublicationAdditionalInfoRealtyAdditionalInfoKitchenSpace	//table[@class='search_result']//td[contains(.,'Площадь')]/following-sibling::td[1]	{{InnerText}}	\D*(\d+)?\s*\/\D*(\d+)?\s*\/\D*(\d+)?.*	$3
+9	WebPublicationAdditionalInfoRealtyAdditionalInfoRoomNumber	//table[@class='search_result']//td[contains(.,'Всего комнат')]/following-sibling::td[1]	{{InnerText}}	.*	$&
+9	WebPublicationAdditionalInfoRealtyAdditionalInfoFloor	//table[@class='search_result']//td[contains(.,'Этаж')]/following-sibling::td[1]	{{InnerText}}	\D*(\d+)?\s*\/\D*(\d+)?.*	$1
+9	WebPublicationAdditionalInfoRealtyAdditionalInfoFloorNumber	//table[@class='search_result']//td[contains(.,'Этаж')]/following-sibling::td[1]	{{InnerText}}	\D*(\d+)?\s*\/\D*(\d+)?.*	$2
+9	WebPublicationAdditionalInfoRealtyAdditionalInfoIsLoggia	//table[@class='search_result']//td[contains(.,'Балкон')]/following-sibling::td[1]	{{InnerText}}	.*	$&
+9	WebPublicationAdditionalInfoRealtyAdditionalInfoWallМaterial	//table[@class='search_result']//td[contains(.,'Материал стен')]/following-sibling::td[1]	{{InnerText}}	.*	$&
+9	WebPublicationAdditionalInfoRealtyAdditionalInfoCostAll	//table[@class='search_result']//td[contains(.,'Цена')]/following-sibling::td[1]	{{InnerText}}	\D*(\d+)\D*	$1
+9	WebPublicationDescription	//div[@class='printDescription']	{{InnerText}}	.*	$&
+
+<div id="ctl00_VOI_divDescription" class="printDescription" style="text-align: left; width: 100%; margin-top: 8px; padding: 3px; background-color: #eff8f8; border: solid 1px #d1e2e6;">Две комнаты в доме коридорного типа, дом крепкий, недавно был капитальный ремонт,  есть возможность сделать однокомнатную квартиру,  рядом магазины,школы, детские сады,  баня, станция -  электричка до Екатеринбурга, ходят маршрутки, прописка Ж/дорожного района города Екатеринбурга, недалеко красивый пруд, оборудованная детская площадка, в поселке хорошая асфальтовая дорога.</div>
+
+<div id="galleria" style="width:540px;height: 480;"><div class="galleria-container notouch" style="width: 540px; height: 480px;"><div class="galleria-stage"><div class="galleria-images" style="position: relative; top: 0px; left: 0px; width: 100%; height: 100%;"><div class="galleria-image" style="overflow: hidden; position: absolute; top: 0px; left: 0px; -webkit-transition: none; transition: none; opacity: 0; z-index: 0;"><div class="galleria-layer" style="position: absolute; top: 0px; left: 0px; right: 0px; bottom: 0px; z-index: 2;"></div></div><div class="galleria-image" style="overflow: hidden; position: absolute; top: 0px; left: 0px; opacity: 1; width: 514px; height: 404px; -webkit-transition: none; transition: none; z-index: 1;"><div class="galleria-layer" style="position: absolute; top: 0px; left: 106px; right: 0px; bottom: 0px; z-index: 2; display: none; width: 303px; height: 404px;"></div><img src="/images/objects/2698_1144_1.jpg" width="303" height="404" style="display: block; opacity: 1; min-width: 0px; min-height: 0px; max-width: none; max-height: none; width: 303px; height: 404px; position: absolute; top: 0px; left: 106px; cursor: pointer;"></div></div><div class="galleria-loader" style="display: none; opacity: 0.4;"></div><div class="galleria-counter" style="opacity: 0; -webkit-transition: none; transition: none;"><span class="galleria-current">1</span> / <span class="galleria-total">10</span></div><div class="galleria-image-nav"><div class="galleria-image-nav-right" style="right: -50px; -webkit-transition: none; transition: none;"></div><div class="galleria-image-nav-left" style="left: -50px; -webkit-transition: none; transition: none;"></div></div></div><div class="galleria-thumbnails-container"><div class="galleria-thumb-nav-left disabled"></div><div class="galleria-thumbnails-list" style="overflow: hidden; position: relative;"><div class="galleria-thumbnails" style="overflow: hidden; position: relative; width: 514px; height: 42px;"><div class="galleria-image active" style="overflow: hidden; position: relative; visibility: visible; width: 30px; height: 40px;"><img src="/images/objects/2698_1144_1_s.jpg" width="30" height="40" style="display: block; opacity: 1; min-width: 0px; min-height: 0px; max-width: none; max-height: none; width: 30px; height: 40px; position: absolute; top: 0px; left: 0px;"></div><div class="galleria-image" style="overflow: hidden; position: relative; visibility: visible; width: 30px; height: 40px;"><img src="/images/objects/2698_1144_2_s.jpg" width="30" height="40" style="display: block; opacity: 0.6; min-width: 0px; min-height: 0px; max-width: none; max-height: none; width: 30px; height: 40px; position: absolute; top: 0px; left: 0px;"></div><div class="galleria-image" style="overflow: hidden; position: relative; visibility: visible; width: 30px; height: 40px;"><img src="/images/objects/2698_1144_3_s.jpg" width="30" height="40" style="display: block; opacity: 0.6; min-width: 0px; min-height: 0px; max-width: none; max-height: none; width: 30px; height: 40px; position: absolute; top: 0px; left: 0px;"></div><div class="galleria-image" style="overflow: hidden; position: relative; visibility: visible; width: 54px; height: 40px;"><img src="/images/objects/2698_1144_4_s.jpg" width="54" height="40" style="display: block; opacity: 0.6; min-width: 0px; min-height: 0px; max-width: none; max-height: none; width: 54px; height: 40px; position: absolute; top: 0px; left: 0px;"></div><div class="galleria-image" style="overflow: hidden; position: relative; visibility: visible; width: 54px; height: 40px;"><img src="/images/objects/2698_1144_5_s.jpg" width="54" height="40" style="display: block; opacity: 0.6; min-width: 0px; min-height: 0px; max-width: none; max-height: none; width: 54px; height: 40px; position: absolute; top: 0px; left: 0px;"></div><div class="galleria-image" style="overflow: hidden; position: relative; visibility: visible; width: 30px; height: 40px;"><img src="/images/objects/2698_1144_6_s.jpg" width="30" height="40" style="display: block; opacity: 0.6; min-width: 0px; min-height: 0px; max-width: none; max-height: none; width: 30px; height: 40px; position: absolute; top: 0px; left: 0px;"></div><div class="galleria-image" style="overflow: hidden; position: relative; visibility: visible; width: 54px; height: 40px;"><img src="/images/objects/2698_1144_7_s.jpg" width="54" height="40" style="display: block; opacity: 0.6; min-width: 0px; min-height: 0px; max-width: none; max-height: none; width: 54px; height: 40px; position: absolute; top: 0px; left: 0px;"></div><div class="galleria-image" style="overflow: hidden; position: relative; visibility: visible; width: 54px; height: 40px;"><img src="/images/objects/2698_1144_8_s.jpg" width="54" height="40" style="display: block; opacity: 0.6; min-width: 0px; min-height: 0px; max-width: none; max-height: none; width: 54px; height: 40px; position: absolute; top: 0px; left: 0px;"></div><div class="galleria-image" style="overflow: hidden; position: relative; visibility: visible; width: 54px; height: 40px;"><img src="/images/objects/2698_1144_9_s.jpg" width="54" height="40" style="display: block; opacity: 0.6; min-width: 0px; min-height: 0px; max-width: none; max-height: none; width: 54px; height: 40px; position: absolute; top: 0px; left: 0px;"></div><div class="galleria-image" style="overflow: hidden; position: relative; visibility: visible; width: 54px; height: 40px;"><img src="/images/objects/2698_1144_10_s.jpg" width="54" height="40" style="display: block; opacity: 0.6; min-width: 0px; min-height: 0px; max-width: none; max-height: none; width: 54px; height: 40px; position: absolute; top: 0px; left: 0px;"></div></div></div><div class="galleria-thumb-nav-right disabled"></div></div><div class="galleria-info" style="display: none;"><div class="galleria-info-text" style="display: block;"><div class="galleria-info-title" style="display: none;"></div><div class="galleria-info-description" style="display: none;"></div></div><div class="galleria-info-link" style="display: none;"></div><div class="galleria-info-close" style="display: none;"></div></div><div class="galleria-tooltip" style="opacity: 0;"></div></div></div>
+
+<table id="printFirm">
+                    
+                            <tbody><tr>
+                                <td>Выставлен:</td>
+                                <td><b>Агентством недвижимости (членом УПН)</b></td>
+                            </tr>
+                        
+                            <tr>
+                                <td>Фирма:</td>
+                                <td><b><a style="color:#E85E0A;" href="/agentstva-nedvizhimosti/info/2126&amp;dealerobject" title="Агентство недвижимости НОВОСЁЛ ЛЕНИНА">НОВОСЁЛ ЛЕНИНА (ООО "Агентство недвижимости "Новосёл-Новостройки. Инвестиции. Консалтинг. Аналитика")</a></b></td>
+                            </tr>
+                        
+                            <tr>
+                                <td>Адрес агентства:</td>
+                                <td><b>Екатеринбург, Ленина 39/а</b></td>
+                            </tr>
+                        
+                            <tr>
+                                <td>Телефон агента:</td>
+                                <td><b>(343) 385-2009</b></td>
+                            </tr>
+                        
+                            <tr>
+                                <td>Телефон агентства:</td>
+                                <td><b>385-2009(телефон/факс),319-49-28, 319-49-27</b></td>
+                            </tr>
+                        
+                            <tr>
+                                <td>WWW:</td>
+                                <td><b><a target="_blank" onclick="_gaq.push(['_trackEvent','Object','Click','Site'])" href="/redirect.asp?url=http://www.новосёл99.рф" style="color: #618199;">http://www.новосёл99.рф</a></b></td>
+                            </tr>
+                        
+                            <tr>
+                                <td>EMail:</td>
+                                <td><b><a href="mailto:novosel-nika@mail.ru" style="color: #618199;">novosel-nika@mail.ru</a></b></td>
+                            </tr>
+                        
+                    
+                    </tbody><tbody id="ctl00_VOI_tbd_www_link">
+                        <tr>
+                            <td colspan="2">
+                                <a href="http://novosel99.ru/catalog/object/34654" id="ctl00_VOI_lnk_www_link" target="_blank" onclick="_gad.push(['_trackEvent','Object','Click','Site'])">Смотреть информацию об объекте на сайте агентства</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                    
+                </table>
+
+9	PublicationLink	//div[@id='panel_search']//tr[@class='robotno']//a	{{href}}	.*	$&
+
+9	PublicationId	//div[@id='panel_search']//tr[@class='robotno']//a	{{href}}	(http(s)?:\/\/)?(\D[^\/]*\/)*(\d+-\d+).*	$4
+9	WebPublicationUrl	/	{{Url}}	.*	$&
+9	WebPublicationSite	/	{{Url}}	((http(s)?:\/\/)?[^\/\?]+).*	$1
+9	WebPublicationPublicationId	/	{{Url}}	(http(s)?:\/\/)?(\D[^\/]+\/)*(\d+-\d+).*	$4
+
+
+9	\Жилая\Строящееся жилье\2	Квартиру	\Жилая\Вторичное (готовое) жилье\	3	_flat	NULL
+9	\Жилая\Строящееся жилье\3	Комнату	\Жилая\Вторичное (готовое) жилье\	3	_flat	/komnaty
+9	\Жилая\Строящееся жилье\-1	Долю	\Жилая\Вторичное (готовое) жилье\	3	_flat	NULL
+9	\Жилая\Строящееся жилье\4	Дом/коттедж	\Жилая\Вторичное (готовое) жилье\	3	_houses	NULL
+
+9	0	\Жилая\Строящееся жилье\2	/realty_new
+9	0	\Жилая\Строящееся жилье\3	/realty_new
+9	0	\Жилая\Строящееся жилье\-1	/realty_new
+9	0	\Жилая\Строящееся жилье\4	/realty_new
+9	453	\Жилая\Строящееся жилье\2	/realty_new_eburg
+9	453	\Жилая\Строящееся жилье\3	/realty_new_eburg
+9	453	\Жилая\Строящееся жилье\-1	/realty_new_eburg
+9	453	\Жилая\Строящееся жилье\4	/realty_new
+9	0	\Гараж\Строящееся жилье\	/realty_new
+9	453	\Гараж\Строящееся жилье\	/realty_new_eburg
+9	0	\Гараж\Вторичное (готовое) жилье\	/realty
+9	453	\Гараж\Вторичное (готовое) жилье\	/realty_eburg
+
+
+5	1382	\Вся недвижимость одной страницей\\
+5	1383	\Жилая недвижимость\Квартиры и комнаты\
+5	1384	\Жилая недвижимость\Квартиры и комнаты\Вторичный рынок
+5	1385	\Жилая недвижимость\Квартиры и комнаты\Вторичный рынок
+5	1386	\Жилая недвижимость\Квартиры и комнаты\Вторичный рынок
+5	1393	\Жилая недвижимость\Квартиры и комнаты\Новостройки
+5	1387	\Жилая недвижимость\Квартиры и комнаты\Вторичный рынок
+5	1394	\Жилая недвижимость\Квартиры и комнаты\Новостройки
+5	1388	\Жилая недвижимость\Квартиры и комнаты\Вторичный рынок
+5	1395	\Жилая недвижимость\Квартиры и комнаты\Новостройки
+5	1389	\Жилая недвижимость\Квартиры и комнаты\Вторичный рынок
+5	1396	\Жилая недвижимость\Квартиры и комнаты\Новостройки
+5	1390	\Жилая недвижимость\Квартиры и комнаты\Вторичный рынок
+5	1397	\Жилая недвижимость\Квартиры и комнаты\Новостройки
+5	1392	\Жилая недвижимость\Квартиры и комнаты\Новостройки
+5	1398	\Жилая недвижимость\Квартиры и комнаты\Новостройки
+5	1399	\Жилая недвижимость\Дома, коттеджи\
+5	1400	\Жилая недвижимость\Загородная недвижимость\Дачи, сады
+5	1403	\Коммерческая недвижимость\\
+5	1404	\Коммерческая недвижимость\Офисы\
+5	1405	\Коммерческая недвижимость\Производственные помещения\
+5	1406	\Коммерческая недвижимость\Торговые помещения\
+5	1405	\Коммерческая недвижимость\Склады\
+5	4220	\Жилая недвижимость\Дома, коттеджи\
+5	4221	\Прочее\Гаражи, парковочные места, стоянки\
+5	4223	\Прочее\Гаражи, парковочные места, стоянки\
+5	4224	\Прочее\Гаражи, парковочные места, стоянки\
+5	4225	\Прочее\Гаражи, парковочные места, стоянки\
+5	4226	\Прочее\Гаражи, парковочные места, стоянки\
+5	4227	\Прочее\Гаражи, парковочные места, стоянки\
+
+
+5	\Жилая недвижимость\\	Жилая недвижимость	\\\	1	NULL	NULL
+5	\Жилая недвижимость\Квартиры и комнаты\	Квартиры и комнаты	\Жилая недвижимость\\	2	NULL	NULL
+5	\Жилая недвижимость\Квартиры и комнаты\Вторичный рынок	Вторичный рынок	\Жилая недвижимость\Квартиры и комнаты\	3	NULL	NULL
+5	\Жилая недвижимость\Квартиры и комнаты\Новостройки	Новостройки	\Жилая недвижимость\Квартиры и комнаты\	3	NULL	NULL
+5	\Жилая недвижимость\Дома, коттеджи\	Дома, коттеджи	\Жилая недвижимость\\	2	NULL	NULL
+5	\Жилая недвижимость\Гостиницы\	Гостиницы	\Жилая недвижимость\\	2	NULL	NULL
+5	\Жилая недвижимость\Загородная недвижимость\	Загородная недвижимость	\Жилая недвижимость\\	2	NULL	NULL
+5	\Жилая недвижимость\Загородная недвижимость\Дачи, сады	Дачи, сады	\Жилая недвижимость\Загородная недвижимость\	3	NULL	NULL
+5	\Жилая недвижимость\Загородная недвижимость\Земельные участки	Земельные участки	\Жилая недвижимость\Загородная недвижимость\	3	NULL	NULL
+5	\Коммерческая недвижимость\\	Коммерческая недвижимость	\\\	1	NULL	NULL
+5	\Коммерческая недвижимость\Офисы\	Офисы	\Коммерческая недвижимость\\	2	NULL	NULL
+5	\Коммерческая недвижимость\Торговые помещения\	Торговые помещения	\Коммерческая недвижимость\\	2	NULL	NULL
+5	\Коммерческая недвижимость\Производственные помещения\	Производственные помещения	\Коммерческая недвижимость\\	2	NULL	NULL
+5	\Коммерческая недвижимость\Склады\	Склады	\Коммерческая недвижимость\\	2	NULL	NULL
+5	\Коммерческая недвижимость\Прочая коммерческая недвижимость\	Прочая коммерческая недвижимость	\Коммерческая недвижимость\\	2	NULL	NULL
+5	\Зарубежная недвижимость\\	Зарубежная недвижимость	\\\	1	NULL	NULL
+5	\Зарубежная недвижимость\Квартиры, апартаменты\	ЗКвартиры, апартаменты	\Зарубежная недвижимость\\	2	NULL	NULL
+5	\Зарубежная недвижимость\Дома, таунхаусы\	Дома, таунхаусы	\Зарубежная недвижимость\\	2	NULL	NULL
+5	\Зарубежная недвижимость\Земельные участки\	Земельные участки	\Зарубежная недвижимость\\	2	NULL	NULL
+5	\Прочее\Гаражи, парковочные места, стоянки\	Гаражи, парковочные места, стоянки	\Прочее\\		2	NULL	NULL
+5	\Прочее\Услуги\	Услуги	\Прочее\\	2	NULL	NULL
+5	\Прочее\Другое\	Другое	\Прочее\\	2	NULL	NULL
+5	\Вся недвижимость одной страницей\\	Вся недвижимость одной страницей	\\\	1	NULL	NULL
+
+
+
+
+
+
+5	\Жилая недвижимость\Квартиры и комнаты\	\Аренда\Предложение	
+5	\Жилая недвижимость\Квартиры и комнаты\	\Аренда\Спрос	/kvartiri/hires
+5	\Жилая недвижимость\Квартиры и комнаты\Вторичный рынок	\Продажа\Предложение	/kvartiri/prodazha
+5	\Жилая недвижимость\Квартиры и комнаты\Новостройки	\Продажа\Предложение	/kvartiri/novostroiki
+5	\Жилая недвижимость\Квартиры и комнаты\	\Продажа\Спрос	/kvartiri/buy
+5	\Жилая недвижимость\Дома, коттеджи\	\Продажа\Предложение	/kottedzhej
+5	\Жилая недвижимость\Дома, коттеджи\	\Продажа\Спрос	/kottedzhej/buy
+5	\Жилая недвижимость\Дома, коттеджи\	\Аренда\Предложение	/kottedzhej/arenda
+5	\Жилая недвижимость\Дома, коттеджи\	\Аренда\Спрос	/kottedzhej/hire
+5	\Жилая недвижимость\Дома, коттеджи\	\Посуточная, почасовая, сезонная aренда\	/posutochno/kottedzhi-doma
+5	\Жилая недвижимость\Квартиры и комнаты\	\Посуточная, почасовая, сезонная aренда\	/posutochno
+5	\Жилая недвижимость\Гостиницы\	\Посуточная, почасовая, сезонная aренда\	/posutochno/hotel
+5	\Жилая недвижимость\\	Обмен жилья\	/obmen
+5	\Жилая недвижимость\Загородная недвижимость\	\Продажа\Предложение	/zagorodnaya-nedvizhimost
+5	\Жилая недвижимость\Загородная недвижимость\Дачи, сады	\Продажа\Предложение	/dachi-sady
+5	\Жилая недвижимость\Загородная недвижимость\Дачи, сады	\Продажа\Спрос	/dachi-sady/buy
+5	\Жилая недвижимость\Загородная недвижимость\Земельные участки	\Продажа\Предложение	/uchastkov
+5	\Жилая недвижимость\Загородная недвижимость\Земельные участки	\Продажа\Спрос	/uchastkov/buy
+5	\Коммерческая недвижимость\Офисы\	\Аренда\Предложение	/ofis
+5	\Коммерческая недвижимость\Офисы\	\Аренда\Спрос	/ofis/hire
+5	\Коммерческая недвижимость\Офисы\	\Продажа\Предложение	/ofis/prodazha
+5	\Коммерческая недвижимость\Офисы\	\Продажа\Спрос	/ofis/buy
+5	\Коммерческая недвижимость\Торговые помещения\	\Аренда\Предложение	/torg
+5	\Коммерческая недвижимость\Торговые помещения\	\Аренда\Спрос	/torg/hire
+5	\Коммерческая недвижимость\Торговые помещения\	\Продажа\Предложение	/torg/prodazha
+5	\Коммерческая недвижимость\Торговые помещения\	\Продажа\Спрос	/torg/buy
+5	\Коммерческая недвижимость\Производственные помещения\	\Аренда\Предложение	/production
+5	\Коммерческая недвижимость\Производственные помещения\	\Аренда\Спрос	/production/hire
+5	\Коммерческая недвижимость\Производственные помещения\	\Продажа\Предложение	/production/prodazha
+5	\Коммерческая недвижимость\Производственные помещения\	\Продажа\Спрос	/production/buy
+5	\Коммерческая недвижимость\Склады\	\Аренда\Предложение	/sklada
+5	\Коммерческая недвижимость\Склады\	\Аренда\Спрос	/sklada/hire
+5	\Коммерческая недвижимость\Склады\	\Продажа\Предложение	/sklada/prodazha
+5	\Коммерческая недвижимость\Склады\	\Продажа\Спрос	/sklada/buy
+5	\Зарубежная недвижимость\Квартиры, апартаменты\	\Аренда\Предложение	/foreign-flat
+5	\Зарубежная недвижимость\Квартиры, апартаменты\	\Аренда\Спрос	/foreign-flat/hire
+5	\Зарубежная недвижимость\Квартиры, апартаменты\	\Продажа\Предложение	/foreign-flat/sale
+5	\Зарубежная недвижимость\Квартиры, апартаменты\	\Продажа\Спрос	/foreign-flat/buy
+5	\Зарубежная недвижимость\Дома, таунхаусы\	\Аренда\Предложение	/foreign-house
+5	\Зарубежная недвижимость\Дома, таунхаусы\	\Аренда\Спрос	/foreign-house/hire
+5	\Зарубежная недвижимость\Дома, таунхаусы\	\Продажа\Предложение	/foreign-house/prodazha
+5	\Зарубежная недвижимость\Дома, таунхаусы\	\Продажа\Спрос	/foreign-house/buy
+5	\Зарубежная недвижимость\Земельные участки\	\Продажа\Предложение	/foreign-sector
+5	\Зарубежная недвижимость\Земельные участки\	\Продажа\Спрос	/foreign-sector/buy
+5	\Прочее\Гаражи, парковочные места, стоянки\	\Продажа\Предложение	/garazhi
+5	\Прочее\Гаражи, парковочные места, стоянки\	\Продажа\Спрос	/garazhi/buy
+5	\Прочее\Гаражи, парковочные места, стоянки\	\Аренда\Предложение	/garazhi/arenda
+5	\Прочее\Гаражи, парковочные места, стоянки\	\Аренда\Спрос	/garazhi/hire
+5	\Прочее\Услуги\	\Всё\	/uslugi
+5	\Прочее\Другое\	\Всё\	/other
+5	\Вся недвижимость одной страницей\\	\Всё\	/nedvizhimost
+8	46	59	46
+8	48	59	48
+8	50	59	50
+8	46	63	54
+8	48	63	55
+8	50	63	56
+8	46	86	70
+8	48	86	71
+8	46	58	45
+8	48	58	47
+8	50	58	49
+8	46	62	51
+8	48	62	52
+8	50	62	53
+NULL	NULL	NULL	NULL
+
+
+
+
+5	\Аренда\	Аренда	\\	1	NULL
+5	\Продажа\	Продажа	\\	1	NULL
+5	\Аренда\Предложение	Предложение	\Аренда\	2	NULL
+5	\Аренда\Спрос	Спрос	\Аренда\	2	NULL
+5	\Продажа\Предложение	Предложение	\Продажа\	2	NULL
+5	\Продажа\Спрос	Спрос	\Продажа\	2	NULL
+5	\Посуточная, почасовая, сезонная аренда\	Посуточная, почасовая, сезонная аренда	\\	2	NULL
+5	\Обмен жилья\	Обмен жилья	\\	1	NULL
+5	\Всё\	Всё	\\	1	NULL
+
+
+
+
+
+
+<table class="summary" cellpadding="0px" cellspacing="0px" border="0px">
+        <tbody><tr>
+            <th style="text-align: left; width: auto;">
+                <a href="/index.aspx?page=realty" id="ctl00_ctl11_aRealty" style=" text-decoration: blink">
+                    <img src="/images/lupa.png" style="border: 0px none; margin-right: 5px;" alt="Поиск недвижимости Екатеринбурга" title="Поиск недвижимости Екатеринбурга"><img src="/images/search/realty2.gif" style="border: 0px; margin: 5px;" alt="Недвижимость Екатеринбурга" title="Недвижимость Екатеринбурга">
+                </a>
+                
+                
+            </th>
+            <th id="ctl00_ctl11_thSale"><a href="/index.aspx?page=realty_sale" class="rs_type">Продажа</a></th>
+
+            <th id="ctl00_ctl11_thRent"><a href="/index.aspx?page=realty_rent" class="rs_type">Аренда</a></th>
+
+        </tr>
+        <tr><td class="desc"><a href="/index.aspx?page=realty_eburg_flat_sale" title="Вторичное (готовое) жилье в Екатеринбурге">Вторичное (готовое) жилье в Екатеринбурге</a></td>
+<td><a href="/index.aspx?page=realty_eburg_flat_sale" title="Продажа">9435</a></td>
+<td><a href="/index.aspx?page=realty_eburg_flat_rent" title="Aренда">1107</a></td></tr>
+<tr><td class="desc"><a href="/index.aspx?page=realty_new_eburg_flat_sale" title="Строящееся жилье в Екатеринбурге">Строящееся жилье в Екатеринбурге</a></td>
+<td><a href="/index.aspx?page=realty_new_eburg_flat_sale" title="Продажа">1372</a>
+</td><td>-</td></tr><tr><td class="desc"><a href="/index.aspx?page=realty_non_eburg_flat_sale" title="Иногородние квартиры и комнаты">Иногородние квартиры и комнаты</a></td><td><a href="/index.aspx?page=realty_non_eburg_flat_sale" title="Продажа">2470</a></td><td><a href="/index.aspx?page=realty_non_eburg_flat_rent" title="Aренда">24</a></td></tr><tr><td class="desc"><a href="/index.aspx?page=realty_offices_flats_sale" title="Квартиры под офисы">Квартиры под офисы</a></td><td><a href="/index.aspx?page=realty_offices_flats_sale" title="Продажа">560</a></td><td>-</td></tr><tr><td class="desc"><a href="/index.aspx?page=realty_offices_sale" title="Торгово-офисная недвижимость">Торгово-офисная недвижимость</a></td><td><a href="/index.aspx?page=realty_offices_sale" title="Продажа">1529</a></td><td><a href="/index.aspx?page=realty_offices_rent" title="Aренда">1330</a></td></tr><tr><td class="desc"><a href="/index.aspx?page=realty_industrials_sale" title="Производственная недвижимость">Производственная недвижимость</a></td><td><a href="/index.aspx?page=realty_industrials_sale" title="Продажа">277</a></td><td><a href="/index.aspx?page=realty_industrials_rent" title="Aренда">113</a></td></tr><tr><td class="desc"><a href="/index.aspx?page=realty_commercials_sale" title="Коммерческая недвижимость">Коммерческая недвижимость</a></td><td><a href="/index.aspx?page=realty_commercials_sale" title="Продажа">844</a></td><td><a href="/index.aspx?page=realty_commercials_rent" title="Aренда">208</a></td></tr><tr><td class="desc"><a href="/index.aspx?page=realty_stores_sale" title="Склады">Склады</a></td><td><a href="/index.aspx?page=realty_stores_sale" title="Продажа">156</a></td><td><a href="/index.aspx?page=realty_stores_rent" title="Aренда">164</a></td></tr><tr><td class="desc"><a href="/index.aspx?page=realty_garages_sale" title="Гаражи">Гаражи</a></td><td><a href="/index.aspx?page=realty_garages_sale" title="Продажа">817</a></td><td><a href="/index.aspx?page=realty_garages_rent" title="Aренда">11</a></td></tr><tr><td class="desc"><a href="/index.aspx?page=realty_houses_sale" title="Индивидуальное жилье">Индивидуальное жилье</a></td><td><a href="/index.aspx?page=realty_houses_sale" title="Продажа">3663</a></td><td><a href="/index.aspx?page=realty_houses_rent" title="Aренда">31</a></td></tr><tr><td class="desc"><a href="/index.aspx?page=realty_land_sale" title="Земельные участки">Земельные участки</a></td><td><a href="/index.aspx?page=realty_land_sale" title="Продажа">2910</a></td><td><a href="/index.aspx?page=realty_land_rent" title="Aренда">16</a></td></tr><tr><td class="desc"><a href="/index.aspx?page=realty_gardens_sale" title="Коллективные сады">Коллективные сады</a></td><td><a href="/index.aspx?page=realty_gardens_sale" title="Продажа">1459</a></td><td><a href="/index.aspx?page=realty_gardens_rent" title="Aренда">1</a></td></tr><tr><td class="desc"><a href="/index.aspx?page=realty_ready_business_sale" title="Готовый бизнес">Готовый бизнес</a></td><td><a href="/index.aspx?page=realty_ready_business_sale" title="Продажа">495</a></td><td><a href="/index.aspx?page=realty_ready_business_rent" title="Aренда">40</a></td></tr><tr><td class="desc"><a href="/index.aspx?page=realty_non_russian_realty_sale" title="Зарубежная недвижимость">Зарубежная недвижимость</a></td><td><a href="/index.aspx?page=realty_non_russian_realty_sale" title="Продажа">190</a></td><td>-</td></tr>
+    </tbody></table>
+
+
+
+
+
+9	0	2	/realty
+9	0	3	/realty
+9	0	-1	/realty
+9	0	4	/realty
+9	0	8	/realty
+9	0	9	/realty
+9	0	10	/realty
+9	0	11	/realty
+9	453	2	/realty_eburg
+9	453	3	/realty_eburg
+9	453	-1	/realty_eburg
+9	453	4	/realty
+9	453	8	/realty
+9	453	9	/realty
+9	453	10	/realty
+9	453	11	/realty
+
+BEGIN;
+
+INSERT OR REPLACE INTO SiteRubric(SiteId,SiteRubricId,SiteRubricTitle,ParentId,Level) VALUES (9,'\Жилая\','Жилая','\\',1);
+INSERT OR REPLACE INTO SiteRubric(SiteId,SiteRubricId,SiteRubricTitle,ParentId,Level) VALUES (9,'\Жилая\2','Квартиру','\Жилая\',2);
+INSERT OR REPLACE INTO SiteRubric(SiteId,SiteRubricId,SiteRubricTitle,ParentId,Level) VALUES (9,'\Жилая\3','Комнату','\Жилая\',2);
+INSERT OR REPLACE INTO SiteRubric(SiteId,SiteRubricId,SiteRubricTitle,ParentId,Level) VALUES (9,'\Жилая\-1','Долю','\Жилая\',2);
+INSERT OR REPLACE INTO SiteRubric(SiteId,SiteRubricId,SiteRubricTitle,ParentId,Level) VALUES (9,'\Жилая\4','Дом/коттедж','\Жилая\',2);
+INSERT OR REPLACE INTO SiteRubric(SiteId,SiteRubricId,SiteRubricTitle,ParentId,Level) VALUES (9,'\Коммерческая\','Коммерческая','\\',1);
+INSERT OR REPLACE INTO SiteRubric(SiteId,SiteRubricId,SiteRubricTitle,ParentId,Level) VALUES (9,'\Коммерческая\11','Офис/Магазин','\Коммерческая\',2);
+INSERT OR REPLACE INTO SiteRubric(SiteId,SiteRubricId,SiteRubricTitle,ParentId,Level) VALUES (9,'\Коммерческая\10','Коммерческую','\Коммерческая\',2);
+INSERT OR REPLACE INTO SiteRubric(SiteId,SiteRubricId,SiteRubricTitle,ParentId,Level) VALUES (9,'\Коммерческая\9','Производственную','\Коммерческая\',2);
+INSERT OR REPLACE INTO SiteRubric(SiteId,SiteRubricId,SiteRubricTitle,ParentId,Level) VALUES (9,'\Коммерческая\8','Склад','\Коммерческая\',2);
+
+INSERT OR REPLACE INTO SiteAction(SiteId,SiteActionId,SiteActionTitle,ParentId,Level) VALUES (9,'\1','Купить','',1);
+INSERT OR REPLACE INTO SiteAction(SiteId,SiteActionId,SiteActionTitle,ParentId,Level) VALUES (9,'\2','Арендовать','',1);
+
+INSERT OR REPLACE INTO SiteRegion(SiteId,SiteRegionId,SiteRegionTitle,ParentId,Level) VALUES (9,'\0\','Свердловская обл','\\',1);
+INSERT OR REPLACE INTO SiteRegion(SiteId,SiteRegionId,SiteRegionTitle,ParentId,Level)  VALUES (9,'\0\453','Екатеринбург','\0\',2);
+
+INSERT OR REPLACE INTO SiteActionMapping(SiteId,ActionId,SiteActionId) VALUES (9,1,'\1');
+INSERT OR REPLACE INTO SiteActionMapping(SiteId,ActionId,SiteActionId) VALUES (9,3,'\2');
+
+INSERT OR REPLACE INTO SiteRegionMapping(SiteId,RegionId,SiteRegionId) VALUES (9,66,'\0\');
+INSERT OR REPLACE INTO SiteRegionMapping(SiteId,RegionId,SiteRegionId) VALUES (9,2931,'\0\453');
+
+INSERT OR REPLACE INTO SiteRubricMapping(SiteId,RubricId,SiteRubricId) VALUES (9,1382,'\Жилая\2');
+INSERT OR REPLACE INTO SiteRubricMapping(SiteId,RubricId,SiteRubricId) VALUES (9,1382,'\Жилая\3');
+INSERT OR REPLACE INTO SiteRubricMapping(SiteId,RubricId,SiteRubricId) VALUES (9,1382,'\Жилая\4');
+INSERT OR REPLACE INTO SiteRubricMapping(SiteId,RubricId,SiteRubricId) VALUES (9,1382,'\Жилая\-1');
+INSERT OR REPLACE INTO SiteRubricMapping(SiteId,RubricId,SiteRubricId) VALUES (9,1382,'\Коммерческая\10');
+INSERT OR REPLACE INTO SiteRubricMapping(SiteId,RubricId,SiteRubricId) VALUES (9,1383,'\Жилая\2');
+INSERT OR REPLACE INTO SiteRubricMapping(SiteId,RubricId,SiteRubricId) VALUES (9,1383,'\Жилая\3');
+INSERT OR REPLACE INTO SiteRubricMapping(SiteId,RubricId,SiteRubricId) VALUES (9,1383,'\Жилая\4');
+INSERT OR REPLACE INTO SiteRubricMapping(SiteId,RubricId,SiteRubricId) VALUES (9,1383,'\Жилая\-1');
+INSERT OR REPLACE INTO SiteRubricMapping(SiteId,RubricId,SiteRubricId) VALUES (9,1384,'\Жилая\2');
+INSERT OR REPLACE INTO SiteRubricMapping(SiteId,RubricId,SiteRubricId) VALUES (9,1384,'\Жилая\3');
+INSERT OR REPLACE INTO SiteRubricMapping(SiteId,RubricId,SiteRubricId) VALUES (9,1384,'\Жилая\4');
+INSERT OR REPLACE INTO SiteRubricMapping(SiteId,RubricId,SiteRubricId) VALUES (9,1384,'\Жилая\-1');
+INSERT OR REPLACE INTO SiteRubricMapping(SiteId,RubricId,SiteRubricId) VALUES (9,1385,'\Жилая\3');
+INSERT OR REPLACE INTO SiteRubricMapping(SiteId,RubricId,SiteRubricId) VALUES (9,1386,'\Жилая\2');
+INSERT OR REPLACE INTO SiteRubricMapping(SiteId,RubricId,SiteRubricId) VALUES (9,1387,'\Жилая\2');
+INSERT OR REPLACE INTO SiteRubricMapping(SiteId,RubricId,SiteRubricId) VALUES (9,1388,'\Жилая\2');
+INSERT OR REPLACE INTO SiteRubricMapping(SiteId,RubricId,SiteRubricId) VALUES (9,1389,'\Жилая\2');
+INSERT OR REPLACE INTO SiteRubricMapping(SiteId,RubricId,SiteRubricId) VALUES (9,1390,'\Жилая\2');
+INSERT OR REPLACE INTO SiteRubricMapping(SiteId,RubricId,SiteRubricId) VALUES (9,1392,'\Жилая\2');
+INSERT OR REPLACE INTO SiteRubricMapping(SiteId,RubricId,SiteRubricId) VALUES (9,1392,'\Жилая\3');
+INSERT OR REPLACE INTO SiteRubricMapping(SiteId,RubricId,SiteRubricId) VALUES (9,1392,'\Жилая\4');
+INSERT OR REPLACE INTO SiteRubricMapping(SiteId,RubricId,SiteRubricId) VALUES (9,1392,'\Жилая\-1');
+INSERT OR REPLACE INTO SiteRubricMapping(SiteId,RubricId,SiteRubricId) VALUES (9,1392,'\Жилая\2');
+INSERT OR REPLACE INTO SiteRubricMapping(SiteId,RubricId,SiteRubricId) VALUES (9,1393,'\Жилая\2');
+INSERT OR REPLACE INTO SiteRubricMapping(SiteId,RubricId,SiteRubricId) VALUES (9,1394,'\Жилая\2');
+INSERT OR REPLACE INTO SiteRubricMapping(SiteId,RubricId,SiteRubricId) VALUES (9,1395,'\Жилая\2');
+INSERT OR REPLACE INTO SiteRubricMapping(SiteId,RubricId,SiteRubricId) VALUES (9,1396,'\Жилая\2');
+INSERT OR REPLACE INTO SiteRubricMapping(SiteId,RubricId,SiteRubricId) VALUES (9,1397,'\Жилая\2');
+INSERT OR REPLACE INTO SiteRubricMapping(SiteId,RubricId,SiteRubricId) VALUES (9,1398,'\Жилая\2');
+INSERT OR REPLACE INTO SiteRubricMapping(SiteId,RubricId,SiteRubricId) VALUES (9,1399,'\Жилая\4');
+INSERT OR REPLACE INTO SiteRubricMapping(SiteId,RubricId,SiteRubricId) VALUES (9,1400,'\Жилая\4');
+INSERT OR REPLACE INTO SiteRubricMapping(SiteId,RubricId,SiteRubricId) VALUES (9,1403,'\Коммерческая\10');
+INSERT OR REPLACE INTO SiteRubricMapping(SiteId,RubricId,SiteRubricId) VALUES (9,1404,'\Коммерческая\11');
+INSERT OR REPLACE INTO SiteRubricMapping(SiteId,RubricId,SiteRubricId) VALUES (9,1405,'\Коммерческая\9');
+INSERT OR REPLACE INTO SiteRubricMapping(SiteId,RubricId,SiteRubricId) VALUES (9,1405,'\Коммерческая\8');
+INSERT OR REPLACE INTO SiteRubricMapping(SiteId,RubricId,SiteRubricId) VALUES (9,1406,'\Коммерческая\11');
+COMMIT;
+
+
+
+http://upn.ru/realty_eburg_flat_sale.htm?f=1&vm=3&deal=1&type=2&city=453&region=&room4=4#panel_search
+http://upn.ru/realty_eburg_flat_rent.htm?f=1&vm=3&deal=2&type=2&city=453&region=&room4=4#panel_search
+http://upn.ru/realty_eburg_flat_rent.htm?f=1&vm=3&deal=2&type=2&city=453&region=&room4=4#panel_search
+http://upn.ru/realty_eburg_flat_sale.htm?f=1&vm=3&deal=1&type=2&city=453&region=&room4=4#panel_search
+http://upn.ru/realty_eburg_flat_sale/komnaty.htm#panel_search
+http://upn.ru/realty_eburg_flat_sale.htm?f=1&vm=3&deal=1&type=-1&city=453&region=&room4=4#panel_search
+http://upn.ru/realty_houses_rent.htm?f=1&vm=3&deal=2&type=4&city=453&region=&room4=4#panel_search
+http://upn.ru/realty_houses_rent.htm?f=1&vm=3&deal=2&type=4&city=0&room4=4#panel_search
+http://upn.ru/realty_offices_sale.htm?f=1&vm=3&deal=1&type=11&city=0#panel_search
+http://upn.ru/realty_commercials_sale.htm?f=1&vm=3&deal=1&type=10&city=0&id=5#panel_search
+http://upn.ru/realty_industrials_sale.htm?f=1&vm=3&deal=1&type=9&city=0#panel_search
+http://upn.ru/realty_stores_sale.htm?f=1&vm=3&deal=1&type=8&city=0#panel_search
+
+<select name="city" class="st" id="c" data-class="long city" style="display: none;">
+						<option value="453">Екатеринбурге</option>
+						<option value="0">В области</option>
+					</select>
+
+
+<select name="deal" class="st dealClass" data-class="long" style="display: none;">
+						<option value="1">Купить</option>
+						<option value="2">Арендовать</option>
+					</select>
+
+<select name="type" class="st" data-class="type" id="type" style="display: none;">
+						<option value="2">Квартиру</option>
+						<option value="3">Комнату</option>
+						<option value="-1">Долю</option>
+						<option value="4">Дом/коттедж</option>
+					</select>
+
+<select name="type" class="st" data-class="" style="display: none;">
+						<option value="11">Офис/Магазин</option><option value="10">Коммерческую</option><option value="9">Производственную</option><option value="8">Склад</option>
+					</select>

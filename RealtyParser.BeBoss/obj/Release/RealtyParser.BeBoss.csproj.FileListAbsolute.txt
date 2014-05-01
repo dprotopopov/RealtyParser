@@ -34,6 +34,5 @@ D:\Projects\RealtyParser\RealtyParser.BeBoss\bin\Release\HtmlAgilityPack.pdb
 D:\Projects\RealtyParser\RealtyParser.BeBoss\bin\Release\HtmlAgilityPack.xml
 D:\Projects\RealtyParser\RealtyParser.BeBoss\bin\Release\System.Data.SQLite.xml
 D:\Projects\RealtyParser\RealtyParser.BeBoss\bin\Release\EntityFramework.xml
-D:\Projects\RealtyParser\RealtyParser.BeBoss\obj\Release\RealtyParser.BeBoss.csprojResolveAssemblyReference.cache
 D:\Projects\RealtyParser\RealtyParser.BeBoss\obj\Release\RealtyParser.BeBoss.dll
 D:\Projects\RealtyParser\RealtyParser.BeBoss\obj\Release\RealtyParser.BeBoss.pdb

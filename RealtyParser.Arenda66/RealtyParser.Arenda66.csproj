@@ -83,11 +83,14 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Arenda66Action.sql" />
+    <Content Include="Arenda66ActionMapping.sql" />
     <Content Include="Arenda66Parser.sqlite3">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Arenda66Region.sql" />
+    <Content Include="Arenda66RegionMapping.sql" />
     <Content Include="Arenda66Rubric.sql" />
+    <Content Include="Arenda66RubricMapping.sql" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

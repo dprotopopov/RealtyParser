@@ -10,6 +10,7 @@ using RealtyParser.Egent;
 using RealtyParser.Mirkvartir;
 using RealtyParser.NetAgenta;
 using RealtyParser.Rosrealt;
+using RealtyParser.Upn;
 using RT.ParsingLibs;
 using RT.ParsingLibs.Models;
 using RT.ParsingLibs.Requests;
@@ -33,6 +34,7 @@ namespace RealtyParser.Editor.Children
                     new BnParser(),
                     new BeBossParser(),
                     new Arenda66Parser(),
+                    new UpnParser(),
                 }.Select(item => new KeyValuePair<string, IParsingModule>(item.ModuleClassname, item))
                     .Cast<object>().ToArray());
             propertyGridControlParseRequest.SelectedObject = new ParseRequest();

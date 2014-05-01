@@ -5,6 +5,7 @@ copy /v /y RealtyParser.sqlite3 NetAgentaParser.sqlite3
 copy /v /y RealtyParser.sqlite3 BnParser.sqlite3
 copy /v /y RealtyParser.sqlite3 BeBossParser.sqlite3
 copy /v /y RealtyParser.sqlite3 Arenda66Parser.sqlite3
+copy /v /y RealtyParser.sqlite3 UpnParser.sqlite3
 copy /v /y RosrealtParser.sqlite3 ..\RealtyParser.Rosrealt\RosrealtParser.sqlite3
 copy /v /y MirkvartirParser.sqlite3 ..\RealtyParser.Mirkvartir\MirkvartirParser.sqlite3
 copy /v /y EgentParser.sqlite3 ..\RealtyParser.Egent\EgentParser.sqlite3
@@ -12,6 +13,7 @@ copy /v /y NetAgentaParser.sqlite3 ..\RealtyParser.NetAgenta\NetAgentaParser.sql
 copy /v /y BnParser.sqlite3 ..\RealtyParser.Bn\BnParser.sqlite3
 copy /v /y BeBossParser.sqlite3 ..\RealtyParser.BeBoss\BeBossParser.sqlite3
 copy /v /y Arenda66Parser.sqlite3 ..\RealtyParser.Arenda66\Arenda66Parser.sqlite3
+copy /v /y UpnParser.sqlite3 ..\RealtyParser.Upn\UpnParser.sqlite3
 copy /v /y RealtyParser.sqlite3 ..\RealtyParser.Editor\RealtyParser.sqlite3
 copy /v /y RosrealtParser.sqlite3 ..\RealtyParser.Editor\RosrealtParser.sqlite3
 copy /v /y MirkvartirParser.sqlite3 ..\RealtyParser.Editor\MirkvartirParser.sqlite3
@@ -20,3 +22,4 @@ copy /v /y NetAgentaParser.sqlite3 ..\RealtyParser.Editor\NetAgentaParser.sqlite
 copy /v /y BnParser.sqlite3 ..\RealtyParser.Editor\BnParser.sqlite3
 copy /v /y BeBossParser.sqlite3 ..\RealtyParser.Editor\BeBossParser.sqlite3
 copy /v /y Arenda66Parser.sqlite3 ..\RealtyParser.Editor\Arenda66Parser.sqlite3
+copy /v /y UpnParser.sqlite3 ..\RealtyParser.Editor\UpnParser.sqlite3

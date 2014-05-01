@@ -5,6 +5,7 @@ using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using HtmlAgilityPack;
 using MyLibrary;
 using MyLibrary.Trace;
@@ -91,8 +92,9 @@ namespace RealtyParser
                     Type returnPropertyType = returnPropertyInfo.PropertyType;
                     try
                     {
-                        var enumerable = (IEnumerable<string>) returnPropertyInfo.GetValue(returnFields);
-                        List<string> list = enumerable.ToList();
+                        List<string> list =
+                            new MyLibrary.Collections.StackListQueue<string>(
+                                (IEnumerable<string>) returnPropertyInfo.GetValue(returnFields, null));
                         object value = Converter.Convert(list, propertyType);
                         propertyInfo.SetValue(pair.Key, value);
                         Debug.WriteLine("Assign data for property {0} from {1}", propertyInfo.Name, propertyFullName);
@@ -135,7 +137,7 @@ namespace RealtyParser
                 {
                     try
                     {
-                        object propertyValue = propertyInfo.GetValue(pair.Key);
+                        object propertyValue = propertyInfo.GetValue(pair.Key, null);
                         Debug.WriteLine(propertyValue != null
                             ? string.Format("Property {0} is ok ({1})", propertyInfo.Name,
                                 pair.Value + propertyInfo.Name)
@@ -170,10 +172,10 @@ namespace RealtyParser
             var returnFields = new ReturnFields();
             long current = 0;
             long total = returnFieldInfos.ToList().Count*(parentDocuments.Count() + 1);
-            foreach (ReturnFieldInfo returnFieldInfo in returnFieldInfos.ToList())
+            Parallel.ForEach(returnFieldInfos.ToList(), returnFieldInfo =>
             {
                 var agregated = new Values();
-                foreach (HtmlDocument document in parentDocuments)
+                Parallel.ForEach(parentDocuments, document =>
                 {
                     var values = new Values(parentValues);
                     IEnumerable<string> xpaths =
@@ -187,17 +189,16 @@ namespace RealtyParser
                             xpaths.Select(xpath => document.DocumentNode.SelectNodes(xpath))
                                 .Where(nodes => nodes != null)
                                 .SelectMany(nodes => nodes))
-                    {
                         values.Add(BuildValues(returnFieldInfo.ReturnFieldResultTemplate.ToString(), htmlNode));
-                    }
 
-                    foreach (var pair in values)
-                        if (!agregated.ContainsKey((pair.Key))) agregated.Add(pair.Key, pair.Value);
-                        else if (agregated[pair.Key].Count() < pair.Value.Count())
-                            agregated[pair.Key] = pair.Value;
+                    lock (agregated)
+                        foreach (var pair in values)
+                            if (!agregated.ContainsKey((pair.Key))) agregated.Add(pair.Key, pair.Value);
+                            else if (agregated[pair.Key].Count() < pair.Value.Count())
+                                agregated[pair.Key] = pair.Value;
 
                     if (ProgressCallback != null) ProgressCallback(++current, total);
-                }
+                });
 
 
                 var regex = new Regex(returnFieldInfo.ReturnFieldRegexPattern.ToString(),
@@ -213,10 +214,10 @@ namespace RealtyParser
                         .Select(
                             input => regex.Replace(input, returnFieldInfo.ReturnFieldRegexReplacement.ToString()).Trim())
                         .Where(value => !string.IsNullOrWhiteSpace(value));
-                returnFields.Add(returnFieldInfo.ReturnFieldId.ToString(), list);
+                lock (returnFields) returnFields.Add(returnFieldInfo.ReturnFieldId.ToString(), list);
                 Debug.WriteLine("{0}:{1}", returnFieldInfo.ReturnFieldId, string.Join(Environment.NewLine, list));
                 if (ProgressCallback != null) ProgressCallback(++current, total);
-            }
+            });
 
             if (CompliteCallback != null) CompliteCallback();
             Debug.WriteLine("End {0}::{1}", GetType().Name, MethodBase.GetCurrentMethod().Name);
@@ -238,7 +239,7 @@ namespace RealtyParser
 
             long current = 0;
             long total = mapping.Count();
-            foreach (string table in mapping)
+            Parallel.ForEach(mapping, table =>
             {
                 Debug.Assert(requestId[table] != null &&
                              !string.IsNullOrWhiteSpace(requestId[table].ToString()));
@@ -251,55 +252,92 @@ namespace RealtyParser
                 for (int i = 0; i < parents.Count(); i++)
                     values.Add(string.Format("{0}[{1}]", table, i), parents[Math.Min(i, parents.Length - 1)]);
 
-                Collections.Properties fields = Database.GetUserFields(requestId[table],
-                    mappedId[table],
-                    table, requestId.Site);
-                values.Add(fields.Keys.Select(item => item.ToString()), fields.Values.Select(item => item.ToString()));
-                foreach (var field in fields)
-                    try
-                    {
-                        values.Add(string.Format("{0}-1", field.Key),
-                            (MyDatabase.Database.ConvertTo<long>(field.Value) - 1).ToString(CultureInfo.InvariantCulture));
-                    }
-                    catch (Exception exception)
-                    {
-                        Debug.WriteLine(exception.ToString());
-                    }
-
-                if (ProgressCallback != null) ProgressCallback(++current, total);
-            }
-
-            {
-                var tables = new[] {"Rubric", "Action"};
-                List<string[]> parentses = tables.Select(table => mappedId[table].ToString().Split(SplitChar)).ToList();
+                Collections.Properties fields = null;
                 try
                 {
-                    IEnumerable<string> list =
-                        parentses.Select(
-                            (v, i) =>
-                                v[Math.Min(MyDatabase.Database.ConvertTo<long>(mappedLevel[tables[i]]), v.Length - 1)]);
-                    values.Add(string.Join(string.Empty, tables),
-                        Database.GetScalar(list, tables, requestId.Site).ToString());
+                    Database.Wait(Database.Connection);
+                    fields = Database.GetUserFields(requestId[table],
+                        mappedId[table],
+                        table, requestId.Site);
                 }
                 catch (Exception exception)
                 {
                     Debug.WriteLine(exception);
                     LastError = exception;
                 }
-                for (int i = 0; i < parentses[0].Count(); i++)
-                    for (int j = 0; j < parentses[1].Count(); j++)
+                finally
+                {
+                    Database.Release(Database.Connection);
+                }
+
+                lock (values)
+                    values.Add(fields.Keys.Select(item => item.ToString(CultureInfo.InvariantCulture)),
+                        fields.Values.Select(item => item.ToString()));
+                foreach (var field in fields)
+                    try
+                    {
+                        lock (values)
+                            values.Add(string.Format("{0}-1", field.Key),
+                                (MyDatabase.Database.ConvertTo<long>(field.Value) - 1).ToString(
+                                    CultureInfo.InvariantCulture));
+                    }
+                    catch (Exception exception)
+                    {
+                        Debug.WriteLine(exception.ToString());
+                    }
+                if (ProgressCallback != null) ProgressCallback(++current, total);
+            });
+
+            Parallel.ForEach(new[] {new[] {"Rubric", "Action"}, new[] {"Region", "Rubric"}}, tables =>
+            {
+                IEnumerable<string> enumerable = tables.Select(t => mappedId[t].ToString());
+                try
+                {
+                    Database.Wait(Database.Connection);
+                    lock (values)
+                        values.Add(string.Join(string.Empty, tables),
+                            Database.GetScalar(enumerable, tables, requestId.Site).ToString());
+                }
+                catch (Exception exception)
+                {
+                    Debug.WriteLine(exception);
+                    LastError = exception;
+                }
+                finally
+                {
+                    Database.Release(Database.Connection);
+                }
+                IEnumerable<List<string>> parents =
+                    tables.Select(t => new StackListQueue<string>(mappedId[t].ToString().Split(SplitChar)));
+                Parallel.ForEach(from i in Enumerable.Range(0, parents.First().Count())
+                    from j in Enumerable.Range(0, parents.Last().Count())
+                    select new[] {i, j}, pair =>
+                    {
+                        IEnumerable<string> list = pair.Select((v, index) =>
+                            string.Format("{0}{1}",
+                                string.Join(SplitChar.ToString(CultureInfo.InvariantCulture),
+                                    parents.ElementAt(index)
+                                        .GetRange(0, Math.Min(v + 1, parents.ElementAt(index).Count()))),
+                                new String(SplitChar, parents.ElementAt(index).Count() - v)));
                         try
                         {
-                            IEnumerable<string> list = new List<string> {parentses[0][i], parentses[1][j]};
-                            values.Add(string.Format("{0}[{1},{2}]", string.Join(string.Empty, tables), i, j),
-                                Database.GetScalar(list, tables, requestId.Site).ToString());
+                            Database.Wait(Database.Connection);
+                            lock (values)
+                                values.Add(
+                                    string.Format("{0}[{1},{2}]", string.Join(string.Empty, tables), pair[0], pair[1]),
+                                    Database.GetScalar(list, tables, requestId.Site).ToString());
                         }
                         catch (Exception exception)
                         {
                             Debug.WriteLine(exception);
                             LastError = exception;
                         }
-            }
+                        finally
+                        {
+                            Database.Release(Database.Connection);
+                        }
+                    });
+            });
 
             Debug.WriteLine("values {0}", values);
             if (CompliteCallback != null) CompliteCallback();

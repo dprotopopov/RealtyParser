@@ -34,6 +34,5 @@ D:\Projects\RealtyParser\RealtyParser.Arenda66\bin\Release\HtmlAgilityPack.pdb
 D:\Projects\RealtyParser\RealtyParser.Arenda66\bin\Release\HtmlAgilityPack.xml
 D:\Projects\RealtyParser\RealtyParser.Arenda66\bin\Release\System.Data.SQLite.xml
 D:\Projects\RealtyParser\RealtyParser.Arenda66\bin\Release\EntityFramework.xml
-D:\Projects\RealtyParser\RealtyParser.Arenda66\obj\Release\RealtyParser.Arenda66.csprojResolveAssemblyReference.cache
 D:\Projects\RealtyParser\RealtyParser.Arenda66\obj\Release\RealtyParser.Arenda66.dll
 D:\Projects\RealtyParser\RealtyParser.Arenda66\obj\Release\RealtyParser.Arenda66.pdb

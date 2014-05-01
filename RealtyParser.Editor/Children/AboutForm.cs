@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
+using RealtyParser.Arenda66;
 using RealtyParser.BeBoss;
 using RealtyParser.Bn;
 using RealtyParser.Collections;
@@ -9,6 +10,7 @@ using RealtyParser.Egent;
 using RealtyParser.Mirkvartir;
 using RealtyParser.NetAgenta;
 using RealtyParser.Rosrealt;
+using RealtyParser.Upn;
 using RT.ParsingLibs;
 
 namespace RealtyParser.Editor.Children
@@ -28,6 +30,8 @@ namespace RealtyParser.Editor.Children
                     new NetAgentaParser(),
                     new BnParser(),
                     new BeBossParser(),
+                    new Arenda66Parser(),
+                    new UpnParser(),
                 }.Select(item => new KeyValuePair<string, IParsingModule>(item.ModuleClassname, item))
                     .Cast<object>().ToArray());
         }
