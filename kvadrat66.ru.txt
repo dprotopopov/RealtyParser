@@ -1,0 +1,161 @@
+10	PublicationLink	//td[@class="tdec"]//a[@class="site3"]	/{{href}}	.*	$&
+10	PublicationId	//table[contains(@class,"t100") or @class="tmain"]//td[@class="tdec"]//a[@class="site3"]	{{href}}	(http(s)?:\/\/)?([^\/]*\/)*\D*(\d+).*	$4
+10	WebPublicationPublicationId	//table[contains(@class,"t100") or @class="tmain"]//td[@class="tdec"]//a[@class="site3"]	{{href}}	(http(s)?:\/\/)?([^\/]+\/)*\D*(\d+).*	$4
+10	PublicationDatetime	//table[contains(@class,"t100") or @class="tmain"]//div[@class='tdate']/text()	{{InnerText}}	.*	$&
+10	WebPublicationModifyDate	//div[@class="tmain"]//div[@class='tdate']/text()	{{InnerText}}	\D*(\d+-\d+-\d+).*	$1
+10	WebPublicationUrl	//table[contains(@class,"t100") or @class="tmain"]//td[@class="rcol" or @class="tddec5"]//td[@class="adres"][contains(.,"Адрес этого объявления")]	{{InnerText}}	\s*Адрес\sэтого\sобъявления:\s*(\S+)\s*	$1
+10	WebPublicationSite	/	{{Url}}	((http(s)?:\/\/)?[^\/\?]+).*	$1
+10	WebPublicationContactAuthor	//table[contains(@class,"t100") or @class="tmain"]//td[@class="rcol" or @class="tddec2"]/text()[contains(.,'Агентство недвижимости')]/following-sibling::a[1]	{{InnerText}}	.*	$&
+10	WebPublicationContactAuthorUrl	//table[contains(@class,"t100") or @class="tmain"]//td[@class="rcol" or @class="tddec2"]/text()[contains(.,'Агентство недвижимости')]/following-sibling::a[1]	{{href}}	.*	$&
+10	WebPublicationContactContactName	//table[contains(@class,"t100") or @class="tmain"]//td[@class="rcol" or @class="tddec2"]/text()[contains(.,'Персона для контактов')]/following-sibling::span[1]	{{InnerText}}	.*	$&
+10	WebPublicationPhotos	//table[contains(@class,"t100") or @class="tmain"]//td[@class="tdimg"]//img[@src]	{{src}}	.*	$&
+10	WebPublicationContactPhone	//table[contains(@class,"t100") or @class="tmain"]//td[@class="rcol" or @class="tddec2"]/text()[contains(.,'Контактный телефон')]/following-sibling::span[1]	{{InnerText}}	.*	$&
+10	WebPublicationContactEmail	//table[contains(@class,"t100") or @class="tmain"]//td[@class="rcol" or @class="tddec2"]/text()[contains(.,'E-mail')]/following-sibling::a[1]	{{href}}	.*	$&
+10	WebPublicationDescription	//table[contains(@class,"t100") or @class="tmain"]//td[@class="rcol" or @class="tddec2"]/text()[contains(.,'Еще пара слов') or contains(.,'Описание недвижимости')]/following-sibling::p[1]	{{InnerText}}	.*	$&
+10	WebPublicationAdditionalInfoRealtyAdditionalInfoFloor	//table[contains(@class,"t100") or @class="tmain"]//td[@class="rcol" or @class="tddec"]/text()[contains(.,'Этаж/этажей в доме')]/following-sibling::span[1]	{{InnerText}}	\D*((\d+)\s*\/\D*)?(\d+)?.*	$2
+10	WebPublicationAdditionalInfoRealtyAdditionalInfoFloorNumber	//table[contains(@class,"t100") or @class="tmain"]//td[@class="rcol" or @class="tddec"]/text()[contains(.,'Этаж/этажей в доме') or contains(.,'Этажность дома')]/following-sibling::span[1]	{{InnerText}}	\D*((\d+)\s*\/\D*)?(\d+)?.*	$3
+10	WebPublicationAdditionalInfoRealtyAdditionalInfoTotalSpace	//table[contains(@class,"t100") or @class="tmain"]//td[@class="rcol" or @class="tddec"]/text()[contains(.,'Площадь общая') or contains(.,'Площадь дома')]/following-sibling::span[1]	{{InnerText}}	\D*(\d+).*	$1
+10	WebPublicationAdditionalInfoRealtyAdditionalInfoLivingSpace	//table[contains(@class,"t100") or @class="tmain"]//td[@class="rcol" or @class="tddec"]/text()[contains(.,'Жилая')]/following-sibling::span[1]	{{InnerText}}	\D*(\d+).*	$1
+10	WebPublicationAdditionalInfoRealtyAdditionalInfoKitchenSpace	//table[contains(@class,"t100") or @class="tmain"]//td[@class="rcol" or @class="tddec"]/text()[contains(.,'Кухня')]/following-sibling::span[1]	{{InnerText}}	\D*(\d+).*	$1
+10	WebPublicationAdditionalInfoRealtyAdditionalInfoIsLoggia	//table[contains(@class,"t100") or @class="tmain"]//td[@class="rcol" or @class="tddec"]/text()[contains(.,'Балкон')]/following-sibling::span[1]	{{InnerText}}	.*	$&
+10	WebPublicationAdditionalInfoRealtyAdditionalInfoWc	//table[contains(@class,"t100") or @class="tmain"]//td[@class="rcol" or @class="tddec"]/text()[contains(.,'Санузел')]/following-sibling::span[1]	{{InnerText}}	.*	$&
+10	WebPublicationAdditionalInfoRealtyAdditionalInfoWallМaterial	//table[contains(@class,"t100") or @class="tmain"]//td[@class="rcol" or @class="tddec"]/text()[contains(.,'Материал дома') or contains(.,'Дом(cтроение)')]/following-sibling::span[1]	{{InnerText}}	.*	$&
+10	WebPublicationAdditionalInfoRealtyAdditionalInfoCostAll	//table[contains(@class,"t100") or @class="tmain"]//td[@class="rcol" or @class="tddec2"]/text()[contains(.,'Цена')]/following-sibling::span[1]	{{InnerText}}	\D*(\d+)\D*	$1
+10	WebPublicationAdditionalInfoRealtyAdditionalInfoViewFromProperty	//table[contains(@class,"t100") or @class="tmain"]//td[@class="rcol" or @class="tddec"]/text()[contains(.,'Окна')]/following-sibling::span[1]	{{InnerText}}	.*	$&
+10	WebPublicationAdditionalInfoRealtyAdditionalInfoLandSpace	//table[contains(@class,"t100") or @class="tmain"]//td[@class="rcol" or @class="tddec"]/text()[contains(.,'Площадь участка')]/following-sibling::span[1]	{{InnerText}}	\D*(\d+).*	$1
+10	WebPublicationAdditionalInfoRealtyAdditionalInfoAppointmentOfRoom	//td[@class='hh' or @class='tjob']	{{InnerText}}	.*	$&
+10	WebPublicationAdditionalInfoRealtyAdditionalInfoAddress	//td[@class='hh' or @class='tjob']	{{InnerText}}	.*	$&
+
+
+
+<div align="right" class="tdate">обновлено 02-05-2014, создано 02-05-2014<br><a href="myadvsf-5671.html" title="поднять это объявление в списке и выделить ярким цветом" class="strup3">сделать VIP-объявлением</a> &nbsp; 
+<span id="f1f5671" class="fav">
+<a href="inrealtyfav-1-5671.html" title="добавить объявление в избранное" onclick="return SetFav(1,5671,50,0);" class="afav">в избранное</a>
+</span></div>
+
+
+<td class="tddec2">
+Описание недвижимости:<p align="justify" class="dinfo">ПРОДАЮ 3 - комнатную квартиру в Екатеринбурге, ул. Уральских рабочих, 62, 2/3, 60/42/8, застекл. балкон, в доме чистота и порядок. Квартира в хорошем состоянии, тёплая, уютная, с приличным ремонтом. Сейф-дверь с надёжным замком, счётчики хол. и гор. воды, двухтарифный электросчётчик. Остаются два шкафа-купе, кухонный гарнитур, стиральная машина. хорошая транспортная доступность, развитая торговая сеть. Документы готовы. Стоимость 3 550 000 руб.</p>
+</td>
+
+<td class="tddec2">Персона для контактов (посредник): <span class="d">Виктор Леонидович</span><br>Контактный телефон: <span class="d">8-912-2692006</span><br>Внутренняя почта сайта: <a href="sendmsg.html?id=5671&amp;tip=1" onclick="return getMsgFrm('www.kvadrat66.ru',1,5671);" class="mail">Отправить сообщение</a><br>E-mail:  <a href="mailto:vodoley45@mail.ru?subject=KVADRAT66.RU&amp;body=http://www.kvadrat66.ru/sellflat-5671.html" class="mail">vodoley45@mail.ru</a><br></td>
+
+<td class="hh">
+3-х комнатная квартира, ул. Уральских Рабочих, 62, УРАЛМАШ, Екатеринбург  <a href="http://maps.yandex.ru/?text=%C5%EA%E0%F2%E5%F0%E8%ED%E1%F3%F0%E3+%D3%F0%E0%EB%FC%F1%EA%E8%F5+%D0%E0%E1%EE%F7%E8%F5+62" rel="nofollow" class="nakarte2" target="_blank">на карте</a>
+</td>
+
+<td nowrap="" class="tddec">Площадь общая: <span class="d">60 м?</span> &nbsp; Жилая: <span class="d">42 м?</span>
+ &nbsp; Кухня: <span class="d">8 м?</span><br>Высота потолков: <span class="d">потолок 3 м</span><br>
+Этаж/этажей в доме: <span class="d">этаж 2/3</span><br>Дом(cтроение): <span class="d">дом кирпичный</span><br>Планировка квартиры: <span class="d">полнометраж</span><br>
+Балкон: <span class="d">есть балкон</span><br>Санузел: <span class="d">санузел раздельный</span><br></td>
+
+<td class="tddec">Площадь дома: <span class="d">30 м?</span><br>Площадь участка: <span class="d">7.2  соток</span><br>
+														    Этажность дома: <span class="d">этажей 1</span><br>
+														    Материал дома: <span class="d">брус</span><br>
+														    Год постройки: <span class="d">2011 г</span><br>
+Коммуникации: <span class="d">электричество</span><br></td>
+
+
+<td class="tddec2">Цена всего: <span class="dzp">650 000 рублей</span><br>Торг: <span class="d">возможен разумный торг</span><br>Доп.информация: <span class="d">Земля в собственности</span><br></td>
+
+<td class="tddec2">Еще пара слов: <p class="dinfo">Продам отличный сад, расположен в 2 км. от озера Глухое. Дом из бруса на фундаменте, участок 7, 26 соток. Плодоносящие деревья, централизованная вода для полива. СОСНЫ на участке. Замечательное место для отдыха, в лесу много черники и грибов.</p></td>
+
+<td rowspan="5" class="tdimg"><div id="mainfotoid"><a href="foto.html?folder=121&amp;id=1236&amp;n=1" onclick="return getfoto(121,1236,1);"><img src="imgsz/1236b-131086104576.jpg" alt="Дача Екатеринбург НОВОМОСКОВСКИЙ ТРАКТ, 12 КМ. , ОЗ. ГЛУХОЕ" border="0" width="450px" class="fimg"></a></div><a href="foto.html?folder=121&amp;id=1236&amp;n=1" onclick="return getfotomain(121,1236,1);"><img src="imgsz/1236s-131086104576.jpg" alt="Дача Екатеринбург НОВОМОСКОВСКИЙ ТРАКТ, 12 КМ. , ОЗ. ГЛУХОЕ (фото 1)" border="0" class="fimg"></a><a href="foto.html?folder=121&amp;id=1236&amp;n=2" onclick="return getfotomain(121,1236,2);"><img src="imgsz/1236s-131086104582.jpg" alt="Дача Екатеринбург НОВОМОСКОВСКИЙ ТРАКТ, 12 КМ. , ОЗ. ГЛУХОЕ (фото 2)" border="0" class="fimg"></a><a href="foto.html?folder=121&amp;id=1236&amp;n=3" onclick="return getfotomain(121,1236,3);"><img src="imgsz/1236s-131086104587.jpg" alt="Дача Екатеринбург НОВОМОСКОВСКИЙ ТРАКТ, 12 КМ. , ОЗ. ГЛУХОЕ (фото 3)" border="0" class="fimg"></a><a href="foto.html?folder=121&amp;id=1236&amp;n=4" onclick="return getfotomain(121,1236,4);"><img src="imgsz/1236s-1310861045103.jpg" alt="Дача Екатеринбург НОВОМОСКОВСКИЙ ТРАКТ, 12 КМ. , ОЗ. ГЛУХОЕ (фото 4)" border="0" class="fimg"></a><br></td>
+
+<table cellpadding="0" cellspacing="15" class="divdec t100"><tbody><tr valign="top"><td></td><td rowspan="5" class="tdimg"><div id="mainfotoid"><a href="foto.html?folder=121&amp;id=1236&amp;n=1" onclick="return getfoto(121,1236,1);"><img src="imgsz/1236b-131086104576.jpg" alt="Дача Екатеринбург НОВОМОСКОВСКИЙ ТРАКТ, 12 КМ. , ОЗ. ГЛУХОЕ" border="0" width="450px" class="fimg"></a></div><a href="foto.html?folder=121&amp;id=1236&amp;n=1" onclick="return getfotomain(121,1236,1);"><img src="imgsz/1236s-131086104576.jpg" alt="Дача Екатеринбург НОВОМОСКОВСКИЙ ТРАКТ, 12 КМ. , ОЗ. ГЛУХОЕ (фото 1)" border="0" class="fimg"></a><a href="foto.html?folder=121&amp;id=1236&amp;n=2" onclick="return getfotomain(121,1236,2);"><img src="imgsz/1236s-131086104582.jpg" alt="Дача Екатеринбург НОВОМОСКОВСКИЙ ТРАКТ, 12 КМ. , ОЗ. ГЛУХОЕ (фото 2)" border="0" class="fimg"></a><a href="foto.html?folder=121&amp;id=1236&amp;n=3" onclick="return getfotomain(121,1236,3);"><img src="imgsz/1236s-131086104587.jpg" alt="Дача Екатеринбург НОВОМОСКОВСКИЙ ТРАКТ, 12 КМ. , ОЗ. ГЛУХОЕ (фото 3)" border="0" class="fimg"></a><a href="foto.html?folder=121&amp;id=1236&amp;n=4" onclick="return getfotomain(121,1236,4);"><img src="imgsz/1236s-1310861045103.jpg" alt="Дача Екатеринбург НОВОМОСКОВСКИЙ ТРАКТ, 12 КМ. , ОЗ. ГЛУХОЕ (фото 4)" border="0" class="fimg"></a><br></td></tr>
+<tr valign="top">
+<td class="tddec">Площадь дома: <span class="d">30 м?</span><br>Площадь участка: <span class="d">7.2  соток</span><br>
+														    Этажность дома: <span class="d">этажей 1</span><br>
+														    Материал дома: <span class="d">брус</span><br>
+														    Год постройки: <span class="d">2011 г</span><br>
+Коммуникации: <span class="d">электричество</span><br>
+</td></tr>
+<tr valign="top">
+<td class="tddec2">Цена всего: <span class="dzp">650 000 рублей</span><br>Торг: <span class="d">возможен разумный торг</span><br>Доп.информация: <span class="d">Земля в собственности</span><br></td></tr><tr valign="top"><td class="tddec2">Еще пара слов: <p class="dinfo">Продам отличный сад, расположен в 2 км. от озера Глухое. Дом из бруса на фундаменте, участок 7, 26 соток. Плодоносящие деревья, централизованная вода для полива. СОСНЫ на участке. Замечательное место для отдыха, в лесу много черники и грибов.</p></td></tr>
+<tr valign="top">
+<td class="tddec2">Агентство недвижимости: <a href="company-100310.html" class="aregan">АН "Ярмарка"</a><br>Персона для контактов: <span class="d">Яна</span><br>
+Контактный телефон: <span class="d">8-1008-1023-45-44</span><br>
+Внутренняя почта сайта: <a href="sendmsg.html?id=1236&amp;tip=21" onclick="return getMsgFrm('www.kvadrat66.ru',21,1236);" class="mail">Отправить сообщение</a><br></td>
+</tr><tr>
+<td colspan="2" class="tddec5">
+<table cellpadding="0" cellspacing="0" class="t100"><tbody><tr>
+<td><img src="/gifjpg/print.gif" title="100310" border="0"><a href="print.php?tip=21&amp;id=1236" target="_blank" class="prnt">Версия для печати</a></td>
+<td><a href="complain-21-1236.html#cmpl" class="cmpln">пожаловаться</a></td>
+<td class="adres">Адрес этого объявления: http://www.kvadrat66.ru/sellzag-1236.html</td>
+</tr></tbody></table>	  
+</td></tr>
+</tbody></table>
+
+
+10	PublicationLink	//td[@class="tdec"]//a[@class="site3"]	{{href}}	.*	$&
+10	PublicationId	//table[contains(@class,"t100") or @class="tmain"]//td[@class="tdec"]//a[@class="site3"]	{{href}}	(http(s)?:\/\/)?([^\/]*\/)\D*(\d+).*	$4
+10	WebPublicationPublicationId	//table[contains(@class,"t100") or @class="tmain"]//td[@class="tdec"]//a[@class="site3"]	{{href}}	(http(s)?:\/\/)?([^\/]+\/)\D*(\d+).*	$4
+10	PublicationDatetime	//table[contains(@class,"t100") or @class="tmain"]//div[@class='tdate']/text()	{{InnerText}}	.*	$&
+10	WebPublicationModifyDate	//table[contains(@class,"t100") or @class="tmain"]//div[@class='tdate']/text()	{{InnerText}}	.*	$&
+
+10	WebPublicationUrl	//td[@class="adres"][contains(.,"Адрес этого объявления")]	{{InnerText}}	\s*Адрес\sэтого\sобъявления:\s*(\S+)\s*	$1
+10	WebPublicationSite	/	{{Url}}	((http(s)?:\/\/)?[^\/\?]+).*	$1
+
+<td class="adres">Адрес этого объявления: http://www.kvadrat66.ru/sellzag-1236.html</td>
+
+
+<div align="center" class="tdate"><a href="myadvsz-1235.html" title="поднять и сделать ярким" class="strup"> ^ </a> 28-04-2014</div>
+10	PublicationLink	//td[@class="tdec"]//a[@class="site3"]	{{href}}	.*	$&
+//table[contains(@class,"t100") or @class="tmain"][3]
+
+<td class="tdec">
+	<a href="company-100310.html" target="_blank" class="aregan">АН "Ярмарка", т.8-1008-1023-45-44</a>
+<br><img src="http://kvadrat66.ru/gifjpg/icon-closed.gif" id="icon1236" name="icon1236" class="icon" border="0" onclick="shown(1236);"> &nbsp; 
+<a href="sellzag-1236.html" class="site3" onclick="shown(1236); return false;">Дача (30 м? / 7.2 соток) , НОВОМОСКОВСКИЙ ТРАКТ, 12 КМ. , ОЗ. ГЛУХОЕ (12 км от Екатеринбурга)  <span class="adres">адрес: оз. Глухое</span></a> <a href="foto.html?folder=121&amp;id=1236&amp;n=1" onclick="return getfoto(121,1236,1);" class="fotoch">4 фото</a><br>
+	электричество<br>этажей 1, брус, 2011 г
+	<p class="tinfo">Продам отличный сад, расположен в 2 км. от озера Глухое. Дом из бруса на фундаменте, участок 7, 26 соток. Плодоносящие...</p>
+	</td>
+http://kvadrat66.ru/search-3-1.html?proom[1]=1
+
+<form action="search-3-1.html" method="post"><table cellpadding="10" class="tpoisk"><tbody><tr><td colspan="3"><b style="color:#000000;font-size:12pt;font-family:Arial;">Поиск объявлений об аренде квартир, комнат, коттеджей в Екатеринбурге</b> <br><br><b style="color:#0010000;font-size:8pt;">Установите только важные для вас ограничения.</b></td></tr><tr align="left" valign="top"><td nowrap="" style="width:150px;"><b>Квартиры</b><br><br><input type="checkbox" name="proom[12]" value="12"> малосемейки<br><input type="checkbox" name="proom[1]" value="1"> 1 комнатные<br><input type="checkbox" name="proom[3]" value="3"> 2-х комнатные<br><input type="checkbox" name="proom[4]" value="4"> 3-х комнатные<br><input type="checkbox" name="proom[5]" value="5"> 4-х комнатные<br><input type="checkbox" name="proom[6]" value="6"> многокомнатные<br><input type="checkbox" name="proom[7]" value="7"> комнаты<br><input type="checkbox" name="proom[13]" value="13"> гостинки<br><input type="checkbox" name="proom[10]" value="10"> коттеджи<br><input type="checkbox" name="proom[10]" value="10"> дома<br><input type="checkbox" name="proom[11]" value="11" checked=""> таунхаусы</td><td nowrap="" style="width:180px;"><b>Район</b><br><br><input type="checkbox" name="praion[1]" value="1"> ЦЕНТР<br><input type="checkbox" name="praion[2]" value="2"> АВТОВОКЗАЛ<br><input type="checkbox" name="praion[3]" value="3"> БОТАНИЧЕСКИЙ<br><input type="checkbox" name="praion[4]" value="4"> ВИЗ<br><input type="checkbox" name="praion[5]" value="5"> ВОКЗАЛЬНЫЙ<br><input type="checkbox" name="praion[6]" value="6"> ВТУЗГОРОДОК<br><input type="checkbox" name="praion[7]" value="7"> ЖБИ<br><input type="checkbox" name="praion[8]" value="8"> ЗАРЕЧНЫЙ<br><input type="checkbox" name="praion[10]" value="10"> ПАРКОВЫЙ<br><input type="checkbox" name="praion[10]" value="10"> ПИОНЕРСКИЙ<br><input type="checkbox" name="praion[11]" value="11"> СИНИЕ КАМНИ<br><input type="checkbox" name="praion[12]" value="12"> УРАЛМАШ<br><input type="checkbox" name="praion[13]" value="13"> ЧЕРМЕТ<br><input type="checkbox" name="praion[14]" value="14"> ШАРТАШСКИЙ РЫНОК<br><input type="checkbox" name="praion[15]" value="15"> ЭЛЬМАШ<br><input type="checkbox" name="praion[16]" value="16"> ЮГО-ЗАПАДНЫЙ<br><input type="checkbox" name="praion[17]" value="17"> ЕЛИЗАВЕТ<br><input type="checkbox" name="praion[18]" value="18"> ЗАВОКЗАЛЬНЫЙ<br><input type="checkbox" name="praion[110]" value="110"> НОВАЯ СОРТИРОВКА<br><input type="checkbox" name="praion[20]" value="20"> СЕМЬ КЛЮЧЕЙ<br><input type="checkbox" name="praion[21]" value="21"> СТАРАЯ СОРТИРОВКА<br><input type="checkbox" name="praion[22]" value="22"> УКТУС<br><input type="checkbox" name="praion[23]" value="23"> УНЦ<br><input type="checkbox" name="praion[24]" value="24"> ХИММАШ<br><input type="checkbox" name="praion[25]" value="25"> ИЗОПЛИТ<br><input type="checkbox" name="praion[26]" value="26"> ИСТОК<br><input type="checkbox" name="praion[27]" value="27"> КАЛИНОВКА<br><input type="checkbox" name="praion[28]" value="28"> КОЛЬЦОВО<br><input type="checkbox" name="praion[210]" value="210"> КОМПРЕССОРНЫЙ<br><input type="checkbox" name="praion[30]" value="30"> ЛЕЧЕБНЫЙ<br><input type="checkbox" name="praion[31]" value="31"> ПТИЦЕФАБРИКА<br><input type="checkbox" name="praion[32]" value="32"> РУДНЫЙ<br><input type="checkbox" name="praion[33]" value="33"> САДОВЫЙ<br><input type="checkbox" name="praion[34]" value="34"> СЕВЕРКА<br><input type="checkbox" name="praion[35]" value="35"> СОВХОЗ<br><input type="checkbox" name="praion[36]" value="36"> ШАРТАШ<br><input type="checkbox" name="praion[37]" value="37"> ШИРОКАЯ РЕЧКА</td><td>Улица (или несколько улиц через запятую)<br><input type="text" name="pstreet" value="" maxlength="250" style="color:#000000;font-size:11pt;width:100%;border:1px solid #a0b0c0;font-family:Verdana;"><br><br>Площадь от м? &nbsp; &nbsp; &nbsp;Площадь до м?<br><input type="text" name="psp1" value="" maxlength="20" class="qp2"> &nbsp; <input type="text" name="psp2" value="" maxlength="20" class="qp2"> &nbsp;  <input type="checkbox" name="pnewbuild" value="1"> только новые дома<br><br>Этаж от &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Этаж до <i style="color:#B0B010A;">этаж указывайте только при поиске квартир и комнат</i><br><input type="text" name="pet1" value="" maxlength="2" class="qp2"> &nbsp; <input type="text" name="pet2" value="" maxlength="2" class="qp2"> &nbsp;  <input type="checkbox" name="pnofirstfloor" value="1"> кроме первого  &nbsp;&nbsp; <input type="checkbox" name="pnolastfloor" value="1"> кроме последнего<br><br>Цена от р/мес &nbsp; &nbsp; &nbsp; &nbsp;Цена до р/мес<br><input type="text" name="ppr1" value="" maxlength="20" class="qp2"> &nbsp; <input type="text" name="ppr2" value="" maxlength="20" class="qp2"><br><br><input type="checkbox" name="powner" value="1"> без посредников от хозяина (сайт не гарантирует достоверность результата)<hr style="color:#BBBBBB;">МЕБЕЛЬ &nbsp; <input type="checkbox" name="pmebel[1]" value="1"> полностью  &nbsp; <input type="checkbox" name="pmebel[2]" value="2"> частично  &nbsp; <input type="checkbox" name="pmebel[4]" value="4"> только кухня  &nbsp; <input type="checkbox" name="pmebel[3]" value="3"> нет мебели<hr style="color:#BBBBBB;">ОБЯЗАТЕЛЬНО &nbsp; <input type="checkbox" name="pphone" value="1"> городской телефон &nbsp; <input type="checkbox" name="pholodilnik" value="1"> холодильник &nbsp; <input type="checkbox" name="ptelik" value="1"> телевизор<br><input type="checkbox" name="pstiralka" value="1"> стиральная машина<hr style="color:#BBBBBB;">Давность объявлений до <input type="text" name="pday" value="" maxlength="3" class="qp2" style="width:50px;"> дней<br>Сортировать&nbsp;<select name="psort" class="qp2" style="width:180px;"><option value="1">по дате</option><option value="2">по цене</option><option value="3">по районам</option><option value="4">по районам и цене</option></select><br>Способ отображения &nbsp; <select name="pview" style="color:#000000;font-size:11pt;width:300px;border:1px solid #a0b0c0;font-family:Verdana;"><option value="1">раскрывающийся список (удобно)</option><option value="2">список</option><option value="3">подробно</option></select><br>Объявлений на странице &nbsp; <select name="gflimit" class="qp2"><option value="15">15</option><option value="30">30</option><option value="50" selected="">50</option><option value="100">100</option></select><br><br><br><br><input type="submit" value="Найти" name="poisk" class="qpb"><br><br><br><br><input type="checkbox" name="pfoto" value="1"> с фото</td></tr></tbody></table></form>
+
+<form action="search-11-1.html" method="post"><table cellpadding="10" class="tpoisk"><tbody><tr><td colspan="3"><b style="color:#000000;font-size:12pt;font-family:Arial;">Поиск объявлений о продаже коммерческой недвижимости в Екатеринбурге</b> <br><br><b style="color:#0010000;font-size:8pt;">Установите только важные для вас ограничения.</b></td></tr><tr align="left" valign="top"><td nowrap="" style="width:150px;"><b>Категория помещений</b><br><br><input type="checkbox" name="pcat[1]" value="1" checked=""> офисные<br><br><input type="checkbox" name="pcat[2]" value="2"> торговые<br><br><input type="checkbox" name="pcat[3]" value="3"> сферы услуг<br><br><input type="checkbox" name="pcat[4]" value="4"> производственные и складские</td><td nowrap="" style="width:180px;"><b>Район</b><br><br><input type="checkbox" name="praion[1]" value="1"> ЦЕНТР<br><input type="checkbox" name="praion[2]" value="2"> АВТОВОКЗАЛ<br><input type="checkbox" name="praion[3]" value="3"> БОТАНИЧЕСКИЙ<br><input type="checkbox" name="praion[4]" value="4"> ВИЗ<br><input type="checkbox" name="praion[5]" value="5"> ВОКЗАЛЬНЫЙ<br><input type="checkbox" name="praion[6]" value="6"> ВТУЗГОРОДОК<br><input type="checkbox" name="praion[7]" value="7"> ЖБИ<br><input type="checkbox" name="praion[8]" value="8"> ЗАРЕЧНЫЙ<br><input type="checkbox" name="praion[10]" value="10"> ПАРКОВЫЙ<br><input type="checkbox" name="praion[10]" value="10"> ПИОНЕРСКИЙ<br><input type="checkbox" name="praion[11]" value="11"> СИНИЕ КАМНИ<br><input type="checkbox" name="praion[12]" value="12"> УРАЛМАШ<br><input type="checkbox" name="praion[13]" value="13"> ЧЕРМЕТ<br><input type="checkbox" name="praion[14]" value="14"> ШАРТАШСКИЙ РЫНОК<br><input type="checkbox" name="praion[15]" value="15"> ЭЛЬМАШ<br><input type="checkbox" name="praion[16]" value="16"> ЮГО-ЗАПАДНЫЙ<br><input type="checkbox" name="praion[17]" value="17"> ЕЛИЗАВЕТ<br><input type="checkbox" name="praion[18]" value="18"> ЗАВОКЗАЛЬНЫЙ<br><input type="checkbox" name="praion[110]" value="110"> НОВАЯ СОРТИРОВКА<br><input type="checkbox" name="praion[20]" value="20"> СЕМЬ КЛЮЧЕЙ<br><input type="checkbox" name="praion[21]" value="21"> СТАРАЯ СОРТИРОВКА<br><input type="checkbox" name="praion[22]" value="22"> УКТУС<br><input type="checkbox" name="praion[23]" value="23"> УНЦ<br><input type="checkbox" name="praion[24]" value="24"> ХИММАШ<br><input type="checkbox" name="praion[25]" value="25"> ИЗОПЛИТ<br><input type="checkbox" name="praion[26]" value="26"> ИСТОК<br><input type="checkbox" name="praion[27]" value="27"> КАЛИНОВКА<br><input type="checkbox" name="praion[28]" value="28"> КОЛЬЦОВО<br><input type="checkbox" name="praion[210]" value="210"> КОМПРЕССОРНЫЙ<br><input type="checkbox" name="praion[30]" value="30"> ЛЕЧЕБНЫЙ<br><input type="checkbox" name="praion[31]" value="31"> ПТИЦЕФАБРИКА<br><input type="checkbox" name="praion[32]" value="32"> РУДНЫЙ<br><input type="checkbox" name="praion[33]" value="33"> САДОВЫЙ<br><input type="checkbox" name="praion[34]" value="34"> СЕВЕРКА<br><input type="checkbox" name="praion[35]" value="35"> СОВХОЗ<br><input type="checkbox" name="praion[36]" value="36"> ШАРТАШ<br><input type="checkbox" name="praion[37]" value="37"> ШИРОКАЯ РЕЧКА</td><td><b>Улица</b> (или несколько улиц через запятую)<br><input type="text" name="pstreet" value="" maxlength="250" style="color:#000000;font-size:11pt;width:100%;border:1px solid #a0b0c0;font-family:Verdana;"><br><br><b>Площадь от</b> м? &nbsp; &nbsp;<b>Площадь до</b> м?<br><input type="text" name="psp1" value="" maxlength="20" class="qp2"> &nbsp; <input type="text" name="psp2" value="" maxlength="20" class="qp2"><br><br><b>Цена за м? от</b> руб &nbsp; &nbsp;<b>Цена за м? до</b> руб<br><input type="text" name="p1pr1" value="" maxlength="20" class="qp2" style="width:120px;"> &nbsp; <input type="text" name="p1pr2" value="" maxlength="20" class="qp2" style="width:120px;"> &nbsp; <br><br><b>Цена за объект от</b> руб &nbsp; &nbsp;<b>Цена за объект до</b> руб<br><input type="text" name="p2pr1" value="" maxlength="20" class="qp2" style="width:150px;"> &nbsp; <input type="text" name="p2pr2" value="" maxlength="20" class="qp2" style="width:150px;"> &nbsp; <br><br><input type="checkbox" name="powner" value="1"> без посредников (сайт не гарантирует достоверность результата)<br><br><b>Давность объявлений до</b> <input type="text" name="pday" value="" maxlength="3" class="qp2" style="width:50px;"> <b>дней</b> <br><b>Сортировать</b> &nbsp; <select name="psort" class="qp2" style="width:260px;"><option value="1">по дате</option><option value="2">по цене за м?</option><option value="3">по цене за объект</option><option value="4">по районам</option><option value="5">по районам и цене за м?</option><option value="6">по районам и цене за объект</option></select><br><b>Способ отображения</b> &nbsp; <select name="pview" style="color:#000000;font-size:11pt;width:300px;border:1px solid #a0b0c0;font-family:Verdana;"><option value="1">раскрывающийся список (удобно)</option><option value="2">список</option><option value="3">подробно</option></select><br><b>Объявлений на странице</b> &nbsp; <select name="sclimit" class="qp2"><option value="15">15</option><option value="30">30</option><option value="50" selected="">50</option><option value="100">100</option></select><br><br><br><br><input type="submit" value="Найти" name="poisk" class="qpb"><br><br><br><br><input type="checkbox" name="pfoto" value="1"> с фото</td></tr></tbody></table></form>
+
+20 68 74 74 70 3A 2F 2F 6B 76 61 64 72 61 74 36 36 2E 72 75 2F 73 65 61 72 63 68 2D 31 33 2D 32 2E 68 74 6D 6C 
+ http://kvadrat66.ru/search-13-2.html
+70 63 61 74 25 35 42 32 25 35 44 3D 32 26 70 63 61 74 25 35 42 34 25 35 44 3D 34 26 70 73 74 72 65 65 74 3D 26 70 73 70 31 3D 26 70 73 70 32 3D 26 70 31 70 72 31 3D 26 70 31 70 72 32 3D 26 70 64 61 710 3D 26 70 73 6F 72 74 3D 31 26 70 76 610 65 77 3D 31 26 67 63 6C 610 6D 610 74 3D 35 30 26 70 6F 610 73 6B 3D 25 43 44 25 45 30 25 45 310 25 46 32 25 45 38 
+pcat%5B2%5D=2&pcat%5B4%5D=4&pstreet=&psp1=&psp2=&p1pr1=&p1pr2=&pday=&psort=1&pview=1&gclimit=50&poisk=%CD%E0%E10%F2%E8
+
+малосемейки
+1 комнатные
+2-х комнатные
+3-х комнатные
+4-х комнатные
+многокомнатные
+
+комнаты
+гостинки
+
+офисные
+торговые
+сферы услуг
+производственные и складские
+
+Загородная недвижимость
+Земельные участки
+Гаражи
+
+10	\66\	Свердловская обл	\\	1	NULL
+10	\66\21031	Екатеринбург	\66\	2	NULL
+
+10	66	\66\
+10	21031	\66\21031
+
+10	\Аренда\	Аренда	\\	1	NULL
+10	\Продажа\	Продажа	\\	1	NULL
+
+10	kvadrat66.ru	http://kvadrat66.ru	POST	
+/search-{{RubricAction}}{{RegionRubric}}-{{Page}}.html	
+psort=1&pview=1&gclimit=50{{RubricPost}}
+	{{PublicationLink}}	[PublicationDatetime:##{{PublicationDatetime}}##,PublicationId:{{PublicationId}},Action:{{Action}},Rubric:{{Rubric}},Region:{{Region}}]	NULL	NULL	30	DatetimeFirstIdSecondComparer	NoCompression	windows-1251	50	1	1	Kvadrat66Parser
+
+
+<div align="right" class="tdate">обновлено 02-05-2014, создано 02-05-2014<br><a href="myadvsf-5671.html" title="поднять это объявление в списке и выделить ярким цветом" class="strup3">сделать VIP-объявлением</a> &nbsp; 
+<span id="f1f5671" class="fav">
+<a href="inrealtyfav-1-5671.html" title="добавить объявление в избранное" onclick="return SetFav(1,5671,50,0);" class="afav">в избранное</a>
+</span></div>

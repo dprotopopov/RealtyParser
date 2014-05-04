@@ -37,7 +37,8 @@ namespace RealtyParser
             Converter = new Converter();
             Transformation = new Transformation();
             Parser = new Parser {Transformation = Transformation, Database = Database, Converter = Converter};
-            Crawler = new Crawler {CompressionManager = CompressionManager};
+            LookupCrawler = new Crawler {CompressionManager = CompressionManager};
+            PublicationCrawler = new Crawler {CompressionManager = CompressionManager};
             LinkComparer = new LinkComparer();
             ObjectComparer = new ObjectComparer();
             PublicationHash = new Dictionary<Link, WebPublication>(LinkComparer);
@@ -91,9 +92,12 @@ namespace RealtyParser
                 ComparerManager.CreatePublicationComparer(SiteProperties.PublicationComparerClassName.ToString());
             ResourceComparer = new ResourceComparer {PublicationComparer = PublicationComparer, Mapping = Mapping};
             ReturnFieldInfos = Database.GetReturnFieldInfos(requestId.Site);
-            Crawler.Method = SiteProperties.Method.ToString();
-            Crawler.Encoding = SiteProperties.Encoding.ToString();
-            Crawler.Compression = SiteProperties.CompressionClassName.ToString();
+            LookupCrawler.Method = SiteProperties.LookupMethod.ToString();
+            LookupCrawler.Encoding = SiteProperties.Encoding.ToString();
+            LookupCrawler.Compression = SiteProperties.CompressionClassName.ToString();
+            PublicationCrawler.Method = "GET";
+            PublicationCrawler.Encoding = SiteProperties.Encoding.ToString();
+            PublicationCrawler.Compression = SiteProperties.CompressionClassName.ToString();
 
             List<Resource> lastResources =
                 (string.IsNullOrWhiteSpace(request.LastPublicationId) ? string.Empty : request.LastPublicationId).Split(
@@ -238,29 +242,32 @@ namespace RealtyParser
                                     }
                             };
                             pageValues.Add("Page-1", (pageId - 1).ToString(CultureInfo.InvariantCulture));
+                            pageValues.Add("Page||1", pageId.ToString(CultureInfo.InvariantCulture));
 
                             Debug.WriteLine(pageValues.ToString());
-                            foreach (
-                                Link url in
-                                    Transformation.ParseTemplate(SiteProperties.LookupTemplate.ToString(), pageValues)
-                                        .Select(s => new Link(s))
-                                )
+                            IEnumerable<string> urls =
+                                Transformation.ParseTemplate(SiteProperties.LookupTemplate.ToString(), pageValues);
+                            IEnumerable<string> reqs =
+                                Transformation.ParseTemplate(SiteProperties.LookupRequestTemplate.ToString(), pageValues);
+                            for (int index = 0; index < pageValues.MaxCount; index++)
                             {
-                                Debug.WriteLine(url);
+                                Debug.WriteLine(urls.ElementAt(index) + ":" + reqs.ElementAt(index));
                                 try
                                 {
-                                    var builder = new UriBuilder(Uri.Combine(BaseBuilder.Uri.ToString(), url.ToString()))
-                                    {
-                                        UserName = BaseBuilder.UserName,
-                                        Password = BaseBuilder.Password,
-                                    };
+                                    LookupCrawler.Request = reqs.ElementAt(index);
+                                    var builder =
+                                        new UriBuilder(Uri.Combine(BaseBuilder.Uri.ToString(), urls.ElementAt(index)))
+                                        {
+                                            UserName = BaseBuilder.UserName,
+                                            Password = BaseBuilder.Password,
+                                        };
                                     var urlValues = new Values(pageValues)
                                     {
                                         Url = new StackListQueue<string> {builder.Uri.ToString()}
                                     };
                                     IEnumerable<HtmlDocument> documents =
                                         await
-                                            Crawler.WebRequestHtmlDocument(builder.Uri);
+                                            LookupCrawler.WebRequestHtmlDocument(builder.Uri);
                                     Thread.Sleep(0);
                                     ReturnFields returnFields = Parser.BuildReturnFields(documents,
                                         urlValues, returnFieldInfos);
@@ -333,7 +340,7 @@ namespace RealtyParser
                                             };
                                             IEnumerable<HtmlDocument> htmlDocuments =
                                                 await
-                                                    Crawler.WebRequestHtmlDocument(builder1.Uri);
+                                                    PublicationCrawler.WebRequestHtmlDocument(builder1.Uri);
                                             Thread.Sleep(0);
                                             ReturnFields fields = Parser.BuildReturnFields(htmlDocuments,
                                                 values, ReturnFieldInfos);
@@ -562,7 +569,7 @@ namespace RealtyParser
                         };
                         IEnumerable<HtmlDocument> documents =
                             await
-                                Crawler.WebRequestHtmlDocument(builder.Uri);
+                                PublicationCrawler.WebRequestHtmlDocument(builder.Uri);
                         Thread.Sleep(0);
                         ReturnFields returnFields = Parser.BuildReturnFields(documents,
                             urlValues, ReturnFieldInfos);
@@ -730,7 +737,8 @@ namespace RealtyParser
         public Parser Parser { get; set; }
         public ComparerManager ComparerManager { get; set; }
         public CompressionManager CompressionManager { get; set; }
-        public Crawler Crawler { get; set; }
+        public Crawler LookupCrawler { get; set; }
+        public Crawler PublicationCrawler { get; set; }
 
         private ReturnFieldInfos ReturnFieldInfos { get; set; }
         private IPublicationComparer PublicationComparer { get; set; }

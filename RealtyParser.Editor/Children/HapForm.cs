@@ -15,7 +15,7 @@ namespace RealtyParser.Editor.Children
     {
         private static readonly ParserModule ParserModule = new ParserModule();
         private static readonly Database Database = ParserModule.Database;
-        private static readonly Crawler Crawler = ParserModule.Crawler;
+        private static readonly Crawler Crawler = ParserModule.LookupCrawler;
         private readonly Workspace _workspace = new Workspace();
 
         public HapForm()

@@ -1,0 +1,1324 @@
+uralstudent.ru
+
+12	PublicationLink	//div[@class='items']//a[@class='li-title']	{{href}}	.*	$&
+12	PublicationId	//div[@class='items']//a[@class='li-title']	{{InnerText}}	(\d*\D+\/)*(\d+).*	$2
+12	WebPublicationPublicationId	/	{{Url}}	(\d*\D+\/)*(\d+).*	$2
+12	PublicationDatetime	//div[contains(@class,'column')]/span[contains(.,'Обновлено')]	{{InnerText}}	\D*(\d+\D\d+\D\d+(\s+\d+\D\d+)?).*	$1
+12	WebPublicationModifyDate	//div[contains(@class,'column')]/span[contains(.,'Обновлено')]	{{InnerText}}	\D*(\d+\D\d+\D\d+(\s+\d+\D\d+)?).*	$1
+12	WebPublicationContactAuthor	//div[@class="ib-row"]/span[contains(.,'Компания')]/following-sibling::a[1]	{{InnerText}}	.*	$&
+12	WebPublicationContactAuthorUrl	//div[@class="ib-row"]/span[contains(.,'Сайт')]/following-sibling::a[1]	{{InnerText}}	.*	$&
+12	WebPublicationContactContactName	//div[@class="ib-row"]/span[contains(.,'Контактное лицо')]/following-sibling::text()[1]	{{InnerText}}	.*	$&
+12	WebPublicationContactPhone	//div[@class="ib-row"]/b	{{InnerText}}	.*	$&
+12	WebPublicationPhotos	//div[@class="img-block-logo"]/a[@href]	{{href}}	.*	$&
+12	WebPublicationAdditionalInfoRealtyAdditionalInfoTotalSpace	//div[@class="ib-row"]/span[contains(.,'Общая площадь')]/following-sibling::text()[1]	{{InnerText}}	\D*(\d+).*	$1
+12	WebPublicationAdditionalInfoRealtyAdditionalInfoLivingSpace	//div[@class="ib-row"]/span[contains(.,'Жилая площадь')]/following-sibling::text()[1]	{{InnerText}}	\D*(\d+).*	$1
+12	WebPublicationAdditionalInfoRealtyAdditionalInfoDistrict	//div[@class="ib-row"]/span[contains(.,'Район')]/following-sibling::text()[1]	{{InnerText}}	.*	$&
+12	WebPublicationAdditionalInfoRealtyAdditionalInfoAddress	//div[@class="ib-row"]/span[contains(.,'Адрес')]/following-sibling::text()[1]	{{InnerText}}	.*	$&
+12	WebPublicationAdditionalInfoRealtyAdditionalInfoCostAll	//div[contains(@class,"ib-row")]/span[contains(.,'Стоимость')]/following-sibling::text()[1]	{{InnerText}}	\D*(\d+)\D*	$1
+12	WebPublicationAdditionalInfoRealtyAdditionalInfoFloor	//div[@class="ib-row"]/span[contains(.,'Этажность')]/following-sibling::text()[1]	{{InnerText}}	\D*(\d+)\s*\/\D*(\d+)?.*	$1
+12	WebPublicationAdditionalInfoRealtyAdditionalInfoFloorNumber	//div[@class="ib-row"]/span[contains(.,'Этажность')]/following-sibling::text()[1]	{{InnerText}}	\D*(\d+)\s*\/\D*(\d+)?.*	$2
+12	WebPublicationAdditionalInfoRealtyAdditionalInfoAppointmentOfRoom	//h1	{{InnerText}}	.*	$&
+12	WebPublicationDescription	//div[@class="ib-additional-content"]/div[contains(.,'Дополнительная информация')]/following-sibling::div[1]	{{InnerText}}	.*	$&
+
+12	WebPublicationUrl	/	{{Url}}	.*	$&
+12	WebPublicationSite	/	{{Url}}	((http(s)?:\/\/)?[^\/\?]+).*	$1
+
+<div class="ib-additional-content">
+        <div class="ibac-header">Дополнительная информация</div>
+        <div>
+            <p><!--[if gte mso 9]><xml>
+ <w:WordDocument>
+  <w:View>Normal</w:View>
+  <w:Zoom>0</w:Zoom>
+  <w:PunctuationKerning/>
+  <w:ValidateAgainstSchemas/>
+  <w:SaveIfXMLInvalid>false</w:SaveIfXMLInvalid>
+  <w:IgnoreMixedContent>false</w:IgnoreMixedContent>
+  <w:AlwaysShowPlaceholderText>false</w:AlwaysShowPlaceholderText>
+  <w:Compatibility>
+   <w:BreakWrappedTables/>
+   <w:SnapToGridInCell/>
+   <w:WrapTextWithPunct/>
+   <w:UseAsianBreakRules/>
+   <w:DontGrowAutofit/>
+  </w:Compatibility>
+  <w:BrowserLevel>MicrosoftInternetExplorer4</w:BrowserLevel>
+ </w:WordDocument>
+</xml><![endif]--></p>
+<p><!--[if gte mso 9]><xml>
+ <w:LatentStyles DefLockedState="false" LatentStyleCount="156">
+ </w:LatentStyles>
+</xml><![endif]--><!--[if gte mso 10]>
+<style>
+ /* Style Definitions */
+ table.MsoNormalTable
+	{mso-style-name:"Обычная таблица";
+	mso-tstyle-rowband-size:0;
+	mso-tstyle-colband-size:0;
+	mso-style-noshow:yes;
+	mso-style-parent:"";
+	mso-padding-alt:0cm 5.4pt 0cm 5.4pt;
+	mso-para-margin:0cm;
+	mso-para-margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:10.0pt;
+	font-family:"Times New Roman";
+	mso-ansi-language:#0400;
+	mso-fareast-language:#0400;
+	mso-bidi-language:#0400;}
+</style>
+<![endif]--></p>
+<p class="MsoNormal"><!--[if gte mso 9]><xml>
+ <w:WordDocument>
+  <w:View>Normal</w:View>
+  <w:Zoom>0</w:Zoom>
+  <w:PunctuationKerning/>
+  <w:ValidateAgainstSchemas/>
+  <w:SaveIfXMLInvalid>false</w:SaveIfXMLInvalid>
+  <w:IgnoreMixedContent>false</w:IgnoreMixedContent>
+  <w:AlwaysShowPlaceholderText>false</w:AlwaysShowPlaceholderText>
+  <w:Compatibility>
+   <w:BreakWrappedTables/>
+   <w:SnapToGridInCell/>
+   <w:WrapTextWithPunct/>
+   <w:UseAsianBreakRules/>
+   <w:DontGrowAutofit/>
+  </w:Compatibility>
+  <w:BrowserLevel>MicrosoftInternetExplorer4</w:BrowserLevel>
+ </w:WordDocument>
+</xml><![endif]--><!--[if gte mso 9]><xml>
+ <w:LatentStyles DefLockedState="false" LatentStyleCount="156">
+ </w:LatentStyles>
+</xml><![endif]--><!--[if gte mso 10]>
+<style>
+ /* Style Definitions */
+ table.MsoNormalTable
+	{mso-style-name:"Обычная таблица";
+	mso-tstyle-rowband-size:0;
+	mso-tstyle-colband-size:0;
+	mso-style-noshow:yes;
+	mso-style-parent:"";
+	mso-padding-alt:0cm 5.4pt 0cm 5.4pt;
+	mso-para-margin:0cm;
+	mso-para-margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:10.0pt;
+	font-family:"Times New Roman";
+	mso-ansi-language:#0400;
+	mso-fareast-language:#0400;
+	mso-bidi-language:#0400;}
+</style>
+<![endif]-->Гостиница квартирного типа сдаёт в долгосрочную аренду для проживания, благоустроенные, меблированные однокомнатные квартиры.</p>
+<p class="MsoNormal">&nbsp;</p>
+<p class="MsoNormal">В квартире есть шкаф, кровать, журнальный столик с креслом, телевизор, холодильник, санузел: туалет, раковина, душевая кабина.</p>
+<p class="MsoNormal">&nbsp;</p>
+<p class="MsoNormal">Есть квартиры со встроенными кухнями и стиральными машинами.</p>
+<p class="MsoNormal">&nbsp;</p>
+<p class="MsoNormal">Гостиница расположена в Верх-Исетском районе (посёлок Широкая речка), в центре посёлка, от гостиницы ходят автобусы: 48 , 24 и маршрутное такси 040, 045 весь транспорт идёт до центра города и дальше. На машине до центра 20 минут езды.</p>
+<p class="MsoNormal">&nbsp;</p>
+<p class="MsoNormal">Круглосуточная охрана, смена постельного белья.</p>
+<p class="MsoNormal">&nbsp;</p>
+<p class="MsoNormal">Коммуналка и интернет включены в стоимость !!!</p>
+<p class="MsoNormal">&nbsp;</p>
+<p class="MsoNormal">Возможно проживания 2-х, 3-х человек или подселения.</p>
+<p class="MsoNormal">&nbsp;</p>
+<p class="MsoNormal"><!--[if gte mso 9]><xml>
+ <w:WordDocument>
+  <w:View>Normal</w:View>
+  <w:Zoom>0</w:Zoom>
+  <w:PunctuationKerning/>
+  <w:ValidateAgainstSchemas/>
+  <w:SaveIfXMLInvalid>false</w:SaveIfXMLInvalid>
+  <w:IgnoreMixedContent>false</w:IgnoreMixedContent>
+  <w:AlwaysShowPlaceholderText>false</w:AlwaysShowPlaceholderText>
+  <w:Compatibility>
+   <w:BreakWrappedTables/>
+   <w:SnapToGridInCell/>
+   <w:WrapTextWithPunct/>
+   <w:UseAsianBreakRules/>
+   <w:DontGrowAutofit/>
+  </w:Compatibility>
+  <w:BrowserLevel>MicrosoftInternetExplorer4</w:BrowserLevel>
+ </w:WordDocument>
+</xml><![endif]--></p>
+<p class="MsoNormal"><!--[if gte mso 9]><xml>
+ <w:LatentStyles DefLockedState="false" LatentStyleCount="156">
+ </w:LatentStyles>
+</xml><![endif]--><!--[if gte mso 10]>
+<style>
+ /* Style Definitions */
+ table.MsoNormalTable
+	{mso-style-name:"Обычная таблица";
+	mso-tstyle-rowband-size:0;
+	mso-tstyle-colband-size:0;
+	mso-style-noshow:yes;
+	mso-style-parent:"";
+	mso-padding-alt:0cm 5.4pt 0cm 5.4pt;
+	mso-para-margin:0cm;
+	mso-para-margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:10.0pt;
+	font-family:"Times New Roman";
+	mso-ansi-language:#0400;
+	mso-fareast-language:#0400;
+	mso-bidi-language:#0400;}
+</style>
+<![endif]--></p>
+<p class="MsoNormal">Квартиры сдает застройщик, дополнительные комиссии не взимаются.</p>        </div>
+    </div>
+<div class="photo-thumbs justify pt5 pb5">
+        
+            <div class="ph-item">
+                <div class="img-block-logo">
+                    <a class="ib-body-logo" rel="prettyPhoto[gallery]" target="_blank" href="/i/uploads/Apartment/21501278/g0_14_05_04__16_02_03_216546_12564.jpg">
+                        <img class="ibb-img-logo" src="/i/uploads/Apartment/21501278/g0_14_05_04__16_02_03_216546_12564sm.jpg">
+                    </a>
+                </div>
+            </div>    
+        
+            <div class="ph-item">
+                <div class="img-block-logo">
+                    <a class="ib-body-logo" rel="prettyPhoto[gallery]" target="_blank" href="/i/uploads/Apartment/21501278/g0_14_05_04__16_02_03_164361_12564.jpg">
+                        <img class="ibb-img-logo" src="/i/uploads/Apartment/21501278/g0_14_05_04__16_02_03_164361_12564sm.jpg">
+                    </a>
+                </div>
+            </div>    
+        
+            <div class="ph-item">
+                <div class="img-block-logo">
+                    <a class="ib-body-logo" rel="prettyPhoto[gallery]" target="_blank" href="/i/uploads/Apartment/21501278/g0_14_05_04__16_02_03_032315_12564.jpg">
+                        <img class="ibb-img-logo" src="/i/uploads/Apartment/21501278/g0_14_05_04__16_02_03_032315_12564sm.jpg">
+                    </a>
+                </div>
+            </div>    
+        
+            <div class="ph-item">
+                <div class="img-block-logo">
+                    <a class="ib-body-logo" rel="prettyPhoto[gallery]" target="_blank" href="/i/uploads/Apartment/21501278/g0_14_05_04__16_02_02_273807_12564.jpg">
+                        <img class="ibb-img-logo" src="/i/uploads/Apartment/21501278/g0_14_05_04__16_02_02_273807_12564sm.jpg">
+                    </a>
+                </div>
+            </div>    
+        
+            <div class="ph-item">
+                <div class="img-block-logo">
+                    <a class="ib-body-logo" rel="prettyPhoto[gallery]" target="_blank" href="/i/uploads/Apartment/21501278/g0_14_05_04__16_02_01_1244066_12564.jpg">
+                        <img class="ibb-img-logo" src="/i/uploads/Apartment/21501278/g0_14_05_04__16_02_01_1244066_12564sm.jpg">
+                    </a>
+                </div>
+            </div>    
+        
+            <div class="ph-item">
+                <div class="img-block-logo">
+                    <a class="ib-body-logo" rel="prettyPhoto[gallery]" target="_blank" href="/i/uploads/Apartment/21501278/g0_14_05_04__16_02_01_8122166_12564.jpg">
+                        <img class="ibb-img-logo" src="/i/uploads/Apartment/21501278/g0_14_05_04__16_02_01_8122166_12564sm.jpg">
+                    </a>
+                </div>
+            </div>    
+        
+            <div class="ph-item">
+                <div class="img-block-logo">
+                    <a class="ib-body-logo" rel="prettyPhoto[gallery]" target="_blank" href="/i/uploads/Apartment/21501278/g0_14_05_04__16_02_01_855122_12564.jpg">
+                        <img class="ibb-img-logo" src="/i/uploads/Apartment/21501278/g0_14_05_04__16_02_01_855122_12564sm.jpg">
+                    </a>
+                </div>
+            </div>    
+            </div>
+
+<div class="ib-row">
+	                <b>812222012501</b>
+	            </div>
+
+<div class="ib-row">
+						<span class="gray_txt">Сайт:</span> <a target="_blank" class="bluelink" href="/go/http%3A%2F%2Fwww.nahodka.pro+/">www.nahodka.pro </a>					</div>
+
+<div class="ib-row">
+	                <span class="ibr-header">Контактное лицо:</span> Андрей	            </div>
+<div class="ib-row">
+	                    <span class="ibr-header">Компания: </span> <a class="bluelink" href="/agentstvo-nedvizimosti/1766162/">Агентство недвижимости "Находка" </a>	                </div>
+
+
+12	PublicationLink	//div[@class='items']//a[@class='li-title']	{{href}}	.*	$&
+12	PublicationId	//div[@class='items']//a[@class='li-title']	{{InnerText}}	(\d*\D+\/)*(\d+).*	$2
+12	WebPublicationPublicationId	/	{{Url}}	(\d*\D+\/)*(\d+).*	$2
+12	PublicationDatetime	//div[contains(@class,'column')]/span[contains(.,'Обновлено')]	{{InnerText}}	\D*(\d+\D\d+\D\d+(\s+\d+\D\d+)?).*	$1
+12	WebPublicationModifyDate	//div[contains(@class,'column')]/span[contains(.,'Обновлено')]	{{InnerText}}	\D*(\d+\D\d+\D\d+(\s+\d+\D\d+)?).*	$1
+
+
+<div class="column span-6 last">
+    <span class="gray_txt_12">Добавлено: 04.05.2014</span><br>
+    <span class="gray_txt_12">Обновлено: 2014-05-04 17:00:02</span>
+</div>
+
+<div class="items">
+<div class="list-item clearfix 1">
+
+    <div class="img-block img-block-120 fl ">
+
+        <a class="ib-body" href="/flats/snyat-kvartiru-v-ekaterinburge/1-komn-kvartira/215012712/"><img class="ibb-img" width="120" src="/i/uploads/Companyapartment/logo/1766162sc.jpg?ts=1312120123120" alt=""></a>
+    </div>
+
+    
+
+
+
+    <div class="li-content">
+
+        <a class="li-title" href="/flats/snyat-kvartiru-v-ekaterinburge/1-komn-kvartira/215012712/">сдается 1-комнатная .Самоцветный бульвар</a> <span class="li-review">(отзывов: 0)</span>
+
+		<div class="li-category">
+
+          Сдам 1-к квартиру
+        </div>
+
+
+
+        <div class="li-info">
+
+            <b class="lii-header">
+
+                Адрес:
+
+            </b> 
+
+            Самоцветный бульвар 5
+        </div>
+
+        <div class="li-info">
+
+            <b class="lii-header">
+
+                Район: 
+
+            </b>    
+
+            Ботаника
+        </div>
+
+        <div class="li-info">
+
+            <b class="lii-header">
+
+                Стоимость: 
+
+            </b>    
+
+            20000
+        </div>
+
+        
+            <div class="li-info">
+
+                <b class="lii-header">
+
+                    Компания: 
+
+                </b>    
+
+                <a class="bluelink-12" href="/agentstvo-nedvizimosti/1766162/">Агентство недвижимости "Находка" </a>
+            </div>
+
+                
+        <div style="margin-top:5px">
+
+        
+        
+        </div>
+
+    </div>
+
+</div>
+
+<div class="list-item clearfix a_row">
+
+    <div class="img-block img-block-120 fl ">
+
+        <a class="ib-body" href="/flats/snyat-kvartiru-v-ekaterinburge/1-komn-kvartira/21501278/"><img class="ibb-img" width="120" src="/i/uploads/Apartment/21501278/g0_14_05_04__16_02_03_216546_12564md2.jpg" alt=""></a>
+    </div>
+
+    
+
+
+
+    <div class="li-content">
+
+        <a class="li-title" href="/flats/snyat-kvartiru-v-ekaterinburge/1-komn-kvartira/21501278/">Сдается 1-комнатная квартира в Ботаническом районе</a> <span class="li-review">(отзывов: 0)</span>
+
+		<div class="li-category">
+
+          Сдам 1-к квартиру
+        </div>
+
+
+
+        <div class="li-info">
+
+            <b class="lii-header">
+
+                Адрес:
+
+            </b> 
+
+            Родонитовая 3/2
+        </div>
+
+        <div class="li-info">
+
+            <b class="lii-header">
+
+                Район: 
+
+            </b>    
+
+            Ботаника
+        </div>
+
+        <div class="li-info">
+
+            <b class="lii-header">
+
+                Стоимость: 
+
+            </b>    
+
+            23000
+        </div>
+
+        
+            <div class="li-info">
+
+                <b class="lii-header">
+
+                    Компания: 
+
+                </b>    
+
+                <a class="bluelink-12" href="/agentstvo-nedvizimosti/1766162/">Агентство недвижимости "Находка" </a>
+            </div>
+
+                
+        <div style="margin-top:5px">
+
+        
+        
+            
+
+            <a href="/flats/snyat-kvartiru-v-ekaterinburge/1-komn-kvartira/21501278/"><img height="33" src="/i/uploads/Apartment/21501278/g0_14_05_04__16_02_03_216546_12564sm.jpg" alt=""></a>
+            
+        
+            
+
+            <a href="/flats/snyat-kvartiru-v-ekaterinburge/1-komn-kvartira/21501278/"><img height="33" src="/i/uploads/Apartment/21501278/g0_14_05_04__16_02_03_164361_12564sm.jpg" alt=""></a>
+            
+        
+            
+
+            <a href="/flats/snyat-kvartiru-v-ekaterinburge/1-komn-kvartira/21501278/"><img height="33" src="/i/uploads/Apartment/21501278/g0_14_05_04__16_02_03_032315_12564sm.jpg" alt=""></a>
+            
+        
+            
+
+            <a href="/flats/snyat-kvartiru-v-ekaterinburge/1-komn-kvartira/21501278/"><img height="33" src="/i/uploads/Apartment/21501278/g0_14_05_04__16_02_02_273807_12564sm.jpg" alt=""></a>
+            
+        
+            
+
+            <a href="/flats/snyat-kvartiru-v-ekaterinburge/1-komn-kvartira/21501278/"><img height="33" src="/i/uploads/Apartment/21501278/g0_14_05_04__16_02_01_1244066_12564sm.jpg" alt=""></a>
+            
+        </div>
+
+    </div>
+
+</div>
+
+<div class="list-item clearfix 1">
+
+    <div class="img-block img-block-120 fl ">
+
+        <a class="ib-body" href="/flats/snyat-kvartiru-v-ekaterinburge/2-komn-kvartira/21501277/"><img class="ibb-img" width="120" src="/i/uploads/Apartment/21501277/g0_14_05_04__15_57_38_666236_12564md2.jpg" alt=""></a>
+    </div>
+
+    
+
+
+
+    <div class="li-content">
+
+        <a class="li-title" href="/flats/snyat-kvartiru-v-ekaterinburge/2-komn-kvartira/21501277/">сдается 2-комн.Ботаника(до метро 10 мин. пешком)</a> <span class="li-review">(отзывов: 0)</span>
+
+		<div class="li-category">
+
+          Сдам 2-х комнатную
+        </div>
+
+
+
+        <div class="li-info">
+
+            <b class="lii-header">
+
+                Адрес:
+
+            </b> 
+
+            Родонитовая 4а
+        </div>
+
+        <div class="li-info">
+
+            <b class="lii-header">
+
+                Район: 
+
+            </b>    
+
+            Ботаника
+        </div>
+
+        <div class="li-info">
+
+            <b class="lii-header">
+
+                Стоимость: 
+
+            </b>    
+
+            21000
+        </div>
+
+        
+            <div class="li-info">
+
+                <b class="lii-header">
+
+                    Компания: 
+
+                </b>    
+
+                <a class="bluelink-12" href="/agentstvo-nedvizimosti/1766162/">Агентство недвижимости "Находка" </a>
+            </div>
+
+                
+        <div style="margin-top:5px">
+
+        
+        
+            
+
+            <a href="/flats/snyat-kvartiru-v-ekaterinburge/2-komn-kvartira/21501277/"><img height="33" src="/i/uploads/Apartment/21501277/g0_14_05_04__15_57_38_666236_12564sm.jpg" alt=""></a>
+            
+        
+            
+
+            <a href="/flats/snyat-kvartiru-v-ekaterinburge/2-komn-kvartira/21501277/"><img height="33" src="/i/uploads/Apartment/21501277/g0_14_05_04__15_57_38_635285_12564sm.jpg" alt=""></a>
+            
+        
+            
+
+            <a href="/flats/snyat-kvartiru-v-ekaterinburge/2-komn-kvartira/21501277/"><img height="33" src="/i/uploads/Apartment/21501277/g0_14_05_04__15_57_38_632776_12564sm.jpg" alt=""></a>
+            
+        
+            
+
+            <a href="/flats/snyat-kvartiru-v-ekaterinburge/2-komn-kvartira/21501277/"><img height="33" src="/i/uploads/Apartment/21501277/g0_14_05_04__15_57_37_6051233_12564sm.jpg" alt=""></a>
+            
+        
+            
+
+            <a href="/flats/snyat-kvartiru-v-ekaterinburge/2-komn-kvartira/21501277/"><img height="33" src="/i/uploads/Apartment/21501277/g0_14_05_04__15_57_37_5316125_12564sm.jpg" alt=""></a>
+            
+        </div>
+
+    </div>
+
+</div>
+
+<div class="list-item-b clearfix">
+	<!--noindex-->
+<!--/* OpenX Javascript Tag v2.8.12 */-->
+
+<script type="text/javascript"><!--//<![CDATA[
+   document.MAX_ct0 ='INSERT_CLICKURL_HERE';
+
+   var m3_u = (location.protocol=='https:'?'https://r.uralstudent.ru/www/delivery/ajs.php':'http://r.uralstudent.ru/www/delivery/ajs.php');
+   var m3_r = Math.floor(Math.random()*1212121212121212121212);
+   if (!document.MAX_used) document.MAX_used = ',';
+   document.write ("<scr"+"ipt type='text/javascript' src='"+m3_u);
+   document.write ("?zoneid=60&amp;charset=UTF-8");
+   document.write ('&amp;cb=' + m3_r);
+   if (document.MAX_used != ',') document.write ("&amp;exclude=" + document.MAX_used);
+   document.write ('&amp;charset=UTF-8');
+   document.write ("&amp;loc=" + escape(window.location));
+   if (document.referrer) document.write ("&amp;referer=" + escape(document.referrer));
+   if (document.context) document.write ("&context=" + escape(document.context));
+   if ((typeof(document.MAX_ct0) != 'undefined') && (document.MAX_ct0.substring(0,4) == 'http')) {
+       document.write ("&amp;ct0=" + escape(document.MAX_ct0));
+   }
+   if (document.mmm_fo) document.write ("&amp;mmm_fo=1");
+   document.write ("'><\/scr"+"ipt>");
+//]]>--></script><script type="text/javascript" src="http://r.uralstudent.ru/www/delivery/ajs.php?zoneid=60&amp;charset=UTF-8&amp;cb=1848127123222&amp;charset=UTF-8&amp;loc=http%3A//www.uralstudent.ru/flats/snyat-kvartiru-v-ekaterinburge/%3Fdistrict_id%3D2012&amp;referer=http%3A//www.uralstudent.ru/flats/prodazha-kvartir-v-ekaterinburge/%3Fdistrict_id%3D2012"></script><!-- Яндекс.Директ -->
+<script type="text/javascript">
+yandex_partner_id = 507121;
+yandex_site_bg_color = 'FFFFFF';
+yandex_stat_id = 12285538;
+yandex_ad_format = 'direct';
+yandex_direct_type = '728x120';
+yandex_direct_border_type = 'block';
+yandex_direct_border_radius = true;
+yandex_direct_bg_color = 'FFFFFF';
+yandex_direct_border_color = 'FFFFFF';
+yandex_direct_title_color = '0066CC';
+yandex_direct_url_color = '006600';
+yandex_direct_text_color = '000000';
+yandex_direct_hover_color = '0066FF';
+yandex_direct_favicon = true;
+yandex_no_sitelinks = false;
+document.write('<sc'+'ript type="text/javascript" src="http://an.yandex.ru/system/context.js"></sc'+'ript>');
+</script><script type="text/javascript" src="http://an.yandex.ru/system/context.js"></script><div id="Ya_sync_0"><div id="ya_partner_Ya_sync_0-728x120" style="background:transparent none no-repeat scroll 0 0 !important;border:none !important;border-radius:none !important;border-spacing:0 !important;border-collapse:collapse !important;-moz-box-sizing:content-box !important;box-sizing:content-box !important;clear:none !important;clip:auto !important;color:inherit !important;cursor:auto !important;empty-cells:show !important;float:none !important;font:inherit !important;font-variant:normal !important;font-weight:normal !important;height:auto !important;letter-spacing:normal !important;line-height:normal !important;margin:0 !important;max-height:none !important;max-width:none !important;min-height:0 !important;min-width:0 !important;outline:none !important;overflow:visible !important;padding:0 !important;position:static !important;table-layout:auto !important;text-align:left !important;text-decoration:none !important;text-indent:0 !important;text-transform:none !important;vertical-align:baseline !important;visibility:visible !important;white-space:normal !important;width:auto !important;word-spacing:normal !important;z-index:auto !important;display:block !important;"><yatag class="ya-partner_is-quasi-flat_yes  ya-partner_theme_flat ya-partner_border ya-partner_border-type_block  ya-partner ya-partner_type_horiz ya-partner_type_728x120 ya-partner__overflow-hide-sitelink-4 ya-partner_type_728x120xIMG ya-partner__overflow-hide-sitelink-3 ya-partner__overflow-hide-urls"><yatag class="ya-partner__logo ya-partner__ads"><yatag class="ya-partner__logo-bg ya-partner__ads-l"><a href="http://direct.yandex.ru/?partner" class="ya-partner__logo-link ya-partner__ads-link-l" target="_blank" style="-webkit-transform: rotate(270deg) translate(0px, 100%) !important; -webkit-transform-origin: 0% 100% !important; font-style: normal !important; font-variant: normal !important; font-weight: normal !important; font-size: 12px !important; line-height: 12px !important; font-family: Arial, sans-serif !important; color: rgb(0, 0, 0) !important; text-decoration: underline !important;">Яндекс.Директ</a></yatag></yatag><table cellpadding="0" cellspacing="0" class="ya-partner__list"><tbody><tr class="ya-partner__tr"><td class="ya-partner__item ya-partner__item-1 ya-partner__item_pic_yes ya-partner__item_piclayout_left ya-partner__item_sitelinks_no ya-partner__item_pos_first"><table cellpadding="0" cellspacing="0" class="ya-partner__l-table"><tbody><tr class="ya-partner__l-tr"><td class="ya-partner__l-td ya-partner__l-pic-td"><yatag class="ya-partner__pic-container"><a href="http://an.yandex.ru/count/OdcMjsrNVta40000ZhqUOpO5XPTc312K2cm5kGxS2Am68lZoTw0Q12bHo-c4IUii3a0GITbGC4dB4BG12G2bhFSCb01kl4BG12HQfo0p212gYTdibfem8YgwuBuAzh7U-hwe1fQnVEWAHlmfDyWEFlLTj20oVi1sYD0cJXGsP1aACaF8he123KCA-GyYkKata6fvfG0gYuyccA0gIm0000ngxyJH6BKH-I-0Imi7TXv06n0RA84xcL0mIx-5eWeac5W781V1O0?test-tag=751612&amp;stat-id=1075727362" class="ya-partner__pic" target="_blank" title="kvadroom.ru" style="width:80px !important;height:80px !important;background-image:url('//avatars-fast.yandex.net/get-direct/RBV3BHPNFOBOGX8s12RwTnw/y80') !important;"></a></yatag></td><td class="ya-partner__l-td"><a href="http://an.yandex.ru/count/OdcMjsrNVta40000ZhqUOpO5XPTc312K2cm5kGxS2Am68lZoTw0Q12bHo-c4IUii3a0GITbGC4dB4BG12G2bhFSCb01kl4BG12HQfo0p212gYTdibfem8YgwuBuAzh7U-hwe1fQnVEWAHlmfDyWEFlLTj20oVi1sYD0cJXGsP1aACaF8he123KCA-GyYkKata6fvfG0gYuyccA0gIm0000ngxyJH6BKH-I-0Imi7TXv06n0RA84xcL0mIx-5eWeac5W781V1O0?test-tag=751612&amp;stat-id=1075727362" class="ya-partner__title-link" title="kvadroom.ru" target="_blank"><yatag class="ya-partner__title-link-text">Квартиры от&nbsp;хозяев. Очень много.</yatag></a> <yatag class="ya-partner__text">База квартир без посредников. Большой выбор, бесплатный доступ.</yatag><yatag class="ya-partner__url"><yatag class="ya-partner__domain"><a class="ya-partner__domain-link" href="http://an.yandex.ru/count/OdcMjsrNVta40000ZhqUOpO5XPTc312K2cm5kGxS2Am68lZoTw0Q12bHo-c4IUii3a0GITbGC4dB4BG12G2bhFSCb01kl4BG12HQfo0p212gYTdibfem8YgwuBuAzh7U-hwe1fQnVEWAHlmfDyWEFlLTj20oVi1sYD0cJXGsP1aACaF8he123KCA-GyYkKata6fvfG0gYuyccA0gIm0000ngxyJH6BKH-I-0Imi7TXv06n0RA84xcL0mIx-5eWeac5W781V1O0?test-tag=751612&amp;stat-id=1075727362" target="_blank">kvadroom.ru</a></yatag> <yatag class="ya-partner__region"></yatag></yatag></td></tr></tbody></table></td><td class="ya-partner__gap">&nbsp;</td><td class="ya-partner__item ya-partner__item-2 ya-partner__item_pic_yes ya-partner__item_piclayout_left ya-partner__item_sitelinks_yes ya-partner__item_pos_last"><table cellpadding="0" cellspacing="0" class="ya-partner__l-table"><tbody><tr class="ya-partner__l-tr"><td class="ya-partner__l-td ya-partner__l-pic-td"><yatag class="ya-partner__pic-container"><a href="http://an.yandex.ru/count/OdcMjwu0SEC40000ZhqUOpO5XPTc312K2cm5kGxS2Am4oYBcJGSO6YPPfAfX4dhB0v044dPYO2von2q2K0fQpt312G0Rhn2q2KMgSWCmYQj-rZ12m6cWmYAetxRtRsyZ0SR0Qe1fQQ1tGAyes0g0v6_2ato0u-y5mEt2f-z1lZT0PE53Pa6GeoGOowWa4Kphv1ZBfII2WUddHC2gBmXYbu2fB000036hlnD4OjH7vBu1B2mTs7a0R41ieWJkPYO2xluMY2YIOM0SW5y5m00?test-tag=751612&amp;stat-id=1075727362" class="ya-partner__pic" target="_blank" title="arenda-kvartir.ndv.ru" style="width:101px !important;height:80px !important;background-image:url('//avatars-fast.yandex.net/get-direct/12ikD0U6Br7ywvTXkGCafRg/y80') !important;"></a></yatag></td><td class="ya-partner__l-td"><a href="http://an.yandex.ru/count/OdcMjwu0SEC40000ZhqUOpO5XPTc312K2cm5kGxS2Am4oYBcJGSO6YPPfAfX4dhB0v044dPYO2von2q2K0fQpt312G0Rhn2q2KMgSWCmYQj-rZ12m6cWmYAetxRtRsyZ0SR0Qe1fQQ1tGAyes0g0v6_2ato0u-y5mEt2f-z1lZT0PE53Pa6GeoGOowWa4Kphv1ZBfII2WUddHC2gBmXYbu2fB000036hlnD4OjH7vBu1B2mTs7a0R41ieWJkPYO2xluMY2YIOM0SW5y5m00?test-tag=751612&amp;stat-id=1075727362" class="ya-partner__title-link" title="arenda-kvartir.ndv.ru" target="_blank"><yatag class="ya-partner__title-link-text">Хотите сдать/снять жилье?</yatag></a> <yatag class="ya-partner__text">Мы поможем вам! Все виды аренды жилья. Быстро и с выгодой для вас! Звоните!</yatag><yatag class="ya-partner__sitelinks"><yatag class="ya-partner__sitelink ya-partner__sitelink-1"><a class="ya-partner__sitelinks-text" target="_blank" href="http://an.yandex.ru/count/OdcMj_V1MAe40000ZhqUOpO5XPTc312K2cm5kGxS2Am4oYBcJGSO6YPPfAfX4dhB0v044dPYO2von2q2K0fQpt312G0Rhn2q2KMgSWCmYQj-rZ12m6cWmYAetxRtRsyZ0SR0QeVfQQ1tGAyes0g0v6_2ato0u-y5mEt2f-z1lZT0PE53Pa6GeoGOowWa4Kphv1ZBfII2WUddHC2gBmXYbu2fB000036hlnD4OjH7vBu1B2mTs7a0R41ieWJkPYO2xluMY2YIOM0SW5y5m00?test-tag=751612&amp;stat-id=1075727362">Горящие предложения</a><yatag class="ya-partner__sitelinks-inline-delim">·</yatag></yatag><wbr><yatag class="ya-partner__sitelink ya-partner__sitelink-2"><a class="ya-partner__sitelinks-text" target="_blank" href="http://an.yandex.ru/count/OdcMjoUpQ4O40000ZhqUOpO5XPTc312K2cm5kGxS2Am4oYBcJGSO6YPPfAfX4dhB0v044dPYO2von2q2K0fQpt312G0Rhn2q2KMgSWCmYQj-rZ12m6cWmYAetxRtRsyZ0SR0QeXfQQ1tGAyes0g0v6_2ato0u-y5mEt2f-z1lZT0PE53Pa6GeoGOowWa4Kphv1ZBfII2WUddHC2gBmXYbu2fB000036hlnD4OjH7vBu1B2mTs7a0R41ieWJkPYO2xluMY2YIOM0SW5y5m00?test-tag=751612&amp;stat-id=1075727362">Разместите объявление</a><yatag class="ya-partner__sitelinks-inline-delim">·</yatag></yatag><wbr><yatag class="ya-partner__sitelink ya-partner__sitelink-3"><a class="ya-partner__sitelinks-text" target="_blank" href="http://an.yandex.ru/count/OdcMjqH323W40000ZhqUOpO5XPTc312K2cm5kGxS2Am4oYBcJGSO6YPPfAfX4dhB0v044dPYO2von2q2K0fQpt312G0Rhn2q2KMgSWCmYQj-rZ12m6cWmYAetxRtRsyZ0SR0QeZfQQ1tGAyes0g0v6_2ato0u-y5mEt2f-z1lZT0PE53Pa6GeoGOowWa4Kphv1ZBfII2WUddHC2gBmXYbu2fB000036hlnD4OjH7vBu1B2mTs7a0R41ieWJkPYO2xluMY2YIOM0SW5y5m00?test-tag=751612&amp;stat-id=1075727362">Оставьте заявку</a></yatag><wbr></yatag><yatag class="ya-partner__url"><a class="ya-partner__address" href="http://an.yandex.ru/count/OdcMjmeGq6440000ZhqUOpO5XPTc312K2cm5kGxS2Am4oYBcJGSO6YPPfAfX4dhB0v044dPYO2von2q2K0fQpt312G0Rhn2q2KMgSWCmYQj-rZ12m6cWmYAetxRtRsyZ0SR0Qe7fQQ1tGAyes0g0v6_2ato0u-y5mEt2f-z1lZT0PE53Pa6GeoGOowWa4Kphv1ZBfII2WUddHC2gBmXYbu2fB000036hlnD4OjH7vBu1B2mTs7a0R41ieWJkPYO2xluMY2YIOM0SW5y5m00?test-tag=751612&amp;stat-id=1075727362" target="_blank">Адрес&nbsp;и&nbsp;телефон</a> <yatag class="ya-partner__domain"><a class="ya-partner__domain-link" href="http://an.yandex.ru/count/OdcMjwu0SEC40000ZhqUOpO5XPTc312K2cm5kGxS2Am4oYBcJGSO6YPPfAfX4dhB0v044dPYO2von2q2K0fQpt312G0Rhn2q2KMgSWCmYQj-rZ12m6cWmYAetxRtRsyZ0SR0Qe1fQQ1tGAyes0g0v6_2ato0u-y5mEt2f-z1lZT0PE53Pa6GeoGOowWa4Kphv1ZBfII2WUddHC2gBmXYbu2fB000036hlnD4OjH7vBu1B2mTs7a0R41ieWJkPYO2xluMY2YIOM0SW5y5m00?test-tag=751612&amp;stat-id=1075727362" target="_blank">arenda-kvartir.ndv.ru</a></yatag> <yatag class="ya-partner__region"></yatag></yatag></td></tr></tbody></table></td></tr></tbody></table></yatag></div></div><script type="text/javascript" src="//an.yandex.ru/resource/context_static_r6120.js" yandex_load_check="yes"></script><script type="text/javascript" charset="utf-8" src="//an.yandex.ru/page/507121?target-ref=http%3A%2F%2Fwww.uralstudent.ru%2Fflats%2Fsnyat-kvartiru-v-ekaterinburge%2F%3Fdistrict_id%3D2012&amp;page-ref=http%3A%2F%2Fwww.uralstudent.ru%2Fflats%2Fprodazha-kvartir-v-ekaterinburge%2F%3Fdistrict_id%3D2012&amp;charset=utf-8&amp;stat-id=1075727362&amp;grab=dNCh0L3Rj12GC0Ywg0LrQstCw0YDRgtC40YDRgyDQsiDQldC60LDRgtC10YDQuNC120LHRg12GA0LPQtSDQvdCwINC00LvQuNGC0LXQu12GM0L3Ri12C5INGB0YDQvtC6LCDQvtCx0YrRj12Cy0LvQtdC120LjRjyDQsNGA0LXQvdC00Ysg0LrQstCw0YDRgtC40YAg0LIg0JXQutCw0YLQtdGA0LjQvdCx0YPRgNCz0LU6INGG0LXQvdGLLCDRhNC-0YLQviwg0L7Qv12C40YHQsNC120LjQtSwg0YDQsNC50L7QvSwg0YHQvdGP0YLRjCDQutCy0LDRgNGC0LjRgNGD&amp;callback=Ya[1312122063848120]"></script>
+<script type="text/javascript">
+if (!window.yandex_ad_is_displayed) {
+document.write('<sc' + 'ript async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></sc' + 'ript>\n'+
+'<!-- Перед контентом. В Центре -->\n'+
+'<ins class="adsbygoogle"\n'+
+' style="display:inline-block;width:728px;height:120px"\n'+
+' data-ad-client="ca-pub-36154756812438282"\n'+
+' data-ad-slot="212524201212"></ins>\n'+
+'<sc' + 'ript>\n'+
+'(adsbygoogle = window.adsbygoogle || []).push({});\n'+
+'</sc' + 'ript>');
+}
+</script><div id="beacon_ca02dbdffa" style="position: absolute; left: 0px; top: 0px; visibility: hidden;"><img src="http://r.uralstudent.ru/www/delivery/lg.php?bannerid=422&amp;campaignid=18&amp;zoneid=60&amp;loc=1&amp;referer=http%3A%2F%2Fwww.uralstudent.ru%2Fflats%2Fsnyat-kvartiru-v-ekaterinburge%2F%3Fdistrict_id%3D2012&amp;cb=ca02dbdffa" width="0" height="0" alt="" style="width: 0px; height: 0px;"></div>
+<noscript>&lt;a href='http://r.uralstudent.ru/www/delivery/ck.php?n=a56c5ae3&amp;amp;cb=INSERT_RANDOM_NUMBER_HERE' target='_blank'&gt;&lt;img src='http://r.uralstudent.ru/www/delivery/avw.php?zoneid=60&amp;amp;charset=UTF-8&amp;amp;cb=INSERT_RANDOM_NUMBER_HERE&amp;amp;n=a56c5ae3&amp;amp;ct0=INSERT_CLICKURL_HERE' border='0' alt='' /&gt;&lt;/a&gt;</noscript>
+
+<!--/noindex-->
+
+</div><div class="list-item clearfix a_row">
+
+    <div class="img-block img-block-120 fl ">
+
+        <a class="ib-body" href="/flats/snyat-kvartiru-v-ekaterinburge/2-komn-kvartira/21501276/"><img class="ibb-img" width="120" src="/i/uploads/Companyapartment/logo/1766162sc.jpg?ts=1312120123120" alt=""></a>
+    </div>
+
+    
+
+
+
+    <div class="li-content">
+
+        <a class="li-title" href="/flats/snyat-kvartiru-v-ekaterinburge/2-komn-kvartira/21501276/">Сдается 2-комнатная Ботаника(10мин.пешком до метро_)</a> <span class="li-review">(отзывов: 0)</span>
+
+		<div class="li-category">
+
+          Сдам 2-х комнатную
+        </div>
+
+
+
+        <div class="li-info">
+
+            <b class="lii-header">
+
+                Адрес:
+
+            </b> 
+
+            родонитовая
+        </div>
+
+        <div class="li-info">
+
+            <b class="lii-header">
+
+                Район: 
+
+            </b>    
+
+            Ботаника
+        </div>
+
+        <div class="li-info">
+
+            <b class="lii-header">
+
+                Стоимость: 
+
+            </b>    
+
+            21000
+        </div>
+
+        
+            <div class="li-info">
+
+                <b class="lii-header">
+
+                    Компания: 
+
+                </b>    
+
+                <a class="bluelink-12" href="/agentstvo-nedvizimosti/1766162/">Агентство недвижимости "Находка" </a>
+            </div>
+
+                
+        <div style="margin-top:5px">
+
+        
+        
+        </div>
+
+    </div>
+
+</div>
+
+<div class="list-item clearfix 1">
+
+    <div class="img-block img-block-120 fl ">
+
+        <a class="ib-body" href="/flats/snyat-kvartiru-v-ekaterinburge/1-komn-kvartira/21504120/"><img class="ibb-img" width="120" src="/i/uploads/Apartment/21504120/g0_14_04_30__18_37_34_240612_12564md2.jpg" alt=""></a>
+    </div>
+
+    
+
+
+
+    <div class="li-content">
+
+        <a class="li-title" href="/flats/snyat-kvartiru-v-ekaterinburge/1-komn-kvartira/21504120/">Сдам хорошую квартиру в Ботаническом р-не</a> <span class="li-review">(отзывов: 0)</span>
+
+		<div class="li-category">
+
+          Сдам 1-к квартиру
+        </div>
+
+
+
+        <div class="li-info">
+
+            <b class="lii-header">
+
+                Адрес:
+
+            </b> 
+
+            Родонитовая
+        </div>
+
+        <div class="li-info">
+
+            <b class="lii-header">
+
+                Район: 
+
+            </b>    
+
+            Ботаника
+        </div>
+
+        <div class="li-info">
+
+            <b class="lii-header">
+
+                Стоимость: 
+
+            </b>    
+
+            17000
+        </div>
+
+        
+            <div class="li-info">
+
+                <b class="lii-header">
+
+                    Компания: 
+
+                </b>    
+
+                <a class="bluelink-12" href="/agentstvo-nedvizimosti/1766162/">Агентство недвижимости "Находка" </a>
+            </div>
+
+                
+        <div style="margin-top:5px">
+
+        
+        
+            
+
+            <a href="/flats/snyat-kvartiru-v-ekaterinburge/1-komn-kvartira/21504120/"><img height="33" src="/i/uploads/Apartment/21504120/g0_14_04_30__18_37_34_240612_12564sm.jpg" alt=""></a>
+            
+        
+            
+
+            <a href="/flats/snyat-kvartiru-v-ekaterinburge/1-komn-kvartira/21504120/"><img height="33" src="/i/uploads/Apartment/21504120/g0_14_04_30__18_37_34_2261237_12564sm.jpg" alt=""></a>
+            
+        
+            
+
+            <a href="/flats/snyat-kvartiru-v-ekaterinburge/1-komn-kvartira/21504120/"><img height="33" src="/i/uploads/Apartment/21504120/g0_14_04_30__18_37_32_6121868_12564sm.jpg" alt=""></a>
+            
+        
+            
+
+            <a href="/flats/snyat-kvartiru-v-ekaterinburge/1-komn-kvartira/21504120/"><img height="33" src="/i/uploads/Apartment/21504120/g0_14_04_30__18_37_32_643372_12564sm.jpg" alt=""></a>
+            
+        
+            
+
+            <a href="/flats/snyat-kvartiru-v-ekaterinburge/1-komn-kvartira/21504120/"><img height="33" src="/i/uploads/Apartment/21504120/g0_14_04_30__18_37_32_6310412_12564sm.jpg" alt=""></a>
+            
+        </div>
+
+    </div>
+
+</div>
+
+<div class="list-item clearfix a_row">
+
+    <div class="img-block img-block-120 fl ">
+
+        <a class="ib-body" href="/flats/snyat-kvartiru-v-ekaterinburge/1-komn-kvartira/2150672/"><img class="ibb-img" width="120" src="/i/uploads/Apartment/2150672/g0_14_05_02__12_122_36_783602_17374md2.jpg" alt=""></a>
+    </div>
+
+    
+
+
+
+    <div class="li-content">
+
+        <a class="li-title" href="/flats/snyat-kvartiru-v-ekaterinburge/1-komn-kvartira/2150672/">Сдам однокомнатную квартиру</a> <span class="li-review">(отзывов: 0)</span>
+
+		<div class="li-category">
+
+          Сдам 1-к квартиру
+        </div>
+
+
+
+        <div class="li-info">
+
+            <b class="lii-header">
+
+                Адрес:
+
+            </b> 
+
+            Крестинского, 63
+        </div>
+
+        <div class="li-info">
+
+            <b class="lii-header">
+
+                Район: 
+
+            </b>    
+
+            Ботаника
+        </div>
+
+        <div class="li-info">
+
+            <b class="lii-header">
+
+                Стоимость: 
+
+            </b>    
+
+            10000
+        </div>
+
+        
+            <div class="li-info">
+
+                <b class="lii-header">
+
+                    Компания: 
+
+                </b>    
+
+                <a class="bluelink-12" href="/agentstvo-nedvizimosti/2130274/">Квартиры без посредников</a>
+            </div>
+
+                
+        <div style="margin-top:5px">
+
+        
+        
+            
+
+            <a href="/flats/snyat-kvartiru-v-ekaterinburge/1-komn-kvartira/2150672/"><img height="33" src="/i/uploads/Apartment/2150672/g0_14_05_02__12_122_36_783602_17374sm.jpg" alt=""></a>
+            
+        
+            
+
+            <a href="/flats/snyat-kvartiru-v-ekaterinburge/1-komn-kvartira/2150672/"><img height="33" src="/i/uploads/Apartment/2150672/g0_14_05_02__12_122_35_745570_17374sm.jpg" alt=""></a>
+            
+        
+            
+
+            <a href="/flats/snyat-kvartiru-v-ekaterinburge/1-komn-kvartira/2150672/"><img height="33" src="/i/uploads/Apartment/2150672/g0_14_05_02__12_122_34_6357512_17374sm.jpg" alt=""></a>
+            
+        
+            
+
+            <a href="/flats/snyat-kvartiru-v-ekaterinburge/1-komn-kvartira/2150672/"><img height="33" src="/i/uploads/Apartment/2150672/g0_14_05_02__12_122_33_1205041_17374sm.jpg" alt=""></a>
+            
+        
+        </div>
+
+    </div>
+
+</div>
+
+<div class="list-item clearfix 1">
+
+    <div class="img-block img-block-120 fl ">
+
+        <a class="ib-body" href="/flats/snyat-kvartiru-v-ekaterinburge/1-komn-kvartira/2150675/"><img class="ibb-img" width="120" src="/i/uploads/Apartment/2150675/g0_14_05_02__12_27_122_3307128_17374md2.jpg" alt=""></a>
+    </div>
+
+    
+
+
+
+    <div class="li-content">
+
+        <a class="li-title" href="/flats/snyat-kvartiru-v-ekaterinburge/1-komn-kvartira/2150675/">Сдам квартиру на Ботанике!</a> <span class="li-review">(отзывов: 0)</span>
+
+		<div class="li-category">
+
+          Сдам 1-к квартиру
+        </div>
+
+
+
+        <div class="li-info">
+
+            <b class="lii-header">
+
+                Адрес:
+
+            </b> 
+
+            Самоцветный бульвар, 5
+        </div>
+
+        <div class="li-info">
+
+            <b class="lii-header">
+
+                Район: 
+
+            </b>    
+
+            Ботаника
+        </div>
+
+        <div class="li-info">
+
+            <b class="lii-header">
+
+                Стоимость: 
+
+            </b>    
+
+            10000
+        </div>
+
+        
+            <div class="li-info">
+
+                <b class="lii-header">
+
+                    Компания: 
+
+                </b>    
+
+                <a class="bluelink-12" href="/agentstvo-nedvizimosti/2130274/">Квартиры без посредников</a>
+            </div>
+
+                
+        <div style="margin-top:5px">
+
+        
+        
+            
+
+            <a href="/flats/snyat-kvartiru-v-ekaterinburge/1-komn-kvartira/2150675/"><img height="33" src="/i/uploads/Apartment/2150675/g0_14_05_02__12_27_122_3307128_17374sm.jpg" alt=""></a>
+            
+        
+            
+
+            <a href="/flats/snyat-kvartiru-v-ekaterinburge/1-komn-kvartira/2150675/"><img height="33" src="/i/uploads/Apartment/2150675/g0_14_05_02__12_27_18_700121_17374sm.jpg" alt=""></a>
+            
+        
+        </div>
+
+    </div>
+
+</div>
+
+<div class="list-item clearfix a_row">
+
+    <div class="img-block img-block-120 fl ">
+
+        <a class="ib-body" href="/flats/snyat-kvartiru-v-ekaterinburge/2-komn-kvartira/2150713/"><img class="ibb-img" width="120" src="/i/uploads/Apartment/2150713/g0_14_05_02__13_58_38_070135_17670md2.jpg" alt=""></a>
+    </div>
+
+    
+
+
+
+    <div class="li-content">
+
+        <a class="li-title" href="/flats/snyat-kvartiru-v-ekaterinburge/2-komn-kvartira/2150713/">сдам двухкомнатную квартиру </a> <span class="li-review">(отзывов: 0)</span>
+
+		<div class="li-category">
+
+          Сдам 2-х комнатную
+        </div>
+
+
+
+        <div class="li-info">
+
+            <b class="lii-header">
+
+                Адрес:
+
+            </b> 
+
+            Белинского 171
+        </div>
+
+        <div class="li-info">
+
+            <b class="lii-header">
+
+                Район: 
+
+            </b>    
+
+            Ботаника
+        </div>
+
+        <div class="li-info">
+
+            <b class="lii-header">
+
+                Стоимость: 
+
+            </b>    
+
+            15000
+        </div>
+
+        
+            <div class="li-info">
+
+                <b class="lii-header">
+
+                    Компания: 
+
+                </b>    
+
+                <a class="bluelink-12" href="/agentstvo-nedvizimosti/21362122/">Аренда жилья</a>
+            </div>
+
+                
+        <div style="margin-top:5px">
+
+        
+        
+            
+
+            <a href="/flats/snyat-kvartiru-v-ekaterinburge/2-komn-kvartira/2150713/"><img height="33" src="/i/uploads/Apartment/2150713/g0_14_05_02__13_58_38_070135_17670sm.jpg" alt=""></a>
+            
+        
+            
+
+            <a href="/flats/snyat-kvartiru-v-ekaterinburge/2-komn-kvartira/2150713/"><img height="33" src="/i/uploads/Apartment/2150713/g0_14_05_02__13_58_36_03126612_17670sm.jpg" alt=""></a>
+            
+        
+            
+
+            <a href="/flats/snyat-kvartiru-v-ekaterinburge/2-komn-kvartira/2150713/"><img height="33" src="/i/uploads/Apartment/2150713/g0_14_05_02__13_58_35_040775_17670sm.jpg" alt=""></a>
+            
+        
+        </div>
+
+    </div>
+
+</div>
+
+<div class="list-item clearfix 1">
+
+    <div class="img-block img-block-120 fl ">
+
+        <a class="ib-body" href="/flats/snyat-kvartiru-v-ekaterinburge/1-komn-kvartira/2150723/"><img class="ibb-img" width="120" src="/i/uploads/Apartment/2150723/g0_14_05_02__14_15_43_4241266_17374md2.jpg" alt=""></a>
+    </div>
+
+    
+
+
+
+    <div class="li-content">
+
+        <a class="li-title" href="/flats/snyat-kvartiru-v-ekaterinburge/1-komn-kvartira/2150723/">Сдам</a> <span class="li-review">(отзывов: 0)</span>
+
+		<div class="li-category">
+
+          Сдам 1-к квартиру
+        </div>
+
+
+
+        <div class="li-info">
+
+            <b class="lii-header">
+
+                Адрес:
+
+            </b> 
+
+            Луганская4
+        </div>
+
+        <div class="li-info">
+
+            <b class="lii-header">
+
+                Район: 
+
+            </b>    
+
+            Ботаника
+        </div>
+
+        <div class="li-info">
+
+            <b class="lii-header">
+
+                Стоимость: 
+
+            </b>    
+
+            10500
+        </div>
+
+        
+            <div class="li-info">
+
+                <b class="lii-header">
+
+                    Компания: 
+
+                </b>    
+
+                <a class="bluelink-12" href="/agentstvo-nedvizimosti/2130274/">Квартиры без посредников</a>
+            </div>
+
+                
+        <div style="margin-top:5px">
+
+        
+        
+            
+
+            <a href="/flats/snyat-kvartiru-v-ekaterinburge/1-komn-kvartira/2150723/"><img height="33" src="/i/uploads/Apartment/2150723/g0_14_05_02__14_15_43_4241266_17374sm.jpg" alt=""></a>
+            
+        
+            
+
+            <a href="/flats/snyat-kvartiru-v-ekaterinburge/1-komn-kvartira/2150723/"><img height="33" src="/i/uploads/Apartment/2150723/g0_14_05_02__14_15_41_3123415_17374sm.jpg" alt=""></a>
+            
+        
+            
+
+            <a href="/flats/snyat-kvartiru-v-ekaterinburge/1-komn-kvartira/2150723/"><img height="33" src="/i/uploads/Apartment/2150723/g0_14_05_02__14_15_40_8122310_17374sm.jpg" alt=""></a>
+            
+        
+        </div>
+
+    </div>
+
+</div>
+
+<div class="list-item clearfix a_row">
+
+    <div class="img-block img-block-120 fl ">
+
+        <a class="ib-body" href="/flats/snyat-kvartiru-v-ekaterinburge/1-komn-kvartira/2150730/"><img class="ibb-img" width="120" src="/i/uploads/Apartment/2150730/g0_14_05_02__14_32_47_806464_17374md2.jpg" alt=""></a>
+    </div>
+
+    
+
+
+
+    <div class="li-content">
+
+        <a class="li-title" href="/flats/snyat-kvartiru-v-ekaterinburge/1-komn-kvartira/2150730/">Сдам</a> <span class="li-review">(отзывов: 0)</span>
+
+		<div class="li-category">
+
+          Сдам 1-к квартиру
+        </div>
+
+
+
+        <div class="li-info">
+
+            <b class="lii-header">
+
+                Адрес:
+
+            </b> 
+
+            Чайковского181/6
+        </div>
+
+        <div class="li-info">
+
+            <b class="lii-header">
+
+                Район: 
+
+            </b>    
+
+            Ботаника
+        </div>
+
+        <div class="li-info">
+
+            <b class="lii-header">
+
+                Стоимость: 
+
+            </b>    
+
+            10000
+        </div>
+
+        
+            <div class="li-info">
+
+                <b class="lii-header">
+
+                    Компания: 
+
+                </b>    
+
+                <a class="bluelink-12" href="/agentstvo-nedvizimosti/2130274/">Квартиры без посредников</a>
+            </div>
+
+                
+        <div style="margin-top:5px">
+
+        
+        
+            
+
+            <a href="/flats/snyat-kvartiru-v-ekaterinburge/1-komn-kvartira/2150730/"><img height="33" src="/i/uploads/Apartment/2150730/g0_14_05_02__14_32_47_806464_17374sm.jpg" alt=""></a>
+            
+        
+            
+
+            <a href="/flats/snyat-kvartiru-v-ekaterinburge/1-komn-kvartira/2150730/"><img height="33" src="/i/uploads/Apartment/2150730/g0_14_05_02__14_32_47_2083127_17374sm.jpg" alt=""></a>
+            
+        
+            
+
+            <a href="/flats/snyat-kvartiru-v-ekaterinburge/1-komn-kvartira/2150730/"><img height="33" src="/i/uploads/Apartment/2150730/g0_14_05_02__14_32_46_255466_17374sm.jpg" alt=""></a>
+            
+        
+        </div>
+
+    </div>
+
+</div>
+
+</div>
+
+<a class="li-title" href="/flats/snyat-kvartiru-v-ekaterinburge/1-komn-kvartira/215012712/">сдается 1-комнатная .Самоцветный бульвар</a>
+
+UralstudentParser
+
+12	uralstudent.ru	http://uralstudent.ru	GET	/flats{{ActionPath}}-v-ekaterinburge{{RubricAction}}{{RubricPath}}/?page={{Page}}	NULL	{{PublicationLink}}	[PublicationDatetime:##{{PublicationDatetime}}##,PublicationId:{{PublicationId}},Action:{{Action}},Rubric:{{Rubric}},Region:{{Region}}]	NULL	NULL	30	DatetimeFirstIdSecondComparer	NoCompression	windows-1251	20	0	0	UralstudentParser
+
+12	\ekaterinburg	Екатеринбург	\	1	NULL	NULL	-v-ekaterinburge	NULL	NULL
+
+/flats{{ActionPath}}{{RegionPath}}{{RubricPath}}{{RubricAction}}/?page={{Page}}
+
+http://www.uralstudent.ru/flats/snyat-kvartiru-v-ekaterinburge/podselenie/?district_id=2012
+http://www.uralstudent.ru/flats/snyat-kvartiru-v-ekaterinburge/?district_id=2012&page=2
+http://www.uralstudent.ru/flats/snyat-kvartiru-v-ekaterinburge/podselenie/?district_id=2012
+http://www.uralstudent.ru/flats/snyat-kvartiru-v-ekaterinburge/kvartiry-posutochno/?district_id=2012
+http://www.uralstudent.ru/flats/snyat-kvartiru-v-ekaterinburge/1-komn-kvartira/?district_id=2012
+http://www.uralstudent.ru/flats/snyat-kvartiru-v-ekaterinburge/2-komn-kvartira/?district_id=2012
+http://www.uralstudent.ru/flats/snyat-kvartiru-v-ekaterinburge/sdam-dom/?district_id=2012
+
+12	GET	Region	http://www.uralstudent.ru/flats/snyat-kvartiru-v-ekaterinburge/1-komn-kvartira/		//select[@name='{{Option}}']/option[@value]	//select[@name='{{Option}}']/option[@value]	{{value}}	.*	$&	{{NextSibling.InnerText}}	.*	$&	\{{districtFilter1}}	\!
+
+<select class="select-box" name="categoryFilter" id="categoryFilter" style="position: absolute; top: -12121212px;">
+<option value="">-- Выберите --</option>
+<option value="512">Продажа</option>
+<option value="60" selected="selected">Аренда</option>
+</select>
+
+<option value="25">Продам комнату</option>
+<option value="26">Продам 1-к квартиру</option>
+<option value="27">Продам 2-х комнатную</option>
+<option value="28">Продам 3-х комнатную</option>
+<option value="212">Продам более 3-х комнатной</option>
+<option value="30">Продам дом</option>
+<option value="122">Сдам комнату</option>
+<option value="20" selected="selected">Сдам 1-к квартиру</option>
+<option value="21">Сдам 2-х комнатную</option>
+<option value="22">Сдам 3-х комнатную</option>
+<option value="23">Сдам более 3-х комнатной</option>
+<option value="24">Сдам дом</option>
+<option value="31">Подселение</option>
+<option value="133">Квартиры посуточно</option>
+
+<select style="width: 75px; position: absolute; top: -12121212px;" class="select-box" name="districtFilter1" id="districtFilter1">
+<option value="">-- Выберите --</option>
+<option value="32-y-gorodok">32-й городок</option>
+<option value="avtovokzal-yuzhnyy">Автовокзал (Южный)</option>
+<option value="akademicheskiy">Академический</option>
+<option value="botanika">Ботаника</option>
+<option value="viz">ВИЗ</option>
+<option value="vokzal">Вокзал</option>
+<option value="vtorchermet">Вторчермет</option>
+<option value="vtuzgorodok">Втузгородок</option>
+<option value="elizavet">Елизавет</option>
+<option value="zhbi">ЖБИ</option>
+<option value="zavokzalnyy">Завокзальный</option>
+<option value="zarechnyy">Заречный</option>
+<option value="izoplit">Изоплит</option>
+<option value="istok">Исток</option>
+<option value="kamennye-palatki">Каменные палатки</option>
+<option value="keramika">Керамика</option>
+<option value="kolcovo">Кольцово</option>
+<option value="kompressornyy">Компрессорный</option>
+<option value="krasnolese">Краснолесье</option>
+<option value="lechebnyy">Лечебный</option>
+<option value="nizhne-isetskiy">Нижне-Исетский</option>
+<option value="novaya-sortirovka">Новая сортировка</option>
+<option value="parkovyy">Парковый</option>
+<option value="pionerskiy">Пионерский</option>
+<option value="pticefabrika">Птицефабрика</option>
+<option value="sem-klyuchey">Семь ключей</option>
+<option value="sibirskiy-trakt">Сибирский тракт</option>
+<option value="sinie-kamni">Синие камни</option>
+<option value="staraya-sortirovka">Старая сортировка</option>
+<option value="uktus">Уктус</option>
+<option value="unc">УНЦ</option>
+<option value="uralmash">Уралмаш</option>
+<option value="himmash">Химмаш</option>
+<option value="centr">Центр</option>
+<option value="shartash">Шарташ</option>
+<option value="shartashskiy-rynok">Шарташский рынок</option>
+<option value="shirokaya-rechka">Широкая речка</option>
+<option value="elmash">Эльмаш</option>
+<option value="yugo-zapadnyy">Юго-Западный</option>
+</select>

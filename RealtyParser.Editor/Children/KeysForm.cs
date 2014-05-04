@@ -7,10 +7,13 @@ using RealtyParser.BeBoss;
 using RealtyParser.Bn;
 using RealtyParser.Collections;
 using RealtyParser.Egent;
+using RealtyParser.Kvadrat66;
 using RealtyParser.Mirkvartir;
 using RealtyParser.NetAgenta;
 using RealtyParser.Rosrealt;
+using RealtyParser.Sdamka;
 using RealtyParser.Upn;
+using RealtyParser.Uralstudent;
 using RT.ParsingLibs;
 
 namespace RealtyParser.Editor.Children
@@ -32,6 +35,9 @@ namespace RealtyParser.Editor.Children
                     new BeBossParser(),
                     new Arenda66Parser(),
                     new UpnParser(),
+                    new Kvadrat66Parser(),
+                    new SdamkaParser(),
+                    new UralstudentParser(),
                 }.Select(item => new KeyValuePair<string, IParsingModule>(item.ModuleClassname, item))
                     .Cast<object>().ToArray());
         }

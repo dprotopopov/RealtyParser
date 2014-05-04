@@ -10,6 +10,8 @@ D:\Projects\RealtyParser\RealtyParser.Egent\bin\Release\RealtyParserMerge.bat
 D:\Projects\RealtyParser\RealtyParser.Egent\bin\Release\RealtyParser.Egent.dll.config
 D:\Projects\RealtyParser\RealtyParser.Egent\bin\Release\RealtyParser.Egent.dll
 D:\Projects\RealtyParser\RealtyParser.Egent\bin\Release\RealtyParser.Egent.pdb
+D:\Projects\RealtyParser\RealtyParser.Egent\bin\Release\EntityFramework.dll
+D:\Projects\RealtyParser\RealtyParser.Egent\bin\Release\EntityFramework.SqlServer.dll
 D:\Projects\RealtyParser\RealtyParser.Egent\bin\Release\HtmlAgilityPack.dll
 D:\Projects\RealtyParser\RealtyParser.Egent\bin\Release\ICSharpCode.SharpZipLib.dll
 D:\Projects\RealtyParser\RealtyParser.Egent\bin\Release\MyDatabase.dll
@@ -18,9 +20,10 @@ D:\Projects\RealtyParser\RealtyParser.Egent\bin\Release\MyParser.dll
 D:\Projects\RealtyParser\RealtyParser.Egent\bin\Release\RealtyParser.dll
 D:\Projects\RealtyParser\RealtyParser.Egent\bin\Release\RT.Crawler.dll
 D:\Projects\RealtyParser\RealtyParser.Egent\bin\Release\RT.ParsingLibs.dll
-D:\Projects\RealtyParser\RealtyParser.Egent\bin\Release\TidyManaged.dll
 D:\Projects\RealtyParser\RealtyParser.Egent\bin\Release\System.Data.SQLite.dll
-D:\Projects\RealtyParser\RealtyParser.Egent\bin\Release\EntityFramework.dll
+D:\Projects\RealtyParser\RealtyParser.Egent\bin\Release\System.Data.SQLite.EF6.dll
+D:\Projects\RealtyParser\RealtyParser.Egent\bin\Release\System.Data.SQLite.Linq.dll
+D:\Projects\RealtyParser\RealtyParser.Egent\bin\Release\TidyManaged.dll
 D:\Projects\RealtyParser\RealtyParser.Egent\bin\Release\MyDatabase.pdb
 D:\Projects\RealtyParser\RealtyParser.Egent\bin\Release\MyLibrary.pdb
 D:\Projects\RealtyParser\RealtyParser.Egent\bin\Release\MyParser.pdb
@@ -30,10 +33,10 @@ D:\Projects\RealtyParser\RealtyParser.Egent\bin\Release\RT.Crawler.xml
 D:\Projects\RealtyParser\RealtyParser.Egent\bin\Release\RT.ParsingLibs.pdb
 D:\Projects\RealtyParser\RealtyParser.Egent\bin\Release\RT.ParsingLibs.xml
 D:\Projects\RealtyParser\RealtyParser.Egent\bin\Release\TidyManaged.xml
+D:\Projects\RealtyParser\RealtyParser.Egent\bin\Release\EntityFramework.xml
+D:\Projects\RealtyParser\RealtyParser.Egent\bin\Release\EntityFramework.SqlServer.xml
 D:\Projects\RealtyParser\RealtyParser.Egent\bin\Release\HtmlAgilityPack.pdb
 D:\Projects\RealtyParser\RealtyParser.Egent\bin\Release\HtmlAgilityPack.xml
 D:\Projects\RealtyParser\RealtyParser.Egent\bin\Release\System.Data.SQLite.xml
-D:\Projects\RealtyParser\RealtyParser.Egent\bin\Release\EntityFramework.xml
-D:\Projects\RealtyParser\RealtyParser.Egent\obj\Release\RealtyParser.Egent.csprojResolveAssemblyReference.cache
 D:\Projects\RealtyParser\RealtyParser.Egent\obj\Release\RealtyParser.Egent.dll
 D:\Projects\RealtyParser\RealtyParser.Egent\obj\Release\RealtyParser.Egent.pdb

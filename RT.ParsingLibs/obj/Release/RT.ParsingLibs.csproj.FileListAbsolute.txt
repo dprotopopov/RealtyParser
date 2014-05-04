@@ -21,5 +21,6 @@ D:\MYFILES\RERDAN\SVN\CODE\RT.ParsingLibs\obj\Release\RT.ParsingLibs.pdb
 D:\Projects\RealtyParser\RT.ParsingLibs\bin\Release\RT.ParsingLibs.XML
 D:\Projects\RealtyParser\RT.ParsingLibs\bin\Release\RT.ParsingLibs.dll
 D:\Projects\RealtyParser\RT.ParsingLibs\bin\Release\RT.ParsingLibs.pdb
+D:\Projects\RealtyParser\RT.ParsingLibs\obj\Release\RT.ParsingLibs.csprojResolveAssemblyReference.cache
 D:\Projects\RealtyParser\RT.ParsingLibs\obj\Release\RT.ParsingLibs.dll
 D:\Projects\RealtyParser\RT.ParsingLibs\obj\Release\RT.ParsingLibs.pdb

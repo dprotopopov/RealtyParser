@@ -619,6 +619,7 @@ namespace RealtyParser
                                     }
                                 });
                     Debug.WriteLine(command.CommandText);
+                    Debug.WriteLine(string.Join(Environment.NewLine, (parameters[0] as IEnumerable<object>)));
                     command.Parameters.Add(new SQLiteParameter(string.Format("@{0}{1}", SiteTable, IdColumn),
                         parameters[parameters.Length - 1]));
                     for (int index = 0; index < (parameters[1] as IEnumerable<string>).Count(); index++)

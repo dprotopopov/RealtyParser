@@ -1,0 +1,13 @@
+BEGIN;
+-- DELETE FROM SiteBuilderMapping WHERE NOT SiteId IN (SELECT SiteId FROM Site);
+-- DELETE FROM SiteReturnFieldMapping WHERE NOT SiteId IN (SELECT SiteId FROM Site);
+-- DELETE FROM SiteRubricActionMapping WHERE NOT SiteId IN (SELECT SiteId FROM Site);
+-- DELETE FROM SiteRegionRubricMapping WHERE NOT SiteId IN (SELECT SiteId FROM Site);
+-- DELETE FROM SiteActionMapping WHERE NOT SiteId IN (SELECT SiteId FROM Site);
+-- DELETE FROM SiteRubricMapping WHERE NOT SiteId IN (SELECT SiteId FROM Site);
+-- DELETE FROM SiteRegionMapping WHERE NOT SiteId IN (SELECT SiteId FROM Site);
+-- DELETE FROM SiteAction WHERE NOT SiteId IN (SELECT SiteId FROM Site);
+-- DELETE FROM SiteRubric WHERE NOT SiteId IN (SELECT SiteId FROM Site);
+-- DELETE FROM SiteRegion WHERE NOT SiteId IN (SELECT SiteId FROM Site);
+COMMIT;
+VACUUM;

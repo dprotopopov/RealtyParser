@@ -1,0 +1,205 @@
+sdamka.com
+
+http://www.sdamka.com/dtls.php?id=67286
+
+
+11	WebPublicationPublicationId	//div[@id='result']//div[@class='resid']	{{InnerText}}	\D*(\d+).*	$1
+11	WebPublicationUrl	/	{{Url}}	.*	$&
+11	WebPublicationSite	/	{{Url}}	((http(s)?:\/\/)?[^\/\?]+).*	$1
+11	WebPublicationDescription	//div[@id='result']//div[@class='textadv']/text()	{{InnerText}}	.*	$&
+11	WebPublicationPhotos	//div[@id='telo']/following-sibling::img[@src]	{{src}}	.*	$&
+11	WebPublicationAdditionalInfoRealtyAdditionalInfoRoomNumber	//div[@id='result']//div[@class='textadv']//dt[contains(.,'Комнат')]/following-sibling::dd[1]	{{InnerText}}	.*	$&
+11	WebPublicationAdditionalInfoRealtyAdditionalInfoWc	//div[@id='result']//div[@class='textadv']//dt[contains(.,'Санузел')]/following-sibling::dd[1]	{{InnerText}}	.*	$&
+11	WebPublicationAdditionalInfoRealtyAdditionalInfoFloor	//div[@id='result']//div[@class='textadv']//dt[contains(.,'Этаж')]/following-sibling::dd[1]	{{InnerText}}	.*	$&
+11	WebPublicationAdditionalInfoRealtyAdditionalInfoAddress	//div[@id='result']//div[@class='areaadres']/div[4]	{{InnerText}}	.*	$&
+11	WebPublicationAdditionalInfoRealtyAdditionalInfoDistrict	//div[@id='result']//div[@class='areaadres']/div[3]	{{InnerText}}	.*	$&
+11	WebPublicationAdditionalInfoRealtyAdditionalInfoAppointmentOfRoom	//h1	{{InnerText}}	.*	$&
+11	WebPublicationAdditionalInfoRealtyAdditionalInfoCostAll	//div[@id='result']//div[@class='areaadres']/div[1]	{{InnerText}}	\D*(\d+)\D*	$1
+11	PublicationLink	//div[@class='results']//div[@class='resid']	{{InnerText}}	\D*(\d+).*	/dtls.php?id=$1
+11	PublicationId	//div[@class='results']//div[@class='resid']	{{InnerText}}	\D*(\d+).*	$1
+11	PublicationDatetime	//div[@class='results']//div[@class='restime']	{{InnerText}}	\D*(\d+\D\d+\D\d+(\s+\d+\D\d+)?).*	$1
+11	WebPublicationModifyDate	//div[@id='result']//div[@class='restime']	{{InnerText}}	\D*(\d+\D\d+\D\d+(\s+\d+\D\d+)?).*	$1
+11	WebPublicationContactContactName	//div[@id='result']//div[@class='res3']/span[contains(.,'Тел.')]/following-sibling::span[1]	{{InnerText}}	[\d\s&;+\(\)\/\\,.-]*((\s*[^\d\s&;+\(\)\/\\,.-]+)+)[\d\s&;+\(\)\/\\,.-]*	$1
+11	WebPublicationContactPhone	//div[@id='result']//div[@class='res3']/span[contains(.,'Тел.')]/following-sibling::span[1]	{{InnerText}}	\D*((\D*\d+)+)\D*	$1
+
+
+<div class="textadv"><dl><dt>Комнат:</dt><dd>1</dd><dt>Санузел:</dt><dd>совмещенный</dd>
+<dt>Мебель:</dt><dd>есть</dd><dt>Этаж:</dt><dd>1</dd></dl>Квартира ПОСУТОЧНО от Собственнника полностью оборудована мебелью и техникой. Интернет. 10 мин до Центра, Автовокзала, ВИЗ. Недалеко Д. Спорта, ТРЦ Фан-Фан, Горная Академия, у-ам Звездный.</div>
+
+Сдают
+Снимут
+Продают
+Купят
+
+
+квартиру
+комнату
+дом, участок
+гараж
+помещение
+
+
+все
+однокомнатную
+двухкомнатную
+трехкомнатную
+четырехкомнатную
+многокомнатную
+
+
+все
+Центральный
+– 1 ПОЯС –
+"Автовокзал"
+Ботанический
+"ВИЗ"
+Вокзальный
+Втузгородок
+"ЖБИ"
+Заречный
+Парковый
+Пионерский
+Шарташский рынок
+Юго-Западный
+Южный
+– 2 ПОЯС –
+Завокзальный
+Н. Сортировка
+Сибирский
+Синие камни
+Уктус
+Уралмаш
+Широкая речка
+Эльмаш
+– 3 ПОЯС –
+Академический
+Аппаратный
+Елизавет
+Компрессорный
+Лечебный
+С. Сортировка
+УНЦ
+Химмаш
+Чермет
+Шинный
+– 4 ПОЯС –
+Верхнемакарово
+Изоплит
+Исток
+Кольцово
+Медный
+Н-Исетский
+Палкино
+Птицефабрика
+Рудный
+Садовый
+Семь ключей
+Совхоз
+Чусовское озеро
+Шабровский
+Шарташ
+Шувакиш
+– ОБЛАСТЬ –
+Алапаевск
+Арамиль
+Асбест
+Березовский
+Богданович
+Верхняя Пышма
+Верхняя Салда
+Ирбит
+Каменск-Уральский
+Качканар
+Кировград
+Краснотурьинск
+Красноуфимск
+Нижний Тагил
+Нижняя Тура
+Новоуральск
+Первоуральск
+Полевской
+Ревда
+Реж
+Серов
+Среднеуральск
+Сысерть
+Талица
+
+
+Апрелевка
+Балашиха
+Бронницы
+Видное
+Волоколамск
+Воскресенск
+Высоковск
+Голицыно
+Дедовск
+Дзержинский
+Дмитров
+Долгопрудный
+Домодедово
+Дрезна
+Дубна
+Егорьевск
+Железнодорожный
+Жуковский
+Зарайск
+Звенигород
+Ивантеевка
+Истра
+Кашира
+Климовск
+Клин
+Коломна
+Королев
+Котельники
+Красноармейск
+Красногорск
+Краснозаводск
+Краснознаменск
+Кубинка
+Куровское
+Ликино-Дулево
+Лобня
+Лосино-Петровский
+Луховицы
+Лыткарино
+Люберцы
+Можайск
+Московский
+Мытищи
+Наро-Фоминск
+Ногинск
+Одинцово
+Озеры
+Орехово-Зуево
+Павловский Посад
+Подольск
+Протвино
+Пушкино
+Пущино
+Раменское
+Реутов
+Рошаль
+Руза
+Сергиев Посад
+Серпухов
+Солнечногорск
+Старая Купавна
+Ступино
+Талдом
+Троицк
+Фрязино
+Химки
+Хотьково
+Черноголовка
+Чехов
+Шатура
+Щелково
+Щербинка
+Электрогорск
+Электросталь
+Электроугли
+Юбилейный
+Яхрома

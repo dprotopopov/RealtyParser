@@ -38,7 +38,7 @@ namespace RealtyParser
                 }
                 list1.Add(parts.Last());
                 string value = string.Join(string.Empty, list1).Trim();
-                if (!string.IsNullOrWhiteSpace(value)) list.Add(value);
+                list.Add(value);
                 if (ProgressCallback != null) ProgressCallback(++current, total);
             }
             if (CompliteCallback != null) CompliteCallback();

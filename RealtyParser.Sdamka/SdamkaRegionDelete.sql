@@ -1,0 +1,4 @@
+BEGIN;
+DELETE FROM SiteRegion
+WHERE  (SiteId = 11);
+COMMIT;

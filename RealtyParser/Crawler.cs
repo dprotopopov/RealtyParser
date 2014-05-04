@@ -7,6 +7,7 @@ using System.Net;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 using HtmlAgilityPack;
 using MyLibrary.Trace;
 using MyParser.Compression;
@@ -31,7 +32,7 @@ namespace RealtyParser
         }
 
         /// <summary>
-        ///     Запрос к сайту с использованием RT.Crawler
+        ///     Запрос к сайту с использованием RT.LookupCrawler
         /// </summary>
         public async Task<IEnumerable<HtmlDocument>> WebRequestHtmlDocument(Uri uri, bool async = true)
         {
@@ -53,7 +54,6 @@ namespace RealtyParser
                         var httpWebRequest = (HttpWebRequest) WebRequest.Create(uri);
                         httpWebRequest.CookieContainer = new CookieContainer();
                         httpWebRequest.AutomaticDecompression = DecompressionMethods.None;
-                        httpWebRequest.ContentType = string.Format(@"text/html; charset={0}", Encoding);
                         httpWebRequest.Referer = @"http://yandex.ru";
                         httpWebRequest.Accept = @"text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8";
                         httpWebRequest.UserAgent =
@@ -63,13 +63,6 @@ namespace RealtyParser
                         {
                             httpWebRequest.ContentType = "application/json; charset=utf-8";
                             httpWebRequest.Accept = "application/json, text/javascript, */*";
-                        }
-
-                        if (string.Compare(Method, "JSON", StringComparison.Ordinal) == 0 ||
-                            string.Compare(Method, "POST", StringComparison.Ordinal) == 0)
-                        {
-                            httpWebRequest.Method = "POST";
-
                             using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
                             {
                                 Debug.WriteLine("Request: {0}", Request);
@@ -78,8 +71,26 @@ namespace RealtyParser
                                 streamWriter.Close();
                             }
                         }
-                        else
+
+                        if (string.Compare(Method, "POST", StringComparison.Ordinal) == 0)
+                        {
+                            httpWebRequest.Method = "POST";
+                            httpWebRequest.ContentType = "application/x-www-form-urlencoded";
+
+                            using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
+                            {
+                                Debug.WriteLine("Request: {0}", HttpUtility.UrlEncode(Request));
+                                streamWriter.Write(Request);
+                                streamWriter.Flush();
+                                streamWriter.Close();
+                            }
+                        }
+
+                        if (string.Compare(Method, "GET", StringComparison.Ordinal) == 0)
+                        {
                             httpWebRequest.Method = Method;
+                            httpWebRequest.ContentType = string.Format(@"text/html; charset={0}", Encoding);
+                        }
 
                         WebResponse responce;
                         if (async)

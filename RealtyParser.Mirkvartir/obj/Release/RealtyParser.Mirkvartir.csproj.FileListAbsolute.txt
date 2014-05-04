@@ -10,6 +10,8 @@ D:\Projects\RealtyParser\RealtyParser.Mirkvartir\bin\Release\RealtyParserMerge.b
 D:\Projects\RealtyParser\RealtyParser.Mirkvartir\bin\Release\RealtyParser.Mirkvartir.dll.config
 D:\Projects\RealtyParser\RealtyParser.Mirkvartir\bin\Release\RealtyParser.Mirkvartir.dll
 D:\Projects\RealtyParser\RealtyParser.Mirkvartir\bin\Release\RealtyParser.Mirkvartir.pdb
+D:\Projects\RealtyParser\RealtyParser.Mirkvartir\bin\Release\EntityFramework.dll
+D:\Projects\RealtyParser\RealtyParser.Mirkvartir\bin\Release\EntityFramework.SqlServer.dll
 D:\Projects\RealtyParser\RealtyParser.Mirkvartir\bin\Release\HtmlAgilityPack.dll
 D:\Projects\RealtyParser\RealtyParser.Mirkvartir\bin\Release\MyDatabase.dll
 D:\Projects\RealtyParser\RealtyParser.Mirkvartir\bin\Release\MyLibrary.dll
@@ -17,9 +19,10 @@ D:\Projects\RealtyParser\RealtyParser.Mirkvartir\bin\Release\MyParser.dll
 D:\Projects\RealtyParser\RealtyParser.Mirkvartir\bin\Release\RealtyParser.dll
 D:\Projects\RealtyParser\RealtyParser.Mirkvartir\bin\Release\RT.Crawler.dll
 D:\Projects\RealtyParser\RealtyParser.Mirkvartir\bin\Release\RT.ParsingLibs.dll
-D:\Projects\RealtyParser\RealtyParser.Mirkvartir\bin\Release\TidyManaged.dll
 D:\Projects\RealtyParser\RealtyParser.Mirkvartir\bin\Release\System.Data.SQLite.dll
-D:\Projects\RealtyParser\RealtyParser.Mirkvartir\bin\Release\EntityFramework.dll
+D:\Projects\RealtyParser\RealtyParser.Mirkvartir\bin\Release\System.Data.SQLite.EF6.dll
+D:\Projects\RealtyParser\RealtyParser.Mirkvartir\bin\Release\System.Data.SQLite.Linq.dll
+D:\Projects\RealtyParser\RealtyParser.Mirkvartir\bin\Release\TidyManaged.dll
 D:\Projects\RealtyParser\RealtyParser.Mirkvartir\bin\Release\ICSharpCode.SharpZipLib.dll
 D:\Projects\RealtyParser\RealtyParser.Mirkvartir\bin\Release\MyDatabase.pdb
 D:\Projects\RealtyParser\RealtyParser.Mirkvartir\bin\Release\MyLibrary.pdb
@@ -30,10 +33,11 @@ D:\Projects\RealtyParser\RealtyParser.Mirkvartir\bin\Release\RT.Crawler.xml
 D:\Projects\RealtyParser\RealtyParser.Mirkvartir\bin\Release\RT.ParsingLibs.pdb
 D:\Projects\RealtyParser\RealtyParser.Mirkvartir\bin\Release\RT.ParsingLibs.xml
 D:\Projects\RealtyParser\RealtyParser.Mirkvartir\bin\Release\TidyManaged.xml
+D:\Projects\RealtyParser\RealtyParser.Mirkvartir\bin\Release\EntityFramework.xml
+D:\Projects\RealtyParser\RealtyParser.Mirkvartir\bin\Release\EntityFramework.SqlServer.xml
 D:\Projects\RealtyParser\RealtyParser.Mirkvartir\bin\Release\HtmlAgilityPack.pdb
 D:\Projects\RealtyParser\RealtyParser.Mirkvartir\bin\Release\HtmlAgilityPack.xml
 D:\Projects\RealtyParser\RealtyParser.Mirkvartir\bin\Release\System.Data.SQLite.xml
-D:\Projects\RealtyParser\RealtyParser.Mirkvartir\bin\Release\EntityFramework.xml
 D:\Projects\RealtyParser\RealtyParser.Mirkvartir\obj\Release\RealtyParser.Mirkvartir.csprojResolveAssemblyReference.cache
 D:\Projects\RealtyParser\RealtyParser.Mirkvartir\obj\Release\RealtyParser.Mirkvartir.dll
 D:\Projects\RealtyParser\RealtyParser.Mirkvartir\obj\Release\RealtyParser.Mirkvartir.pdb

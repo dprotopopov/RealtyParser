@@ -1,0 +1,14 @@
+BEGIN;
+DELETE FROM SiteBuilderMapping WHERE SiteId<>9;
+DELETE FROM SiteReturnFieldMapping WHERE SiteId<>9;
+DELETE FROM SiteRubricActionMapping WHERE SiteId<>9;
+DELETE FROM SiteRegionRubricMapping WHERE SiteId<>9;
+DELETE FROM SiteActionMapping WHERE SiteId<>9;
+DELETE FROM SiteRubricMapping WHERE SiteId<>9;
+DELETE FROM SiteRegionMapping WHERE SiteId<>9;
+DELETE FROM SiteAction WHERE SiteId<>9;
+DELETE FROM SiteRubric WHERE SiteId<>9;
+DELETE FROM SiteRegion WHERE SiteId<>9;
+DELETE FROM Site WHERE SiteId<>9;
+COMMIT;
+VACUUM;

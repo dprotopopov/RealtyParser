@@ -12,7 +12,7 @@ namespace RealtyParser.UnitTest
         private static readonly ParserModule ParserModule = new ParserModule();
         private static readonly Parser Parser = ParserModule.Parser;
         private static readonly Transformation Transformation = ParserModule.Transformation;
-        private static readonly Crawler Crawler = ParserModule.Crawler;
+        private static readonly Crawler Crawler = ParserModule.LookupCrawler;
 
         [TestMethod]
         public void TestInvokeNodeProperty()

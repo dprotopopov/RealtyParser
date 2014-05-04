@@ -10,6 +10,8 @@ D:\Projects\RealtyParser\RealtyParser.Rosrealt\bin\Release\RealtyParserMerge.bat
 D:\Projects\RealtyParser\RealtyParser.Rosrealt\bin\Release\RealtyParser.Rosrealt.dll.config
 D:\Projects\RealtyParser\RealtyParser.Rosrealt\bin\Release\RealtyParser.Rosrealt.dll
 D:\Projects\RealtyParser\RealtyParser.Rosrealt\bin\Release\RealtyParser.Rosrealt.pdb
+D:\Projects\RealtyParser\RealtyParser.Rosrealt\bin\Release\EntityFramework.dll
+D:\Projects\RealtyParser\RealtyParser.Rosrealt\bin\Release\EntityFramework.SqlServer.dll
 D:\Projects\RealtyParser\RealtyParser.Rosrealt\bin\Release\HtmlAgilityPack.dll
 D:\Projects\RealtyParser\RealtyParser.Rosrealt\bin\Release\MyDatabase.dll
 D:\Projects\RealtyParser\RealtyParser.Rosrealt\bin\Release\MyLibrary.dll
@@ -17,9 +19,10 @@ D:\Projects\RealtyParser\RealtyParser.Rosrealt\bin\Release\MyParser.dll
 D:\Projects\RealtyParser\RealtyParser.Rosrealt\bin\Release\RealtyParser.dll
 D:\Projects\RealtyParser\RealtyParser.Rosrealt\bin\Release\RT.Crawler.dll
 D:\Projects\RealtyParser\RealtyParser.Rosrealt\bin\Release\RT.ParsingLibs.dll
-D:\Projects\RealtyParser\RealtyParser.Rosrealt\bin\Release\TidyManaged.dll
 D:\Projects\RealtyParser\RealtyParser.Rosrealt\bin\Release\System.Data.SQLite.dll
-D:\Projects\RealtyParser\RealtyParser.Rosrealt\bin\Release\EntityFramework.dll
+D:\Projects\RealtyParser\RealtyParser.Rosrealt\bin\Release\System.Data.SQLite.EF6.dll
+D:\Projects\RealtyParser\RealtyParser.Rosrealt\bin\Release\System.Data.SQLite.Linq.dll
+D:\Projects\RealtyParser\RealtyParser.Rosrealt\bin\Release\TidyManaged.dll
 D:\Projects\RealtyParser\RealtyParser.Rosrealt\bin\Release\ICSharpCode.SharpZipLib.dll
 D:\Projects\RealtyParser\RealtyParser.Rosrealt\bin\Release\MyDatabase.pdb
 D:\Projects\RealtyParser\RealtyParser.Rosrealt\bin\Release\MyLibrary.pdb
@@ -30,10 +33,11 @@ D:\Projects\RealtyParser\RealtyParser.Rosrealt\bin\Release\RT.Crawler.xml
 D:\Projects\RealtyParser\RealtyParser.Rosrealt\bin\Release\RT.ParsingLibs.pdb
 D:\Projects\RealtyParser\RealtyParser.Rosrealt\bin\Release\RT.ParsingLibs.xml
 D:\Projects\RealtyParser\RealtyParser.Rosrealt\bin\Release\TidyManaged.xml
+D:\Projects\RealtyParser\RealtyParser.Rosrealt\bin\Release\EntityFramework.xml
+D:\Projects\RealtyParser\RealtyParser.Rosrealt\bin\Release\EntityFramework.SqlServer.xml
 D:\Projects\RealtyParser\RealtyParser.Rosrealt\bin\Release\HtmlAgilityPack.pdb
 D:\Projects\RealtyParser\RealtyParser.Rosrealt\bin\Release\HtmlAgilityPack.xml
 D:\Projects\RealtyParser\RealtyParser.Rosrealt\bin\Release\System.Data.SQLite.xml
-D:\Projects\RealtyParser\RealtyParser.Rosrealt\bin\Release\EntityFramework.xml
 D:\Projects\RealtyParser\RealtyParser.Rosrealt\obj\Release\RealtyParser.Rosrealt.csprojResolveAssemblyReference.cache
 D:\Projects\RealtyParser\RealtyParser.Rosrealt\obj\Release\RealtyParser.Rosrealt.dll
 D:\Projects\RealtyParser\RealtyParser.Rosrealt\obj\Release\RealtyParser.Rosrealt.pdb
