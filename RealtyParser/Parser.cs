@@ -214,7 +214,14 @@ namespace RealtyParser
                         .Select(
                             input => regex.Replace(input, returnFieldInfo.ReturnFieldRegexReplacement.ToString()).Trim())
                         .Where(value => !string.IsNullOrWhiteSpace(value));
-                lock (returnFields) returnFields.Add(returnFieldInfo.ReturnFieldId.ToString(), list);
+                if (string.IsNullOrEmpty(returnFieldInfo.JoinSeparator.ToString()))
+                    lock (returnFields)
+                        returnFields.Add(returnFieldInfo.ReturnFieldId.ToString(), list);
+                else
+                    lock (returnFields)
+                        returnFields.Add(returnFieldInfo.ReturnFieldId.ToString(),
+                            string.Join(returnFieldInfo.JoinSeparator.ToString(), list));
+
                 Debug.WriteLine("{0}:{1}", returnFieldInfo.ReturnFieldId, string.Join(Environment.NewLine, list));
                 if (ProgressCallback != null) ProgressCallback(++current, total);
             });

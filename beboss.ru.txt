@@ -1,21 +1,38 @@
-7	WebPublicationPublicationId	//div[contains(@class,'content')]//p[contains(.,'Объявление №')]	{{InnerText}}	\D*(\d+)\D*	$1
-7	PublicationDatetime	//div[contains(@class,'content')]//span[contains(.,'Обновлено')]	{{InnerText}}	\s*Обновлено\s*(\d+\D+\d+\D+\d+\D+\d+\D+\d+)\s*.*	$1
-7	WebPublicationModifyDate	//div[contains(@class,'content')]//span[contains(.,'Обновлено')]	{{InnerText}}	\s*Обновлено\s*(\d+\D+\d+\D+\d+)\D+(\d+\D+\d+)\s*.*	$1 $2
-7	PublicationLink	//div[@class='obj-info']/p[@class='title']/a[@href]	{{href}}	.*	$&
-7	WebPublicationUrl	/	{{Url}}	.*	$&
-7	WebPublicationSite	/	{{Url}}	((http(s)?:\/\/)?[^\/\?]+).*	$1
-7	WebPublicationDescription	//div[contains(@class,'content')]//p[@itemprop='description']	{{InnerText}}	.*	$&
+7	PublicationLink	//div[@class='obj-info']/p[@class='title']/a[@href]	{{href}}	.*	$&	NULL
+7	PublicationId	//div[contains(@class,'content')]//p[contains(.,'Объявление №')]	{{InnerText}}	\D*(\d+)\D*	$1	NULL
+7	PublicationDatetime	//div[contains(@class,'content')]//span[contains(.,'Обновлено')]	{{InnerText}}	\D*(\d+\D+\d+\D+\d+)\D+(\d+\D+\d+)\s*.*	$1 $2	NULL
+7	WebPublicationModifyDate	//div[contains(@class,'content')]//span[contains(.,'Обновлено')]	{{InnerText}}	\D*(\d+\D+\d+\D+\d+)\D+(\d+\D+\d+)\s*.*	$1 $2	NULL
+7	WebPublicationUrl	/	{{Url}}	.*	$&	NULL
+7	WebPublicationSite	/	{{Url}}	((http(s)?:\/\/)?[^\/\?]+).*	$1	NULL
+7	WebPublicationPublicationId	//div[contains(@class,'content')]//p[contains(.,'Объявление №')]	{{InnerText}}	\D*(\d+)\D*	$1	NULL
+7	WebPublicationContactContactName	//div[@itemtype='http://schema.org/Brand']/b	{{InnerText}}	\s*(\S+)\s*	$1	 
+7	WebPublicationContactAuthor	//div[@itemtype='http://schema.org/Brand']/b	{{InnerText}}	\s*(\S+)\s*	$1	 
+7	WebPublicationPhotos	//div[contains(@class,'content')]//img[@itemprop='image'][@src]	{{src}}	.*	$&	NULL
+7	WebPublicationAdditionalInfoRealtyAdditionalInfoAddress	//div[contains(@class,'content')]//p[@class='object-addresses']	{{InnerText}}	\s*(\S+)\s*	$1	 
+7	WebPublicationAdditionalInfoRealtyAdditionalInfoCostAll	//div[@itemtype='http://schema.org/Offer']/font[@itemprop='price']/b	{{InnerText}}	\D*(\d+)\D*	$1	NULL
+7	WebPublicationAdditionalInfoRealtyAdditionalInfoTotalSpace	//div[@itemtype='http://schema.org/Offer']/b[1]	{{InnerText}}	\D*(\d+)\D*	$1	NULL
+7	WebPublicationAdditionalInfoRealtyAdditionalInfoAppointmentOfRoom	//h2/span[@itemprop='name']	{{InnerText}}	\s*(\S+)\s*	$1	 
+7	WebPublicationAdditionalInfoRealtyAdditionalInfoLeasableSpace	//div[@itemtype='http://schema.org/Offer']/text()[contains(.,'Арендные площади')]/following-sibling::b|//div[@itemtype='http://schema.org/Offer']/font[@itemprop='price'][contains(.,'аренд')]/following-sibling::b[1]	{{InnerText}}	\D*(\d+)\D*	$1	NULL
+7	WebPublicationAdditionalInfoRealtyAdditionalInfoCostPerMeter	//div[@itemtype='http://schema.org/Offer']/font[@itemprop='price']/text()[contains(.,'Арендная ставка')]|//div[@itemtype='http://schema.org/Offer']//span[contains(.,'руб./м?')]	{{InnerText}}	\D*(\d+)\D*	$1	NULL
+7	WebPublicationAdditionalInfoRealtyAdditionalInfoFloorNumber	//div[contains(@class,'content')]//label[contains(.,'Этажность объекта')]/following-sibling::span[1]	{{InnerText}}	\D*(\d+)\D*	$1	NULL
+7	WebPublicationAdditionalInfoRealtyAdditionalInfoDistrict	//div[contains(@class,'content')]//label[contains(.,'Район')]/following-sibling::span[1]	{{InnerText}}	\s*(\S+)\s*	$1	 
+7	WebPublicationDescription	//div[contains(@class,'content')]//label[contains(.,'В стоимость аренды входит')]|//div[contains(@class,'content')]//label[contains(.,'В стоимость аренды входит')]/following-sibling::span[1]|//div[contains(@class,'content')]//p[contains(@class,'desc')]/preceding-sibling::h3[1]|//div[contains(@class,'content')]//p[contains(@class,'desc')]	{{InnerText}}	\s*(\S+)\s*	$1	 
 
-7	WebPublicationContactAuthor	//div[@itemtype='http://schema.org/Brand']/b	{{InnerText}}	.*	$&
-7	WebPublicationPhotos	//div[contains(@class,'content')]//img[@itemprop='image'][@src]	{{src}}	.*	$&
-
-7	WebPublicationAdditionalInfoRealtyAdditionalInfoAddress	//div[contains(@class,'content')]//p[@class='object-addresses']	{{InnerText}}	.*	$&
-7	WebPublicationAdditionalInfoRealtyAdditionalInfoCostAll	//div[@itemtype='http://schema.org/Offer']/font[@itemprop='price']/b	{{InnerText}}	\D*(\d+)\D*	$1
-7	WebPublicationAdditionalInfoRealtyAdditionalInfoCostPerMeter	//div[@itemtype='http://schema.org/Offer']/span	{{InnerText}}	\D*(\d+)\D*	$1
-7	WebPublicationAdditionalInfoRealtyAdditionalInfoTotalSpace	//div[@itemtype='http://schema.org/Offer']/b[1]	{{InnerText}}	\D*(\d+)\D*.*	$1
-7	WebPublicationAdditionalInfoRealtyAdditionalInfoLeasableSpace	//div[@itemtype='http://schema.org/Offer']/font[@itemprop='price'][contains(.,'аренд')]/../b[1]	{{InnerText}}	\D*(\d+)\D*.*	$1
-
-7	WebPublicationAdditionalInfoRealtyAdditionalInfoAppointmentOfRoom	//h2/span[@itemprop='name']	{{InnerText}}	.*	$&
+<div class="object-main-props" itemprop="offers" itemscope="itemscope" itemtype="http://schema.org/Offer">
+                                Общая площадь объекта: 
+                                    <b>4 000 м?
+                                    </b><br>
+                                Арендные площади:
+                                <b>30 </b>?<b>1 500 м?
+                                    </b><br><font itemprop="price">Арендная ставка: 
+                                        950&nbsp;руб./м?/мес</font><br>
+</div>
+<p class="row"><label for="">Этажность объекта</label><span>
+3
+</span></p>
+<p class="row"><label for="">В стоимость аренды входит</label><span>
+эксплуатационные расходы, коммунальные платежи, уборка мест общего пользования
+</span></p>
 
 <div class="obj-info">
 <p class="title"><a href="http://atmosfera-msk.beboss.ru">Атмосфера, офисный центр</a></p>
