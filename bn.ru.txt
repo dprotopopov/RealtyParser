@@ -1,5 +1,24 @@
 bn.ru
 
+
+[PublicationId:10924687,Action:\sale,Rubric:\/city/flats,Region:\/moskva/]
+[PublicationId:10941127,Action:\sale,Rubric:\/city/flats,Region:\/moskva/]
+
+http://www.bn.ru/moskva/sale/city/flats/?
+sort=address
+&sortorder=ASC
+&price%5Bfrom%5D=&price%5Bto%5D=
+&square_total%5Bfrom%5D=
+&square_total%5Bto%5D=&square_living%5Bfrom%5D=&square_living%5Bto%5D=
+&square_kitchen%5Bfrom%5D=&square_kitchen%5Bto%5D=
+&floor%5Bfrom%5D=&floor%5Bto%5D=
+&date_create=1
+&firm_name=&description=&text=
+
+http://www.bn.ru/moskva/sale/city/flats/?sort=address&sortorder=ASC&price%5Bfrom%5D=&price%5Bto%5D=&square_total%5Bfrom%5D=&square_total%5Bto%5D=&square_living%5Bfrom%5D=&square_living%5Bto%5D=&square_kitchen%5Bfrom%5D=&square_kitchen%5Bto%5D=&floor%5Bfrom%5D=&floor%5Bto%5D=&date_create=2&firm_name=&description=&text=
+
+6	bn.ru	http://bn.ru	GET	{{Region}}{{Action}}{{Rubric}}/?start={{PageStart}}{{rooms}}&result_tpl=table&date_create=1&print_page=1	NULL	{{PublicationLink}}	[PublicationDatetime:##{{PublicationDatetime}}##,PublicationId:{{PublicationId}},Action:{{Action}},Rubric:{{Rubric}},Region:{{Region}}]	NULL	NULL	30	DatetimeFirstIdSecondComparer	NoCompression	windows-1251	50	0	0	1	BnParser
+
 6	bn.ru	http://bn.ru	GET	NoCompression	http://bn.ru{{Region}}{{Action}}{{Rubric}}/?start={{PageStart}}{{rooms}}&result_tpl=table&print_page=1	{{PublicationLink}}	[PublicationDatetime:##{{PublicationDatetime}}##,PublicationId:{{PublicationId}},Action:{{Action}},Rubric:{{Rubric}},Region:{{Region}}]	NULL	NULL	30	DatetimeFirstIdSecondComparer	windows-1251	50	0	BnParser
 
 6	PublicationLink	//table//p/a[1][@href]	{{href}}	.*	$&

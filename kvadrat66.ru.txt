@@ -1,10 +1,10 @@
 
 
 10	PublicationLink	//td[@class="tdec"]//a[@class="site3"]	/{{href}}	.*	$&	NULL
-10	PublicationId	//table[contains(@class,"t100") or @class="tmain"]//td[@class="tdec"]//a[@class="site3"]	{{href}}	(http(s)?:\/\/)?([^\/]*\/)*\D*(\d+).*	$4	NULL
+10	PublicationId	//table[contains(@class,"t100") or @class="tmain"]//td[@class="rcol" or @class="tddec5"]//td[@class="adres"][contains(.,"јдрес этого объ€влени€")]	{{InnerText}}	[^:]*:\s*(http(s)?:\/\/)?([^\/]*\/)*\D*(\d+).*	$4	NULL
 10	WebPublicationPublicationId	//table[contains(@class,"t100") or @class="tmain"]//td[@class="rcol" or @class="tddec5"]//td[@class="adres"][contains(.,"јдрес этого объ€влени€")]	{{InnerText}}	[^:]*:\s*(http(s)?:\/\/)?([^\/]*\/)*\D*(\d+).*	$4	NULL
-10	PublicationDatetime	//table[contains(@class,"t100") or @class="tmain"]//div[@class='tdate']/text()	{{InnerText}}	\D*(\d+\D\d+\D\d+(\s+\d+\D\d+)?).*	$1	NULL
-10	WebPublicationModifyDate	//div[@class="tmain"]//div[@class='tdate']	{{InnerText}}	\D*(\d+\D\d+\D\d+(\s+\d+\D\d+)?).*	$1	NULL
+10	PublicationDatetime	//*[contains(@class,"t100") or @class="tmain"]//*[@class='tdate']/text()	{{InnerText}}	\A\D*(\d+-\d+-\d+(\s+\d+:\d+)?).*	$1	NULL
+10	WebPublicationModifyDate	//*[contains(@class,"t100") or @class="tmain"]//*[@class='tdate']/text()	{{InnerText}}	\A\D*(\d+-\d+-\d+(\s+\d+:\d+)?).*	$1	NULL
 10	WebPublicationUrl	//table[contains(@class,"t100") or @class="tmain"]//td[@class="rcol" or @class="tddec5"]//td[@class="adres"][contains(.,"јдрес этого объ€влени€")]	{{InnerText}}	[^:]*:\s*(\S+).*	$1	NULL
 10	WebPublicationSite	/	{{Url}}	((http(s)?:\/\/)?[^\/\?]+).*	$1	NULL
 10	WebPublicationContactAuthor	//table[contains(@class,"t100") or @class="tmain"]//td[@class="rcol" or @class="tddec2"]/text()[contains(.,'јгентство недвижимости')]/following-sibling::a[1]	{{InnerText}}	\s*(\S+)\s*	$1	 
@@ -28,7 +28,6 @@
 10	WebPublicationAdditionalInfoRealtyAdditionalInfoAppointmentOfRoom	//td[@class='hh' or @class='tjob']/text()	{{InnerText}}	\s*(\S+)\s*	$1	 
 10	WebPublicationAdditionalInfoRealtyAdditionalInfoAddress	//td[@class='hh' or @class='tjob']/text()	{{InnerText}}	\s*(\S+)\s*	$1	 
 10	WebPublicationAdditionalInfoRealtyAdditionalInfoDistrict	//td[@class='hh' or @class='tjob']/text()	{{InnerText}}	,([^,]+),[^,]+\Z	$1	 
-
 
 10	\∆ила€\ вартиры\	 вартиры	\∆ила€\\	2	NULL	NULL	NULL	NULL	NULL
 10	\∆ила€\ вартиры\малосемейки	малосемейки	\∆ила€\ вартиры\	3	NULL	NULL	NULL	NULL	&proom[12]=12
