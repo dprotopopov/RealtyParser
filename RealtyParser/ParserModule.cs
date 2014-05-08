@@ -18,7 +18,6 @@ using RT.ParsingLibs.Models;
 using RT.ParsingLibs.Requests;
 using RT.ParsingLibs.Responses;
 using Boolean = MyLibrary.Types.Boolean;
-using DateTime = MyLibrary.Types.DateTime;
 using Uri = MyLibrary.Types.Uri;
 
 namespace RealtyParser
@@ -98,6 +97,15 @@ namespace RealtyParser
             PublicationCrawler.Method = "GET";
             PublicationCrawler.Encoding = SiteProperties.Encoding.ToString();
             PublicationCrawler.Compression = SiteProperties.CompressionClassName.ToString();
+
+            var loggingDays = MyDatabase.Database.ConvertTo<long>(SiteProperties.LoggingDays);
+            if (loggingDays > 0)
+                Database.Delete(
+                    new Logging
+                    {
+                        SiteId = SiteProperties.SiteId,
+                        RequestTimestamp = DateTime.Now.AddDays(1 - loggingDays).ToString("yyyy-MM-dd 00:00:00")
+                    }, "<");
 
             List<Resource> lastResources =
                 (string.IsNullOrWhiteSpace(request.LastPublicationId) ? string.Empty : request.LastPublicationId).Split(
@@ -187,7 +195,7 @@ namespace RealtyParser
 
                 // Устанавливаем uri используемый по-умолчанию при преобразовании строки
                 Uri.Default = BaseBuilder.Uri;
-                DateTime.Default = System.DateTime.Now;
+                MyLibrary.Types.DateTime.Default = DateTime.Now;
 
                 var returnFieldInfos = new ReturnFieldInfos();
                 foreach (
@@ -316,6 +324,13 @@ namespace RealtyParser
                                             };
                                             if (dictionary.ContainsKey(resource))
                                                 throw new LoopDetectedException();
+                                            if (loggingDays > 0)
+                                                if (
+                                                    Database.Exists(new Logging
+                                                    {
+                                                        SiteId = SiteProperties.SiteId,
+                                                        ResponceResource = resource.ToString()
+                                                    })) continue;
 
                                             dictionary.Add(resource,
                                                 new KeyValuePair<Link, Values>(links.ElementAt(i), returnValues.Slice(i)));
@@ -363,6 +378,14 @@ namespace RealtyParser
 
                                             if (dictionary.ContainsKey(list.First()))
                                                 throw new LoopDetectedException();
+
+                                            if (loggingDays > 0)
+                                                if (
+                                                    Database.Exists(new Logging
+                                                    {
+                                                        SiteId = SiteProperties.SiteId,
+                                                        ResponceResource = list.First().ToString()
+                                                    })) continue;
 
                                             currentResources.Enqueue(list.First());
                                             dictionary.Add(list.First(),
@@ -435,6 +458,16 @@ namespace RealtyParser
                     resources.AddRangeExcept(currentResources);
                     Debug.WriteLine("resources.Count = " + resources.Count());
                 }
+                if (loggingDays > 0)
+                    Database.InsertOrReplace(
+                        resources.Select(
+                            r =>
+                                new Logging
+                                {
+                                    SiteId = SiteProperties.SiteId,
+                                    RequestTimestamp = DateTime.Now.ToString(),
+                                    ResponceResource = r.ToString()
+                                }));
                 try
                 {
                     if (lastResourceDictionary.Any())

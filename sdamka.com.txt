@@ -1,30 +1,49 @@
 sdamka.com
 
+11	sdamka.com	http://sdamka.com	GET	http://{{RegionDomain}}sdamka.com/{{ActionPage}}{{RubricPage}}{{RegionPage}}.php?page={{Page}}{{ActionQuery}}{{RubricQuery}}	NULL	http://{{RegionDomain}}sdamka.com{{PublicationLink}}	[PublicationDatetime:##{{PublicationDatetime}}##,PublicationId:{{PublicationId}},Action:{{Action}},Rubric:{{Rubric}},Region:{{Region}}]	NULL	NULL	30	DatetimeFirstIdSecondComparer	NoCompression	windows-1251	20	0	0	0	SdamkaParser
+
 http://www.sdamka.com/dtls.php?id=67286
+http://www.sdamka.com/sdam-kvartiru-ekaterinburg.php?m=1&w=1&d=1
 
-
-11	WebPublicationPublicationId	//div[@id='result']//div[@class='resid']	{{InnerText}}	\D*(\d+).*	$1
-11	WebPublicationUrl	/	{{Url}}	.*	$&
-11	WebPublicationSite	/	{{Url}}	((http(s)?:\/\/)?[^\/\?]+).*	$1
-11	WebPublicationDescription	//div[@id='result']//div[@class='textadv']/text()	{{InnerText}}	.*	$&
-11	WebPublicationPhotos	//div[@id='telo']/following-sibling::img[@src]	{{src}}	.*	$&
-11	WebPublicationAdditionalInfoRealtyAdditionalInfoRoomNumber	//div[@id='result']//div[@class='textadv']//dt[contains(.,'Комнат')]/following-sibling::dd[1]	{{InnerText}}	.*	$&
-11	WebPublicationAdditionalInfoRealtyAdditionalInfoWc	//div[@id='result']//div[@class='textadv']//dt[contains(.,'Санузел')]/following-sibling::dd[1]	{{InnerText}}	.*	$&
-11	WebPublicationAdditionalInfoRealtyAdditionalInfoFloor	//div[@id='result']//div[@class='textadv']//dt[contains(.,'Этаж')]/following-sibling::dd[1]	{{InnerText}}	.*	$&
-11	WebPublicationAdditionalInfoRealtyAdditionalInfoAddress	//div[@id='result']//div[@class='areaadres']/div[4]	{{InnerText}}	.*	$&
-11	WebPublicationAdditionalInfoRealtyAdditionalInfoDistrict	//div[@id='result']//div[@class='areaadres']/div[3]	{{InnerText}}	.*	$&
-11	WebPublicationAdditionalInfoRealtyAdditionalInfoAppointmentOfRoom	//h1	{{InnerText}}	.*	$&
-11	WebPublicationAdditionalInfoRealtyAdditionalInfoCostAll	//div[@id='result']//div[@class='areaadres']/div[1]	{{InnerText}}	\D*(\d+)\D*	$1
-11	PublicationLink	//div[@class='results']//div[@class='resid']	{{InnerText}}	\D*(\d+).*	/dtls.php?id=$1
-11	PublicationId	//div[@class='results']//div[@class='resid']	{{InnerText}}	\D*(\d+).*	$1
-11	PublicationDatetime	//div[@class='results']//div[@class='restime']	{{InnerText}}	\D*(\d+\D\d+\D\d+(\s+\d+\D\d+)?).*	$1
-11	WebPublicationModifyDate	//div[@id='result']//div[@class='restime']	{{InnerText}}	\D*(\d+\D\d+\D\d+(\s+\d+\D\d+)?).*	$1
-11	WebPublicationContactContactName	//div[@id='result']//div[@class='res3']/span[contains(.,'Тел.')]/following-sibling::span[1]	{{InnerText}}	[\d\s&;+\(\)\/\\,.-]*((\s*[^\d\s&;+\(\)\/\\,.-]+)+)[\d\s&;+\(\)\/\\,.-]*	$1
-11	WebPublicationContactPhone	//div[@id='result']//div[@class='res3']/span[contains(.,'Тел.')]/following-sibling::span[1]	{{InnerText}}	\D*((\D*\d+)+)\D*	$1
-
+11	WebPublicationPublicationId	//div[@id='result']//div[@class='resid']	{{InnerText}}	\D*(\d+).*	$1	NULL
+11	WebPublicationUrl	/	{{Url}}	.*	$&	NULL
+11	WebPublicationSite	/	{{Url}}	((http(s)?:\/\/)?[^\/\?]+).*	$1	NULL
+11	WebPublicationDescription	//div[@id='result']//div[@class='textadv']/text()	{{InnerText}}	\s*(\S+)\s*	$1	 
+11	WebPublicationPhotos	//div[@id='telo']/following-sibling::img[@src]	{{src}}	.*	$&	NULL
+11	WebPublicationAdditionalInfoRealtyAdditionalInfoRoomNumber	//div[@id='result']//div[@class='textadv']//dt[contains(.,'Комнат:')]/following-sibling::dd[1]	{{InnerText}}	.*	$&	NULL
+11	WebPublicationAdditionalInfoRealtyAdditionalInfoWc	//div[@id='result']//div[@class='textadv']//dt[contains(.,'Санузел')]/following-sibling::dd[1]	{{InnerText}}	\s*(\S+)\s*	$1	 
+11	WebPublicationAdditionalInfoRealtyAdditionalInfoFloor	//div[@id='result']//div[@class='textadv']//dt[contains(.,'Этаж')]/following-sibling::dd[1]	{{InnerText}}	.*	$&	NULL
+11	WebPublicationAdditionalInfoRealtyAdditionalInfoAddress	//div[@id='result']//div[@class='areaadres']/div[4]	{{InnerText}}	\s*(\S+)\s*	$1	 
+11	WebPublicationAdditionalInfoRealtyAdditionalInfoDistrict	//div[@id='result']//div[@class='areaadres']/div[3]	{{InnerText}}	\s*(\S+)\s*	$1	 
+11	WebPublicationAdditionalInfoRealtyAdditionalInfoAppointmentOfRoom	//h1	{{InnerText}}	\s*(\S+)\s*	$1	 
+11	WebPublicationAdditionalInfoRealtyAdditionalInfoCostAll	//div[@id='result']//div[@class='areaadres']/div[1]	{{InnerText}}	\D*(\d+)\D*	$1	NULL
+11	PublicationLink	//div[@class='results']//div[@class='resid']	{{InnerText}}	\D*(\d+).*	/dtls.php?id=$1	NULL
+11	PublicationId	//div[@class='results']//div[@class='resid']	{{InnerText}}	\D*(\d+).*	$1	NULL
+11	PublicationDatetime	//div[@class='results']//div[@class='restime']	{{InnerText}}	\D*(\d+\D\d+\D\d+(\s+\d+\D\d+)?).*	$1	NULL
+11	WebPublicationModifyDate	//div[@id='result']//div[@class='restime']	{{InnerText}}	\D*(\d+\D\d+\D\d+(\s+\d+\D\d+)?).*	$1	NULL
+11	WebPublicationContactContactName	//div[@id='result']//div[@class='res3']/span[contains(.,'Тел.')]/following-sibling::span[1]	{{InnerText}}	[\d\s&;+\(\)\/\\,.-]*((\s*[^\d\s&;+\(\)\/\\,.-]+)+)[\d\s&;+\(\)\/\\,.-]*	$1	NULL
+11	WebPublicationContactPhone	//div[@id='result']//div[@class='res3']/span[contains(.,'Тел.')]/following-sibling::span[1]	{{InnerText}}	\D*((\D*\d+)+)\D*	$1	NULL
+11	WebPublicationContactAuthor	//div[@id='result']//div[@class='areaadres']/div[2]	{{InnerText}}	\s*(\S+)\s*	$1	 
 
 <div class="textadv"><dl><dt>Комнат:</dt><dd>1</dd><dt>Санузел:</dt><dd>совмещенный</dd>
 <dt>Мебель:</dt><dd>есть</dd><dt>Этаж:</dt><dd>1</dd></dl>Квартира ПОСУТОЧНО от Собственнника полностью оборудована мебелью и техникой. Интернет. 10 мин до Центра, Автовокзала, ВИЗ. Недалеко Д. Спорта, ТРЦ Фан-Фан, Горная Академия, у-ам Звездный.</div>
+
+11	\sdam\	Сдают	\\	1	NULL	NULL	sdam	NULL	NULL
+11	\snimu\	Снимут	\\	1	NULL	NULL	snimu	NULL	NULL
+11	\prodam\	Продают	\\	1	NULL	NULL	prodam	NULL	NULL
+11	\kuplju\	Купят	\\	1	NULL	NULL	kuplju	NULL	NULL
+11	\sdam\посуточно	посуточно	\sdam\	2	NULL	NULL	sdam	NULL	NULL
+11	\snimu\посуточно	посуточно	\snimu\	2	NULL	NULL	snimu	NULL	NULL
+11	\sdam\понедельно	понедельно	\sdam\	2	NULL	NULL	sdam	NULL	NULL
+11	\snimu\понедельно	понедельно	\snimu\	2	NULL	NULL	snimu	NULL	NULL
+11	\sdam\помесячно	помесячно	\sdam\	2	NULL	NULL	sdam	NULL	NULL
+11	\snimu\помесячно	помесячно	\snimu\	2	NULL	NULL	snimu	NULL	NULL
+
+11	1	\prodam\
+11	2	\kuplju\
+11	3	\sdam\
+11	4	\snimu\
+11	5	\snimu\посуточно
 
 Сдают
 Снимут

@@ -99,6 +99,7 @@
     <Compile Include="IValueable.cs" />
     <Compile Include="Link.cs" />
     <Compile Include="LinkComparer.cs" />
+    <Compile Include="Logging.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

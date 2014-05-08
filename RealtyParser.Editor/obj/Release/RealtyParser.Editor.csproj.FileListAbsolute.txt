@@ -1,3 +1,4 @@
+D:\Projects\RealtyParser\RealtyParser.Editor\bin\Release\RealtyParserEditor.exe.config
 D:\Projects\RealtyParser\RealtyParser.Editor\bin\Release\libtidy.dll
 D:\Projects\RealtyParser\RealtyParser.Editor\bin\Release\MirkvartirParser.sqlite3
 D:\Projects\RealtyParser\RealtyParser.Editor\bin\Release\BeBossParser.sqlite3
@@ -12,7 +13,6 @@ D:\Projects\RealtyParser\RealtyParser.Editor\bin\Release\Kvadrat66Parser.sqlite3
 D:\Projects\RealtyParser\RealtyParser.Editor\bin\Release\SdamkaParser.sqlite3
 D:\Projects\RealtyParser\RealtyParser.Editor\bin\Release\UpnParser.sqlite3
 D:\Projects\RealtyParser\RealtyParser.Editor\bin\Release\UralstudentParser.sqlite3
-D:\Projects\RealtyParser\RealtyParser.Editor\bin\Release\RealtyParserEditor.exe.config
 D:\Projects\RealtyParser\RealtyParser.Editor\bin\Release\RealtyParserEditor.exe.manifest
 D:\Projects\RealtyParser\RealtyParser.Editor\bin\Release\RealtyParserEditor.application
 D:\Projects\RealtyParser\RealtyParser.Editor\bin\Release\RealtyParserEditor.exe

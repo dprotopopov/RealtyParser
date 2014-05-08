@@ -1,5 +1,7 @@
 8	arenda88.info	http://www.arenda88.info	GET	NoCompression	
-/index.php?option=com_content&layout=default&search=1&view=category&Itemid={{Action}}&id={{Rubric}}&city={{Region}}&{{count}}&limitstart={{PageStart}}	{{PublicationLink}}	[PublicationDatetime:##{{PublicationDatetime}}##,PublicationId:{{PublicationId}},Action:{{Action}},Rubric:{{Rubric}},Region:{{Region}}]	NULL	NULL	30	DatetimeFirstIdSecondComparer	utf-8	20	0	Arenda88Parser
+/index.php?option=com_content&layout=default&search=1&view=category&Itemid={{Action}}&id={{Rubric}}&city={{Region}}&{{count}}&limitstart={{PageStart}}	{{PublicationLink}}	
+
+[PublicationDatetime:##{{PublicationDatetime}}##,PublicationId:{{PublicationId}},Action:{{Action}},Rubric:{{Rubric}},Region:{{Region}}]	NULL	NULL	30	DatetimeFirstIdSecondComparer	utf-8	20	0	Arenda88Parser
 
 http://www.arenda88.info/index.php?option=com_content&layout=default&search=1&view=category&Itemid={{Action}}&id={{Rubric}}&city={{Region}}&{{count}}&limitstart={{PageStart}}
 
@@ -20,28 +22,27 @@ http://net-agenta.ru{{Region}}{{RubricAction}}/{{PageStart}}.html?rooms={{roomsF
 
 
 
-8	PublicationLink	//table[@class='advTable']//td[@class='item']/a	{{href}}	.*	$&
-8	PublicationId	//table[@class='advTable']//td[@class='item']/a	{{href}}	[^\?]*\?id=(\d+).*	$1
-8	PublicationDatetime	//table[@class='advTable']//td[@class='date']	{{InnerText}}	.*	$&
-8	WebPublicationUrl	/	{{Url}}	.*	$&
-8	WebPublicationSite	/	{{Url}}	((http(s)?:\/\/)?[^\/\?]+).*	$1
-8	WebPublicationPublicationId	/	{{Url}}	[^\?]*\?id=(\d+).*	$1
-8	WebPublicationModifyDate	//div[@class='dateIco']	{{InnerText}}	.*	$&
-8	WebPublicationContactContactName	//td[contains(.,'Контактное лицо')]/following-sibling::td[1]	{{InnerText}}	.*	$&
-8	WebPublicationContactPhone	//td[contains(.,'Телефон')]/following-sibling::td[1]	{{InnerText}}	.*	$&
-8	WebPublicationPhotos	//div[contains(@class,'gallery')]//a/img[@src]	{{src}}	.*	$&
-8	WebPublicationAdditionalInfoRealtyAdditionalInfoCostAll	//td[contains(.,'Цена')]/following-sibling::td[1]	{{InnerText}}	\D*(\d+)\D*	$1
-8	WebPublicationAdditionalInfoRealtyAdditionalInfoFloor	//td[contains(.,'Этаж')]/following-sibling::td[1]	{{InnerText}}	\D*(\d*)(\D*(\d*))?.*	$1
-8	WebPublicationAdditionalInfoRealtyAdditionalInfoFloorNumber	//td[contains(.,'Этаж')]/following-sibling::td[1]	{{InnerText}}	\D*(\d*)(\D*(\d*))?.*	$3
-8	WebPublicationAdditionalInfoRealtyAdditionalInfoAppointmentOfRoom	//h2	{{InnerText}}	.*	$&
-8	WebPublicationAdditionalInfoRealtyAdditionalInfoAddress	//td[contains(.,'Город')]/following-sibling::td[1]|//td[contains(.,'Район')]/following-sibling::td[1]|//td[contains(.,'Адрес')]/following-sibling::td[1]|//span[contains(@class,'breadcrumbs')]/a	{{InnerText}}	.*	$&
-8	WebPublicationAdditionalInfoRealtyAdditionalInfoDistrict	//td[contains(.,'Район')]/following-sibling::td[1]	{{InnerText}}	.*	$&
-8	WebPublicationAdditionalInfoRealtyAdditionalInfoTotalSpace	//td[contains(.,'Площадь')]/following-sibling::td[1]	{{InnerText}}	\D*(\d+)(\.\d+)?.*	$1
-8	WebPublicationAdditionalInfoRealtyAdditionalInfoRoomNumber	//td[contains(.,'Количество комнат')]/following-sibling::td[1]	{{InnerText}}	.*	$&
-8	WebPublicationAdditionalInfoRealtyAdditionalInfoWc	//td[contains(.,'Сан узел')]/following-sibling::td[1]	{{InnerText}}	.*	$&
-8	WebPublicationAdditionalInfoRealtyAdditionalInfoIsLoggia	//td[contains(.,'Балкон/лоджия')]/following-sibling::td[1]	{{InnerText}}	.*	$&
-8	WebPublicationDescription	//div[@class='flatCardTablePad2']/text()	{{InnerText}}	.*	$&
-
+8	PublicationLink	//table[@class='advTable']//td[@class='item']/a	{{href}}	.*	$&	NULL
+8	PublicationId	//table[@class='advTable']//td[@class='item']/a	{{href}}	[^\?]*\?id=(\d+).*	$1	NULL
+8	PublicationDatetime	//table[@class='advTable']//td[@class='date']	{{InnerText}}	.*	$&	NULL
+8	WebPublicationUrl	/	{{Url}}	.*	$&	NULL
+8	WebPublicationSite	/	{{Url}}	((http(s)?:\/\/)?[^\/\?]+).*	$1	NULL
+8	WebPublicationPublicationId	/	{{Url}}	[^\?]*\?id=(\d+).*	$1	NULL
+8	WebPublicationModifyDate	//table[@class='advTable']//td[@class='date']	{{InnerText}}	.*	$&	NULL
+8	WebPublicationContactContactName	//div[@class='flatCardTablePad1']//td[contains(.,'Контактное лицо')]/following-sibling::td[1]	{{InnerText}}	\s*(\S+)\s*	$1	 
+8	WebPublicationContactPhone	//div[@class='flatCardTablePad1']//td[contains(.,'Телефон')]/following-sibling::td[1]	{{InnerText}}	.*	$&	NULL
+8	WebPublicationPhotos	//div[contains(@class,'gallery')]//a/img[@src]	{{src}}	.*	$&	NULL
+8	WebPublicationAdditionalInfoRealtyAdditionalInfoCostAll	//div[@class='flatCardTablePad1']//td[contains(.,'Цена')]/following-sibling::td[1]	{{InnerText}}	\D*(\d+)\D*	$1	NULL
+8	WebPublicationAdditionalInfoRealtyAdditionalInfoFloor	//div[@class='flatCardTablePad1']//td[contains(.,'Этаж')]/following-sibling::td[1]	{{InnerText}}	\D*(\d*)(\D*(\d*))?.*	$1	NULL
+8	WebPublicationAdditionalInfoRealtyAdditionalInfoFloorNumber	//div[@class='flatCardTablePad1']//td[contains(.,'Этаж')]/following-sibling::td[1]	{{InnerText}}	\D*(\d*)(\D*(\d*))?.*	$3	NULL
+8	WebPublicationAdditionalInfoRealtyAdditionalInfoAppointmentOfRoom	(//h2)[1]	{{InnerText}}	\s*(\S+)\s*	$1	 
+8	WebPublicationAdditionalInfoRealtyAdditionalInfoAddress	//div[@class='flatCardTablePad1']//td[contains(.,'Город')]/following-sibling::td[1]|//div[@class='flatCardTablePad1']//td[contains(.,'Район')]/following-sibling::td[1]|//div[@class='flatCardTablePad1']//td[contains(.,'Адрес')]/following-sibling::td[1]|//span[contains(@class,'breadcrumbs')]/a|(//h2)[1]	{{InnerText}}	([^,]+,)?\s*(\S+)\s*	$1	 
+8	WebPublicationAdditionalInfoRealtyAdditionalInfoDistrict	//div[@class='flatCardTablePad1']//td[contains(.,'Район')]/following-sibling::td[1]	{{InnerText}}	\s*(\S+)\s*	$1	 
+8	WebPublicationAdditionalInfoRealtyAdditionalInfoTotalSpace	//div[@class='flatCardTablePad1']//td[contains(.,'Площадь')]/following-sibling::td[1]	{{InnerText}}	\D*(\d+)(\.\d+)?.*	$1	NULL
+8	WebPublicationAdditionalInfoRealtyAdditionalInfoRoomNumber	//div[@class='flatCardTablePad1']//td[contains(.,'Количество комнат')]/following-sibling::td[1]	{{InnerText}}	.*	$&	NULL
+8	WebPublicationAdditionalInfoRealtyAdditionalInfoWc	//div[@class='flatCardTablePad1']//td[contains(.,'Сан узел')]/following-sibling::td[1]	{{InnerText}}	\s*(\S+)\s*	$1	 
+8	WebPublicationAdditionalInfoRealtyAdditionalInfoIsLoggia	//div[@class='flatCardTablePad1']//td[contains(.,'Балкон/лоджия')]/following-sibling::td[1]	{{InnerText}}	.*	$&	NULL
+8	WebPublicationDescription	//div[@class='flatCardTablePad2']/text()|//div[@class='flatCardTablePad2']/p	{{InnerText}}	\s*(\S+)\s*	$1	 
 
 <table class="flatCardTable">
                 <tbody><tr>

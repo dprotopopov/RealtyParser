@@ -1,32 +1,139 @@
-10	PublicationLink	//td[@class="tdec"]//a[@class="site3"]	/{{href}}	.*	$&
-10	PublicationId	//table[contains(@class,"t100") or @class="tmain"]//td[@class="tdec"]//a[@class="site3"]	{{href}}	(http(s)?:\/\/)?([^\/]*\/)*\D*(\d+).*	$4
-10	WebPublicationPublicationId	//table[contains(@class,"t100") or @class="tmain"]//td[@class="tdec"]//a[@class="site3"]	{{href}}	(http(s)?:\/\/)?([^\/]+\/)*\D*(\d+).*	$4
-10	PublicationDatetime	//table[contains(@class,"t100") or @class="tmain"]//div[@class='tdate']/text()	{{InnerText}}	.*	$&
-10	WebPublicationModifyDate	//div[@class="tmain"]//div[@class='tdate']/text()	{{InnerText}}	\D*(\d+-\d+-\d+).*	$1
-10	WebPublicationUrl	//table[contains(@class,"t100") or @class="tmain"]//td[@class="rcol" or @class="tddec5"]//td[@class="adres"][contains(.,"Адрес этого объявления")]	{{InnerText}}	\s*Адрес\sэтого\sобъявления:\s*(\S+)\s*	$1
-10	WebPublicationSite	/	{{Url}}	((http(s)?:\/\/)?[^\/\?]+).*	$1
-10	WebPublicationContactAuthor	//table[contains(@class,"t100") or @class="tmain"]//td[@class="rcol" or @class="tddec2"]/text()[contains(.,'Агентство недвижимости')]/following-sibling::a[1]	{{InnerText}}	.*	$&
-10	WebPublicationContactAuthorUrl	//table[contains(@class,"t100") or @class="tmain"]//td[@class="rcol" or @class="tddec2"]/text()[contains(.,'Агентство недвижимости')]/following-sibling::a[1]	{{href}}	.*	$&
-10	WebPublicationContactContactName	//table[contains(@class,"t100") or @class="tmain"]//td[@class="rcol" or @class="tddec2"]/text()[contains(.,'Персона для контактов')]/following-sibling::span[1]	{{InnerText}}	.*	$&
-10	WebPublicationPhotos	//table[contains(@class,"t100") or @class="tmain"]//td[@class="tdimg"]//img[@src]	{{src}}	.*	$&
-10	WebPublicationContactPhone	//table[contains(@class,"t100") or @class="tmain"]//td[@class="rcol" or @class="tddec2"]/text()[contains(.,'Контактный телефон')]/following-sibling::span[1]	{{InnerText}}	.*	$&
-10	WebPublicationContactEmail	//table[contains(@class,"t100") or @class="tmain"]//td[@class="rcol" or @class="tddec2"]/text()[contains(.,'E-mail')]/following-sibling::a[1]	{{href}}	.*	$&
-10	WebPublicationDescription	//table[contains(@class,"t100") or @class="tmain"]//td[@class="rcol" or @class="tddec2"]/text()[contains(.,'Еще пара слов') or contains(.,'Описание недвижимости')]/following-sibling::p[1]	{{InnerText}}	.*	$&
-10	WebPublicationAdditionalInfoRealtyAdditionalInfoFloor	//table[contains(@class,"t100") or @class="tmain"]//td[@class="rcol" or @class="tddec"]/text()[contains(.,'Этаж/этажей в доме')]/following-sibling::span[1]	{{InnerText}}	\D*((\d+)\s*\/\D*)?(\d+)?.*	$2
-10	WebPublicationAdditionalInfoRealtyAdditionalInfoFloorNumber	//table[contains(@class,"t100") or @class="tmain"]//td[@class="rcol" or @class="tddec"]/text()[contains(.,'Этаж/этажей в доме') or contains(.,'Этажность дома')]/following-sibling::span[1]	{{InnerText}}	\D*((\d+)\s*\/\D*)?(\d+)?.*	$3
-10	WebPublicationAdditionalInfoRealtyAdditionalInfoTotalSpace	//table[contains(@class,"t100") or @class="tmain"]//td[@class="rcol" or @class="tddec"]/text()[contains(.,'Площадь общая') or contains(.,'Площадь дома')]/following-sibling::span[1]	{{InnerText}}	\D*(\d+).*	$1
-10	WebPublicationAdditionalInfoRealtyAdditionalInfoLivingSpace	//table[contains(@class,"t100") or @class="tmain"]//td[@class="rcol" or @class="tddec"]/text()[contains(.,'Жилая')]/following-sibling::span[1]	{{InnerText}}	\D*(\d+).*	$1
-10	WebPublicationAdditionalInfoRealtyAdditionalInfoKitchenSpace	//table[contains(@class,"t100") or @class="tmain"]//td[@class="rcol" or @class="tddec"]/text()[contains(.,'Кухня')]/following-sibling::span[1]	{{InnerText}}	\D*(\d+).*	$1
-10	WebPublicationAdditionalInfoRealtyAdditionalInfoIsLoggia	//table[contains(@class,"t100") or @class="tmain"]//td[@class="rcol" or @class="tddec"]/text()[contains(.,'Балкон')]/following-sibling::span[1]	{{InnerText}}	.*	$&
-10	WebPublicationAdditionalInfoRealtyAdditionalInfoWc	//table[contains(@class,"t100") or @class="tmain"]//td[@class="rcol" or @class="tddec"]/text()[contains(.,'Санузел')]/following-sibling::span[1]	{{InnerText}}	.*	$&
-10	WebPublicationAdditionalInfoRealtyAdditionalInfoWallМaterial	//table[contains(@class,"t100") or @class="tmain"]//td[@class="rcol" or @class="tddec"]/text()[contains(.,'Материал дома') or contains(.,'Дом(cтроение)')]/following-sibling::span[1]	{{InnerText}}	.*	$&
-10	WebPublicationAdditionalInfoRealtyAdditionalInfoCostAll	//table[contains(@class,"t100") or @class="tmain"]//td[@class="rcol" or @class="tddec2"]/text()[contains(.,'Цена')]/following-sibling::span[1]	{{InnerText}}	\D*(\d+)\D*	$1
-10	WebPublicationAdditionalInfoRealtyAdditionalInfoViewFromProperty	//table[contains(@class,"t100") or @class="tmain"]//td[@class="rcol" or @class="tddec"]/text()[contains(.,'Окна')]/following-sibling::span[1]	{{InnerText}}	.*	$&
-10	WebPublicationAdditionalInfoRealtyAdditionalInfoLandSpace	//table[contains(@class,"t100") or @class="tmain"]//td[@class="rcol" or @class="tddec"]/text()[contains(.,'Площадь участка')]/following-sibling::span[1]	{{InnerText}}	\D*(\d+).*	$1
-10	WebPublicationAdditionalInfoRealtyAdditionalInfoAppointmentOfRoom	//td[@class='hh' or @class='tjob']	{{InnerText}}	.*	$&
-10	WebPublicationAdditionalInfoRealtyAdditionalInfoAddress	//td[@class='hh' or @class='tjob']	{{InnerText}}	.*	$&
 
 
+10	PublicationLink	//td[@class="tdec"]//a[@class="site3"]	/{{href}}	.*	$&	NULL
+10	PublicationId	//table[contains(@class,"t100") or @class="tmain"]//td[@class="tdec"]//a[@class="site3"]	{{href}}	(http(s)?:\/\/)?([^\/]*\/)*\D*(\d+).*	$4	NULL
+10	WebPublicationPublicationId	//table[contains(@class,"t100") or @class="tmain"]//td[@class="rcol" or @class="tddec5"]//td[@class="adres"][contains(.,"Адрес этого объявления")]	{{InnerText}}	[^:]*:\s*(http(s)?:\/\/)?([^\/]*\/)*\D*(\d+).*	$4	NULL
+10	PublicationDatetime	//table[contains(@class,"t100") or @class="tmain"]//div[@class='tdate']/text()	{{InnerText}}	\D*(\d+\D\d+\D\d+(\s+\d+\D\d+)?).*	$1	NULL
+10	WebPublicationModifyDate	//div[@class="tmain"]//div[@class='tdate']	{{InnerText}}	\D*(\d+\D\d+\D\d+(\s+\d+\D\d+)?).*	$1	NULL
+10	WebPublicationUrl	//table[contains(@class,"t100") or @class="tmain"]//td[@class="rcol" or @class="tddec5"]//td[@class="adres"][contains(.,"Адрес этого объявления")]	{{InnerText}}	[^:]*:\s*(\S+).*	$1	NULL
+10	WebPublicationSite	/	{{Url}}	((http(s)?:\/\/)?[^\/\?]+).*	$1	NULL
+10	WebPublicationContactAuthor	//table[contains(@class,"t100") or @class="tmain"]//td[@class="rcol" or @class="tddec2"]/text()[contains(.,'Агентство недвижимости')]/following-sibling::a[1]	{{InnerText}}	\s*(\S+)\s*	$1	 
+10	WebPublicationContactAuthorUrl	//table[contains(@class,"t100") or @class="tmain"]//td[@class="rcol" or @class="tddec2"]/text()[contains(.,'Агентство недвижимости')]/following-sibling::a[1]	{{href}}	.*	$&	NULL
+10	WebPublicationContactContactName	//table[contains(@class,"t100") or @class="tmain"]//td[@class="rcol" or @class="tddec2"]/text()[contains(.,'Персона для контактов')]/following-sibling::span[1]	{{InnerText}}	\s*(\S+)\s*	$1	 
+10	WebPublicationPhotos	//table[contains(@class,"t100") or @class="tmain"]//td[@class="tdimg"]//img[@src]	{{src}}	.*	$&	NULL
+10	WebPublicationContactPhone	//table[contains(@class,"t100") or @class="tmain"]//td[@class="rcol" or @class="tddec2"]/text()[contains(.,'Контактный телефон')]/following-sibling::span[1]	{{InnerText}}	.*	$&	NULL
+10	WebPublicationContactEmail	//table[contains(@class,"t100") or @class="tmain"]//td[@class="rcol" or @class="tddec2"]/text()[contains(.,'E-mail')]/following-sibling::a[1]	{{InnerText}}	.*	$&	NULL
+10	WebPublicationDescription	//table[contains(@class,"t100") or @class="tmain"]//td[@class="rcol" or @class="tddec2"]/text()[contains(.,'Еще пара слов') or contains(.,'Описание недвижимости')]/following-sibling::p[1]	{{InnerText}}	\s*(\S+)\s*	$1	 
+10	WebPublicationAdditionalInfoRealtyAdditionalInfoFloor	//table[contains(@class,"t100") or @class="tmain"]//td[@class="rcol" or @class="tddec"]/text()[contains(.,'Этаж/этажей в доме')]/following-sibling::span[1]	{{InnerText}}	\D*((\d+)\s*\/\D*)?(\d+)?.*	$2	NULL
+10	WebPublicationAdditionalInfoRealtyAdditionalInfoFloorNumber	//table[contains(@class,"t100") or @class="tmain"]//td[@class="rcol" or @class="tddec"]/text()[contains(.,'Этаж/этажей в доме') or contains(.,'Этажность дома')]/following-sibling::span[1]	{{InnerText}}	\D*((\d+)\s*\/\D*)?(\d+)?.*	$3	NULL
+10	WebPublicationAdditionalInfoRealtyAdditionalInfoTotalSpace	//table[contains(@class,"t100") or @class="tmain"]//td[@class="rcol" or @class="tddec"]/text()[contains(.,'Площадь общая') or contains(.,'Площадь дома')]/following-sibling::span[1]	{{InnerText}}	\D*(\d+).*	$1	NULL
+10	WebPublicationAdditionalInfoRealtyAdditionalInfoLivingSpace	//table[contains(@class,"t100") or @class="tmain"]//td[@class="rcol" or @class="tddec"]/text()[contains(.,'Жилая')]/following-sibling::span[1]	{{InnerText}}	\D*(\d+).*	$1	NULL
+10	WebPublicationAdditionalInfoRealtyAdditionalInfoKitchenSpace	//table[contains(@class,"t100") or @class="tmain"]//td[@class="rcol" or @class="tddec"]/text()[contains(.,'Кухня')]/following-sibling::span[1]	{{InnerText}}	\D*(\d+).*	$1	NULL
+10	WebPublicationAdditionalInfoRealtyAdditionalInfoIsLoggia	//table[contains(@class,"t100") or @class="tmain"]//td[@class="rcol" or @class="tddec"]/text()[contains(.,'Балкон')]/following-sibling::span[1]	{{InnerText}}	\s*(\S+)\s*	$1	 
+10	WebPublicationAdditionalInfoRealtyAdditionalInfoWc	//table[contains(@class,"t100") or @class="tmain"]//td[@class="rcol" or @class="tddec"]/text()[contains(.,'Санузел')]/following-sibling::span[1]	{{InnerText}}	\s*(\S+)\s*	$1	 
+10	WebPublicationAdditionalInfoRealtyAdditionalInfoWallМaterial	//table[contains(@class,"t100") or @class="tmain"]//td[@class="rcol" or @class="tddec"]/text()[contains(.,'Материал дома') or contains(.,'Дом(cтроение)')]/following-sibling::span[1]	{{InnerText}}	\s*(\S+)\s*	$1	 
+10	WebPublicationAdditionalInfoRealtyAdditionalInfoCostAll	//table[contains(@class,"t100") or @class="tmain"]//td[@class="rcol" or @class="tddec2"]/text()[contains(.,'Цена')]/following-sibling::span[1]	{{InnerText}}	\D*(\d+)\D*	$1	NULL
+10	WebPublicationAdditionalInfoRealtyAdditionalInfoViewFromProperty	//table[contains(@class,"t100") or @class="tmain"]//td[@class="rcol" or @class="tddec"]/text()[contains(.,'Окна')]/following-sibling::span[1]	{{InnerText}}	\s*(\S+)\s*	$1	 
+10	WebPublicationAdditionalInfoRealtyAdditionalInfoLandSpace	//table[contains(@class,"t100") or @class="tmain"]//td[@class="rcol" or @class="tddec"]/text()[contains(.,'Площадь участка')]/following-sibling::span[1]	{{InnerText}}	\D*(\d+).*	$1	NULL
+10	WebPublicationAdditionalInfoRealtyAdditionalInfoAppointmentOfRoom	//td[@class='hh' or @class='tjob']/text()	{{InnerText}}	\s*(\S+)\s*	$1	 
+10	WebPublicationAdditionalInfoRealtyAdditionalInfoAddress	//td[@class='hh' or @class='tjob']/text()	{{InnerText}}	\s*(\S+)\s*	$1	 
+10	WebPublicationAdditionalInfoRealtyAdditionalInfoDistrict	//td[@class='hh' or @class='tjob']/text()	{{InnerText}}	,([^,]+),[^,]+\Z	$1	 
+
+
+10	\Жилая\Квартиры\	Квартиры	\Жилая\\	2	NULL	NULL	NULL	NULL	NULL
+10	\Жилая\Квартиры\малосемейки	малосемейки	\Жилая\Квартиры\	3	NULL	NULL	NULL	NULL	&proom[12]=12
+10	\Жилая\Квартиры\1 комнатные	1 комнатные	\Жилая\Квартиры\	3	NULL	NULL	NULL	NULL	&proom[1]=1
+10	\Жилая\Квартиры\2-х комнатные	2-х комнатные	\Жилая\Квартиры\	3	NULL	NULL	NULL	NULL	&proom[3]=3
+10	\Жилая\Квартиры\3-х комнатные	3-х комнатные	\Жилая\Квартиры\	3	NULL	NULL	NULL	NULL	&proom[4]=4
+10	\Жилая\Квартиры\4-х комнатные	4-х комнатные	\Жилая\Квартиры\	3	NULL	NULL	NULL	NULL	&proom[5]=5
+10	\Жилая\Квартиры\многокомнатные	многокомнатные	\Жилая\Квартиры\	3	NULL	NULL	NULL	NULL	&proom[6]=6
+10	\Жилая\Комнаты\	Комнаты	\Жилая\\	2	NULL	NULL	NULL	NULL	NULL
+10	\Жилая\Комнаты\комнаты	комнаты	\Жилая\Комнаты\	3	NULL	NULL	NULL	NULL	NULL
+10	\Жилая\Комнаты\гостинки	гостинки	\Жилая\Комнаты\	3	NULL	NULL	NULL	NULL	NULL
+10	\Жилая\Дома, коттеджи\	Дома, коттеджи	\Жилая\\	2	NULL	NULL	NULL	NULL	NULL
+10	\Жилая\Дома, коттеджи\коттеджи	коттеджи	\Жилая\Дома, коттеджи\	3	NULL	NULL	NULL	NULL	NULL
+10	\Жилая\Дома, коттеджи\дома	дома	\Жилая\Дома, коттеджи\	3	NULL	NULL	NULL	NULL	NULL
+10	\Жилая\Дома, коттеджи\таунхаусы	таунхаусы	\Жилая\Дома, коттеджи\	3	NULL	NULL	NULL	NULL	NULL
+10	\Коммерческая\офисные\	офисные	\Коммерческая\\	2	NULL	NULL	NULL	NULL	&pcat[1]=1
+10	\Коммерческая\торговые\	торговые	\Коммерческая\\	2	NULL	NULL	NULL	NULL	&pcat[2]=2
+10	\Коммерческая\сферы услуг\	сферы услуг	\Коммерческая\\	2	NULL	NULL	NULL	NULL	&pcat[3]=3
+10	\Коммерческая\производственные и складские\	производственные и складские	\Коммерческая\\	2	NULL	NULL	NULL	NULL	&pcat[4]=4
+10	\Загородная недвижимость\\	Загородная недвижимость	\\\	1	NULL	NULL	NULL	NULL	NULL
+10	\Земельные участки\\	Земельные участки	\\\	1	NULL	NULL	NULL	NULL	NULL
+10	\Гаражи\\	Гаражи	\\\	1	NULL	NULL	NULL	NULL	NULL
+10	\Гаражи\гаражи\	гаражи	\Гаражи\\	1	NULL	NULL	NULL	NULL	NULL
+10	\Гаражи\машиноместа\	машиноместа	\Гаражи\\	1	NULL	NULL	NULL	NULL	NULL
+10	\Коммерческая\\	Коммерческая	\\\	1	NULL	NULL	NULL	NULL	NULL
+10	\Жилая\\	Жилая	\\\	1	NULL	NULL	NULL	NULL	NULL
+
+10	\Жилая\Квартиры\	\Продажа\	1
+10	\Жилая\Квартиры\малосемейки	\Продажа\	1
+10	\Жилая\Квартиры\1 комнатные	\Продажа\	1
+10	\Жилая\Квартиры\2-х комнатные	\Продажа\	1
+10	\Жилая\Квартиры\3-х комнатные	\Продажа\	1
+10	\Жилая\Квартиры\4-х комнатные	\Продажа\	1
+10	\Жилая\Квартиры\многокомнатные	\Продажа\	1
+10	\Жилая\Комнаты\	\Продажа\	102
+10	\Жилая\Комнаты\комнаты	\Продажа\	102
+10	\Жилая\Комнаты\гостинки	\Продажа\	102
+10	\Жилая\Дома, коттеджи\	\Продажа\	103
+10	\Жилая\Дома, коттеджи\коттеджи	\Продажа\	103
+10	\Жилая\Дома, коттеджи\дома	\Продажа\	103
+10	\Жилая\Дома, коттеджи\таунхаусы	\Продажа\	103
+10	\Жилая\Квартиры\	\Аренда\	3
+10	\Жилая\Квартиры\малосемейки	\Аренда\	3
+10	\Жилая\Квартиры\1 комнатные	\Аренда\	3
+10	\Жилая\Квартиры\2-х комнатные	\Аренда\	3
+10	\Жилая\Квартиры\3-х комнатные	\Аренда\	3
+10	\Жилая\Квартиры\4-х комнатные	\Аренда\	3
+10	\Жилая\Квартиры\многокомнатные	\Аренда\	3
+10	\Жилая\Комнаты\	\Аренда\	3
+10	\Жилая\Комнаты\комнаты	\Аренда\	3
+10	\Жилая\Комнаты\гостинки	\Аренда\	3
+10	\Жилая\Дома, коттеджи\	\Аренда\	3
+10	\Жилая\Дома, коттеджи\коттеджи	\Аренда\	3
+10	\Жилая\Дома, коттеджи\дома	\Аренда\	3
+10	\Жилая\Дома, коттеджи\таунхаусы	\Аренда\	3
+10	\Коммерческая\офисные\	\Продажа\	11
+10	\Коммерческая\торговые\	\Продажа\	11
+10	\Коммерческая\сферы услуг\	\Продажа\	11
+10	\Коммерческая\производственные и складские\	\Продажа\	11
+10	\Коммерческая\офисные\	\Аренда\	13
+10	\Коммерческая\торговые\	\Аренда\	13
+10	\Коммерческая\сферы услуг\	\Аренда\	13
+10	\Коммерческая\производственные и складские\	\Аренда\	13
+10	\Загородная недвижимость\\	\Продажа\	21
+10	\Земельные участки\\	\Продажа\	41
+10	\Гаражи\\	\Продажа\	31
+10	\Гаражи\гаражи\	\Продажа\	31
+10	\Гаражи\машиноместа\	\Продажа\	31
+10	\Гаражи\\	\Аренда\	33
+10	\Гаражи\гаражи\	\Аренда\	33
+10	\Гаражи\машиноместа\	\Аренда\	33
+
+
+10	\66\	\Гаражи\гаражи\	
+10	\66\2931	\Гаражи\гаражи\	
+10	\66\	\Гаражи\машиноместа\	
+10	\66\2931	\Гаражи\машиноместа\	
+
+
+4221	Гараж и стоянка	1382	2	1	NULL	NULL	NULL	NULL	NULL
+4223	Гараж	4221	3	0	NULL	NULL	NULL	NULL	NULL
+4224	Машиноместо в паркинге	4221	3	0	NULL	NULL	NULL	NULL	NULL
+
+10	\Аренда\	Аренда	\\	1	NULL	NULL	NULL	NULL	NULL
+10	\Аренда\посуточно	посуточно	\Аренда\	2	NULL	NULL	NULL	NULL	NULL
+10	\Продажа\	Продажа	\\	1	NULL	NULL	NULL	NULL	NULL
+
+10	\Жилая\Квартиры\	\Аренда\посуточно	4
+10	\Жилая\Квартиры\малосемейки	\Аренда\посуточно	4
+10	\Жилая\Квартиры\1 комнатные	\Аренда\посуточно	4
+10	\Жилая\Квартиры\2-х комнатные	\Аренда\посуточно	4
+10	\Жилая\Квартиры\3-х комнатные	\Аренда\посуточно	4
+10	\Жилая\Квартиры\4-х комнатные	\Аренда\посуточно	4
+10	\Жилая\Квартиры\многокомнатные	\Аренда\посуточно	4
+10	\Жилая\Комнаты\	\Аренда\посуточно	4
+10	\Жилая\Комнаты\комнаты	\Аренда\посуточно	4
+10	\Жилая\Комнаты\гостинки	\Аренда\посуточно	4
+10	\Жилая\Дома, коттеджи\	\Аренда\посуточно	4
+10	\Жилая\Дома, коттеджи\коттеджи	\Аренда\посуточно	4
+10	\Жилая\Дома, коттеджи\дома	\Аренда\посуточно	4
+10	\Жилая\Дома, коттеджи\таунхаусы	\Аренда\посуточно	4
+
+10	1	\Продажа\
+10	3	\Аренда\
+10	5	\Аренда\посуточно
 
 <div align="right" class="tdate">обновлено 02-05-2014, создано 02-05-2014<br><a href="myadvsf-5671.html" title="поднять это объявление в списке и выделить ярким цветом" class="strup3">сделать VIP-объявлением</a> &nbsp; 
 <span id="f1f5671" class="fav">
