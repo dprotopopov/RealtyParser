@@ -38,6 +38,5 @@ D:\Projects\RealtyParser\RealtyParser.NetAgenta\bin\Release\EntityFramework.SqlS
 D:\Projects\RealtyParser\RealtyParser.NetAgenta\bin\Release\HtmlAgilityPack.pdb
 D:\Projects\RealtyParser\RealtyParser.NetAgenta\bin\Release\HtmlAgilityPack.xml
 D:\Projects\RealtyParser\RealtyParser.NetAgenta\bin\Release\System.Data.SQLite.xml
-D:\Projects\RealtyParser\RealtyParser.NetAgenta\obj\Release\RealtyParser.NetAgenta.csprojResolveAssemblyReference.cache
 D:\Projects\RealtyParser\RealtyParser.NetAgenta\obj\Release\RealtyParser.NetAgenta.dll
 D:\Projects\RealtyParser\RealtyParser.NetAgenta\obj\Release\RealtyParser.NetAgenta.pdb
