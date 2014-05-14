@@ -295,7 +295,8 @@ namespace RealtyParser
                 if (ProgressCallback != null) ProgressCallback(++current, total);
             });
 
-            Parallel.ForEach(new[] {new[] {"Rubric", "Action"}, new[] {"Region", "Rubric"}}, tables =>
+            Debug.WriteLine("values {0}", values);
+            Parallel.ForEach(new[] { new[] { "Rubric", "Action" }, new[] { "Region", "Rubric" } }, tables =>
             {
                 IEnumerable<string> enumerable = tables.Select(t => mappedId[t].ToString());
                 try
@@ -325,7 +326,7 @@ namespace RealtyParser
                                 string.Join(SplitChar.ToString(CultureInfo.InvariantCulture),
                                     parents.ElementAt(index)
                                         .GetRange(0, Math.Min(v + 1, parents.ElementAt(index).Count()))),
-                                new String(SplitChar, parents.ElementAt(index).Count() - v)));
+                                new String(SplitChar, parents.ElementAt(index).Count() - v - 1)));
                         try
                         {
                             Database.Wait(Database.Connection);

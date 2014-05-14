@@ -5,8 +5,10 @@ using System.Windows.Forms;
 using RealtyParser.Arenda66;
 using RealtyParser.BeBoss;
 using RealtyParser.Bn;
+using RealtyParser.Citystar;
 using RealtyParser.Collections;
 using RealtyParser.Egent;
+using RealtyParser.Gdeetotdom;
 using RealtyParser.Kvadrat66;
 using RealtyParser.Mirkvartir;
 using RealtyParser.NetAgenta;
@@ -41,6 +43,8 @@ namespace RealtyParser.Editor.Children
                     new Kvadrat66Parser(),
                     new SdamkaParser(),
                     new UralstudentParser(),
+                    new CitystarParser(),
+                    new GdeetotdomParser(),
                 }.Select(item => new KeyValuePair<string, IParsingModule>(item.ModuleClassname, item))
                     .Cast<object>().ToArray());
             propertyGridControlParseRequest.SelectedObject = new ParseRequest();
@@ -95,21 +99,28 @@ namespace RealtyParser.Editor.Children
 
         private void listBoxPublications_SelectedValueChanged(object sender, EventArgs e)
         {
-            listBoxPhotos.Items.Clear();
-            listBoxPhone.Items.Clear();
-            listBoxEmail.Items.Clear();
-            propertyGridControlWebPublication.SelectedObject = listBoxPublications.SelectedItem as WebPublication;
-            propertyGridControlAdditionalInfo.SelectedObject =
-                ((WebPublication) listBoxPublications.SelectedItem).AdditionalInfo;
-            propertyGridControlContact.SelectedObject = ((WebPublication) listBoxPublications.SelectedItem).Contact;
-            propertyGridControlRealtyAdditionalInfo.SelectedObject =
-                ((WebPublication) listBoxPublications.SelectedItem).AdditionalInfo.RealtyAdditionalInfo;
-            listBoxPhotos.Items.AddRange(
-                ((WebPublication) listBoxPublications.SelectedItem).Photos.Cast<object>().ToArray());
-            listBoxPhone.Items.AddRange(
-                ((WebPublication) listBoxPublications.SelectedItem).Contact.Phone.Cast<object>().ToArray());
-            listBoxEmail.Items.AddRange(
-                ((WebPublication) listBoxPublications.SelectedItem).Contact.Email.Cast<object>().ToArray());
+            try
+            {
+                listBoxPhotos.Items.Clear();
+                listBoxPhone.Items.Clear();
+                listBoxEmail.Items.Clear();
+                propertyGridControlWebPublication.SelectedObject = listBoxPublications.SelectedItem as WebPublication;
+                propertyGridControlAdditionalInfo.SelectedObject =
+                    ((WebPublication) listBoxPublications.SelectedItem).AdditionalInfo;
+                propertyGridControlContact.SelectedObject = ((WebPublication) listBoxPublications.SelectedItem).Contact;
+                propertyGridControlRealtyAdditionalInfo.SelectedObject =
+                    ((WebPublication) listBoxPublications.SelectedItem).AdditionalInfo.RealtyAdditionalInfo;
+                listBoxPhotos.Items.AddRange(
+                    ((WebPublication) listBoxPublications.SelectedItem).Photos.Cast<object>().ToArray());
+                listBoxPhone.Items.AddRange(
+                    ((WebPublication) listBoxPublications.SelectedItem).Contact.Phone.Cast<object>().ToArray());
+                listBoxEmail.Items.AddRange(
+                    ((WebPublication) listBoxPublications.SelectedItem).Contact.Email.Cast<object>().ToArray());
+            }
+            catch (Exception)
+            {
+                
+            }
         }
     }
 }

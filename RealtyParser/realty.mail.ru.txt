@@ -1,0 +1,12 @@
+62 9A 00 50 28 A2 70 82 45 E7 4B A2 50 18 FA F0 86 62 00 00 70 61 72 65 6E 74 49 6E 73 74 61 6E 63 65 3D 67 65 6F 53 65 6C 65 63 74 69 6F 6E 26 69 6E 73 74 61 6E 63 65 3D 73 74 61 74 65 73 26 6C 6F 61 64 5F 73 63 72 69 70 74 3D 74 72 75 65 26 73 65 6C 65 63 74 69 6F 6E 25 35 42 30 25 35 44 3D 26 74 79 70 65 3D 73 74 61 74 65 73 26 67 65 6F 5F 69 64 3D 32 
+b?.P(?p?EcK?P.u??b..parentInstance=geoSelection&instance=states&load_script=true&selection%5B0%5D=&type=states&geo_id=2
+
+
+http://realty.mail.ru/geo/selectionWindowPage/?type=states&geo_id=2
+
+2F 53 65 61 72 63 68 2F 72 65 73 75 6C 74 73 2F 3F 70 61 67 65 3D 31 26 73 6F 72 74 3D 64 61 74 65 26 73 6F 72 74 5F 64 69 72 65 63 74 3D 64 65 73 63 26 76 69 65 77 3D 6C 69 73 74 26 70 65 72 5F 70 61 67 65 3D 32 30 26 67 65 6F 5F 72 65 67 69 6F 6E 25 35 42 25 35 44 3D 36 30 32 30 35 38 26 67 65 6F 5F 72 65 67 69 6F 6E 25 35 42 25 35 44 3D 31 30 35 39 39 31 38 26 67 65 6F 5F 72 65 67 69 6F 6E 25 35 42 25 35 44 3D 32 30 34 31 30 33 38 26 66 6C 61 74 73 5F 63 6F 75 6E 74 25 35 42 32 25 35 44 3D 32 26 66 6C 61 74 73 5F 63 6F 75 6E 74 25 35 42 33 25 35 44 3D 33 26 72 65 67 69 6F 6E 3D 6D 73 6B 26 62 61 72 67 61 69 6E 5F 74 79 70 65 3D 73 61 6C 65 26 62 6C 6F 63 6B 5F 73 75 62 74 79 70 65 73 3D 73 65 63 6F 6E 64 61 72 79 5F 66 6C 61 74 2D 66 6C 61 74 2D 72 6F 6F 6D 2D 6E 65 77 5F 62 75 69 6C 64 69 6E 67 26 6C 6F 61 64 5F 73 63 72 69 70 74 3D 66 61 6C 73 65 26 61 6A 61 78 5F 70 61 67 65 72 3D 74 72 75 65 26 69 6E 73 74 61 6E 63 65 3D 73 65 61 72 63 68 52 65 73 75 6C 74 73 20 
+http://realty.mail.ru/Search/results/?page=1&sort=date&sort_direct=desc&view=list&per_page=20&geo_region%5B%5D=602058&geo_region%5B%5D=1059918&geo_region%5B%5D=2041038&flats_count%5B2%5D=2&flats_count%5B3%5D=3&region=msk&bargain_type=sale&block_subtypes=secondary_flat-flat-room-new_building&load_script=false&ajax_pager=true&instance=searchResults 
+
+http://realty.mail.ru/Search/results/?page=1&sort=date&sort_direct=desc&view=list&per_page=20&geo_region%5B%5D=602058&flats_count%5B3%5D=3&region=msk&bargain_type=sale&block_subtypes=secondary_flat-flat-room-new_building&load_script=false&ajax_pager=true&instance=searchResults 
+
+

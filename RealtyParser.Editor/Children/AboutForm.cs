@@ -5,8 +5,10 @@ using System.Windows.Forms;
 using RealtyParser.Arenda66;
 using RealtyParser.BeBoss;
 using RealtyParser.Bn;
+using RealtyParser.Citystar;
 using RealtyParser.Collections;
 using RealtyParser.Egent;
+using RealtyParser.Gdeetotdom;
 using RealtyParser.Kvadrat66;
 using RealtyParser.Mirkvartir;
 using RealtyParser.NetAgenta;
@@ -38,6 +40,8 @@ namespace RealtyParser.Editor.Children
                     new Kvadrat66Parser(),
                     new SdamkaParser(),
                     new UralstudentParser(),
+                    new CitystarParser(),
+                    new GdeetotdomParser(),
                 }.Select(item => new KeyValuePair<string, IParsingModule>(item.ModuleClassname, item))
                     .Cast<object>().ToArray());
         }

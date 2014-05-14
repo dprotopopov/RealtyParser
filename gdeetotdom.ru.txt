@@ -1,0 +1,1071 @@
+http://www.gdeetotdom.ru
+
+14	gdeetotdom.ru	http://gdeetotdom.ru	GET	http://{{RegionDomain}}gdeetotdom.ru{{RubricPath}}/search/?page={{Page}}{{ActionQuery}}{{RubricQuery}}{{roomset}}&regions[]={{Region}}&advt={{Rubric[2]}}&rtype={{Rubric[1]}}&sort_by=19&sort_order=desc	NULL	{{PublicationLink}}	[PublicationDatetime:##{{PublicationDatetime}}##,Action:{{Action}},Rubric:{{Rubric}},Region:{{Region}}]	NULL	NULL	30	OnlyDatetimeComparer	NoCompression	utf-8	20	0	0	1	GdeetotdomParser
+
+[PublicationDatetime:##{{PublicationDatetime}}##,Action:{{Action}},Rubric:{{Rubric}},Region:{{Region}}]
+
+в System.Linq.Enumerable.Count[TSource](IEnumerable`1 source)
+   в MyLibrary.Collections.DictionaryOfListOfString.ToString() в d:\Projects\MyLibrary\MyLibrary\Collections\DictionaryOfListOfString.cs:строка 87
+   в System.Text.StringBuilder.AppendFormat(IFormatProvider provider, String format, Object[] args)
+   в System.String.Format(IFormatProvider provider, String format, Object[] args)
+   в System.Diagnostics.Debug.WriteLine(String format, Object[] args)
+   в RealtyParser.Parser.BuildValues(RequestProperties requestId, RequestProperties mappedId, RequestProperties mappedLevel) в d:\Projects\RealtyParser\RealtyParser\Parser.cs:строка 349
+   в RealtyParser.ParserModule.<Result>d__a8.MoveNext() в d:\Projects\RealtyParser\RealtyParser\ParserModule.cs:строка 219
+--- Конец трассировка стека из предыдущего расположения, где возникло исключение ---
+   в System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   в System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   в System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()
+   в RealtyParser.Editor.Children.ResultForm.<Execute>d__3.MoveNext() в d:\Projects\RealtyParser\RealtyParser.Editor\Children\ResultForm.cs:строка 84
+
+http://gdeetotdom.ru/living/search/?page=&td=1&roomset[]=r3&regions[]=1232535&advt=3&rtype=2
+
+http://www.gdeetotdom.ru/living/search/?rid=1232535&cid=100&advt=2&td=2&rtype=1&realtyStrict=1&ptx=1&adv=1
+
+http://www.gdeetotdom.ru/new-house/
+
+
+sort_by=19&sort_order=desc
+
+14	\купить	Купить	\	1	NULL	NULL	NULL	&td=1	NULL
+14	\снять	Снять	\	1	NULL	NULL	NULL	&td=2	NULL
+14	\Посуточная аренда	Посуточная аренда	\	1	NULL	NULL	NULL	&td=2	NULL
+
+14	gdeetotdom.ru	http://gdeetotdom.ru	GET	http://{{RegionDomain}}gdeetotdom.ru{{RubricPath}}/search/?page={{Page}}{{ActionQuery}}{{RubricQuery}}{{roomset}}&regions[]={{Region}}&advt={{Rubric[2]}}&rtype={{Rubric[1]}}	NULL	{{PublicationLink}}	[PublicationId:{{PublicationId}},Action:{{Action}},Rubric:{{Rubric}},Region:{{Region}}]	NULL	NULL	30	IdComparer	NoCompression	utf-8	20	0	0	0	GdeetotdomParser
+
+
+14	\100\100001	Московская область	\100\	2	NULL	NULL	NULL	NULL	NULL
+14	\100\1452781	Ленинградская область	\100\	1	NULL	NULL	NULL	NULL	NULL
+
+[PublicationDatetime:##14.04.2014 0:00:00##,PublicationId:8530-373-950,Action:\снять,Rubric:\1\2,Region:\100\1232549]&[PublicationDatetime:##14.04.2014 0:00:00##,PublicationId:8834-815-830,Action:\снять,Rubric:\3\2,Region:\100\1232549]
+
+18	Московская область	0	1	1
+32	Ленинградская область	0	1	1
+
+14	WebPublicationUrl	/	{{Url}}	.*	$&	NULL
+14	WebPublicationSite	/	{{Url}}	((http(s)?:\/\/)?[^\/\?]+).*	$1	NULL
+14	WebPublicationModifyDate	(//ul[@class="adv_activity"]//li/span)[last()]	{{InnerText}}	\D*(\d+\s\w+\s\d+(\D+\d+:\d+)?).*	$1	NULL
+14	WebPublicationPublicationId	//p[@class="id_adv"]/span[@class="triad"]	{{InnerText}}	\D*(\d+).*	$1	NULL
+14	WebPublicationContactContactName	//div[@class="contactContainer"]//*[@class="name"]	{{InnerText}}	\s*(\S+)\s*	$1	 
+14	WebPublicationContactAuthor	//div[@class="agencyBlock"]/p	{{InnerText}}	\s*(\S+)\s*	$1	 
+14	WebPublicationContactAuthorUrl	//div[@class="adv_link"]//a[@href]	{{href}}	.*	$&	NULL
+14	WebPublicationDescription	//div[@id="info"]//td[@class="description"]//div[@id="descFull"]	{{InnerText}}	\s*(\S+)\s*	$1	 
+14	WebPublicationAdditionalInfoRealtyAdditionalInfoAppointmentOfRoom	//div[@class="mainTab"]//div[@class="title"]//h1	{{InnerText}}	\s*(\S+)\s*	$1	 
+14	WebPublicationAdditionalInfoRealtyAdditionalInfoCostAll	//div[@id="info"]//div[@class="price"]//div[contains(@class,'current-rur')]	{{InnerText}}	\D*(\d+)\D*	$1	NULL
+14	WebPublicationAdditionalInfoRealtyAdditionalInfoAddress	//div[@class="mainTab"]//div[@class="address"]/p	{{InnerText}}	\s*(\S+)\s*	$1	 
+14	WebPublicationAdditionalInfoRealtyAdditionalInfoRealEstateType	//div[@id="info"]//table[contains(@class,"inform")]//div[contains(.,'Название объекта')]/following-sibling::div[1]	{{InnerText}}	\s*(\S+)\s*	$1	 
+14	WebPublicationAdditionalInfoRealtyAdditionalInfoCostPerMeter	//div[@id="info"]//table[contains(@class,"inform")]//div[contains(.,'Цена за кв. м.')]/following-sibling::div[1]/span[@class='price_rur']	{{InnerText}}	\D*(\d+)\D*	$1	NULL
+14	WebPublicationAdditionalInfoRealtyAdditionalInfoRoomNumber	//div[@id="info"]//table[contains(@class,"inform")]//div[contains(.,'Количество комнат')]/following-sibling::div[1]	{{InnerText}}	\D*(\d+)\D*	$1	NULL
+14	WebPublicationAdditionalInfoRealtyAdditionalInfoWc	//div[@id="info"]//table[contains(@class,"inform")]//div[contains(.,'Количество санузлов')]/following-sibling::div[1]	{{InnerText}}	\s*(\S+)\s*	$1	 
+14	WebPublicationAdditionalInfoRealtyAdditionalInfoLandSpace	//div[@id="info"]//table[contains(@class,"inform")]//div[contains(.,'Площадь участка')]/following-sibling::div[1]	{{InnerText}}	\A\D*(\d*).*	$1	NULL
+14	WebPublicationAdditionalInfoRealtyAdditionalInfoTotalSpace	//div[@id="info"]//table[contains(@class,"inform")]//div[contains(.,'Общая площадь')]/following-sibling::div[1]	{{InnerText}}	\A\D*(\d*).*	$1	NULL
+14	WebPublicationAdditionalInfoRealtyAdditionalInfoLivingSpace	//div[@id="info"]//table[contains(@class,"inform")]//div[contains(.,'Жилая площадь')]/following-sibling::div[1]	{{InnerText}}	\A\D*(\d*).*	$1	NULL
+14	WebPublicationAdditionalInfoRealtyAdditionalInfoKitchenSpace	//div[@id="info"]//table[contains(@class,"inform")]//div[contains(.,'Площадь кухни')]/following-sibling::div[1]	{{InnerText}}	\A\D*(\d*).*	$1	NULL
+14	WebPublicationAdditionalInfoRealtyAdditionalInfoFloor	//div[@id="info"]//table[contains(@class,"inform")]//div[contains(.,'Этаж')]/following-sibling::div[1]	{{InnerText}}	\D*(\d+)\s*\/\D*(\d+).*	$1	NULL
+14	WebPublicationAdditionalInfoRealtyAdditionalInfoFloorNumber	//div[@id="info"]//table[contains(@class,"inform")]//div[contains(.,'Этаж')]/following-sibling::div[1]	{{InnerText}}	\D*(\d+)\s*\/\D*(\d+).*	$2	NULL
+14	WebPublicationAdditionalInfoRealtyAdditionalInfoDistrict	//div[@id="info"]//table[contains(@class,"inform")]//div[contains(.,'До ')]/following-sibling::div[1]	{{InnerText}}	\s*(\S+)\s*	$1	 
+14	WebPublicationAdditionalInfoRealtyAdditionalInfoFurnish	//div[@id="info"]//table[contains(@class,"inform")]//div[contains(.,'Ремонт')]/following-sibling::div[1]	{{InnerText}}	\s*(\S+)\s*	$1	 
+14	WebPublicationAdditionalInfoRealtyAdditionalInfoIsParking	//div[@class="extraInfo"]//table[contains(@class,"inform")]//div[contains(.,'Парковка')]/following-sibling::div[1]	{{InnerText}}	\s*(\S+)\s*	$1	 
+14	WebPublicationPhotos	//div[@class="photosList"]//span[@class="slide"]//img[@src]	{{src}}	.*	$&	NULL
+14	PublicationLink	//table[contains(@class,'table-result')]//tr[contains(@class,'table-content')]//a[@class="advert-address"]	{{href}}	.*	$&	NULL
+14	PublicationId	//p[@class="id_adv"]/span[@class="triad"]	{{InnerText}}	\D*(\d+).*	$1	NULL
+14	PublicationDatetime	(//ul[@class="adv_activity"]//li/span)[last()]	{{InnerText}}	\D*(\d+\s\w+\s\d+(\D+\d+:\d+)?).*	$1	NULL
+
+<div class="extraInfo">
+                         
+<table class="ninfo-table inform">
+										<tbody><tr>
+											<td colspan="3">
+												<h3 class="info-h3">Информация о доме</h3>
+											</td>
+										</tr>
+										<tr>
+											<td colspan="3">
+                                                                                                <p class="addr_crumbs"><a href="http://www.gdeetotdom.ru/moscow/">Москва</a>, <a href="http://www.gdeetotdom.ru/moscow/uao/nagornyy/">Нагорный</a>, <a href="http://www.gdeetotdom.ru/moscow/uao/nagornyy/simferopolskiy-pr/">Симферопольский пр</a>, д. 18</p>
+											</td>
+										</tr>
+										<tr>
+											<td class="first3" colspan="3">
+                                                                                                <div class="left-request">
+                        <div>Серия дома</div>
+                    </div>
+                    <div class="right-request">
+                        <div><p>индивидуальный проект</p></div>
+                    </div><div class="left-request">
+                        <div>Этажность</div>
+                    </div>
+                    <div class="right-request">
+                        <div><p>14</p></div>
+                    </div><div class="left-request">
+                        <div>Лифты пассажирские</div>
+                    </div>
+                    <div class="right-request">
+                        <div><p>1</p></div>
+                    </div><div class="left-request">
+                        <div>Лифты грузовые</div>
+                    </div>
+                    <div class="right-request">
+                        <div><p>1</p></div>
+                    </div><div class="left-request">
+                        <div>Перекрытия</div>
+                    </div>
+                    <div class="right-request">
+                        <div><p>ж/б</p></div>
+                    </div><div class="left-request">
+                        <div>Парковка</div>
+                    </div>
+                    <div class="right-request">
+                        <div><p>подземная парковка</p></div>
+                    </div>											</td>
+										</tr>
+										<tr>
+                                                                                        											<td class="second  detail" style="padding-left:0px;" colspan="2"><a id="tabToHouse" href="#onhouse">Подробная информация</a></td>
+                                                                                        										</tr>
+									</tbody></table>
+
+<div class="adv_link">
+                <a href="/stat/?adv_id=9173062912&amp;act=to_main&amp;link=http%3A%2F%2Fwww.ng24.ru%2Fdetails%2F%3Fgo%3D1%26objid%3D33798D35-BC8B-4319-BDFC-B72B587A6E7E&amp;id_agency=1586342878&amp;id_subagency=5924809420" target="_blank">Объявление на странице агентства</a>
+                <i></i>
+        </div>
+
+14	WebPublicationPhotos	//div[@class="photosList"]//span[@class="slide"]//img[@src]	{{src}}	.*	$&	NULL
+
+<div class="photosList" style="width:20000px;margin-left:0px;">
+                                                        <span class="slide" style="display:inline;float:left;">
+                                <a href="#">
+                                    <img src="http://vc.gdeetotdom.ru/picmen/320x240/1399904075/123763869.frb">                                </a>
+                            </span>
+                                                        <span class="slide" style="display:inline;float:left;">
+                                <a href="#">
+                                    <img src="http://vc.gdeetotdom.ru/picmen/320x240/1399904242/123763870.frb">                                </a>
+                            </span>
+                                                        </div>
+<table class="inform">
+													<tbody><tr>
+														<td class="first3">
+                                                            <div class="left-request">
+                        <div>Этаж / Этажность</div>
+                    </div>
+                    <div class="right-request">
+                        <div><p>2 / 2</p></div>
+                    </div><div class="left-request">
+                        <div>Название объекта</div>
+                    </div>
+                    <div class="right-request">
+                        <div><p>квартира</p></div>
+                    </div><div class="left-request">
+                        <div>Количество комнат в квартире</div>
+                    </div>
+                    <div class="right-request">
+                        <div><p>3</p></div>
+                    </div><div class="left-request">
+                        <div>Общая площадь</div>
+                    </div>
+                    <div class="right-request">
+                        <div><p>90 м?</p></div>
+                    </div><div class="left-request">
+                        <div>Жилая площадь</div>
+                    </div>
+                    <div class="right-request">
+                        <div><p>65 м?</p></div>
+                    </div><div class="left-request">
+                        <div>Площадь кухни</div>
+                    </div>
+                    <div class="right-request">
+                        <div><p>35 м?</p></div>
+                    </div><div class="left-request">
+                        <div>Площадь комнат</div>
+                    </div>
+                    <div class="right-request">
+                        <div><p>25/25/15 м?</p></div>
+                    </div><div class="left-request">
+                        <div>Цена за кв. м.</div>
+                    </div>
+                    <div class="right-request">
+                        <div><p><span style="display:inline;" class="price_rur">35 000 <span class="rubler">P<span>–</span></span></span><span style="display:none;" class="price_usd">994 $</span><span style="display:none;" class="price_euro">722 €</span></p></div>
+                    </div><div class="left-request">
+                        <div>Тип продажи</div>
+                    </div>
+                    <div class="right-request">
+                        <div><p>свободная</p></div>
+                    </div><div class="left-request">
+                        <div>До метро</div>
+                    </div>
+                    <div class="right-request">
+                        <div><p>м.Парнас<br>10 минут <span>транспортом</span></p></div>
+                    </div>                                                        </td>
+                                                    </tr>
+                                                </tbody></table>
+<table class="inform">
+													<tbody><tr>
+														<td class="first3">
+                                                            <div class="left-request">
+                        <div>Название объекта</div>
+                    </div>
+                    <div class="right-request">
+                        <div><p>дом (коттедж)</p></div>
+                    </div><div class="left-request">
+                        <div>Количество комнат в квартире</div>
+                    </div>
+                    <div class="right-request">
+                        <div><p>7</p></div>
+                    </div><div class="left-request">
+                        <div>Общая площадь</div>
+                    </div>
+                    <div class="right-request">
+                        <div><p>200 м?</p></div>
+                    </div><div class="left-request">
+                        <div>Количество спален</div>
+                    </div>
+                    <div class="right-request">
+                        <div><p>5</p></div>
+                    </div><div class="left-request">
+                        <div>Количество санузлов</div>
+                    </div>
+                    <div class="right-request">
+                        <div><p>2</p></div>
+                    </div><div class="left-request">
+                        <div>Цена за кв. м.</div>
+                    </div>
+                    <div class="right-request">
+                        <div><p><span style="display:inline;" class="price_rur">50 000 <span class="rubler">P<span>–</span></span></span><span style="display:none;" class="price_usd">1 420 $</span><span style="display:none;" class="price_euro">1 031 €</span></p></div>
+                    </div><div class="left-request">
+                        <div>Тип продажи</div>
+                    </div>
+                    <div class="right-request">
+                        <div><p>свободная</p></div>
+                    </div><div class="left-request">
+                        <div>Площадь участка</div>
+                    </div>
+                    <div class="right-request">
+                        <div><p>7 соток</p></div>
+                    </div><div class="left-request">
+                        <div>Шоссе</div>
+                    </div>
+                    <div class="right-request">
+                        <div><p>Мурманское шоссе</p></div>
+                    </div><div class="left-request">
+                        <div>Удаленность от КАД</div>
+                    </div>
+                    <div class="right-request">
+                        <div><p>Санкт-Петербург, 22 км</p></div>
+                    </div>                                                        </td>
+                                                    </tr>
+                                                </tbody></table>
+
+<div class="address">
+                                                                <p class="first-address">Ленинградская обл, Разметелево д, Лесная ул</p>
+                                                                <p class="district-address">Всеволожский р-н</p>
+                                                                                                                                <script type="text/javascript">
+    $(function (){
+        $('#nearAdverts').click(function() {
+                $('.around-address').find('.userCabPopupCloud').toggle();
+                return false;
+        });
+    })
+</script>
+<div class="around-address">
+        <a id="nearAdverts" href="#">Предложения поблизости</a>
+        <div class="userCabPopupCloud similar" style="display: none;">
+                <div class="tr">
+                        <div class="bl">
+                                <div class="popupCloudContent">
+                                        <ul class="tabs">
+                                                                                            <li><a href="/elite/search/?rtype=3&amp;rid=1452781&amp;td=1&amp;cid=100&amp;advt=93727608&amp;ara=2352244054">Всеволожский р-н</a><span class="quant">12</span></li>
+                                                                                    </ul>
+                                </div>
+                                <div class="tl"></div>
+                                <div class="br"></div>
+                                <div class="topArr"></div>
+                        </div>
+                </div>
+        </div>
+</div>
+<div class="plug_block"></div> <!--Шаблон лежит в application/views/advert/blocks/near.php-->
+                                                                                                                        </div>
+
+<div class="price">
+                                                        <p>Цена</p>
+                                                        <div>
+                                                            <div class="currentCurrency-container">
+                                                            <div class="currentCurrency current-rur">10&nbsp;000&nbsp;000&nbsp;<span class="rubler">P<span>–</span></span></div>                                                            <div style="display: none" class="currentCurrency current-euro">206&nbsp;288&nbsp;€</div>                                                            <div style="display: none" class="currentCurrency current-usd">284&nbsp;017&nbsp;$</div>                                                              <span class="currency-price">
+                                                                                                                                <span class="currency-price-min usd"><a href="#">284&nbsp;017&nbsp;$</a><i></i></span>
+                                                                                                                                <span id="dollar_or"> или </span>
+                                                                                                                                <span style="display: none" class="currency-price-min rur"><a href="#">10&nbsp;000&nbsp;000&nbsp;<span class="rubler">P<span>–</span></span></a><i></i></span>
+                                                                                                                                <span id="rur_or" style="display:none"> или </span>
+                                                                                                                                <span class="currency-price-min euro"><a href="#">206&nbsp;288&nbsp;€</a><i></i></span>
+                                                                </span>
+                                                            </div>
+                                                                                                                                                                                    <a href="#price_offer_popup" class="currentCurrency-link"><span>Предложите свою цену</span></a>
+                                                            <div id="price_offer_popup" class="userCabPopupCloud" style="left: -30px; display: none;">
+        <div class="tr">
+                <div class="bl">
+                        <div class="popupCloudContent">
+                                <form action="/classifiedAjax/sendPriceOffer/5848774015" method="post" novalidate="novalidate">
+                                        <div class="field">
+                                                <label for="">Имя</label>
+                                                <input name="name" type="text" class="userContacts">
+                                        </div>
+                                        <div class="field">
+                                                <label for="">Телефон</label>
+                                                <input name="phone" type="text" class="userContacts">
+                                        </div>
+                                        <div class="field">
+                                                <label for="">Эл.почта</label>
+                                                <input name="email" type="text" class="userContacts">
+                                        </div>
+                                        <div class="field textAdd" style="padding-top:5px;">
+                                                <textarea name="offer" placeholder="Цена 10&nbsp;000&nbsp;000 рублей. Хотите купить, но дорого? Предложите свою цену!"></textarea>
+                                        </div>
+                                                                                            <div class="antibot">
+                                                <p>Введите символы, изображенные на картинке:</p>
+                                                <img alt="Captcha" src="/captcha/default/5ac6d7e622227a4feadb08c93b677953?9d3af2c7efbc5c1df01327dc585d37fb" width="150" height="50"><input type="hidden" name="captcha_uid" value="5ac6d7e622227a4feadb08c93b677953" class="captcha_uid">                                                <span class="refreshAntibot"><a href="#" class="refresh">Обновить</a></span>
+                                                <div class="captcha_word">
+                                                        <input name="captcha_word" class="antibot-input" type="text">
+                                                </div>
+                                                </div>
+                                            
+                                        <div class="wrong-request" style="display: none; ">
+                                            <div class="errorBorder"></div>
+                                            <div>
+                                                    <div><span class="messageOut"></span></div>
+                                            </div>
+                                        </div>
+                                        <div style="text-align:center">
+                                            <div class="button button-gray"><input type="submit" class="button__inner" value="Отправить"></div>
+                                        </div>
+                                        <input type="hidden" name="referer" val="http://spb.gdeetotdom.ru/elite/search/?td=1&amp;advt=3&amp;rtype=3&amp;regions%5B%5D=1452781&amp;pt=total&amp;ct=RUB">
+
+                                        <div id="poErrors" class="wrong-request" style="display:none">
+                                            <div class="errorBorder"></div>
+                                            <div>
+                                                <div><span class="messageOut"></span></div>
+                                            </div>
+                                        </div>
+                                        <input type="hidden" name="submitUrl" val="/classifiedAjax/sendPriceOffer/5848774015">
+                                </form>
+                        </div>
+                        <div class="tl"></div>
+                        <div class="br"></div>
+                        <div class="topArr"></div>
+                </div>
+        </div>
+</div>
+
+
+<div id="sendPriceOfferReport" class="userCabPopupCloud" style="display: none;">
+        <div class="tr">
+                <div class="bl">
+                        <div class="popupCloudContent" style="padding:0 20px;height:100px;text-align:center;">
+                            <div class="sendRequest">
+                                Предложение<br>отправлено
+                            </div>
+                            <img src="/skin/ged5/img/content/agents/icon-request-send.png" alt="">
+                        </div>
+                        <div class="tl"></div>
+                        <div class="br"></div>
+                        <div class="topArr"></div>
+                </div>
+        </div>
+</div>
+                                                                                                                    </div>
+                                                        </div>
+
+<div class="title">
+                                                    <h1>Продажа дома (коттеджа), 200&nbsp;м?</h1>
+                                                                                                    </div>
+
+<td colspan="3" class="description">
+                                                                                                                                                                                            <div id="descShort" style="display: none;">23 км Мурманского шоссе, современный коттедж 200 кв. м., 2011 г.п., евроотделка, все центральные коммуникации: свет, газ, водопровод, отопление – газовый котёл, тёплый пол на первом этаже, авт. система очистки. Четыре спальни (14+14+16+20), большие гостиная и холл с двумя каминами, столовая (20),&nbsp;&nbsp;&nbsp;<i class="transparent_ow"></i><a href="#" onclick="$('#descShort').hide(); $('#descFull').show(); return false;">Полностью</a></div>
+                                                                                                <div style="" id="descFull">23 км Мурманского шоссе, современный коттедж 200 кв. м., 2011 г.п., евроотделка, все центральные коммуникации: свет, газ, водопровод, отопление – газовый котёл, тёплый пол на первом этаже, авт. система очистки.  Четыре спальни (14+14+16+20), большие гостиная и холл с двумя каминами, столовая (20), два больших санузла, гардеробная, кованая лестница.   На участке 7 соток банный комплекс с бассейном (под отделку), сторожка, газон. Отличный кр/годичный подъезд и сообщение с СПб, Мурманское шоссе – 300 м. Развитое, охраняемое СНТ «Дружба», два магазина, вокруг сосновый лес, много постоянно проживающих. Недалеко Нева и Лазурное озеро.&nbsp;&nbsp;&nbsp;<a href="#" onclick="$('#descShort').show(); $('#descFull').hide(); return false;">Свернуть</a></div>
+                                                                                                    <i></i>
+
+                                                                                            											</td>
+<div class="salers main_saler">
+        <h3>Контактные данные</h3>
+        <p class="id_adv">Номер <span class="triad">5848</span><span class="triad">774</span><span class="triad">015</span></p>        <div class="contactContainer">
+        <span class="salerBlock ">
+            <p>Риэлтор<a href="http://spb.gdeetotdom.ru/realtors/49684-trofimov-sergey-alekseevich/" class="name">Трофимов Сергей Алексеевич</a></p>
+            <p class="agents-do-not-disturb"><span>Посредникам не беспокоить</span></p>
+                <div class="link-broker">
+                                    <a href="javascript:void(0);" class="call-broker"><i></i><span>Позвонить</span></a>
+                <div class="call-broker-1" rel="/classifiedAjax/showPhones/5848774015/agent/" style="display: none;"><p class="phone phoneFirst"></p></div>
+                                        <div class="demandBlock">
+            <a href="javascript:void(0);" class="send-broker"><i></i><span>Написать</span></a>
+            <div id="demand" class="userCabPopupCloud" style="display:none;">
+        <div class="tr">
+                <div class="bl">
+                        <div class="popupCloudContent">
+                                <form action="">
+                                        <input type="hidden" id="address_id" name="address_id" value="799111">
+                                        <ul class="field">
+                                                                                                <li rel="1">
+                                                                                                                <input type="radio" name="userDemand" checked="" val="1">
+                                                                                                                <label class="abuseTheme" for="">Записаться на просмотр</label>
+                                                </li>
+                                                                                                <li rel="2">
+                                                                                                                <input type="radio" name="userDemand" val="2">
+                                                                                                                <label class="abuseTheme" for="">Задать вопрос</label>
+                                                </li>
+                                                                                        </ul>
+                                        <div class="field">
+                                                <label for="">Имя</label>
+                                                <input name="name" type="text" class="userContacts">
+                                        </div>
+                                        <div class="field">
+                                                <label for="">Телефон</label>
+                                                <input name="phone" type="text" class="userContacts">
+                                        </div>
+                                        <div class="field">
+                                                <label for="">Эл.почта</label>
+                                                <input name="email" type="text" class="userContacts">
+                                        </div>
+                                        <div class="field textAdd" style="padding-top:5px;">
+                                                <label for="">Если есть, что добавить:</label>
+                                                <textarea>Здравствуйте. Прошу записать меня на просмотр квартиры. Свяжитесь со мной.</textarea>
+                                        </div>
+                                                                                            <div class="antibot">
+                                                <p>Введите символы, изображенные на картинке:</p>
+                                                <img alt="Captcha" src="/captcha/default/b561d7bd994279b0060e9ccbc8390a14?cccfad5908596919f660642230048f64" width="150" height="50"><input type="hidden" name="captcha_uid" value="b561d7bd994279b0060e9ccbc8390a14" class="captcha_uid">                                                <span class="refreshAntibot"><a href="#" class="refresh">Обновить</a></span>
+                                                <div class="captcha_word">
+                                                        <input name="captcha_word" class="antibot-input" type="text">
+                                                </div>
+                                                </div>
+                                            
+                                        <div class="wrong-request" style="display: none; ">
+                                            <div class="errorBorder"></div>
+                                            <div>
+                                                    <div><span class="messageOut"></span></div>
+                                            </div>
+                                        </div>
+                                        <div class="btnSub">
+                                                <input type="button" class="btn" value="Отправить заявку">
+                                        </div>
+                                        <div style="display:none;" id="signUpText">Здравствуйте. Прошу записать меня на просмотр квартиры. Свяжитесь со мной.</div>
+                                        <input type="hidden" name="referer" val="http://spb.gdeetotdom.ru/elite/search/?td=1&amp;advt=3&amp;rtype=3&amp;regions%5B%5D=1452781&amp;pt=total&amp;ct=RUB">
+                                        <input type="hidden" name="submitUrl" val="/classifiedAjax/adrequest/5848774015/">
+                                </form>
+                        </div>
+                        <div class="tl"></div>
+                        <div class="br"></div>
+                        <div class="topArr"></div>
+                </div>
+        </div>
+</div>
+
+
+<div id="sendReport" class="userCabPopupCloud" style="display:none;">
+        <div class="tr">
+                <div class="bl">
+                        <div class="popupCloudContent" style="height:100px;text-align:center;">
+                            <div class="sendRequest">
+                                Заявка отправлена
+                            </div>
+                            <img src="/skin/ged5/img/content/agents/icon-request-send.png" alt="">
+                        </div>
+                        <div class="tl"></div>
+                        <div class="br"></div>
+                        <div class="topArr"></div>
+                </div>
+        </div>
+</div>
+            </div>
+                  <div class="clear"></div>
+        </div>
+        <p class="descr">Сообщите, что нашли это объявление <span class="nowrap">на портале</span> ГдеЭтотДом.РУ</p>
+        <div class="adv_link">
+            <a href="/realtors/49684-trofimov-sergey-alekseevich/#agentRealty">Все объявления риэлтора</a>
+                        <span class="adv_quant">1</span>
+                </div>
+        </span>        </div>
+        <div class="call-agency contactContainer " style="padding-bottom:30px !important;">
+        <div class="agencyBlock">
+                            <p>Агентство «Частный риэлтор »</p>
+                <div class="clear"></div>
+                                            <div class="clear"></div>
+        </div>
+        <div class="clear"></div>        </div>
+        <div class="clear"></div>
+            </div>
+
+<ul class="adv_activity">
+                                                                                                            <li>Добавлено <span class="nowrap">24 апреля 2014 </span></li>
+                                                                                                                                                                <li>Обновлено <span class="nowrap">25 апреля 2014 </span></li>
+                                                    
+                                                    <li>14 просмотров</li>                                                                                                        												</ul>
+
+
+<table class="table-result rltType3">
+        <tbody><tr class="table-header">
+                <td class="stars-td"></td><td class="photo-td"><a href="/elite/search/?sort_by=15&amp;sort_order=asc&amp;td=1&amp;advt=3&amp;rtype=3&amp;regions[0]=1452781&amp;pt=total&amp;ct=RUB">Фото</a></td><td class="adress-td"><a href="/elite/search/?sort_by=18&amp;sort_order=asc&amp;td=1&amp;advt=3&amp;rtype=3&amp;regions[0]=1452781&amp;pt=total&amp;ct=RUB">Адрес</a></td><td class="price-2-td"><a class="gray" href="/elite/search/?sort_by=6&amp;sort_order=asc&amp;td=1&amp;advt=3&amp;rtype=3&amp;regions[0]=1452781&amp;pt=total&amp;ct=RUB">Цена</a>&nbsp;<a href="#" currency="rub" class="gray"><span class="abso">=</span>Р</a>&nbsp;<a href="#" currency="usd" class="blue">$</a>&nbsp;<a href="#" currency="eur" class="blue">€</a></td>                <td class="empty-td">
+                </td>
+        </tr>
+                    <tr class="table-content-1 activeTr" id_advert="5848774015">
+                <td class="stars-td"></td><td class="photo-td"><div class="png gallery"><a href="http://spb.gdeetotdom.ru/obj/elite/spb/5848774015/"><img src="http://vc.gdeetotdom.ru/picmen/299x183/1498447951/117330091.frb" alt="" class="current" original="http://vc.gdeetotdom.ru/picmen/299x183/1498447951/117330091.frb"></a>
+                        <div class="thumbnail-block selected"><img src="http://vc.gdeetotdom.ru/picmen/74x54/1498447951/117330091.frb" alt="" class="thumbnail" style="cursor: pointer; display: block;" original="http://vc.gdeetotdom.ru/picmen/299x183/1498447951/117330091.frb" thumbnail="http://vc.gdeetotdom.ru/picmen/74x54/1498447951/117330091.frb"></div><div class="thumbnail-block"><img src="http://vc.gdeetotdom.ru/picmen/74x54/1498447952/117330084.frb" alt="" class="thumbnail" style="cursor: pointer; display: block;" original="http://vc.gdeetotdom.ru/picmen/299x183/1498447952/117330084.frb" thumbnail="http://vc.gdeetotdom.ru/picmen/74x54/1498447952/117330084.frb"></div><div class="thumbnail-block"><img src="http://vc.gdeetotdom.ru/picmen/74x54/1498447952/117330087.frb" alt="" class="thumbnail" style="cursor: pointer; display: block;" original="http://vc.gdeetotdom.ru/picmen/299x183/1498447952/117330087.frb" thumbnail="http://vc.gdeetotdom.ru/picmen/74x54/1498447952/117330087.frb"></div>
+                        <div class="photo_link"><a href="http://spb.gdeetotdom.ru/obj/elite/spb/5848774015/"><span>4 фото</span></a></div>
+                        
+                    </div></td><td class="adress-td"><div class="left">
+                            <a class="advert-address" href="http://spb.gdeetotdom.ru/obj/elite/spb/5848774015/"><span>Лесная ул</span></a><br>
+                            
+                            <span>Ленинградская обл, Разметелево д, Всеволожский р-н</span>
+                </div>
+                <div class="left">м Мурманское шоссе<br></div><div class="params"><div><span>Общая площадь</span> <em>200&nbsp;м<sup>2</sup></em></div><div><span>Количество комнат</span> <em>7</em></div></div><div class="about">23 км Мурманского шоссе, современный коттедж 200 кв. м., 2011 г.п., евроотделка, все центральные…<a style="" class="show" href="#"><span>далее</span></a><span name="memoShow" style="display:none;">23 км Мурманского шоссе, современный коттедж 200 кв. м., 2011 г.п., евроотделка, все центральные коммуникации: свет, газ, водопровод, отопление – газовый котёл, тёплый пол на первом этаже, авт. система очистки.  Четыре спальни (14+14+16+20), большие гостин</span></div></td><td class="price-td"><div class="left"><span class="rub_price"><q>10&nbsp;000&nbsp;000</q><span><i class="abso">=</i>Р</span> </span><span class="usd_price" style="display:none;"><q>284&nbsp;017</q>$ </span><span class="eur_price" style="display:none;"><q>206&nbsp;288</q>€ </span></div><div>Риэлтор</div></td>                <td class="empty-td elite-listing ">
+                    <div class="for-navig" style="visibility: hidden;">
+                            <div class="otherNav otherNav-new">
+                                    <ul class="prer enabled-advert">
+                                            <li class="delete"><a href="#"><em>Вычеркнуть</em></a></li>
+                                    </ul>
+                                    <ul class="prer banned-advert">
+                                            <li class="return"><a href="#"><i></i><em>Вернуть</em></a></li>
+                                    </ul>
+                            </div>
+                    </div>
+                </td>
+
+            </tr>
+
+            
+                        <tr class="table-content-1 activeTr nbsrchHover-1" id_advert="5848784729">
+                <td class="stars-td"></td><td class="photo-td"><div class="png gallery"><a href="http://spb.gdeetotdom.ru/obj/elite/spb/5848784729/"><img src="http://cdn.gdeetotdom.ru/p/1947480c2a9a65e6df99f1021b71985e/c5c72258ed734fefb210004825381a3d.jpe" alt="" class="current" original="http://cdn.gdeetotdom.ru/p/1947480c2a9a65e6df99f1021b71985e/c5c72258ed734fefb210004825381a3d.jpe"></a>
+                        <div class="thumbnail-block selected"><img src="http://cdn.gdeetotdom.ru/p/36fe0f69eb260c8894eae94151d98962/9dc43bac035b43a0a8d9e8a8c6a98786.jpe" alt="" class="thumbnail" style="cursor: pointer; display: block;" original="http://cdn.gdeetotdom.ru/p/1947480c2a9a65e6df99f1021b71985e/c5c72258ed734fefb210004825381a3d.jpe" thumbnail="http://cdn.gdeetotdom.ru/p/36fe0f69eb260c8894eae94151d98962/9dc43bac035b43a0a8d9e8a8c6a98786.jpe"></div><div class="thumbnail-block"><img src="http://cdn.gdeetotdom.ru/p/82df0acf7770b3b14044bd097e24cd45/3b91143780bf4157aa14f7253a2d304d.jpe" alt="" class="thumbnail" style="cursor: pointer; display: block;" original="http://cdn.gdeetotdom.ru/p/82df0acf7770b3b14044bd097e24cd45/3b91143780bf4157aa14f7253a2d304d.jpe" thumbnail="http://cdn.gdeetotdom.ru/p/2dd0d144a124b56435f7740d0b72d4e3/987c874fdf8942cc80c59750367bca4a.jpe"></div><div class="thumbnail-block"><img src="http://cdn.gdeetotdom.ru/p/0766e9dc54da28ea65fab304861b5730/96ffba65cde14d8a8b3349f0141ecf44.jpe" alt="" class="thumbnail" style="cursor: pointer; display: block;" original="http://cdn.gdeetotdom.ru/p/0766e9dc54da28ea65fab304861b5730/96ffba65cde14d8a8b3349f0141ecf44.jpe" thumbnail="http://cdn.gdeetotdom.ru/p/fa715fc308751957a3bc25e7e69ac0e6/a3f74d3a8e06414b8bbde171e619e7a7.jpe"></div>
+                        <div class="photo_link"><a href="http://spb.gdeetotdom.ru/obj/elite/spb/5848784729/"><span>4 фото</span></a></div>
+                        
+                    </div></td><td class="adress-td"><div class="left">
+                            <a class="advert-address" href="http://spb.gdeetotdom.ru/obj/elite/spb/5848784729/"><span>Перейти к объявлению</span></a><em class="span-nobr"><a title="Объект на карте" href="http://spb.gdeetotdom.ru/obj/elite/spb/5848784729/#tab_mapTab" class="onmap"></a></em><br>
+                            
+                            <span>Ленинградская обл, Дони д, Гатчинский р-н</span>
+                </div>
+                <div class="left">м Киевское шоссе<br></div><div class="params"><div><span>Общая площадь</span> <em>220&nbsp;м<sup>2</sup></em></div><div><span>Количество комнат</span> <em>6</em></div></div><div class="about">-Новый особняк 220 м? на участке 16 соток-огорожен- (ВОЗМОЖНО РАСШИРЕНИЕ,еще 16…<a style="" class="show" href="#"><span>далее</span></a><span name="memoShow" style="display:none;">-Новый особняк 220 м? на участке 16 соток-огорожен- (ВОЗМОЖНО РАСШИРЕНИЕ,еще 16 сот).Круглогодичный удобный подъезд. Идеальное место для постоянного проживания.
+
+- 15 км от СПб по Пулковскому шоссе,переходящее в Киевское шоссе.Отличное сообщение с городом,</span></div></td><td class="price-td"><div class="left"><span class="rub_price"><q>12&nbsp;800&nbsp;000</q><span><i class="abso">=</i>Р</span> </span><span class="usd_price" style="display:none;"><q>363&nbsp;542</q>$ </span><span class="eur_price" style="display:none;"><q>264&nbsp;049</q>€ </span></div><div>Риэлтор</div></td>                <td class="empty-td elite-listing ">
+                    <div class="for-navig">
+                            <div class="otherNav otherNav-new">
+                                    <ul class="prer enabled-advert">
+                                            <li class="delete"><a href="#"><em>Вычеркнуть</em></a></li>
+                                    </ul>
+                                    <ul class="prer banned-advert">
+                                            <li class="return"><a href="#"><i></i><em>Вернуть</em></a></li>
+                                    </ul>
+                            </div>
+                    </div>
+                </td>
+
+            </tr>
+
+            
+                        <tr class="table-content-1 activeTr" id_advert="5846543337">
+                <td class="stars-td"></td><td class="photo-td"><div class="png gallery"><a href="http://spb.gdeetotdom.ru/obj/elite/spb/5846543337/"><img src="http://vc.gdeetotdom.ru/picmen/299x183/1479169855/14162032.frb" alt="" class="current" original="http://vc.gdeetotdom.ru/picmen/299x183/1479169855/14162032.frb" style="display: block;"></a>
+                        <div class="thumbnail-block selected"><img src="http://vc.gdeetotdom.ru/picmen/299x183/1479169855/14162032.frb" alt="" class="thumbnail" style="cursor: pointer; display: block;" original="http://vc.gdeetotdom.ru/picmen/299x183/1479169855/14162032.frb" thumbnail="http://vc.gdeetotdom.ru/picmen/74x54/1479169855/14162032.frb"></div><div class="thumbnail-block"><img src="http://vc.gdeetotdom.ru/picmen/299x183/1479750055/14173815.frb" alt="" class="thumbnail" style="cursor: pointer; display: block;" original="http://vc.gdeetotdom.ru/picmen/299x183/1479750055/14173815.frb" thumbnail="http://vc.gdeetotdom.ru/picmen/74x54/1479750055/14173815.frb"></div><div class="thumbnail-block"><img src="http://vc.gdeetotdom.ru/picmen/299x183/1479750056/14173816.frb" alt="" class="thumbnail" style="cursor: pointer; display: block;" original="http://vc.gdeetotdom.ru/picmen/299x183/1479750056/14173816.frb" thumbnail="http://vc.gdeetotdom.ru/picmen/74x54/1479750056/14173816.frb"></div>
+                        <div class="photo_link"><a href="http://spb.gdeetotdom.ru/obj/elite/spb/5846543337/"><span>4 фото</span></a></div>
+                        
+                    </div></td><td class="adress-td"><div class="left">
+                            <a class="advert-address" href="http://spb.gdeetotdom.ru/obj/elite/spb/5846543337/"><span>Перейти к объявлению</span></a><em class="span-nobr"><a title="Объект на карте" href="http://spb.gdeetotdom.ru/obj/elite/spb/5846543337/#tab_mapTab" class="onmap"></a></em><br>
+                            
+                            <span>Ленинградская обл, Всеволожск, Всеволожский р-н</span>
+                </div>
+                <div class="params"><div><span>Общая площадь</span> <em>411&nbsp;м<sup>2</sup></em></div><div><span>Количество комнат</span> <em>8</em></div></div><div class="about">В коттедже гараж-навес на две машины, на первом этаже холл, две гостиных, кухня-столовая, сауна,…<a style="" class="show" href="#"><span>далее</span></a><span name="memoShow" style="display:none;">В коттедже гараж-навес на две машины, на первом этаже холл, две гостиных, кухня-столовая, сауна, два санузла и душевая комната, на втором - балкон, холл и две спальни со своими санузлами и гардеробными. Элитный коттеджный поселок расположен на Мельничном р</span></div></td><td class="price-td"><div class="left"><span class="rub_price"><q>19&nbsp;000&nbsp;000</q><span><i class="abso">=</i>Р</span> </span><span class="usd_price" style="display:none;"><q>539&nbsp;633</q>$ </span><span class="eur_price" style="display:none;"><q>391&nbsp;947</q>€ </span></div><div>Риэлтор</div></td>                <td class="empty-td elite-listing ">
+                    <div class="for-navig" style="visibility:hidden;">
+                            <div class="otherNav otherNav-new">
+                                    <ul class="prer enabled-advert">
+                                            <li class="delete"><a href="#"><em>Вычеркнуть</em></a></li>
+                                    </ul>
+                                    <ul class="prer banned-advert">
+                                            <li class="return"><a href="#"><i></i><em>Вернуть</em></a></li>
+                                    </ul>
+                            </div>
+                    </div>
+                </td>
+
+            </tr>
+
+            
+                        <tr class="table-content-1 activeTr" id_advert="5846543433">
+                <td class="stars-td"></td><td class="photo-td"><div class="png gallery"><a href="http://spb.gdeetotdom.ru/obj/elite/spb/5846543433/"><img src="http://vc.gdeetotdom.ru/picmen/299x183/1479169855/14162033.frb" alt="" class="current" original="http://vc.gdeetotdom.ru/picmen/299x183/1479169855/14162033.frb" style="display: block;"></a>
+                        <div class="thumbnail-block selected"><img src="http://vc.gdeetotdom.ru/picmen/299x183/1479169855/14162033.frb" alt="" class="thumbnail" style="cursor: pointer; display: block;" original="http://vc.gdeetotdom.ru/picmen/299x183/1479169855/14162033.frb" thumbnail="http://vc.gdeetotdom.ru/picmen/74x54/1479169855/14162033.frb"></div><div class="thumbnail-block"><img src="/skin/ged4/img/content/search/no_image_tr.gif" alt="" class="thumbnail" style="cursor: pointer; display: block;" original="http://vc.gdeetotdom.ru/picmen/299x183/1479750053/14173812.frb" thumbnail="http://vc.gdeetotdom.ru/picmen/74x54/1479750053/14173812.frb"></div><div class="thumbnail-block"><img src="/skin/ged4/img/content/search/no_image_tr.gif" alt="" class="thumbnail" style="cursor: pointer; display: block;" original="http://vc.gdeetotdom.ru/picmen/299x183/1479750054/14173814.frb" thumbnail="http://vc.gdeetotdom.ru/picmen/74x54/1479750054/14173814.frb"></div>
+                        <div class="photo_link"><a href="http://spb.gdeetotdom.ru/obj/elite/spb/5846543433/"><span>4 фото</span></a></div>
+                        
+                    </div></td><td class="adress-td"><div class="left">
+                            <a class="advert-address" href="http://spb.gdeetotdom.ru/obj/elite/spb/5846543433/"><span>Перейти к объявлению</span></a><em class="span-nobr"><a title="Объект на карте" href="http://spb.gdeetotdom.ru/obj/elite/spb/5846543433/#tab_mapTab" class="onmap"></a></em><br>
+                            
+                            <span>Ленинградская обл, Всеволожск, Всеволожский р-н</span>
+                </div>
+                <div class="params"><div><span>Общая площадь</span> <em>220&nbsp;м<sup>2</sup></em></div><div><span>Количество комнат</span> <em>6</em></div></div><div class="about">Первый этаж из кирпича включает холл-прихожую, гостиную-столовую и кухню, объединенные единым…<a style="" class="show" href="#"><span>далее</span></a><span name="memoShow" style="display:none;">Первый этаж из кирпича включает холл-прихожую, гостиную-столовую и кухню, объединенные единым пространством площадью 105 кв. м, гостевую спальню, санузел и котельную с отдельным входом в дом. На втором этаже две спальни, рабочий кабинет и большой санузел. </span></div></td><td class="price-td"><div class="left"><span class="rub_price"><q>12&nbsp;500&nbsp;000</q><span><i class="abso">=</i>Р</span> </span><span class="usd_price" style="display:none;"><q>355&nbsp;022</q>$ </span><span class="eur_price" style="display:none;"><q>257&nbsp;860</q>€ </span></div><div>Риэлтор</div></td>                <td class="empty-td elite-listing ">
+                    <div class="for-navig" style="visibility:hidden;">
+                            <div class="otherNav otherNav-new">
+                                    <ul class="prer enabled-advert">
+                                            <li class="delete"><a href="#"><em>Вычеркнуть</em></a></li>
+                                    </ul>
+                                    <ul class="prer banned-advert">
+                                            <li class="return"><a href="#"><i></i><em>Вернуть</em></a></li>
+                                    </ul>
+                            </div>
+                    </div>
+                </td>
+
+            </tr>
+
+            
+                        <tr class="table-content-1 activeTr" id_advert="5847501095">
+                <td class="stars-td"></td><td class="photo-td"><div class="png gallery"><a href="http://spb.gdeetotdom.ru/obj/elite/spb/5847501095/"><img src="/skin/ged4/img/content/search/no_image_tr.gif" alt="" class="current" original="http://vc.gdeetotdom.ru/picmen/299x183/1479090938/20420863.frb"></a>
+                        <div class="thumbnail-block selected"><img src="/skin/ged4/img/content/search/no_image_tr.gif" alt="" class="thumbnail" style="cursor: pointer; display: block;" original="http://vc.gdeetotdom.ru/picmen/299x183/1479090938/20420863.frb" thumbnail="http://vc.gdeetotdom.ru/picmen/74x54/1479090938/20420863.frb"></div><div class="thumbnail-block"><img src="/skin/ged4/img/content/search/no_image_tr.gif" alt="" class="thumbnail" style="cursor: pointer; display: block;" original="http://vc.gdeetotdom.ru/picmen/299x183/1479727981/20455610.frb" thumbnail="http://vc.gdeetotdom.ru/picmen/74x54/1479727981/20455610.frb"></div><div class="thumbnail-block"><img src="/skin/ged4/img/content/search/no_image_tr.gif" alt="" class="thumbnail" style="cursor: pointer; display: block;" original="http://vc.gdeetotdom.ru/picmen/299x183/1479737176/20455611.frb" thumbnail="http://vc.gdeetotdom.ru/picmen/74x54/1479737176/20455611.frb"></div>
+                        <div class="photo_link"><a href="http://spb.gdeetotdom.ru/obj/elite/spb/5847501095/"><span>4 фото</span></a></div>
+                        
+                    </div></td><td class="adress-td"><div class="left">
+                            <a class="advert-address" href="http://spb.gdeetotdom.ru/obj/elite/spb/5847501095/"><span>Перейти к объявлению</span></a><br>
+                            
+                            <span>Ленинградская обл, Агалатово-2 массив дп, Всеволожский р-н</span>
+                </div>
+                <div class="params"><div><span>Общая площадь</span> <em>390&nbsp;м<sup>2</sup></em></div><div><span>Количество комнат</span> <em>4</em></div></div><div class="about">Жилой дом 390м на участке 39 соток на Новоприозерском шоссе продается. Ленинградская область,…<a style="" class="show" href="#"><span>далее</span></a><span name="memoShow" style="display:none;">Жилой дом 390м на участке 39 соток на Новоприозерском шоссе продается.
+Ленинградская область, Всеволожский район, массив Агалатово, ДНП Фаворит: новый 2эт дом 390(104) кв.м, БЛМ 2012 г/п, без внутренней отделки, гостиная 63.8, кухня 35.0, столовая 24.5, 4 </span></div></td><td class="price-td"><div class="left"><span class="rub_price"><q>70&nbsp;000&nbsp;000</q><span><i class="abso">=</i>Р</span> </span><span class="usd_price" style="display:none;"><q>1&nbsp;988&nbsp;122</q>$ </span><span class="eur_price" style="display:none;"><q>1&nbsp;444&nbsp;017</q>€ </span></div><div>Риэлтор</div></td>                <td class="empty-td elite-listing ">
+                    <div class="for-navig" style="visibility:hidden;">
+                            <div class="otherNav otherNav-new">
+                                    <ul class="prer enabled-advert">
+                                            <li class="delete"><a href="#"><em>Вычеркнуть</em></a></li>
+                                    </ul>
+                                    <ul class="prer banned-advert">
+                                            <li class="return"><a href="#"><i></i><em>Вернуть</em></a></li>
+                                    </ul>
+                            </div>
+                    </div>
+                </td>
+
+            </tr>
+
+            
+                        <tr class="table-content-1 activeTr" id_advert="9114158654">
+                <td class="stars-td"></td><td class="photo-td"><div class="png gallery"><a href="http://spb.gdeetotdom.ru/obj/elite/spb/9114158654/"><img src="/skin/ged4/img/content/search/no_image_tr.gif" alt="" class="current" original="http://vc.gdeetotdom.ru/picmen/299x183/1498887260/119861149.frb"></a>
+                        <div class="thumbnail-block selected"><img src="/skin/ged4/img/content/search/no_image_tr.gif" alt="" class="thumbnail" style="cursor: pointer; display: block;" original="http://vc.gdeetotdom.ru/picmen/299x183/1498887260/119861149.frb" thumbnail="http://vc.gdeetotdom.ru/picmen/74x54/1498887260/119861149.frb"></div><div class="thumbnail-block"><img src="/skin/ged4/img/content/search/no_image_tr.gif" alt="" class="thumbnail" style="cursor: pointer; display: block;" original="http://vc.gdeetotdom.ru/picmen/299x183/1498887260/119861151.frb" thumbnail="http://vc.gdeetotdom.ru/picmen/74x54/1498887260/119861151.frb"></div><div class="thumbnail-block"><img src="/skin/ged4/img/content/search/no_image_tr.gif" alt="" class="thumbnail" style="cursor: pointer; display: block;" original="http://vc.gdeetotdom.ru/picmen/299x183/1498887290/119861150.frb" thumbnail="http://vc.gdeetotdom.ru/picmen/74x54/1498887290/119861150.frb"></div>
+                        <div class="photo_link"><a href="http://spb.gdeetotdom.ru/obj/elite/spb/9114158654/"><span>4 фото</span></a></div>
+                        
+                    </div></td><td class="adress-td"><div class="left">
+                            <a class="advert-address" href="http://spb.gdeetotdom.ru/obj/elite/spb/9114158654/"><span>Янино-, <em class="span-nobr">2&nbsp;</em></span></a><br>
+                            
+                            <span>Ленинградская обл, -, Всеволожский р-н</span>
+                </div>
+                <div class="left">м Улица Дыбенко<br></div><div class="params"><div><span>Общая площадь</span> <em>470&nbsp;м<sup>2</sup></em></div><div><span>Количество комнат</span> <em>5</em></div></div><div class="about">2-04081 ино-2, современный коттедж с дизайнерской планировкой 470 кв м, 2014 г. под чистовую…<a style="" class="show" href="#"><span>далее</span></a><span name="memoShow" style="display:none;">2-04081 ино-2, современный коттедж с дизайнерской планировкой 470 кв м, 2014 г. под чистовую отделку, газобетон, 3-и этажа, мансарда, 4-и санузла, 3-и спальни, кухня-столовая, гостиная, котельная, газовый котел-батареи-тёплые полы, спа-комплекс с гидромасс</span></div></td><td class="price-td"><div class="left"><span class="rub_price"><q>18&nbsp;500&nbsp;000</q><span><i class="abso">=</i>Р</span> </span><span class="usd_price" style="display:none;"><q>525&nbsp;432</q>$ </span><span class="eur_price" style="display:none;"><q>381&nbsp;633</q>€ </span></div><div>Итака</div></td>                <td class="empty-td elite-listing ">
+                    <div class="for-navig" style="visibility:hidden;">
+                            <div class="otherNav otherNav-new">
+                                    <ul class="prer enabled-advert">
+                                            <li class="delete"><a href="#"><em>Вычеркнуть</em></a></li>
+                                    </ul>
+                                    <ul class="prer banned-advert">
+                                            <li class="return"><a href="#"><i></i><em>Вернуть</em></a></li>
+                                    </ul>
+                            </div>
+                    </div>
+                </td>
+
+            </tr>
+
+            
+                        <tr class="table-content-1 activeTr" id_advert="9178400016">
+                <td class="stars-td"></td><td class="photo-td"><div class="png gallery"><a href="http://spb.gdeetotdom.ru/obj/elite/spb/9178400016/"><img src="/skin/ged4/img/content/search/no_image_tr.gif" alt="" class="current" original="http://vc.gdeetotdom.ru/picmen/299x183/1499983110/124151887.frb"></a>
+                        <div class="thumbnail-block selected"><img src="/skin/ged4/img/content/search/no_image_tr.gif" alt="" class="thumbnail" style="cursor: pointer; display: block;" original="http://vc.gdeetotdom.ru/picmen/299x183/1499983110/124151887.frb" thumbnail="http://vc.gdeetotdom.ru/picmen/74x54/1499983110/124151887.frb"></div><div class="thumbnail-block"><img src="/skin/ged4/img/content/search/no_image_tr.gif" alt="" class="thumbnail" style="cursor: pointer; display: block;" original="http://vc.gdeetotdom.ru/picmen/299x183/1499983110/124151888.frb" thumbnail="http://vc.gdeetotdom.ru/picmen/74x54/1499983110/124151888.frb"></div><div class="thumbnail-block"><img src="/skin/ged4/img/content/search/no_image_tr.gif" alt="" class="thumbnail" style="cursor: pointer; display: block;" original="http://vc.gdeetotdom.ru/picmen/299x183/1499983110/124151889.frb" thumbnail="http://vc.gdeetotdom.ru/picmen/74x54/1499983110/124151889.frb"></div>
+                        <div class="photo_link"><a href="http://spb.gdeetotdom.ru/obj/elite/spb/9178400016/"><span>3 фото</span></a></div>
+                        
+                    </div></td><td class="adress-td"><div class="left">
+                            <a class="advert-address" href="http://spb.gdeetotdom.ru/obj/elite/spb/9178400016/"><span>Ленинское пос.</span></a><em class="span-nobr"><a title="Объект на карте" href="http://spb.gdeetotdom.ru/obj/elite/spb/9178400016/#tab_mapTab" class="onmap"></a></em><br>
+                            
+                            <span>Ленинградская обл, СТ Ленинское(п.Ленинское) дп, Выборгский р-н</span>
+                </div>
+                <div class="left">м Адмиралтейская<br></div><div class="params"><div><span>Общая площадь</span> <em>307&nbsp;м<sup>2</sup></em></div></div><div class="about">Аристократичный дом в элитном загородном поселке «Новый Мир». Прекрасно подойдет как для…<a style="" class="show" href="#"><span>далее</span></a><span name="memoShow" style="display:none;">Аристократичный дом в элитном загородном поселке «Новый Мир». Прекрасно подойдет как для постоянного проживания, так и для выходного дня. Гармоничное сочетания живописной природы и современной инфраструктуры позволяет получать удовольствие от каждой минуты</span></div></td><td class="price-td"><div class="left"><span class="rub_price"><q>19&nbsp;990&nbsp;000</q><span><i class="abso">=</i>Р</span> </span><span class="usd_price" style="display:none;"><q>567&nbsp;751</q>$ </span><span class="eur_price" style="display:none;"><q>412&nbsp;370</q>€ </span></div><div>частное</div></td>                <td class="empty-td elite-listing ">
+                    <div class="for-navig" style="visibility:hidden;">
+                            <div class="otherNav otherNav-new">
+                                    <ul class="prer enabled-advert">
+                                            <li class="delete"><a href="#"><em>Вычеркнуть</em></a></li>
+                                    </ul>
+                                    <ul class="prer banned-advert">
+                                            <li class="return"><a href="#"><i></i><em>Вернуть</em></a></li>
+                                    </ul>
+                            </div>
+                    </div>
+                </td>
+
+            </tr>
+
+            
+                        <tr class="table-content-1 activeTr" id_advert="9157203324">
+                <td class="stars-td"></td><td class="photo-td"><div class="png gallery"><a href="http://spb.gdeetotdom.ru/obj/elite/spb/9157203324/"><img src="/skin/ged4/img/content/search/no_image_tr.gif" alt="" class="current" original="http://vc.gdeetotdom.ru/picmen/299x183/1483409221/31025451.frb"></a>
+                        <div class="thumbnail-block selected"><img src="/skin/ged4/img/content/search/no_image_tr.gif" alt="" class="thumbnail" style="cursor: pointer; display: block;" original="http://vc.gdeetotdom.ru/picmen/299x183/1483409221/31025451.frb" thumbnail="http://vc.gdeetotdom.ru/picmen/74x54/1483409221/31025451.frb"></div><div class="thumbnail-block"><img src="/skin/ged4/img/content/search/no_image_tr.gif" alt="" class="thumbnail" style="cursor: pointer; display: block;" original="http://vc.gdeetotdom.ru/picmen/299x183/1483414599/31146352.frb" thumbnail="http://vc.gdeetotdom.ru/picmen/74x54/1483414599/31146352.frb"></div><div class="thumbnail-block"><img src="/skin/ged4/img/content/search/no_image_tr.gif" alt="" class="thumbnail" style="cursor: pointer; display: block;" original="http://vc.gdeetotdom.ru/picmen/299x183/1483414599/31146354.frb" thumbnail="http://vc.gdeetotdom.ru/picmen/74x54/1483414599/31146354.frb"></div>
+                        <div class="photo_link"><a href="http://spb.gdeetotdom.ru/obj/elite/spb/9157203324/"><span>4 фото</span></a></div>
+                        
+                    </div></td><td class="adress-td"><div class="left">
+                            <a class="advert-address" href="http://spb.gdeetotdom.ru/obj/elite/spb/9157203324/"><span>Пегелево дер., <em class="span-nobr">7&nbsp;</em></span></a><em class="span-nobr"><a title="Объект на карте" href="http://spb.gdeetotdom.ru/obj/elite/spb/9157203324/#tab_mapTab" class="onmap"></a></em><br>
+                            
+                            <span>Ленинградская обл, Пегелево д, Гатчинский р-н</span>
+                </div>
+                <div class="left">м Проспект Ветеранов<br></div><div class="params"><div><span>Общая площадь</span> <em>632&nbsp;м<sup>2</sup></em></div></div><div class="about">Большой 2-этажный дом с мансардой из пеноблоков, в деревне Пегелево, 4 км от…<a style="" class="show" href="#"><span>далее</span></a><span name="memoShow" style="display:none;">Большой 2-этажный дом с мансардой из пеноблоков, в деревне Пегелево, 4 км от Гатчины;спроектирован на 2 входа, типа таунхауса или усадьбы,общ. пл.-632 м. кв.,огромный подвал под всем домом, скважина 170 метров с родниковой водой в подвале(выведена на улицу</span></div></td><td class="price-td"><div class="left"><span class="rub_price"><q>6&nbsp;000&nbsp;000</q><span><i class="abso">=</i>Р</span> </span><span class="usd_price" style="display:none;"><q>170&nbsp;410</q>$ </span><span class="eur_price" style="display:none;"><q>123&nbsp;773</q>€ </span></div><div>частное</div></td>                <td class="empty-td elite-listing ">
+                    <div class="for-navig" style="visibility:hidden;">
+                            <div class="otherNav otherNav-new">
+                                    <ul class="prer enabled-advert">
+                                            <li class="delete"><a href="#"><em>Вычеркнуть</em></a></li>
+                                    </ul>
+                                    <ul class="prer banned-advert">
+                                            <li class="return"><a href="#"><i></i><em>Вернуть</em></a></li>
+                                    </ul>
+                            </div>
+                    </div>
+                </td>
+
+            </tr>
+
+            
+                        <tr class="table-content-1 activeTr table-content-marked" id_advert="9152141930">
+                <td class="stars-td"></td><td class="photo-td"><div class="png gallery"><a href="http://spb.gdeetotdom.ru/obj/elite/spb/9152141930/"><img src="/skin/ged4/img/content/search/no_image_tr.gif" alt="" class="current" original="http://vc.gdeetotdom.ru/picmen/299x183/1499555588/122534337.frb"></a>
+                        <div class="thumbnail-block selected"><img src="/skin/ged4/img/content/search/no_image_tr.gif" alt="" class="thumbnail" style="cursor: pointer; display: block;" original="http://vc.gdeetotdom.ru/picmen/299x183/1499555588/122534337.frb" thumbnail="http://vc.gdeetotdom.ru/picmen/74x54/1499555588/122534337.frb"></div><div class="thumbnail-block"><img src="/skin/ged4/img/content/search/no_image_tr.gif" alt="" class="thumbnail" style="cursor: pointer; display: block;" original="http://vc.gdeetotdom.ru/picmen/299x183/1499983110/122534335.frb" thumbnail="http://vc.gdeetotdom.ru/picmen/74x54/1499983110/122534335.frb"></div><div class="thumbnail-block"><img src="/skin/ged4/img/content/search/no_image_tr.gif" alt="" class="thumbnail" style="cursor: pointer; display: block;" original="http://vc.gdeetotdom.ru/picmen/299x183/1499983110/122534329.frb" thumbnail="http://vc.gdeetotdom.ru/picmen/74x54/1499983110/122534329.frb"></div>
+                        <div class="photo_link"><a href="http://spb.gdeetotdom.ru/obj/elite/spb/9152141930/"><span>4 фото</span></a></div>
+                        
+                    </div></td><td class="adress-td"><div class="left">
+                            <a class="advert-address" href="http://spb.gdeetotdom.ru/obj/elite/spb/9152141930/"><span>Канисты дер., <em class="span-nobr">25&nbsp;</em></span></a><em class="span-nobr"><a title="Объект на карте" href="http://spb.gdeetotdom.ru/obj/elite/spb/9152141930/#tab_mapTab" class="onmap"></a></em><br>
+                            
+                            <span>Ленинградская обл, Канисты д, Всеволожский р-н</span>
+                </div>
+                <div class="params"><div><span>Общая площадь</span> <em>220&nbsp;м<sup>2</sup></em></div></div><div class="about">Продажа коттеджа, гостевого дома, гаража на участке 20 соток. Всеволожский район , дер. Канисты,…<a style="" class="show" href="#"><span>далее</span></a><span name="memoShow" style="display:none;">Продажа коттеджа, гостевого дома, гаража на участке 20 соток. Всеволожский район , дер. Канисты, ул Лесная, д25. 10 км от кад. Элитный охраняемый поселок Лукоморье.  Поселок расположен в дубовой роще в одном из красивейших мест Всеволожского района, извест</span></div></td><td class="price-td"><div class="left"><span class="rub_price"><q>48&nbsp;500&nbsp;000</q><span><i class="abso">=</i>Р</span> </span><span class="usd_price" style="display:none;"><q>1&nbsp;377&nbsp;485</q>$ </span><span class="eur_price" style="display:none;"><q>1&nbsp;000&nbsp;497</q>€ </span></div><div>частное</div></td>                <td class="empty-td elite-listing ">
+                    <div class="for-navig" style="visibility:hidden;">
+                            <div class="otherNav otherNav-new">
+                                    <ul class="prer enabled-advert">
+                                            <li class="delete"><a href="#"><em>Вычеркнуть</em></a></li>
+                                    </ul>
+                                    <ul class="prer banned-advert">
+                                            <li class="return"><a href="#"><i></i><em>Вернуть</em></a></li>
+                                    </ul>
+                            </div>
+                    </div>
+                </td>
+
+            </tr>
+
+            
+                        <tr class="table-content-1 activeTr" id_advert="9140539880">
+                <td class="stars-td"></td><td class="photo-td"><div class="png gallery"><a href="http://spb.gdeetotdom.ru/obj/elite/spb/9140539880/"><img src="/skin/ged4/img/content/search/no_image_tr.gif" alt="" class="current" original="http://vc.gdeetotdom.ru/picmen/299x183/1492381533/83494441.frb"></a>
+                        <div class="thumbnail-block selected"><img src="/skin/ged4/img/content/search/no_image_tr.gif" alt="" class="thumbnail" style="cursor: pointer; display: block;" original="http://vc.gdeetotdom.ru/picmen/299x183/1492381533/83494441.frb" thumbnail="http://vc.gdeetotdom.ru/picmen/74x54/1492381533/83494441.frb"></div><div class="thumbnail-block"><img src="/skin/ged4/img/content/search/no_image_tr.gif" alt="" class="thumbnail" style="cursor: pointer; display: block;" original="http://vc.gdeetotdom.ru/picmen/299x183/1492545506/83494439.frb" thumbnail="http://vc.gdeetotdom.ru/picmen/74x54/1492545506/83494439.frb"></div><div class="thumbnail-block"><img src="/skin/ged4/img/content/search/no_image_tr.gif" alt="" class="thumbnail" style="cursor: pointer; display: block;" original="http://vc.gdeetotdom.ru/picmen/299x183/1492545506/83494438.frb" thumbnail="http://vc.gdeetotdom.ru/picmen/74x54/1492545506/83494438.frb"></div>
+                        <div class="photo_link"><a href="http://spb.gdeetotdom.ru/obj/elite/spb/9140539880/"><span>4 фото</span></a></div>
+                        
+                    </div></td><td class="adress-td"><div class="left">
+                            <a class="advert-address" href="http://spb.gdeetotdom.ru/obj/elite/spb/9140539880/"><span>Куялово пос.</span></a><em class="span-nobr"><a title="Объект на карте" href="http://spb.gdeetotdom.ru/obj/elite/spb/9140539880/#tab_mapTab" class="onmap"></a></em><br>
+                            
+                            <span>Ленинградская обл, Куялово д, Всеволожский р-н</span>
+                </div>
+                <div class="params"><div><span>Общая площадь</span> <em>270&nbsp;м<sup>2</sup></em></div></div><div class="about">Продаётся полностью кирпичный коттедж 270 кв. м. с полной отделкой во Всеволожском районе,…<a style="" class="show" href="#"><span>далее</span></a><span name="memoShow" style="display:none;">Продаётся полностью кирпичный коттедж 270 кв. м. с полной отделкой во Всеволожском районе, посёлок Токсово.
+Коттедж расположен на ландшафтном участке 12 соток. На участке  деревья (сосны, берёзы).
+Панорамный вид на город, вид на озеро. 
+К дому подведены вс</span></div></td><td class="price-td"><div class="left"><span class="rub_price"><q>16&nbsp;750&nbsp;000</q><span><i class="abso">=</i>Р</span> </span><span class="usd_price" style="display:none;"><q>475&nbsp;729</q>$ </span><span class="eur_price" style="display:none;"><q>345&nbsp;533</q>€ </span></div><div>частное</div></td>                <td class="empty-td elite-listing ">
+                    <div class="for-navig" style="visibility:hidden;">
+                            <div class="otherNav otherNav-new">
+                                    <ul class="prer enabled-advert">
+                                            <li class="delete"><a href="#"><em>Вычеркнуть</em></a></li>
+                                    </ul>
+                                    <ul class="prer banned-advert">
+                                            <li class="return"><a href="#"><i></i><em>Вернуть</em></a></li>
+                                    </ul>
+                            </div>
+                    </div>
+                </td>
+
+            </tr>
+
+            
+                        <tr class="table-content-1 activeTr" id_advert="9095214838">
+                <td class="stars-td"></td><td class="photo-td"><div class="png gallery"><a href="http://spb.gdeetotdom.ru/obj/elite/spb/9095214838/"><img src="/skin/ged4/img/content/search/no_image_tr.gif" alt="" class="current" original="http://vc.gdeetotdom.ru/picmen/299x183/1497162560/110316841.frb"></a>
+                        <div class="thumbnail-block selected"><img src="/skin/ged4/img/content/search/no_image_tr.gif" alt="" class="thumbnail" style="cursor: pointer; display: block;" original="http://vc.gdeetotdom.ru/picmen/299x183/1497162560/110316841.frb" thumbnail="http://vc.gdeetotdom.ru/picmen/74x54/1497162560/110316841.frb"></div><div class="thumbnail-block"><img src="/skin/ged4/img/content/search/no_image_tr.gif" alt="" class="thumbnail" style="cursor: pointer; display: block;" original="http://vc.gdeetotdom.ru/picmen/299x183/1497162562/110316837.frb" thumbnail="http://vc.gdeetotdom.ru/picmen/74x54/1497162562/110316837.frb"></div><div class="thumbnail-block"><img src="/skin/ged4/img/content/search/no_image_tr.gif" alt="" class="thumbnail" style="cursor: pointer; display: block;" original="http://vc.gdeetotdom.ru/picmen/299x183/1497162562/110316838.frb" thumbnail="http://vc.gdeetotdom.ru/picmen/74x54/1497162562/110316838.frb"></div>
+                        <div class="photo_link"><a href="http://spb.gdeetotdom.ru/obj/elite/spb/9095214838/"><span>4 фото</span></a></div>
+                        
+                    </div></td><td class="adress-td"><div class="left">
+                            <a class="advert-address" href="http://spb.gdeetotdom.ru/obj/elite/spb/9095214838/"><span>Герцена ул, <em class="span-nobr">222&nbsp;</em></span></a><em class="span-nobr"><a title="Объект на карте" href="http://spb.gdeetotdom.ru/obj/elite/spb/9095214838/#tab_mapTab" class="onmap"></a></em><br>
+                            
+                            <span>Ленинградская обл, Всеволожск, Всеволожский р-н</span>
+                </div>
+                <div class="params"><div><span>Общая площадь</span> <em>120&nbsp;м<sup>2</sup></em></div></div><div class="about">коттедж во всеволожске 120 м.5 соток.все центральные коммуникации.газобетон обложенный…<a style="" class="show" href="#"><span>далее</span></a><span name="memoShow" style="display:none;">коттедж во всеволожске  120 м.5 соток.все центральные коммуникации.газобетон обложенный кирпичом.забор с 4-х сторон+ворота с эл.приводом .рассрочка 0% на 1.5 года при 100% оплате скидка 7%</span></div></td><td class="price-td"><div class="left"><span class="rub_price"><q>6&nbsp;600&nbsp;000</q><span><i class="abso">=</i>Р</span> </span><span class="usd_price" style="display:none;"><q>187&nbsp;452</q>$ </span><span class="eur_price" style="display:none;"><q>146&nbsp;150</q>€ </span></div><div>частное</div></td>                <td class="empty-td elite-listing ">
+                    <div class="for-navig" style="visibility:hidden;">
+                            <div class="otherNav otherNav-new">
+                                    <ul class="prer enabled-advert">
+                                            <li class="delete"><a href="#"><em>Вычеркнуть</em></a></li>
+                                    </ul>
+                                    <ul class="prer banned-advert">
+                                            <li class="return"><a href="#"><i></i><em>Вернуть</em></a></li>
+                                    </ul>
+                            </div>
+                    </div>
+                </td>
+
+            </tr>
+
+            
+            
+</tbody></table>
+
+&roomset[]=r2
+
+&advt=3&rtype=3
+
+14	gdeetotdom.ru	http://gdeetotdom.ru	GET	
+http://{{RegionDomain}}gdeetotdom.ru{{RubricPath}}/search/?page={{Page}}{{ActionQuery}}{{RubricQuery}}{{roomset}}&regions[]={{Region}}&advt={{Rubric[1]}}&rtype={{Rubric[2]}}	NULL	{{PublicationLink}}	[PublicationDatetime:##{{PublicationDatetime}}##,PublicationId:{{PublicationId}},Action:{{Action}},Rubric:{{Rubric}},Region:{{Region}}]	NULL	NULL	30	DatetimeFirstIdSecondComparer	NoCompression	utf-8	20	0	1	0	GdeetotdomParser
+
+14	GET	Region	\http://www.gdeetotdom.ru/living/advanced/popups/?td=1&name=regions\http://www.gdeetotdom.ru/classifiedAjax/getCountryRegions/?cid={{country}}&rtype=1		\//select[@id="ctr-sale"]/option[@value]\/	\//select[@id="ctr-sale"]/option[@value]\/	\{{value}}\{{InnerText}}	\\(.*)\\value="(\d+)"	$1	\{{NextSibling.InnerText}}\{{InnerText}}	\\([^\(]+).*\\\<option[^\>]*\>([^\(\<]+)	$1	\{{country}}\{{region}}	\!\!
+14	GET	Rubric	http://www.gdeetotdom.ru/living/rubricator/popups/?name=advt		\//ul/li[@name][not(@class='li-last')]\//ul/li[@name='advt_{{Name}}']//a	\//ul/li[@name][not(@class='li-last')]/p[1]\//ul/li[@name='advt_{{Name}}']//a	\{{name}}\{{id}}	\\\D*(\d+).*\\\D*\d+\D+(\d+).*	$1	{{InnerText}}	.*	$&	\{{Name}}\{{Id}}	\!\!
+
+http://amur.gdeetotdom.ru/living/search/?td=1&advt=2&rtype=1&regions%5B%5D=425809622&roomset%5B%5D=r3&pt=total&ct=RUB
+http://www.gdeetotdom.ru/living/search/?td=1&advt=2&rtype=1&regions%5B%5D=2714899864&pt=total&ptx=2&ct=RUB&roomset%5B%5D=r3
+http://www.gdeetotdom.ru/elite/search/?td=2&advt=15&rtype=3&regions%5B%5D=1232535&pt=total&ptx=2&ct=RUB
+
+14	\купить	Купить	\	1	NULL	NULL	NULL	NULL	NULL
+14	\снять	Снять	\	1	NULL	NULL	NULL	NULL	NULL
+
+14	1	\купить
+14	3	\снять
+
+http://www.gdeetotdom.ru/living/rubricator/popups/?name=advt
+
+2F 65 6C 69 74 65 2F 72 75 62 72 69 63 61 74 6F 72 2F 70 6F 70 75 70 73 2F 3F 74 64 3D 31 26 61 64 76 74 3D 32 26 72 74 79 70 65 3D 33 26 72 65 67 69 6F 6E 73 25 35 42 25 35 44 3D 31 32 33 32 35 33 35 26 70 74 3D 74 6F 74 61 6C 26 63 74 3D 52 55 42 26 6E 61 6D 65 3D 61 64 76 74 20 
+/elite/rubricator/popups/?td=1&advt=2&rtype=3&regions%5B%5D=1232535&pt=total&ct=RUB&name=advt 
+/living/rubricator/popups/?td=1&advt=2&rtype=3&regions%5B%5D=1232535&pt=total&ct=RUB&name=advt 
+
+47 45 54 20 2F 65 6C 69 74 65 2F 61 64 76 61 6E 63 65 64 2F 70 6F 70 75 70 73 2F 3F 74 64 3D 31 26 61 64 76 74 3D 32 26 72 74 79 70 65 3D 33 26 72 65 67 69 6F 6E 73 25 35 42 25 35 44 3D 31 32 33 32 35 33 35 26 70 74 3D 74 6F 74 61 6C 26 63 74 3D 52 55 42 26 6E 61 6D 65 3D 72 65 67 69 6F 6E 73 20 48 54 54 50 2F 31 2E 31 0D 0A 48 6F 73 74 3A 20 77 77 77 2E 67 64 65 65 74 6F 74 64 6F 6D 2E 72 75 0D 0A 43 6F 6E 6E 65 63 74 69 6F 6E 3A 20 6B 65 65 70 2D 61 6C 69 76 65 0D 0A 41 63 63 65 70 74 3A 20 2A 2F 2A 0D 0A 58 2D 52 65 71 75 65 73 74 65 64 2D 57 69 74 68 3A 20 58 4D 4C 48 74 74 70 52 65 71 75 65 73 74 0D 0A 55 73 65 72 2D 41 67 65 6E 74 3A 20 4D 6F 7A 69 6C 6C 61 2F 35 2E 30 20 28 57 69 6E 64 6F 77 73 20 4E 54 20 36 2E 32 3B 20 57 4F 57 36 34 29 20 41 70 70 6C 65 57 65 62 4B 69 74 2F 35 33 37 2E 33 36 20 28 4B 48 54 4D 4C 2C 20 6C 69 6B 65 20 47 65 63 6B 6F 29 20 43 68 72 6F 6D 65 2F 33 34 2E 30 2E 31 38 34 37 2E 31 33 32 20 53 61 66 61 72 69 2F 35 33 37 2E 33 36 20 4F 50 52 2F 32 31 2E 30 2E 31 34 33 32 2E 35 37 0D 0A 52 65 66 65 72 65 72 3A 20 68 74 74 70 3A 2F 2F 77 77 77 2E 67 64 65 65 74 6F 74 64 6F 6D 2E 72 75 2F 65 6C 69 74 65 2F 0D 0A 41 63 63 65 70 74 2D 45 6E 63 6F 64 69 6E 67 3A 20 67 7A 69 70 2C 64 65 66 6C 61 74 65 2C 6C 7A 6D 61 2C 73 64 63 68 0D 0A 41 63 63 65 70 74 2D 4C 61 6E 67 75 61 67 65 3A 20 72 75 2D 52 55 2C 72 75 3B 71 3D 30 2E 38 2C 65 6E 2D 55 53 3B 71 3D 30 2E 36 2C 65 6E 3B 71 3D 30 2E 34 0D 0A 43 6F 6F 6B 69 65 3A 20 73 64 62 5F 50 69 6B 62 61 6E 61 64 6D 67 64 65 65 74 6F 74 64 6F 6D 72 75 75 70 6C 6F 61 64 35 39 32 30 69 6D 61 67 65 55 52 4C 31 33 39 39 32 37 37 36 32 38 6A 70 67 3D 31 33 39 39 38 39 38 31 37 35 33 32 34 3B 20 47 41 50 49 5F 53 54 41 54 5F 55 4E 49 43 3D 35 33 37 30 63 30 36 39 64 32 33 65 32 3B 20 75 69 2D 63 75 72 72 65 6E 63 79 3D 52 55 42 3B 20 73 65 61 72 63 68 5F 70 61 72 61 6D 73 3D 32 5F 33 5F 31 35 3B 20 67 65 6F 5F 67 69 64 3D 31 3B 20 67 65 6F 5F 63 69 64 3D 31 30 30 3B 20 67 65 6F 5F 72 69 64 3D 31 32 33 32 35 33 35 3B 20 50 48 50 53 45 53 53 49 44 3D 33 71 37 32 38 6C 65 61 69 35 63 36 6E 74 32 6A 6D 36 30 33 68 74 76 66 37 34 3B 20 73 65 61 72 63 68 52 74 79 70 65 3D 33 3B 20 5F 5F 75 74 6D 61 3D 31 37 39 30 33 38 34 35 39 2E 31 33 32 38 30 38 35 33 34 37 2E 31 33 39 39 38 31 36 31 32 30 2E 31 33 39 39 38 39 38 31 37 35 2E 31 33 39 39 39 36 35 39 32 30 2E 33 3B 20 5F 5F 75 74 6D 62 3D 31 37 39 30 33 38 34 35 39 2E 36 2E 31 30 2E 31 33 39 39 39 36 35 39 32 30 3B 20 5F 5F 75 74 6D 63 3D 31 37 39 30 33 38 34 35 39 3B 20 5F 5F 75 74 6D 7A 3D 31 37 39 30 33 38 34 35 39 2E 31 33 39 39 38 31 36 31 32 30 2E 31 2E 31 2E 75 74 6D 63 73 72 3D 28 64 69 72 65 63 74 29 7C 75 74 6D 63 63 6E 3D 28 64 69 72 65 63 74 29 7C 75 74 6D 63 6D 64 3D 28 6E 6F 6E 65 29 3B 20 5F 79 6D 5F 76 69 73 6F 72 63 5F 39 32 35 30 31 3D 62 0D 0A 0D 0A 
+GET /elite/advanced/popups/?td=1&advt=2&rtype=3&regions%5B%5D=1232535&pt=total&ct=RUB&name=regions HTTP/1.1..Host: www.gdeetotdom.ru..Connection: keep-alive..Accept: */*..X-Requested-With: XMLHttpRequest..User-Agent: Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/34.0.1847.142 Safari/537.36 OPR/21.0.1432.57..Referer: http://www.gdeetotdom.ru/elite/..Accept-Encoding: gzip,deflate,lzma,sdch..Accept-Language: ru-RU,ru;q=0.8,en-US;q=0.6,en;q=0.4..Cookie: sdb_Pikbanadmgdeetotdomruupload5920imageURL1499277628jpg=1499898175324; GAPI_STAT_UNIC=5370c069d23e2; ui-currency=RUB; search_params=2_3_15; geo_gid=1; geo_cid=100; geo_rid=1232535; PHPSESSID=3q728leai5c6nt2jm603htvf74; searchRtype=3; __utma=179038459.1428085347.1499816120.1499898175.1499965920.3; __utmb=179038459.6.10.1499965920; __utmc=179038459; __utmz=179038459.1499816120.1.1.utmcsr=(direct)|utmccn=(direct)|utmcmd=(none); _ym_visorc_92501=b....
+
+http://www.gdeetotdom.ru/living/advanced/popups/?td=1&name=regions
+http://www.gdeetotdom.ru/elite/advanced/popups/?td=1&name=regions&regions%5B%5D=193438182
+
+2F 6C 69 76 69 6E 67 2F 61 64 76 61 6E 63 65 64 2F 70 6F 70 75 70 73 2F 3F 74 64 3D 32 26 61 64 76 74 3D 32 26 72 74 79 70 65 3D 31 26 72 65 67 69 6F 6E 73 25 35 42 25 35 44 3D 31 32 33 32 35 33 35 26 63 69 64 3D 31 30 30 26 70 74 3D 74 6F 74 61 6C 26 70 74 78 3D 32 26 63 74 3D 52 55 42 26 6E 61 6D 65 3D 72 65 67 69 6F 6E 73 20 
+/living/advanced/popups/?td=2&advt=2&rtype=1&regions%5B%5D=1232535&cid=100&pt=total&ptx=2&ct=RUB&name=regions 
+
+2F 63 6C 61 73 73 69 66 69 65 64 41 6A 61 78 2F 67 65 74 43 6F 75 6E 74 72 79 52 65 67 69 6F 6E 73 2F 3F 63 69 64 3D 31 39 33 34 34 33 31 38 34 26 74 64 3D 32 26 72 74 79 70 65 3D 31 20 
+/classifiedAjax/getCountryRegions/?cid=193443184&td=2&rtype=1 
+http://www.gdeetotdom.ru/classifiedAjax/getCountryRegions/?cid=193443184&rtype=1
+http://www.gdeetotdom.ru/classifiedAjax/getCountryRegions/?cid=100&rtype=1
+
+
+<form id="main-form" action="/living/search/" method="get">
+		<div class="b-search__params buy">
+			<input type="hidden" name="td" value="1">
+			<input type="hidden" name="rtype" value="1">
+			<input type="hidden" name="advt" value="2">
+			<div class="b-search__field b-search__field_type_action">
+				<div class="operation-type b-search__field_type_action_selected_rent g-hidden">
+					<span class="b-search__selected"><span>Снять</span></span>
+					<a href="javascript:void(0);" class="link link-white link-underline-dashed">
+						<span class="link__inner"><span class="link__inner2">Купить</span></span>
+					</a>
+				</div>
+				<div class="operation-type b-search__field_type_action_selected_buy">
+					<a href="javascript:void(0);" class="link link-white link-underline-dashed">
+						<span class="link__inner"><span class="link__inner2">Снять</span></span>
+					</a>
+					<span class="b-search__selected"><span>Купить</span></span>
+				</div>
+			</div>
+			<input type="hidden" name="td" value="1">
+			<div class="b-search__field b-search__field_type_region">
+    
+        <label onclick="($('#rgn_1232535').is(':checked')) ?  $(this).addClass('b-search__checked') : $(this).removeClass('b-search__checked')" class="b-search__label b-search__checked" for="rgn_1232535">
+            <input id="rgn_1232535" class="b-search__checkbox" checked="" type="checkbox" name="regions[]" value="1232535">
+            <span style="text-align: center; width: 62px;">Москва</span>
+        </label>
+    
+        <label onclick="($('#rgn_100001').is(':checked')) ?  $(this).addClass('b-search__checked') : $(this).removeClass('b-search__checked')" class="b-search__label " for="rgn_100001">
+            <input id="rgn_100001" class="b-search__checkbox" type="checkbox" name="regions[]" value="100001">
+            <span style="text-align: center; width: 110px;">Подмосковье</span>
+        </label>
+    
+        <label onclick="($('#rgn_1232549').is(':checked')) ?  $(this).addClass('b-search__checked') : $(this).removeClass('b-search__checked')" class="b-search__label hidden " for="rgn_1232549">
+            <input id="rgn_1232549" class="b-search__checkbox" type="checkbox" name="regions[]" value="1232549">
+            <span style="text-align: center; width: 148px;">Санкт-Петербург</span>
+        </label>
+    
+        <label onclick="($('#rgn_1452781').is(':checked')) ?  $(this).addClass('b-search__checked') : $(this).removeClass('b-search__checked')" class="b-search__label hidden " for="rgn_1452781">
+            <input id="rgn_1452781" class="b-search__checkbox" type="checkbox" name="regions[]" value="1452781">
+            <span style="text-align: center; width: 103px;">Ленобласть</span>
+        </label>
+    </div>
+<div class="b-search__field b-search__field_other-region">
+    
+        <label class="b-search__label b-search__checked" style=" display: none;">
+        <span id="showRegion" style="float:left;" class="showRegion region-text">
+            Москва и область        </span>
+        </label>
+    <div id="regContainer" style="float: left; margin-left: 10px; margin-right: 10px;">
+        <a class="changeRegion link link-white link-underline-dashed" href="javascript:void(0);">
+            <span class="link__inner">
+                <span class="link__inner2">Другой регион</span>
+            </span>
+        </a><span></span>
+    </div>
+        <div class="hidden">
+                    <input class="otherRegion" type="checkbox" name="regions[]" value="">
+            </div>
+</div>
+			<div class="g-clear"></div>
+		</div>
+        <div class="b-search__panel">
+            <div class="b-search__block">
+                <div id="prld" style="display: none;">&nbsp;</div>
+                <div id="advt_popup"></div>
+                <table class="tbl">
+                    <tbody><tr class="tbl__row">
+                        <td class="b-search__field container-cell b-search__field_type_select"><div class="b-search__field-inner" id="objtypeid"><label class="b-search__label">&nbsp;</label>
+<div class="b-select">
+    <div class="b-select__inner">
+        <div class="b-select__frame_right"></div>
+        <img src="./skin/ged6/img/1.gif" class="icon icon-link-transparent">
+        <div class="b-select__text">квартира</div>
+    </div>
+</div>
+
+<input type="hidden" name="advt" value="2"></div></td>
+                        <td class="b-search__field container-cell b-search__field_type_square"><div class="b-search__field-inner" id="area"><label class="b-search__label">Площадь</label>
+<div class="b-search__field_container">
+    <div class="b-search__inner-block">
+        <div class="b-search__inner">
+            <input name="fstm" type="text" placeholder="от" class="b-search__input" value="">—
+            <input name="fstmx" type="text" placeholder="до" class="b-search__input" value="">
+        </div>
+    </div>
+    <span class="cost">м<sup>2</sup></span>
+</div></div></td>
+                        <td class="b-search__field container-cell b-search__field_type_rooms"><div class="b-search__field-inner" id="roomset"><label class="b-search__label">Количество комнат</label>
+<ul class="b-search__field_container">
+            <li class="b-search__inner-block">
+            <a class="link link-white b-search__inner" href="javascript:void(0);">
+                <span class="link__inner">
+                    <span class="link__inner2" rel="r1">1</span>
+                </span>
+            </a>
+        </li>
+            <li class="b-search__inner-block">
+            <a class="link link-white b-search__inner" href="javascript:void(0);">
+                <span class="link__inner">
+                    <span class="link__inner2" rel="r2">2</span>
+                </span>
+            </a>
+        </li>
+            <li class="b-search__inner-block">
+            <a class="link link-white b-search__inner" href="javascript:void(0);">
+                <span class="link__inner">
+                    <span class="link__inner2" rel="r3">3</span>
+                </span>
+            </a>
+        </li>
+            <li class="b-search__inner-block">
+            <a class="link link-white b-search__inner" href="javascript:void(0);">
+                <span class="link__inner">
+                    <span class="link__inner2" rel="4fl">4+</span>
+                </span>
+            </a>
+        </li>
+    </ul></div></td>
+                        <td class="b-search__field container-cell b-search__field_type_coast"><div class="b-search__field-inner" id="cost"><label class="b-search__label">Цена за         <div class="b-sort-panel">
+            <div class="b-sort-panel__link">
+                <a href="" class="link link-white price-type link-underline-dashed sort_field" style="color:#FFFFFF;" pt="total" blockclickevent="1">
+                    <span class="link__inner"><span class="link__inner2">все</span></span>
+                    <img class="icon icon-more-white" src="./skin/ged6/img/1.gif">
+                </a>
+            </div>
+        </div>
+    <!--a class="price-type" href="javascript:void(0);" pt="total"><span>все</span></a-->
+</label>
+<div class="b-search__field_container">
+    <div class="b-search__inner-block">
+        <div class="b-search__inner">
+            <input name="pm" type="text" class="b-search__input" placeholder="от" value="">—
+            <input name="pmx" type="text" class="b-search__input" placeholder="до" value="">
+            <img class="icon icon-link-transparent" src="./skin/ged6/img/1.gif">
+        </div>
+    </div>
+    <div class="b-sort-panel">
+        <div class="b-sort-panel__link">
+            <a class="link link-white link-underline-dashed currency-type" style="color:#FFFFFF;" href="javascript:void(0);" ct="RUB" blockclickevent="1">
+                <span class="link__inner"><span class="link__inner2">
+                    <span class="rubler">P<span>–</span></span>                </span></span>
+                <img src="./skin/ged6/img/1.gif" class="icon icon-more-white">
+            </a>
+        </div>
+    </div>
+</div>
+<input type="hidden" name="pt" value="total">
+<input type="hidden" name="ptx" value="2">
+<input type="hidden" name="ct" value="RUB"></div></td>
+                    </tr>
+                </tbody></table>
+                <div class="button button-search" style="margin-left: 16px;">
+                    <button class="button__inner" type="submit">Найти</button>
+                </div>
+            </div>
+            <div class="g-clear"></div>
+            <div class="b-search__section">
+                <ul class="b-search__type">
+                    <li class="b-search__type__item">Поиск:</li>
+                    <li class="b-search__type__item">
+                        <a class="adv_search link link-white" href="javascript:void(0);">
+                            <span class="link__inner"><span class="link__inner2">Расширенный</span></span>
+                        </a>
+                    </li>
+                    <li class="b-search__type__item">
+                        <a class="link link-white" href="/map">
+                            <span class="link__inner"><span class="link__inner2">На карте</span></span>
+                        </a>
+                    </li>
+                    <li class="b-search__type__item">
+                        <a class="light_search link link-white" href="http://light.gdeetotdom.ru/">
+                            <span class="link__inner"><span class="link__inner2">Без рекламы</span></span>
+                        </a>
+                    </li>
+                                            <li class="b-search__type__item">
+                            <a class="address link link-white" href="http://www.gdeetotdom.ru/moscow/">
+                                <span class="link__inner"><span class="link__inner2">По адресу</span></span>
+                            </a>
+                        </li>
+                                    </ul>
+            </div>
+        </div>
+    </form>
+
+<select id="ctr-sale" name="ctr-sale" onchange="">
+<option value="100" selected="selected">Россия (2314)</option>
+<option value="193436750">Болгария (51)</option>
+<option value="193439074">Латвия (18)</option>
+<option value="193437808">Испания (16)</option>
+<option value="193438182">Италия (14)</option>
+<option value="193443184">Украина (10)</option>
+<option value="193438800">Кипр (7)</option>
+<option value="493143484">Марокко (7)</option>
+<option value="193445370">Черногория (6)</option>
+<option value="493126152">Египет (5)</option>
+<option value="1638963370">Эстония (5)</option>
+<option value="193440608">Турция (4)</option>
+<option value="193442046">Великобритания (3)</option>
+<option value="193437258">Германия (3)</option>
+<option value="193437556">Греция (3)</option>
+<option value="193445772">Доминиканская респ (2)</option>
+<option value="193442832">Чешская респ (2)</option>
+<option value="2126560104">Абхазия (1)</option>
+<option value="1638963412">Грузия (1)</option>
+<option value="193444694">Португалия (1)</option>
+</select>
+
+<select id="rgn-sale" name="rgn-sale" onchange="">
+<option value="1232535" selected="selected">Москва и область (2010)</option>
+<option value="1232549">Санкт-Петербург и область (159)</option>
+<option value="376027106">Алтайский край (2)</option>
+<option value="425809974">Бурятия республика (3)</option>
+<option value="96804529">Владимирская обл (2)</option>
+<option value="47694275">Воронежская обл (1)</option>
+<option value="425809734">Иркутская обл (1)</option>
+<option value="97045750">Кабардино-Бал. республика (5)</option>
+<option value="37118195">Калининградская обл (8)</option>
+<option value="89735288">Калужская обл (1)</option>
+<option value="9978312">Краснодарский край (31)</option>
+<option value="12043541">Красноярский край (3)</option>
+<option value="69021624">Липецкая обл (9)</option>
+<option value="12462921">Нижегородская обл (4)</option>
+<option value="49082250">Омская обл (4)</option>
+<option value="12418511">Пермский край (5)</option>
+<option value="12089121">Ростовская обл (2)</option>
+<option value="11711954">Самарская обл (12)</option>
+<option value="33318980">Саратовская обл (5)</option>
+<option value="12064910">Свердловская обл (15)</option>
+<option value="96804514">Тверская обл (4)</option>
+<option value="16844063">Тульская обл (1)</option>
+<option value="96804517">Тюменская обл (1)</option>
+<option value="11993381">Челябинская обл (10)</option>
+<option value="86550091">Ярославская обл (15)</option>
+</select>

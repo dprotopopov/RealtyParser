@@ -252,6 +252,12 @@
     <Content Include="Kvadrat66Parser.sqlite3">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="CitystarParser.sqlite3">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GdeetotdomParser.sqlite3">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -303,9 +309,17 @@
       <Project>{a2e352de-f62c-4c0b-9450-c8a40b1e214f}</Project>
       <Name>RealtyParser.Bn</Name>
     </ProjectReference>
+    <ProjectReference Include="..\RealtyParser.Citystar\RealtyParser.Citystar.csproj">
+      <Project>{a6da1ae5-0e1d-4f65-beab-da0eaf3c1154}</Project>
+      <Name>RealtyParser.Citystar</Name>
+    </ProjectReference>
     <ProjectReference Include="..\RealtyParser.Egent\RealtyParser.Egent.csproj">
       <Project>{4c6897ab-5a59-4b9f-80b8-833f42ef9aa2}</Project>
       <Name>RealtyParser.Egent</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RealtyParser.Gdeetotdom\RealtyParser.Gdeetotdom.csproj">
+      <Project>{5580cba3-5237-464e-9215-5c356aea0760}</Project>
+      <Name>RealtyParser.Gdeetotdom</Name>
     </ProjectReference>
     <ProjectReference Include="..\RealtyParser.Kvadrat66\RealtyParser.Kvadrat66.csproj">
       <Project>{d541e173-598e-4f7f-8d18-9190dcd8135f}</Project>

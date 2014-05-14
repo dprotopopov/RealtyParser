@@ -1,3 +1,9 @@
+5	net-agenta.ru	http://net-agenta.ru	POST	{{Region}}{{RubricAction}}/{{PageStart}}.html	rooms={{roomsFrom-1}}&rooms_last={{roomsTo-1}}	{{PublicationLink}}	[PublicationDatetime:##{{PublicationDatetime}}##,PublicationId:{{PublicationId}},Action:{{Action}},Rubric:{{Rubric}},Region:{{Region}}]	NULL	NULL	30	DatetimeFirstIdSecondComparer	NoCompression	utf-8	30	0	1	0	NetAgentaParser
+
+66 2D 74 79 70 65 3D 2D 31 26 66 69 6C 74 65 72 2D 6E 75 6D 72 6F 6F 6D 73 3D 32 26 66 69 6C 74 65 72 2D 6E 75 6D 72 6F 6F 6D 73 2D 6C 61 73 74 3D 35 26 66 2D 6F 6B 72 75 67 3D 30 26 66 2D 64 69 73 74 72 69 63 74 3D 30 26 66 2D 73 74 72 65 65 74 3D 26 66 5F 63 6F 73 74 5F 31 3D 26 66 5F 63 6F 73 74 5F 32 3D 26 66 5F 63 6F 73 74 5F 31 5F 74 79 70 65 3D 36 34 33 26 66 2D 64 61 74 65 3D 2D 31 26 66 2D 6D 65 74 72 6F 2D 64 69 73 74 2D 70 3D 26 66 2D 6D 65 74 72 6F 2D 64 69 73 74 2D 74 3D 31 26 66 2D 66 6C 6F 6F 72 2D 78 3D 30 26 66 2D 66 6C 6F 6F 72 2D 79 3D 30 26 66 2D 74 79 70 65 2D 68 6F 75 73 65 3D 2D 31 26 66 2D 73 71 75 61 72 65 2D 61 6C 6C 3D 26 66 2D 73 71 75 61 72 65 2D 61 6C 6C 2D 74 6F 3D 26 61 64 76 5F 73 74 61 74 69 6F 6E 73 5F 69 64 3D 26 74 61 73 6B 3D 73 65 74 66 69 6C 74 65 72 
+f-type=-1&filter-numrooms=2&filter-numrooms-last=5&f-okrug=0&f-district=0&f-street=&f_cost_1=&f_cost_2=&f_cost_1_type=643&f-date=-1&f-metro-dist-p=&f-metro-dist-t=1&f-floor-x=0&f-floor-y=0&f-type-house=-1&f-square-all=&f-square-all-to=&adv_stations_id=&task=setfilter
+
+
 5	net-agenta.ru	http://net-agenta.ru	GET	NoCompression	http://net-agenta.ru{{Region}}{{RubricAction}}/{{PageStart}}.html?rooms={{roomsFrom-1}}&rooms_last={{roomsTo-1}}	{{PublicationLink}}	[PublicationDatetime:##{{PublicationDatetime}}##,PublicationId:{{PublicationId}},Action:{{Action}},Rubric:{{Rubric}},Region:{{Region}}]	NULL	NULL	30	DatetimeFirstIdSecondComparer	utf-8	30	1	NetAgentaParser
 
 5	PublicationLink	//a[@class='adv_more' or @class='adv-more']	{{href}}	.*	$&

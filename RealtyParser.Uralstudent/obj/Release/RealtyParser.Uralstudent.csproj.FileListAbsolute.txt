@@ -1,10 +1,10 @@
+D:\Projects\RealtyParser\RealtyParser.Uralstudent\bin\Release\RealtyParser.sqlite3
 D:\Projects\RealtyParser\RealtyParser.Uralstudent\bin\Release\libtidy.dll
 D:\Projects\RealtyParser\RealtyParser.Uralstudent\bin\Release\MirkvartirParser.sqlite3
 D:\Projects\RealtyParser\RealtyParser.Uralstudent\bin\Release\BeBossParser.sqlite3
 D:\Projects\RealtyParser\RealtyParser.Uralstudent\bin\Release\BnParser.sqlite3
 D:\Projects\RealtyParser\RealtyParser.Uralstudent\bin\Release\EgentParser.sqlite3
 D:\Projects\RealtyParser\RealtyParser.Uralstudent\bin\Release\NetAgentaParser.sqlite3
-D:\Projects\RealtyParser\RealtyParser.Uralstudent\bin\Release\RealtyParser.sqlite3
 D:\Projects\RealtyParser\RealtyParser.Uralstudent\bin\Release\RosrealtParser.sqlite3
 D:\Projects\RealtyParser\RealtyParser.Uralstudent\bin\Release\RealtyParserMerge.bat
 D:\Projects\RealtyParser\RealtyParser.Uralstudent\bin\Release\UralstudentParser.sqlite3

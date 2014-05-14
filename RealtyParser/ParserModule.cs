@@ -107,7 +107,7 @@ namespace RealtyParser
                         RequestTimestamp = DateTime.Now.AddDays(1 - loggingDays).ToString("yyyy-MM-dd 00:00:00")
                     }, "<");
 
-            List<Resource> lastResources =
+            var lastResources = new StackListQueue<Resource>(
                 (string.IsNullOrWhiteSpace(request.LastPublicationId) ? string.Empty : request.LastPublicationId).Split(
                     '&')
                     .Select(s => s.Trim())
@@ -119,7 +119,7 @@ namespace RealtyParser
                             {
                                 Transformation = Transformation
                             })
-                    .ToList();
+                );
 
             Debug.WriteLine("lastResources.Count = " + lastResources.Count);
 
@@ -139,7 +139,7 @@ namespace RealtyParser
                                 lastResources.Last(
                                     r => ObjectComparer.Equals(r, item, Mapping)));
 
-                if (!requestId.Select(pair => pair.Value != null).Aggregate(Boolean.And))
+                if (requestId.Select(pair => pair.Value == null).Aggregate(Boolean.Or))
                     throw new NotAvailableDetectedException();
 
                 Debug.WriteLine("requestId {0}", requestId);
@@ -273,6 +273,8 @@ namespace RealtyParser
                                     {
                                         Url = new StackListQueue<string> {builder.Uri.ToString()}
                                     };
+                                    Uri.Default = builder.Uri;
+
                                     IEnumerable<HtmlDocument> documents =
                                         await
                                             LookupCrawler.WebRequestHtmlDocument(builder.Uri);
@@ -353,6 +355,8 @@ namespace RealtyParser
                                             {
                                                 Url = new StackListQueue<string> {builder1.Uri.ToString()},
                                             };
+                                            Uri.Default = builder1.Uri;
+
                                             IEnumerable<HtmlDocument> htmlDocuments =
                                                 await
                                                     PublicationCrawler.WebRequestHtmlDocument(builder1.Uri);
@@ -394,7 +398,11 @@ namespace RealtyParser
                                                 Parser.CreateWebPublication(fields, requestId));
 
                                             if (!lastResourceDictionary.ContainsKey(requestProperties))
+                                            {
+                                                Debug.WriteLine("No requestProperties in lastResourceDictionary " +
+                                                                requestProperties);
                                                 throw new EndOfSearchDetectedException();
+                                            }
                                         }
                                         catch (EndOfSearchDetectedException exception)
                                         {
@@ -435,10 +443,10 @@ namespace RealtyParser
                             if (!lastResourceDictionary.ContainsKey(requestProperties))
                                 throw new EndOfSearchDetectedException();
 
-                            if (
-                                ResourceComparer.Compare(currentResources.First(),
-                                    lastResourceDictionary[requestProperties]) <=
-                                0)
+                            if (ResourceComparer.Compare(
+                                currentResources.DefaultIfEmpty(lastResourceDictionary[requestProperties])
+                                    .FirstOrDefault(),
+                                lastResourceDictionary[requestProperties]) < 0)
                                 throw new EndOfSearchDetectedException();
                             Debug.WriteLine("currentResources.First() = " + currentResources.First());
                             Debug.WriteLine("currentResources.Last() = " + currentResources.Last());
@@ -458,6 +466,15 @@ namespace RealtyParser
                     resources.AddRangeExcept(currentResources);
                     Debug.WriteLine("resources.Count = " + resources.Count());
                 }
+
+                var nextResources = new StackListQueue<Resource>(lastResources) {resources};
+                nextResources = new StackListQueue<Resource>(nextResources.Select(
+                    item => new RequestProperties(item, Mapping))
+                    .Distinct().Select(
+                        item =>
+                            nextResources.Last(
+                                r => ObjectComparer.Equals(r, item, Mapping))));
+
                 if (loggingDays > 0)
                     Database.InsertOrReplace(
                         resources.Select(
@@ -465,7 +482,7 @@ namespace RealtyParser
                                 new Logging
                                 {
                                     SiteId = SiteProperties.SiteId,
-                                    RequestTimestamp = DateTime.Now.ToString(),
+                                    RequestTimestamp = DateTime.Now.ToString(CultureInfo.InvariantCulture),
                                     ResponceResource = r.ToString()
                                 }));
                 try
@@ -600,6 +617,7 @@ namespace RealtyParser
                         {
                             Url = new StackListQueue<string> {builder.Uri.ToString()}
                         };
+                        Uri.Default = builder.Uri;
                         IEnumerable<HtmlDocument> documents =
                             await
                                 PublicationCrawler.WebRequestHtmlDocument(builder.Uri);
@@ -619,19 +637,10 @@ namespace RealtyParser
 
                 PublicationHash.Clear();
 
-                lastResources.AddRange(resources);
-                lastResources =
-                    lastResources.Select(
-                        item => new RequestProperties(item, Mapping))
-                        .Distinct().Select(
-                            item =>
-                                lastResources.Last(
-                                    r => ObjectComparer.Equals(r, item, Mapping))).ToList();
-
                 return new ParseResponse
                 {
                     ResponseCode = responseCode[responseLevel],
-                    LastPublicationId = string.Join("&", lastResources.Select(item => item.ToString())),
+                    LastPublicationId = string.Join("&", nextResources.Select(item => item.ToString())),
                     ModuleName = GetType().Name,
                     Publications = publications
                 };

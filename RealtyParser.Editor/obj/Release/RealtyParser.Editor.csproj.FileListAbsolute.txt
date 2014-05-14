@@ -8,6 +8,8 @@ D:\Projects\RealtyParser\RealtyParser.Editor\bin\Release\RealtyParser.sqlite3
 D:\Projects\RealtyParser\RealtyParser.Editor\bin\Release\RosrealtParser.sqlite3
 D:\Projects\RealtyParser\RealtyParser.Editor\bin\Release\RealtyParserMerge.bat
 D:\Projects\RealtyParser\RealtyParser.Editor\bin\Release\Arenda66Parser.sqlite3
+D:\Projects\RealtyParser\RealtyParser.Editor\bin\Release\CitystarParser.sqlite3
+D:\Projects\RealtyParser\RealtyParser.Editor\bin\Release\GdeetotdomParser.sqlite3
 D:\Projects\RealtyParser\RealtyParser.Editor\bin\Release\Kvadrat66Parser.sqlite3
 D:\Projects\RealtyParser\RealtyParser.Editor\bin\Release\SdamkaParser.sqlite3
 D:\Projects\RealtyParser\RealtyParser.Editor\bin\Release\UpnParser.sqlite3
@@ -27,8 +29,10 @@ D:\Projects\RealtyParser\RealtyParser.Editor\bin\Release\MyParser.dll
 D:\Projects\RealtyParser\RealtyParser.Editor\bin\Release\RealtyParser.Arenda66.dll
 D:\Projects\RealtyParser\RealtyParser.Editor\bin\Release\RealtyParser.BeBoss.dll
 D:\Projects\RealtyParser\RealtyParser.Editor\bin\Release\RealtyParser.Bn.dll
+D:\Projects\RealtyParser\RealtyParser.Editor\bin\Release\RealtyParser.Citystar.dll
 D:\Projects\RealtyParser\RealtyParser.Editor\bin\Release\RealtyParser.dll
 D:\Projects\RealtyParser\RealtyParser.Editor\bin\Release\RealtyParser.Egent.dll
+D:\Projects\RealtyParser\RealtyParser.Editor\bin\Release\RealtyParser.Gdeetotdom.dll
 D:\Projects\RealtyParser\RealtyParser.Editor\bin\Release\RealtyParser.Kvadrat66.dll
 D:\Projects\RealtyParser\RealtyParser.Editor\bin\Release\RealtyParser.Mirkvartir.dll
 D:\Projects\RealtyParser\RealtyParser.Editor\bin\Release\RealtyParser.NetAgenta.dll
@@ -53,7 +57,9 @@ D:\Projects\RealtyParser\RealtyParser.Editor\bin\Release\MyParser.pdb
 D:\Projects\RealtyParser\RealtyParser.Editor\bin\Release\RealtyParser.Arenda66.pdb
 D:\Projects\RealtyParser\RealtyParser.Editor\bin\Release\RealtyParser.BeBoss.pdb
 D:\Projects\RealtyParser\RealtyParser.Editor\bin\Release\RealtyParser.Bn.pdb
+D:\Projects\RealtyParser\RealtyParser.Editor\bin\Release\RealtyParser.Citystar.pdb
 D:\Projects\RealtyParser\RealtyParser.Editor\bin\Release\RealtyParser.Egent.pdb
+D:\Projects\RealtyParser\RealtyParser.Editor\bin\Release\RealtyParser.Gdeetotdom.pdb
 D:\Projects\RealtyParser\RealtyParser.Editor\bin\Release\RealtyParser.Kvadrat66.pdb
 D:\Projects\RealtyParser\RealtyParser.Editor\bin\Release\RealtyParser.Mirkvartir.pdb
 D:\Projects\RealtyParser\RealtyParser.Editor\bin\Release\RealtyParser.NetAgenta.pdb

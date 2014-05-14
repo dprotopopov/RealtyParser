@@ -1,0 +1,1642 @@
+http://realty.moskva-citystar.ru
+
+
+13	PublicationLink	//div[@class='adv-list']//table[@class="table"]//td[@class="address"]/a	{{href}}	.*	$&	NULL
+13	PublicationId	//div[@class='adv-list']//table[@class="table"]//td[@class="notebook-column"]/input	{{value}}	.*	$&	NULL
+13	PublicationDatetime	//div[@class='adv-list']//table[@class="table"]//td[@class="date"]/text()	{{InnerText}}	.*	$&	NULL
+13	WebPublicationPublicationId	//div[@class="adv-view"]//div[@class="adv-number"]	{{InnerText}}	\D*(\d+).*	$1	NULL
+13	WebPublicationModifyDate	//div[@class="adv-view"]//div[@class="date"]	{{InnerText}}	\D*(\d+\s\w+\s\d+(\D+\d+:\d+)?).*	$1	NULL
+13	WebPublicationUrl	/	{{Url}}	.*	$&	NULL
+13	WebPublicationSite	/	{{Url}}	((http(s)?:\/\/)?[^\/\?]+).*	$1	NULL
+13	WebPublicationContactContactName	//div[@class="adv-contact-data"]//div[@class="name"]/a	{{InnerText}}	\s*(\S+)\s*	$1	 
+13	WebPublicationContactPhone	//div[@class="adv-contact-data"]//div[@class="phone"][contains(.,'тел.:')]/text()	{{InnerText}}	.*	$&	NULL
+13	WebPublicationContactEmail	//div[@class="adv-contact-data"]//div[@class="phone"][contains(.,'email:')]/text()	{{InnerText}}	.*	$&	NULL
+13	WebPublicationDescription	//div[@class="adv-contact-data"]//div[@class="message"]|//div[@class="adv-view"]//div[@class="adv-main-data"]//td[@class="note"]	{{InnerText}}	\s*(\S+)\s*	$1	 
+13	WebPublicationAdditionalInfoRealtyAdditionalInfoAppointmentOfRoom	//div[@class="adv-view"]//div[@class="adv-title"]//h1	{{InnerText}}	\s*(\S+)\s*	$1	 
+13	WebPublicationAdditionalInfoRealtyAdditionalInfoCostAll	//div[@class="adv-view"]//div[@class="adv-main-data"]//span[@class="price"]	{{InnerText}}	\D*(\d+)\D*	$1	NULL
+13	WebPublicationAdditionalInfoRealtyAdditionalInfoCostPerMeter	//div[@class="adv-view"]//div[@class="adv-main-data"]//span[contains(.,'р./м2')]/strong	{{InnerText}}	\D*(\d+)\D*	$1	NULL
+13	WebPublicationAdditionalInfoRealtyAdditionalInfoFloor	//div[@class="adv-view"]//div[@class="adv-main-data"]//td[contains(.,'Этаж')]/following-sibling::td[1]	{{InnerText}}	\D*(\d+)\s*\/\D*(\d+).*	$1	NULL
+13	WebPublicationAdditionalInfoRealtyAdditionalInfoFloorNumber	//div[@class="adv-view"]//div[@class="adv-main-data"]//td[contains(.,'Этаж')]/following-sibling::td[1]	{{InnerText}}	\D*(\d+)\s*\/\D*(\d+).*	$2	NULL
+13	WebPublicationAdditionalInfoRealtyAdditionalInfoAddress	//div[@class="adv-view"]//div[@class="adv-main-data"]//td[contains(.,'Район') or contains(.,'Адрес')]/following-sibling::td[1]	{{InnerText}}	\s*(\S+)\s*	$1	 
+13	WebPublicationAdditionalInfoRealtyAdditionalInfoDistrict	//div[@class="adv-view"]//div[@class="adv-main-data"]//td[contains(.,'Район')]/following-sibling::td[1]	{{InnerText}}	\s*(\S+)\s*	$1	 
+13	WebPublicationAdditionalInfoRealtyAdditionalInfoWallМaterial	//div[@class="adv-view"]//div[@class="adv-main-data"]//td[contains(.,'Материал стен')]/following-sibling::td[1]	{{InnerText}}	\s*(\S+)\s*	$1	 
+13	WebPublicationAdditionalInfoRealtyAdditionalInfoViewFromProperty	//div[@class="adv-view"]//div[@class="adv-main-data"]//tr[contains(.,'Куда выходят окна')]/following-sibling::tr[1]	{{InnerText}}	\s*(\S+)\s*	$1	 
+13	WebPublicationAdditionalInfoRealtyAdditionalInfoRoomNumber	//div[@class="adv-view"]//div[@class="adv-main-data"]//td[contains(.,'Кол-во комнат')]/following-sibling::td[1]	{{InnerText}}	.*	$&	NULL
+13	WebPublicationAdditionalInfoRealtyAdditionalInfoRealEstateType	//div[@class="adv-view"]//div[@class="adv-main-data"]//td[contains(.,'Тип дома')]/following-sibling::td[1]	{{InnerText}}	\s*(\S+)\s*	$1	 
+13	WebPublicationAdditionalInfoRealtyAdditionalInfoTotalSpace	//div[@class="adv-view"]//div[@class="adv-main-data"]//td[contains(.,'Площадь')]/following-sibling::td[1]	{{InnerText}}	\A\D*(\d*)[^,]*,\D*(\d*)[^,]*,\D*(\d*)[^,].*	$1	NULL
+13	WebPublicationAdditionalInfoRealtyAdditionalInfoLivingSpace	//div[@class="adv-view"]//div[@class="adv-main-data"]//td[contains(.,'Площадь')]/following-sibling::td[1]	{{InnerText}}	\A\D*(\d*)[^,]*,\D*(\d*)[^,]*,\D*(\d*)[^,].*	$2	NULL
+13	WebPublicationAdditionalInfoRealtyAdditionalInfoKitchenSpace	//div[@class="adv-view"]//div[@class="adv-main-data"]//td[contains(.,'Площадь')]/following-sibling::td[1]	{{InnerText}}	\A\D*(\d*)[^,]*,\D*(\d*)[^,]*,\D*(\d*)[^,].*	$3	NULL
+13	WebPublicationPhotos	//div[@class="adv-view"]//div[@class="cs-ig"]//img[@src]	{{src}}	.*	$&	NULL
+13	WebPublicationContactAuthor	//div[@class="adv-contact-data"]//div[@class="agency"]//div[@class="name"]/a	{{InnerText}}	\s*(\S+)\s*	$1	 
+13	WebPublicationAdditionalInfoRealtyAdditionalInfoLandSpace	//div[@class="adv-view"]//div[@class="adv-main-data"]//td[contains(.,'Площадь')]/following-sibling::td[1]	{{InnerText}}	\A\D*(\d*).*	$1	NULL
+13	WebPublicationContactAuthorUrl	//div[@class="adv-contact-data"]//div[@class="name"]/a	{{onclick}}	go\("([^"]+)"\)	$1	NULL
+
+
+<a href="javascript:void(0)" onclick="go(&quot;/party68631&quot;)">CENTURY 21 Street Realty </a>
+
+<div class="agency">
+                <span style="font-weight:normal;">Агентство недвижимости:</span> 
+                <div class="name"><a href="javascript:void(0)" onclick="go(&quot;/party90906&quot;)">Rent Moskow </a></div>
+                
+                <div class="image">
+                    <a href="javascript:void(0)" onclick="go(&quot;/party90906&quot;)"><img src="http://s8.citystar.ru/c0/da0ec38570d9935882a8e7d6a2c3e4ea-fit-78x25.jpg" title="Rent Moskow " alt=""></a>
+                </div>
+                
+            </div>
+
+<div id="cs-ig" class="cs-ig">
+    <div class="cs-ig__preview" style="padding: 4px; border: 1px solid #CCCCCC; margin: 0px; height: 240px;">
+        <img id="cs-ig__preview-img-7176208" class="cs-ig__preview-img" style="width: 320px; height: 240px;" src="http://s7.citystar.ru/00/52f6b81296e220306477192f7c626638-fit-320x240.jpg" alt="" title="">
+        
+    </div>
+    <a class="cs-ig__preview-zoom" title="Увеличить"></a>
+    <div class="cs-ig__gallery-link">
+        <a class="cs-ig__gallery-link-link">Просмотр крупных изображений (9)</a>
+    </div>
+    
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".cs-ig").ImageGallery({
+            selectedImgCssClass: 'cs-ig__img_selected_yes',
+            preview: { imgWidth: 320, imgHeight: 240 }
+        });
+
+        
+        $('#cs-ig__jcarousel-list').jcarousel({
+            vertical: false,
+            
+            scroll: 2,
+            
+            animation: 'slow',
+            buttonNextEvent: 'click',
+            buttonPrevEvent: 'click',
+            
+            itemFallbackDimension: 165 // If, for some reason, jCarousel can not detect the width of an item, you can set a fallback dimension (width or height, depending on the orientation) here to ensure correct calculations.
+        });
+        
+    });
+</script>
+
+
+
+<div class="cs-ig__img-list" style="height: 536px; width: 330px; ">
+    <div class=" jcarousel-skin-1"><div class="jcarousel-container jcarousel-container-horizontal" style="position: relative; display: block;"><div class="jcarousel-clip jcarousel-clip-horizontal" style="position: relative;"><ul style="width: 595px; height: 504px; overflow: hidden; position: relative; top: 0px; margin: 0px; padding: 0px; left: 0px;" id="cs-ig__jcarousel-list" class="jcarousel-list jcarousel-list-horizontal">
+    
+        <li style="width: 165px; height: 504px; float: left; list-style: none;" class="jcarousel-item jcarousel-item-horizontal jcarousel-item-1 jcarousel-item-1-horizontal" jcarouselindex="1">
+        
+        
+            
+            <div class="cs-ig__img-container" style="padding: 3px; border: 1px solid #CCCCCC; margin: 1px; position: absolute; top: 0px; width: 155px; height: 116px;">
+                <a class="pirobox_gall first" href="http://s7.citystar.ru/00/52f6b81296e220306477192f7c626638-fit-800x600.jpg" title="" rel="1&amp;nbsp;из&amp;nbsp;9" rev="0">
+                    <img id="cs-ig__img-7176208" class="cs-ig__img" src="http://s7.citystar.ru/00/52f6b81296e220306477192f7c626638-crop-155x116.jpg" alt="" title="">
+                </a>
+            </div>
+        
+            
+            <div class="cs-ig__img-container" style="padding: 3px; border: 1px solid #CCCCCC; margin: 1px; position: absolute; top: 126px; width: 155px; height: 116px;">
+                <a class="pirobox_gall" href="http://s4.citystar.ru/0v/074d80a967b57046812b39e6ac71d2b2-fit-800x600.jpg" title="" rel="2&amp;nbsp;из&amp;nbsp;9" rev="1">
+                    <img id="cs-ig__img-10061034" class="cs-ig__img" src="http://s4.citystar.ru/0v/074d80a967b57046812b39e6ac71d2b2-crop-155x116.jpg" alt="" title="">
+                </a>
+            </div>
+        
+            
+            <div class="cs-ig__img-container" style="padding: 3px; border: 1px solid #CCCCCC; margin: 1px; position: absolute; top: 252px; width: 155px; height: 116px;">
+                <a class="pirobox_gall" href="http://s10.citystar.ru/0p/96bdc33d856108f870c6abe45b0c2364-fit-800x600.jpg" title="" rel="3&amp;nbsp;из&amp;nbsp;9" rev="2">
+                    <img id="cs-ig__img-10061035" class="cs-ig__img" src="http://s10.citystar.ru/0p/96bdc33d856108f870c6abe45b0c2364-crop-155x116.jpg" alt="" title="">
+                </a>
+            </div>
+        
+            
+            <div class="cs-ig__img-container" style="padding: 3px; border: 1px solid #CCCCCC; margin: 1px; position: absolute; top: 378px; width: 155px; height: 116px;">
+                <a class="pirobox_gall" href="http://s2.citystar.ru/md/a25aab3835bf22c2bbfc0f846a399ecd-fit-800x600.jpg" title="" rel="4&amp;nbsp;из&amp;nbsp;9" rev="3">
+                    <img id="cs-ig__img-10061036" class="cs-ig__img" src="http://s2.citystar.ru/md/a25aab3835bf22c2bbfc0f846a399ecd-crop-155x116.jpg" alt="" title="">
+                </a>
+            </div>
+        
+        
+        </li>
+    
+        <li style="width: 165px; height: 504px; float: left; list-style: none;" class="jcarousel-item jcarousel-item-horizontal jcarousel-item-2 jcarousel-item-2-horizontal" jcarouselindex="2">
+        
+        
+            
+            <div class="cs-ig__img-container" style="padding: 3px; border: 1px solid #CCCCCC; margin: 1px; position: absolute; top: 0px; width: 155px; height: 116px;">
+                <a class="pirobox_gall" href="http://s1.citystar.ru/b0/ff9c5bcd3c0843a34a544495851867f8-fit-800x600.jpg" title="" rel="5&amp;nbsp;из&amp;nbsp;9" rev="4">
+                    <img id="cs-ig__img-10061037" class="cs-ig__img" src="http://s1.citystar.ru/b0/ff9c5bcd3c0843a34a544495851867f8-crop-155x116.jpg" alt="" title="">
+                </a>
+            </div>
+        
+            
+            <div class="cs-ig__img-container" style="padding: 3px; border: 1px solid #CCCCCC; margin: 1px; position: absolute; top: 126px; width: 155px; height: 116px;">
+                <a class="pirobox_gall" href="http://s9.citystar.ru/0a/4ea5a07cda496ab037e5539a26397556-fit-800x600.jpg" title="" rel="6&amp;nbsp;из&amp;nbsp;9" rev="5">
+                    <img id="cs-ig__img-10061038" class="cs-ig__img" src="http://s9.citystar.ru/0a/4ea5a07cda496ab037e5539a26397556-crop-155x116.jpg" alt="" title="">
+                </a>
+            </div>
+        
+            
+            <div class="cs-ig__img-container" style="padding: 3px; border: 1px solid #CCCCCC; margin: 1px; position: absolute; top: 252px; width: 155px; height: 116px;">
+                <a class="pirobox_gall" href="http://s6.citystar.ru/wq/e27d087f4f322421661bf2999d9c0665-fit-800x600.jpg" title="" rel="7&amp;nbsp;из&amp;nbsp;9" rev="6">
+                    <img id="cs-ig__img-10061039" class="cs-ig__img" src="http://s6.citystar.ru/wq/e27d087f4f322421661bf2999d9c0665-crop-155x116.jpg" alt="" title="">
+                </a>
+            </div>
+        
+            
+            <div class="cs-ig__img-container" style="padding: 3px; border: 1px solid #CCCCCC; margin: 1px; position: absolute; top: 378px; width: 155px; height: 116px;">
+                <a class="pirobox_gall" href="http://s7.citystar.ru/gv/b8bed560e0e49c0313a3de063ba09658-fit-800x600.jpg" title="" rel="8&amp;nbsp;из&amp;nbsp;9" rev="7">
+                    <img id="cs-ig__img-10061040" class="cs-ig__img" src="http://s7.citystar.ru/gv/b8bed560e0e49c0313a3de063ba09658-crop-155x116.jpg" alt="" title="">
+                </a>
+            </div>
+        
+        
+        </li>
+    
+        <li style="width: 165px; height: 504px; float: left; list-style: none;" class="jcarousel-item jcarousel-item-horizontal jcarousel-item-3 jcarousel-item-3-horizontal" jcarouselindex="3">
+        
+        
+            
+            <div class="cs-ig__img-container" style="padding: 3px; border: 1px solid #CCCCCC; margin: 1px; position: absolute; top: 0px; width: 155px; height: 116px;">
+                <a class="pirobox_gall last" href="http://s4.citystar.ru/00/375c910e6765c87c52d8570cd1216b27-fit-800x600.jpg" title="" rel="9&amp;nbsp;из&amp;nbsp;9" rev="8">
+                    <img id="cs-ig__img-10061041" class="cs-ig__img" src="http://s4.citystar.ru/00/375c910e6765c87c52d8570cd1216b27-crop-155x116.jpg" alt="" title="">
+                </a>
+            </div>
+        
+        
+        </li>
+    
+    </ul></div><div class="jcarousel-prev jcarousel-prev-horizontal jcarousel-prev-disabled jcarousel-prev-disabled-horizontal" disabled="disabled" style="display: block;"></div><div class="jcarousel-next jcarousel-next-horizontal" style="display: block;"></div></div></div>
+</div>
+</div>
+
+<td class="note" colspan="2">Продается свободная 3-комнатная квартира, метро Медведково, улица Тихомирова, дом 1,корп.2.Состояние хорошее, встроенная кухня. 2 лоджии. Приватизация 2014 года, 3 врослых собственника, легкая альтернатива. </td><td class="note" colspan="2">Продается свободная 3-комнатная квартира, метро Медведково, улица Тихомирова, дом 1,корп.2.Состояние хорошее, встроенная кухня. 2 лоджии. Приватизация 2014 года, 3 врослых собственника, легкая альтернатива. </td>
+<table>
+                <tbody><tr>
+                    <td class="group-title" colspan="2">Куда выходят окна</td>
+                </tr>
+
+                
+
+                    <tr>
+
+                        <td class="field-title">Окон на Восток</td>
+                        <td class="field">3</td>
+
+                    </tr>
+                
+
+            </tbody></table>
+<div class="adv-title" style="margin-top:5px;">
+                        <h1>Двухкомнатная квартира 51,20 м2 по Алма-Атинская 9-2 за 8600000 руб.</h1>
+                    </div>
+<div class="adv-main-data">
+
+            <table>
+                <tbody><tr>
+                    <td class="group-title" colspan="2">Двухкомнатная квартира по ул. Алма-Атинская, 9-2 в Москве</td>
+                </tr>
+
+                
+
+                    <tr>
+
+                        <td class="field-title">Цена</td>
+                        <td class="field"><span class="price">8&nbsp;600&nbsp;000</span>&nbsp;р. <span class="colored-text-1">(<strong>167&nbsp;969</strong>&nbsp;р./м2)</span><br><span class="colored-text-1">286&nbsp;666$ или 191&nbsp;111€</span><br><a href="/mortgageBid/4855679" class="common-button_1 card-hypotec-button">Подать заявку на ипотеку</a></td>
+
+                    </tr>
+                
+
+                    <tr class="even">
+
+                        <td class="field-title">Район</td>
+                        <td class="field">Москва, <span class="colored-text-1">Братеево</span></td>
+
+                    </tr>
+                
+
+                    <tr>
+
+                        <td class="field-title">Адрес</td>
+                        <td class="field">Алма-Атинская, 9-2</td>
+
+                    </tr>
+                
+
+                    <tr class="even">
+
+                        <td class="field-title">Этаж</td>
+                        <td class="field">4<span class="slash">/</span>17</td>
+
+                    </tr>
+                
+
+                    <tr>
+
+                        <td class="field-title">Высота потолка</td>
+                        <td class="field">2,5 м.</td>
+
+                    </tr>
+                
+
+                    <tr class="even">
+
+                        <td class="field-title">Планировка</td>
+                        <td class="field">Изолированные</td>
+
+                    </tr>
+                
+
+                    <tr>
+
+                        <td class="field-title">Площадь</td>
+                        <td class="field"><span class="colored-text-1">общая</span> 51,2 м2, <span class="colored-text-1">жилая</span> 30,2 м2, <span class="colored-text-1">кухни</span> 8,3 м2</td>
+
+                    </tr>
+                
+
+                    <tr class="even">
+
+                        <td class="field-title">Состояние квартиры</td>
+                        <td class="field">Хорошее</td>
+
+                    </tr>
+                
+
+                    <tr>
+
+                        <td class="field-title">Кол-во комнат</td>
+                        <td class="field">Двухкомнатная</td>
+
+                    </tr>
+                
+
+                    <tr class="even">
+
+                        <td class="field-title">Год последнего ремонта</td>
+                        <td class="field">2012&nbsp;г.</td>
+
+                    </tr>
+                
+                    <tr>
+                        <td class="note" colspan="2">Дом 1995 года постройки, балкон застеклен. </td>
+                    </tr>
+                    
+
+            </tbody></table>
+
+            <table>
+                <tbody><tr>
+                    <td class="group-title" colspan="2">Куда выходят окна</td>
+                </tr>
+
+                
+
+                    <tr>
+
+                        <td class="field-title">Окон на Восток</td>
+                        <td class="field">3</td>
+
+                    </tr>
+                
+
+            </tbody></table>
+
+            <table>
+                <tbody><tr>
+                    <td class="group-title" colspan="2">Общественный транспорт</td>
+                </tr>
+
+                
+
+                    <tr>
+
+                        <td class="field-title">Доступный транспорт</td>
+                        <td class="field">Автобус,маршрутка ; 5-мин-(м)Алма-Атинская-пешком.</td>
+
+                    </tr>
+                
+
+                    <tr class="even">
+
+                        <td class="field-title">Пешком до транспорта, мин.</td>
+                        <td class="field">3 мин.</td>
+
+                    </tr>
+                
+
+                    <tr>
+
+                        <td class="field-title">Остановка</td>
+                        <td class="field">Алма-Атинская</td>
+
+                    </tr>
+                
+
+                    <tr class="even">
+
+                        <td class="field-title">Ближайший паркинг</td>
+                        <td class="field">5</td>
+
+                    </tr>
+                
+
+            </tbody></table>
+
+            <table>
+                <tbody><tr>
+                    <td class="group-title" colspan="2">Описание дома</td>
+                </tr>
+
+                
+
+                    <tr>
+
+                        <td class="field-title">Тип дома</td>
+                        <td class="field">Многоэтажный дом</td>
+
+                    </tr>
+                
+
+                    <tr class="even">
+
+                        <td class="field-title">Этажность дома</td>
+                        <td class="field">17</td>
+
+                    </tr>
+                
+
+                    <tr>
+
+                        <td class="field-title">Материал стен</td>
+                        <td class="field">Панельный</td>
+
+                    </tr>
+                
+
+                    <tr class="even">
+
+                        <td class="field-title">Год постройки</td>
+                        <td class="field">1995&nbsp;г.</td>
+
+                    </tr>
+                
+
+                    <tr>
+
+                        <td class="field-title">Обслуживающая орг.</td>
+                        <td class="field">ДЭЗ</td>
+
+                    </tr>
+                
+
+                    <tr class="even">
+
+                        <td class="field-title">Домофон в подъезде</td>
+                        <td class="field">Есть</td>
+
+                    </tr>
+                
+
+            </tbody></table>
+
+            <table>
+                <tbody><tr>
+                    <td class="group-title" colspan="2">Инфраструктура микрорайона</td>
+                </tr>
+
+                
+
+                    <tr>
+
+                        <td class="field-title">Микрорайон или ориентир</td>
+                        <td class="field">Братеево</td>
+
+                    </tr>
+                
+
+                    <tr class="even">
+
+                        <td class="field-title">Домоуправление</td>
+                        <td class="field">Дэз Братеево</td>
+
+                    </tr>
+                
+
+                    <tr>
+
+                        <td class="field-title">Районная поликлиника, школы, детские сады, магазины и т. д.</td>
+                        <td class="field">4 школы, 3-детских сада, 2-поликлиники-взрослая,детская-5 мин.пешком, маг, пятерочка,виктория,2 супермаркета-3 мин пешком.</td>
+
+                    </tr>
+                
+
+            </tbody></table>
+
+            <table>
+                <tbody><tr>
+                    <td class="group-title" colspan="2">Готовность к сделке</td>
+                </tr>
+
+                
+
+                    <tr>
+
+                        <td class="field-title">Правоустанавливающие документы</td>
+                        <td class="field">Свидетельство о гос.регистрации в 2013 году.</td>
+
+                    </tr>
+                
+
+                    <tr class="even">
+
+                        <td class="field-title">Готовность документов</td>
+                        <td class="field">Документы готовы.</td>
+
+                    </tr>
+                
+
+                    <tr>
+
+                        <td class="field-title">Кто зарегистрирован</td>
+                        <td class="field">3-долевых собственника.</td>
+
+                    </tr>
+                
+
+                    <tr class="even">
+
+                        <td class="field-title">Физическое освобождение</td>
+                        <td class="field">В течение 30 д. после сделки</td>
+
+                    </tr>
+                
+
+            </tbody></table>
+
+</div>
+
+<div class="adv-contact-data">
+    <div class="seller">
+        <div class="title">Продавец</div>
+
+        
+            <div class="name"><a href="javascript:void(0)" onclick="go(&quot;/party77910&quot;)">Владимир </a></div>
+        
+        <div class="phone"><span>email:</span>&nbsp;sonia1995g@mail.ru </div>
+        <div class="message">«Продажа 2-х комн.кв.менее 3 лет в собств.-альт-(подобрана)- р-н Братеево ЮАО,квартира в норм.сост-линейка-изолир. комнаты;.тел.интернет,2-л ифта-пасс+груз,5-мин.метр о пешком,рядом парк-наб.Москвы-реки.Квар тира в хор.состоянии.Торг возм.Цена и обьявление непосредственно от собственника квартиры.Владимир. »</div>
+        <div class="phone"><span>тел.:</span>&nbsp;89168478951 </div>
+        <div class="phone-time">с 10 до 22 </div>
+    </div>
+</div>
+
+<div class="date">подано 8 мая 2014 г. 15:18</div>
+
+<div class="adv-number">Объявление № 4855679</div>
+
+<td class="date">04 май<br><span class="time">17:29</span><br><a class="sms" title="Хотите продать быстрее? Узнайте как поднять ваше объявление выше всех других!" href="javascript:void(0)" onclick="go(&quot;/paid-3-5644665&quot;)"><img alt="Хотите продать быстрее? Узнайте как поднять ваше объявление выше всех других!" src="/img/adv/sms.png"></a></td>
+<td class="notebook-column"><input name="cs_note_tg" type="checkbox" value="4855679"></td>
+
+td class="address"
+2F 63 68 6F 6F 73 65 2D 63 69 74 79 3F 
+http://realty.moskva-citystar.ru/choose-city?
+
+13	citystar.ru	http://citystar.ru	GET	{{Region}}/realty{{RubricAction}}/?p={{Page}}{{RubricQuery}}	NULL	{{PublicationLink}}	[PublicationDatetime:##{{PublicationDatetime}}##,PublicationId:{{PublicationId}},Action:{{Action}},Rubric:{{Rubric}},Region:{{Region}}]	NULL	NULL	30	DatetimeFirstIdSecondComparer	NoCompression	utf-8	20	0	1	0	CitystarParser
+
+13	GET	Region	http://realty.moskva-citystar.ru/choose-city		\//ul[@class='city-choose-list']/li/a	\//ul[@class='city-choose-list']/li/a	{{href}}	.*	$&	{{InnerText}}	.*	$&	\{{city}}	\!
+13	GET	Rubric	http://realty.moskva-citystar.ru		\//table[@class="m-div-block-table"]//td[@class='left']/a	\//table[@class="m-div-block-table"]//td[@class='left']/a	{{InnerText}}	.*	$&	{{InnerText}}	.*	$&	\{{rubric}}	\!
+13	GET	Action	http://realty.moskva-citystar.ru		\//table[@class="m-div-block-table"]//th[contains(@class,'operation')]	\//table[@class="m-div-block-table"]//th[contains(@class,'operation')]	{{InnerText}}	.*	$&	{{InnerText}}	.*	$&	\{{operation}}	\!
+
+
+
+http://realty.moskva-citystar.ru/realty/novostroiki-kupit-kvartiru/?room=16&n2=16
+http://realty.moskva-citystar.ru/realty/prodazha-trehkomnatnyh-kvartir/?room=16&n2=16
+
+2F 61 66 68 2E 63 73 68 3F 6E 32 3D 31 32 26 5F 63 69 64 3D 31 32 31 34 39 26 5F 76 69 64 3D 31 30 34 36 32 20 
+/afh.csh?n2=12&_cid=12149&_vid=10462 
+
+
+<table class="m-div-block-table">
+        <tbody><tr>
+            <th class="left"><h2>Посуточная аренда жилья</h2></th>
+
+                
+                <th class="operation operation_three_column">Сдам посуточно</th>
+                
+                <th class="operation operation_three_column">&nbsp;</th>
+                
+                <th class="operation operation_three_column">&nbsp;</th>
+                
+       </tr>
+
+         
+                <tr class="frst3-lvl-bl">
+                <td class="left">
+                       <a href="/realty/kvartiry-posutochno-arenda/" title="Сдача квартир посуточно в Москве"> Все виды жилья </a>
+                </td>
+                            
+                                    <td class="value value_count">
+                                        
+                                                <a href="javascript:void(0)" title="Сдача квартир посуточно в Москве" class="adv-count" onclick="go('/realty/kvartiry-posutochno-arenda/')">0</a>
+                                            
+                                                    <a title="Дать бесплатное объявление в рубрику Сдача квартир посуточно в Москве" href="javascript:void(0)" onclick="go('/add-adv-1406')" class="add-adv-btn"></a>
+                                               
+                                            
+                                            
+                                    </td>
+                               
+                                <td class="value_filter_url">&nbsp;</td>
+                            
+                                <td class="value_filter_url">&nbsp;</td>
+                            
+
+                    </tr>
+
+             
+                <tr class="ord3-lvl-bl">
+                <td class="left">
+                       <a href="/realty/sdam-komnatu-posutochno/" title="Сдача комнат посуточно в Москве"> Комнаты </a>
+                </td>
+                            
+                                    <td class="value value_count">
+                                        
+                                                <a href="javascript:void(0)" title="Сдача комнат посуточно в Москве" class="adv-count" onclick="go('/realty/sdam-komnatu-posutochno/')">0</a>
+                                            
+                                               <div class="add-adv-btn-place"></div> 
+                                            
+                                            
+                                            
+                                    </td>
+                               
+                                <td class="value_filter_url">&nbsp;</td>
+                            
+                                <td class="value_filter_url">&nbsp;</td>
+                            
+
+                    </tr>
+
+             
+                <tr class="ord3-lvl-bl">
+                <td class="left">
+                       <a href="/realty/sdam-kvartiru-posutochno/" title="Сдача квартир посуточно в Москве"> Квартиры </a>
+                </td>
+                            
+                                    <td class="value value_count">
+                                        
+                                                <a href="javascript:void(0)" title="Сдача квартир посуточно в Москве" class="adv-count" onclick="go('/realty/sdam-kvartiru-posutochno/')">0</a>
+                                            
+                                               <div class="add-adv-btn-place"></div> 
+                                            
+                                            
+                                            
+                                    </td>
+                               
+                                <td class="value_filter_url">&nbsp;</td>
+                            
+                                <td class="value_filter_url">&nbsp;</td>
+                            
+
+                    </tr>
+
+             
+                <tr class="ord3-lvl-bl">
+                <td class="left">
+                       <a href="/realty/sdam-kotedj-posutochno/" title="Сдача коттеджей посуточно в Москве"> Коттеджи </a>
+                </td>
+                            
+                                    <td class="value value_count">
+                                        
+                                                <a href="javascript:void(0)" title="Сдача коттеджей посуточно в Москве" class="adv-count" onclick="go('/realty/sdam-kotedj-posutochno/')">0</a>
+                                            
+                                               <div class="add-adv-btn-place"></div> 
+                                            
+                                            
+                                            
+                                    </td>
+                               
+                                <td class="value_filter_url">&nbsp;</td>
+                            
+                                <td class="value_filter_url">&nbsp;</td>
+                            
+
+                    </tr>
+
+             
+                <tr class="ord3-lvl-bl">
+                <td class="left">
+                       <a href="/realty/sdam-dom-posutochno/" title="Сдача домов посуточно в Москве"> Дома </a>
+                </td>
+                            
+                                    <td class="value value_count">
+                                        
+                                                <a href="javascript:void(0)" title="Сдача домов посуточно в Москве" class="adv-count" onclick="go('/realty/sdam-dom-posutochno/')">0</a>
+                                            
+                                               <div class="add-adv-btn-place"></div> 
+                                            
+                                            
+                                            
+                                    </td>
+                               
+                                <td class="value_filter_url">&nbsp;</td>
+                            
+                                <td class="value_filter_url">&nbsp;</td>
+                            
+
+                    </tr>
+
+             
+                <tr class="ord3-lvl-bl">
+                <td class="left">
+                       <a href="/realty/sdam-apartament-posutochno/" title="Сдача апартаментов посуточно в Москве"> Апартаменты </a>
+                </td>
+                            
+                                    <td class="value value_count">
+                                        
+                                                <a href="javascript:void(0)" title="Сдача апартаментов посуточно в Москве" class="adv-count" onclick="go('/realty/sdam-apartament-posutochno/')">0</a>
+                                            
+                                               <div class="add-adv-btn-place"></div> 
+                                            
+                                            
+                                            
+                                    </td>
+                               
+                                <td class="value_filter_url">&nbsp;</td>
+                            
+                                <td class="value_filter_url">&nbsp;</td>
+                            
+
+                    </tr>
+
+             
+                <tr class="ord3-lvl-bl">
+                <td class="left">
+                       <a href="/realty/sdam-nomer-v-gostinice-posutochno/" title="Сдача гостиничных номеров посуточно в Москве"> Номера в гостиницах </a>
+                </td>
+                            
+                                    <td class="value value_count">
+                                        
+                                                <a href="javascript:void(0)" title="Сдача гостиничных номеров посуточно в Москве" class="adv-count" onclick="go('/realty/sdam-nomer-v-gostinice-posutochno/')">0</a>
+                                            
+                                               <div class="add-adv-btn-place"></div> 
+                                            
+                                            
+                                            
+                                    </td>
+                               
+                                <td class="value_filter_url">&nbsp;</td>
+                            
+                                <td class="value_filter_url">&nbsp;</td>
+                            
+
+                    </tr>
+
+             
+                <tr class="ord3-lvl-bl">
+                <td class="left">
+                       <a href="/realty/sdam-dacha-sad-posutochno/" title="Сдача дач и садов посуточно в Москве"> Дачи, Сады </a>
+                </td>
+                            
+                                    <td class="value value_count">
+                                        
+                                                <a href="javascript:void(0)" title="Сдача дач и садов посуточно в Москве" class="adv-count" onclick="go('/realty/sdam-dacha-sad-posutochno/')">0</a>
+                                            
+                                               <div class="add-adv-btn-place"></div> 
+                                            
+                                            
+                                            
+                                    </td>
+                               
+                                <td class="value_filter_url">&nbsp;</td>
+                            
+                                <td class="value_filter_url">&nbsp;</td>
+                            
+
+                    </tr>
+
+            
+    </tbody></table>
+
+<table class="m-div-block-table">
+        <tbody><tr>
+            <th class="left"><h2>Зарубежная недвижимость</h2></th>
+
+            
+                <th class="operation">Продам</th>
+                
+                <th class="operation">&nbsp;</th>
+                
+                <th class="operation">&nbsp;</th>
+                
+                <th class="operation">&nbsp;</th>
+                
+       </tr>
+
+         
+                <tr>
+                <td class="left">
+                       <a href="/realty/prodazha-zhiloi-nedvizhimosti-za-rubezhom/" title="Продажа жилой недвижимости за рубежом в Москве"> Жилая </a>
+                </td>
+                        
+                                    <td class="value">
+                                        
+                                                <a href="javascript:void(0)" title="Продажа жилой недвижимости за рубежом в Москве" class="adv-count" onclick="go('/realty/prodazha-zhiloi-nedvizhimosti-za-rubezhom/')">0</a>
+                                            
+                                                    <a title="Дать бесплатное объявление в рубрику Продажа жилой недвижимости за рубежом в Москве" href="javascript:void(0)" onclick="go('/add-adv-51')" class="add-adv-btn"></a>
+                                               
+                                            
+                                            
+                                    </td>
+                                
+                                <td class="value">&nbsp;</td>
+                            
+                                <td class="value">&nbsp;</td>
+                            
+                                <td class="value">&nbsp;</td>
+                            
+                    </tr>
+
+             
+                <tr>
+                <td class="left">
+                       <a href="/realty/prodazha-komm-nedvizhimosti-za-rubezhom/" title="Продажа коммерческой недвижимости за рубежом в Москве"> Коммерческая </a>
+                </td>
+                        
+                                    <td class="value">
+                                        
+                                                <a href="javascript:void(0)" title="Продажа коммерческой недвижимости за рубежом в Москве" class="adv-count" onclick="go('/realty/prodazha-komm-nedvizhimosti-za-rubezhom/')">0</a>
+                                            
+                                                    <a title="Дать бесплатное объявление в рубрику Продажа коммерческой недвижимости за рубежом в Москве" href="javascript:void(0)" onclick="go('/add-adv-50')" class="add-adv-btn"></a>
+                                               
+                                            
+                                            
+                                    </td>
+                                
+                                <td class="value">&nbsp;</td>
+                            
+                                <td class="value">&nbsp;</td>
+                            
+                                <td class="value">&nbsp;</td>
+                            
+                    </tr>
+
+            
+    </tbody></table>
+
+<table class="m-div-block-table">
+        <tbody><tr>
+            <th class="left"><h2>Обмен</h2></th>
+
+            
+                    <th class="operation">Обмен</th>
+                    
+                    <th class="operation">&nbsp;</th>
+                    
+                    <th class="operation">&nbsp;</th>
+                    
+                    <th class="operation">&nbsp;</th>
+                    
+       </tr>
+
+         
+                <tr>
+                <td class="left">
+                       <a href="/realty/obmen-v-cherte-goroda/" title="Обмен в черте города в Москве"> Городской </a>
+                </td>
+                        
+                                    <td class="value">
+                                        
+                                                <a href="javascript:void(0)" title="Обмен в черте города в Москве" class="adv-count" onclick="go('/realty/obmen-v-cherte-goroda/')">0</a>
+                                            
+                                                    <a title="Дать бесплатное объявление в рубрику Обмен в черте города в Москве" href="javascript:void(0)" onclick="go('/add-adv-20')" class="add-adv-btn"></a>
+                                               
+                                            
+                                            
+                                    </td>
+                                
+                                <td class="value">&nbsp;</td>
+                            
+                                <td class="value">&nbsp;</td>
+                            
+                                <td class="value">&nbsp;</td>
+                            
+                    </tr>
+
+             
+                <tr>
+                <td class="left">
+                       <a href="/realty/obmen-za-gorodom/" title="Обмен за городом в Москве"> Иногородний </a>
+                </td>
+                        
+                                    <td class="value">
+                                        
+                                                <a href="javascript:void(0)" title="Обмен за городом в Москве" class="adv-count" onclick="go('/realty/obmen-za-gorodom/')">0</a>
+                                            
+                                                    <a title="Дать бесплатное объявление в рубрику Обмен за городом в Москве" href="javascript:void(0)" onclick="go('/add-adv-21')" class="add-adv-btn"></a>
+                                               
+                                            
+                                            
+                                    </td>
+                                
+                                <td class="value">&nbsp;</td>
+                            
+                                <td class="value">&nbsp;</td>
+                            
+                                <td class="value">&nbsp;</td>
+                            
+                    </tr>
+
+            
+    </tbody></table>
+
+<table class="m-div-block-table">
+        <tbody><tr>
+            <th class="left"><h2>Загородная недвижимость</h2></th>
+
+            
+                <th class="operation">Продам</th>
+                
+                <th class="operation">&nbsp;</th>
+                
+                <th class="operation">Сдам</th>
+                
+                <th class="operation">&nbsp;</th>
+                
+       </tr>
+
+         
+                <tr>
+                <td class="left">
+                       <a href="/realty/prodazha-zagorodnoi-nedvizhimosti/" title="Продажа загородной недвижимости в Москве"> Загородная недвижимость </a>
+                </td>
+                        
+                                    <td class="value">
+                                        
+                                                <a href="javascript:void(0)" title="Продажа загородной недвижимости в Москве" class="adv-count" onclick="go('/realty/prodazha-zagorodnoi-nedvizhimosti/')">6</a>
+                                            
+                                                    <a title="Дать бесплатное объявление в рубрику Продажа загородной недвижимости в Москве" href="javascript:void(0)" onclick="go('/add-adv-502')" class="add-adv-btn"></a>
+                                               
+                                            
+                                            
+                                    </td>
+                                
+                                <td class="value">&nbsp;</td>
+                            
+                                    <td class="value">
+                                        
+                                                <a href="javascript:void(0)" title="Сдача загородной недвижимости в Москве" class="adv-count" onclick="go('/realty/sdacha-zagorodnoi-nedvizhimosti/')">1</a>
+                                            
+                                                    <a title="Дать бесплатное объявление в рубрику Сдача загородной недвижимости в Москве" href="javascript:void(0)" onclick="go('/add-adv-501')" class="add-adv-btn"></a>
+                                               
+                                            
+                                            
+                                    </td>
+                                
+                                <td class="value">&nbsp;</td>
+                            
+                    </tr>
+
+            
+    </tbody></table>
+
+<table class="m-div-block-table">
+        <tbody><tr>
+            <th class="left"><h2>Дом, участок, сад, гараж</h2></th>
+
+            
+                <th class="operation">Продам</th>
+                
+                <th class="operation">Куплю</th>
+                
+                <th class="operation">Сдам</th>
+                
+                <th class="operation">Сниму</th>
+                
+       </tr>
+
+         
+                <tr>
+                <td class="left">
+                       <a href="/realty/prodazha-domov/" title="Продажа домов в Москве"> Дома </a>
+                </td>
+                        
+                                    <td class="value">
+                                        
+                                                <a href="javascript:void(0)" title="Продажа домов в Москве" class="adv-count" onclick="go('/realty/prodazha-domov/')">13</a>
+                                            
+                                                    <a title="Дать бесплатное объявление в рубрику Продажа домов в Москве" href="javascript:void(0)" onclick="go('/add-adv-42')" class="add-adv-btn"></a>
+                                               
+                                            
+                                            
+                                    </td>
+                                
+                                    <td class="value">
+                                        
+                                                <a href="javascript:void(0)" title="Покупка домов в Москве" class="adv-count" onclick="go('/realty/kupit-dom/')">0</a>
+                                            
+                                                    <a title="Дать бесплатное объявление в рубрику Покупка домов в Москве" href="javascript:void(0)" onclick="go('/add-adv-4')" class="add-adv-btn"></a>
+                                               
+                                            
+                                            
+                                    </td>
+                                
+                                    <td class="value">
+                                        
+                                                <a href="javascript:void(0)" title="Сдача домов в Москве" class="adv-count" onclick="go('/realty/arenda-doma-sdam/')">1</a>
+                                            
+                                                    <a title="Дать бесплатное объявление в рубрику Сдача домов в Москве" href="javascript:void(0)" onclick="go('/add-adv-34')" class="add-adv-btn"></a>
+                                               
+                                            
+                                            
+                                    </td>
+                                
+                                    <td class="value">
+                                        
+                                                <a href="javascript:void(0)" title="Съём домов в Москве" class="adv-count" onclick="go('/realty/snyat-dom-arenda/')">0</a>
+                                            
+                                                    <a title="Дать бесплатное объявление в рубрику Съём домов в Москве" href="javascript:void(0)" onclick="go('/add-adv-28')" class="add-adv-btn"></a>
+                                               
+                                            
+                                            
+                                    </td>
+                                
+                    </tr>
+
+             
+                <tr>
+                <td class="left">
+                       <a href="/realty/prodazha-zemelnix-uchastkov/" title="Продажа земельных участков в Москве"> Участки </a>
+                </td>
+                        
+                                    <td class="value">
+                                        
+                                                <a href="javascript:void(0)" title="Продажа земельных участков в Москве" class="adv-count" onclick="go('/realty/prodazha-zemelnix-uchastkov/')">49</a>
+                                            
+                                                    <a title="Дать бесплатное объявление в рубрику Продажа земельных участков в Москве" href="javascript:void(0)" onclick="go('/add-adv-200')" class="add-adv-btn"></a>
+                                               
+                                            
+                                            
+                                    </td>
+                                
+                                    <td class="value">
+                                        
+                                                <a href="javascript:void(0)" title="Покупка земельных участков в Москве" class="adv-count" onclick="go('/realty/pokupka-zemelnix-uchastkov/')">0</a>
+                                            
+                                                    <a title="Дать бесплатное объявление в рубрику Покупка земельных участков в Москве" href="javascript:void(0)" onclick="go('/add-adv-199')" class="add-adv-btn"></a>
+                                               
+                                            
+                                            
+                                    </td>
+                                
+                                <td class="value">&nbsp;</td>
+                            
+                                <td class="value">&nbsp;</td>
+                            
+                    </tr>
+
+             
+                <tr>
+                <td class="left">
+                       <a href="/realty/prodazha-sadov/" title="Продажа садовых участков в Москве"> Сады </a>
+                </td>
+                        
+                                    <td class="value">
+                                        
+                                                <a href="javascript:void(0)" title="Продажа садовых участков в Москве" class="adv-count" onclick="go('/realty/prodazha-sadov/')">0</a>
+                                            
+                                                    <a title="Дать бесплатное объявление в рубрику Продажа садовых участков в Москве" href="javascript:void(0)" onclick="go('/add-adv-38')" class="add-adv-btn"></a>
+                                               
+                                            
+                                            
+                                    </td>
+                                
+                                    <td class="value">
+                                        
+                                                <a href="javascript:void(0)" title="Покупка садов в Москве" class="adv-count" onclick="go('/realty/pokupka-sadov/')">0</a>
+                                            
+                                                    <a title="Дать бесплатное объявление в рубрику Покупка садов в Москве" href="javascript:void(0)" onclick="go('/add-adv-23')" class="add-adv-btn"></a>
+                                               
+                                            
+                                            
+                                    </td>
+                                
+                                    <td class="value">
+                                        
+                                                <a href="javascript:void(0)" title="Сдача садов в Москве" class="adv-count" onclick="go('/realty/sdacha-sadov/')">0</a>
+                                            
+                                                    <a title="Дать бесплатное объявление в рубрику Сдача садов в Москве" href="javascript:void(0)" onclick="go('/add-adv-35')" class="add-adv-btn"></a>
+                                               
+                                            
+                                            
+                                    </td>
+                                
+                                    <td class="value">
+                                        
+                                                <a href="javascript:void(0)" title="Съём садов в Москве" class="adv-count" onclick="go('/realty/siem-sadov/')">0</a>
+                                            
+                                                    <a title="Дать бесплатное объявление в рубрику Съём садов в Москве" href="javascript:void(0)" onclick="go('/add-adv-29')" class="add-adv-btn"></a>
+                                               
+                                            
+                                            
+                                    </td>
+                                
+                    </tr>
+
+             
+                <tr>
+                <td class="left">
+                       <a href="/realty/prodazha-garazhei/" title="Продажа гаражей в Москве"> Гаражи </a>
+                </td>
+                        
+                                    <td class="value">
+                                        
+                                                <a href="javascript:void(0)" title="Продажа гаражей в Москве" class="adv-count" onclick="go('/realty/prodazha-garazhei/')">0</a>
+                                            
+                                                    <a title="Дать бесплатное объявление в рубрику Продажа гаражей в Москве" href="javascript:void(0)" onclick="go('/add-adv-39')" class="add-adv-btn"></a>
+                                               
+                                            
+                                            
+                                    </td>
+                                
+                                    <td class="value">
+                                        
+                                                <a href="javascript:void(0)" title="Покупка гаражей в Москве" class="adv-count" onclick="go('/realty/pokupka-garazhei/')">0</a>
+                                            
+                                                    <a title="Дать бесплатное объявление в рубрику Покупка гаражей в Москве" href="javascript:void(0)" onclick="go('/add-adv-24')" class="add-adv-btn"></a>
+                                               
+                                            
+                                            
+                                    </td>
+                                
+                                    <td class="value">
+                                        
+                                                <a href="javascript:void(0)" title="Сдача гаражей в Москве" class="adv-count" onclick="go('/realty/sdacha-garazhei/')">0</a>
+                                            
+                                                    <a title="Дать бесплатное объявление в рубрику Сдача гаражей в Москве" href="javascript:void(0)" onclick="go('/add-adv-36')" class="add-adv-btn"></a>
+                                               
+                                            
+                                            
+                                    </td>
+                                
+                                    <td class="value">
+                                        
+                                                <a href="javascript:void(0)" title="Съём гаражей в Москве" class="adv-count" onclick="go('/realty/siem-garazhei/')">0</a>
+                                            
+                                                    <a title="Дать бесплатное объявление в рубрику Съём гаражей в Москве" href="javascript:void(0)" onclick="go('/add-adv-30')" class="add-adv-btn"></a>
+                                               
+                                            
+                                            
+                                    </td>
+                                
+                    </tr>
+
+            
+    </tbody></table>
+
+<table class="m-div-block-table">
+        <tbody><tr>
+            <th class="left"><h2>Коммерческая недвижимость</h2></th>
+
+            
+                <th class="operation">Продам</th>
+                
+                <th class="operation">Куплю</th>
+                
+                <th class="operation">Сдам</th>
+                
+                <th class="operation">Сниму</th>
+                
+       </tr>
+
+         
+                <tr class="frst3-lvl-bl">
+                <td class="left">
+                       <a href="/realty/prodazha-komm-nedvizhimosti/" title="Продажа коммерческой недвижимости в Москве"> Коммерческая недвижимость </a>
+                </td>
+                        
+                                    <td class="value">
+                                        
+                                                <a href="javascript:void(0)" title="Продажа коммерческой недвижимости в Москве" class="adv-count" onclick="go('/realty/prodazha-komm-nedvizhimosti/')">1</a>
+                                            
+                                                    <a title="Дать бесплатное объявление в рубрику Продажа коммерческой недвижимости в Москве" href="javascript:void(0)" onclick="go('/add-adv-40')" class="add-adv-btn"></a>
+                                               
+                                            
+                                            
+                                    </td>
+                                
+                                    <td class="value">
+                                        
+                                                <a href="javascript:void(0)" title="Покупка коммерческой недвижимости в Москве" class="adv-count" onclick="go('/realty/pokupka-kommercheskoi-nedvizhimosti/')">0</a>
+                                            
+                                                    <a title="Дать бесплатное объявление в рубрику Покупка коммерческой недвижимости в Москве" href="javascript:void(0)" onclick="go('/add-adv-25')" class="add-adv-btn"></a>
+                                               
+                                            
+                                            
+                                    </td>
+                                
+                                    <td class="value">
+                                        
+                                                <a href="javascript:void(0)" title="Сдача коммерческой недвижимости в Москве" class="adv-count" onclick="go('/realty/sdacha-komm-nedvizhimosti/')">1</a>
+                                            
+                                                    <a title="Дать бесплатное объявление в рубрику Сдача коммерческой недвижимости в Москве" href="javascript:void(0)" onclick="go('/add-adv-37')" class="add-adv-btn"></a>
+                                               
+                                            
+                                            
+                                    </td>
+                                
+                                    <td class="value">
+                                        
+                                                <a href="javascript:void(0)" title="Съём коммерческой недвижимости в Москве" class="adv-count" onclick="go('/realty/siem-komm-nedvizhimosti/')">0</a>
+                                            
+                                                    <a title="Дать бесплатное объявление в рубрику Съём коммерческой недвижимости в Москве" href="javascript:void(0)" onclick="go('/add-adv-31')" class="add-adv-btn"></a>
+                                               
+                                            
+                                            
+                                    </td>
+                                
+                    </tr>
+
+             
+                <tr class="ord3-lvl-bl">
+                <td class="left">
+                       <a href="/realty/prodazha-office/" title="Продажа офисов в Москве"> Офисы </a>
+                </td>
+                        
+                                    <td class="value">
+                                        
+                                                <a href="javascript:void(0)" title="Продажа офисов в Москве" class="adv-count" onclick="go('/realty/prodazha-office/')">0</a>
+                                            
+                                               <div class="add-adv-btn-place"></div> 
+                                            
+                                            
+                                            
+                                    </td>
+                                
+                                    <td class="value">
+                                        
+                                                <a href="javascript:void(0)" title="Покупка офисов в Москве" class="adv-count" onclick="go('/realty/kupit-office/')">0</a>
+                                            
+                                               <div class="add-adv-btn-place"></div> 
+                                            
+                                            
+                                            
+                                    </td>
+                                
+                                    <td class="value">
+                                        
+                                                <a href="javascript:void(0)" title="Сдача офисов в Москве" class="adv-count" onclick="go('/realty/sdam-office/')">0</a>
+                                            
+                                               <div class="add-adv-btn-place"></div> 
+                                            
+                                            
+                                            
+                                    </td>
+                                
+                                    <td class="value">
+                                        
+                                                <a href="javascript:void(0)" title="Съём офисов в Москве" class="adv-count" onclick="go('/realty/snyat-office/')">0</a>
+                                            
+                                               <div class="add-adv-btn-place"></div> 
+                                            
+                                            
+                                            
+                                    </td>
+                                
+                    </tr>
+
+             
+                <tr class="ord3-lvl-bl">
+                <td class="left">
+                       <a href="/realty/prodazha-zdania-i-osobniaki/" title="Продажа зданий и особняков в Москве"> Здания и особняки </a>
+                </td>
+                        
+                                    <td class="value">
+                                        
+                                                <a href="javascript:void(0)" title="Продажа зданий и особняков в Москве" class="adv-count" onclick="go('/realty/prodazha-zdania-i-osobniaki/')">0</a>
+                                            
+                                               <div class="add-adv-btn-place"></div> 
+                                            
+                                            
+                                            
+                                    </td>
+                                
+                                    <td class="value">
+                                        
+                                                <a href="javascript:void(0)" title="Покупка зданий и особняков в Москве" class="adv-count" onclick="go('/realty/kupit-zdania-i-osobniaki/')">0</a>
+                                            
+                                               <div class="add-adv-btn-place"></div> 
+                                            
+                                            
+                                            
+                                    </td>
+                                
+                                    <td class="value">
+                                        
+                                                <a href="javascript:void(0)" title="Сдача зданий и особняков в Москве" class="adv-count" onclick="go('/realty/sdam-zdania-i-osobniaki/')">0</a>
+                                            
+                                               <div class="add-adv-btn-place"></div> 
+                                            
+                                            
+                                            
+                                    </td>
+                                
+                                    <td class="value">
+                                        
+                                                <a href="javascript:void(0)" title="Съём зданий и особняков в Москве" class="adv-count" onclick="go('/realty/snyat-zdania-i-osobniaki/')">0</a>
+                                            
+                                               <div class="add-adv-btn-place"></div> 
+                                            
+                                            
+                                            
+                                    </td>
+                                
+                    </tr>
+
+             
+                <tr class="ord3-lvl-bl">
+                <td class="left">
+                       <a href="/realty/prodazha-torgovoe-pomeshenie/" title="Продажа торговых помещений в Москве"> Торговые помещения </a>
+                </td>
+                        
+                                    <td class="value">
+                                        
+                                                <a href="javascript:void(0)" title="Продажа торговых помещений в Москве" class="adv-count" onclick="go('/realty/prodazha-torgovoe-pomeshenie/')">0</a>
+                                            
+                                               <div class="add-adv-btn-place"></div> 
+                                            
+                                            
+                                            
+                                    </td>
+                                
+                                    <td class="value">
+                                        
+                                                <a href="javascript:void(0)" title="Покупка торговых помещений в Москве" class="adv-count" onclick="go('/realty/kupit-torgovoe-pomeshenie/')">0</a>
+                                            
+                                               <div class="add-adv-btn-place"></div> 
+                                            
+                                            
+                                            
+                                    </td>
+                                
+                                    <td class="value">
+                                        
+                                                <a href="javascript:void(0)" title="Сдача торговых помещений в Москве" class="adv-count" onclick="go('/realty/sdam-torgovoe-pomeshenie/')">0</a>
+                                            
+                                               <div class="add-adv-btn-place"></div> 
+                                            
+                                            
+                                            
+                                    </td>
+                                
+                                    <td class="value">
+                                        
+                                                <a href="javascript:void(0)" title="Съём торговых помещений в Москве" class="adv-count" onclick="go('/realty/snyat-torgovoe-pomeshenie/')">0</a>
+                                            
+                                               <div class="add-adv-btn-place"></div> 
+                                            
+                                            
+                                            
+                                    </td>
+                                
+                    </tr>
+
+             
+                <tr class="ord3-lvl-bl">
+                <td class="left">
+                       <a href="/realty/prodazha-proizvodstvennoe-pomishenie/" title="Продажа производственных помещений в Москве"> Производственные помещения </a>
+                </td>
+                        
+                                    <td class="value">
+                                        
+                                                <a href="javascript:void(0)" title="Продажа производственных помещений в Москве" class="adv-count" onclick="go('/realty/prodazha-proizvodstvennoe-pomishenie/')">0</a>
+                                            
+                                               <div class="add-adv-btn-place"></div> 
+                                            
+                                            
+                                            
+                                    </td>
+                                
+                                    <td class="value">
+                                        
+                                                <a href="javascript:void(0)" title="Покупка производственных помещений в Москве" class="adv-count" onclick="go('/realty/kupit-proizvodstvennoe-pomishenie/')">0</a>
+                                            
+                                               <div class="add-adv-btn-place"></div> 
+                                            
+                                            
+                                            
+                                    </td>
+                                
+                                    <td class="value">
+                                        
+                                                <a href="javascript:void(0)" title="Сдача производственных помещений в Москве" class="adv-count" onclick="go('/realty/sdam-proizvodstvennoe-pomishenie/')">0</a>
+                                            
+                                               <div class="add-adv-btn-place"></div> 
+                                            
+                                            
+                                            
+                                    </td>
+                                
+                                    <td class="value">
+                                        
+                                                <a href="javascript:void(0)" title="Съём производственных помещений в Москве" class="adv-count" onclick="go('/realty/snyat-proizvodstvennoe-pomishenie/')">0</a>
+                                            
+                                               <div class="add-adv-btn-place"></div> 
+                                            
+                                            
+                                            
+                                    </td>
+                                
+                    </tr>
+
+             
+                <tr class="ord3-lvl-bl">
+                <td class="left">
+                       <a href="/realty/prodazha-sklad/" title="Продажа складов в Москве"> Склады </a>
+                </td>
+                        
+                                    <td class="value">
+                                        
+                                                <a href="javascript:void(0)" title="Продажа складов в Москве" class="adv-count" onclick="go('/realty/prodazha-sklad/')">0</a>
+                                            
+                                               <div class="add-adv-btn-place"></div> 
+                                            
+                                            
+                                            
+                                    </td>
+                                
+                                    <td class="value">
+                                        
+                                                <a href="javascript:void(0)" title="Покупка складов в Москве" class="adv-count" onclick="go('/realty/kupit-sklad/')">0</a>
+                                            
+                                               <div class="add-adv-btn-place"></div> 
+                                            
+                                            
+                                            
+                                    </td>
+                                
+                                    <td class="value">
+                                        
+                                                <a href="javascript:void(0)" title="Сдача складов в Москве" class="adv-count" onclick="go('/realty/sdam-sklad/')">1</a>
+                                            
+                                               <div class="add-adv-btn-place"></div> 
+                                            
+                                            
+                                            
+                                    </td>
+                                
+                                    <td class="value">
+                                        
+                                                <a href="javascript:void(0)" title="Съём складов в Москве" class="adv-count" onclick="go('/realty/snyat-sklad/')">0</a>
+                                            
+                                               <div class="add-adv-btn-place"></div> 
+                                            
+                                            
+                                            
+                                    </td>
+                                
+                    </tr>
+
+             
+                <tr class="ord3-lvl-bl">
+                <td class="left">
+                       <a href="/realty/prodazha-nezhiloe-svobodnogo-naznachenia/" title="Продажа нежилых помещений свободного назначения в Москве"> Нежилые свободного назначения </a>
+                </td>
+                        
+                                    <td class="value">
+                                        
+                                                <a href="javascript:void(0)" title="Продажа нежилых помещений свободного назначения в Москве" class="adv-count" onclick="go('/realty/prodazha-nezhiloe-svobodnogo-naznachenia/')">1</a>
+                                            
+                                               <div class="add-adv-btn-place"></div> 
+                                            
+                                            
+                                            
+                                    </td>
+                                
+                                    <td class="value">
+                                        
+                                                <a href="javascript:void(0)" title="Покупка нежилых помещений свободного назначения в Москве" class="adv-count" onclick="go('/realty/kupit-nezhiloe-svobodnogo-naznachenia/')">0</a>
+                                            
+                                               <div class="add-adv-btn-place"></div> 
+                                            
+                                            
+                                            
+                                    </td>
+                                
+                                    <td class="value">
+                                        
+                                                <a href="javascript:void(0)" title="Сдача нежилых помещений свободного назначения в Москве" class="adv-count" onclick="go('/realty/sdam-nezhiloe-svobodnogo-naznachenia/')">0</a>
+                                            
+                                               <div class="add-adv-btn-place"></div> 
+                                            
+                                            
+                                            
+                                    </td>
+                                
+                                    <td class="value">
+                                        
+                                                <a href="javascript:void(0)" title="Съём нежилых помещений свободного назначения в Москве" class="adv-count" onclick="go('/realty/snyat-nezhiloe-svobodnogo-naznachenia/')">0</a>
+                                            
+                                               <div class="add-adv-btn-place"></div> 
+                                            
+                                            
+                                            
+                                    </td>
+                                
+                    </tr>
+
+             
+                <tr class="ord3-lvl-bl">
+                <td class="left">
+                       <a href="/realty/prodazha-zemelni-uchastok/" title="Продажа земельных участков в Москве"> Земельные участки </a>
+                </td>
+                        
+                                    <td class="value">
+                                        
+                                                <a href="javascript:void(0)" title="Продажа земельных участков в Москве" class="adv-count" onclick="go('/realty/prodazha-zemelni-uchastok/')">0</a>
+                                            
+                                               <div class="add-adv-btn-place"></div> 
+                                            
+                                            
+                                            
+                                    </td>
+                                
+                                    <td class="value">
+                                        
+                                                <a href="javascript:void(0)" title="Покупка земельных участков в Москве" class="adv-count" onclick="go('/realty/kupit-zemelni-uchastok/')">0</a>
+                                            
+                                               <div class="add-adv-btn-place"></div> 
+                                            
+                                            
+                                            
+                                    </td>
+                                
+                                    <td class="value">
+                                        
+                                                <a href="javascript:void(0)" title="Сдача земельных участков в Москве" class="adv-count" onclick="go('/realty/sdam-zemelni-uchastok/')">0</a>
+                                            
+                                               <div class="add-adv-btn-place"></div> 
+                                            
+                                            
+                                            
+                                    </td>
+                                
+                                    <td class="value">
+                                        
+                                                <a href="javascript:void(0)" title="Съём земельных участков в Москве" class="adv-count" onclick="go('/realty/snyat-zemelni-uchastok/')">0</a>
+                                            
+                                               <div class="add-adv-btn-place"></div> 
+                                            
+                                            
+                                            
+                                    </td>
+                                
+                    </tr>
+
+            
+    </tbody></table>
+
+
+<ul class="city-choose-list">
+
+            <li><a href="http://realty.arhangelsk-citystar.ru" title="Перейти">Архангельск</a></li>
+        
+            <li><a href="http://astrakhan-realty.citystar.ru" title="Перейти">Астрахань</a></li>
+        
+            <li><a href="http://www.balakovo-citystar.ru" title="Перейти">Балаково</a></li>
+        
+            <li><a href="http://www.barnaul-citystar.ru" title="Перейти">Барнаул</a></li>
+        
+            <li><a href="http://realty.belgorod-citystar.ru" title="Перейти">Белгород</a></li>
+        
+            <li><a href="http://belor-realty.citystar.ru" title="Перейти">Белорецк</a></li>
+        
+            <li><a href="http://realty.bryansk-citystar.ru" title="Перейти">Брянск</a></li>
+        
+            <li><a href="http://www.vladivostok-citystar.ru" title="Перейти">Владивосток</a></li>
+        
+            <li><a href="http://realty.vladikavkaz-citystar.ru" title="Перейти">Владикавказ</a></li>
+        
+            <li><a href="http://vladimir-realty.citystar.ru" title="Перейти">Владимир</a></li>
+        
+            <li><a href="http://www.volgograd-citystar.ru" title="Перейти">Волгоград</a></li>
+        
+            <li><a href="http://realty.volgodonsk-citystar.ru" title="Перейти">Волгодонск</a></li>
+        
+            <li><a href="http://realty.volzhskiy-citystar.ru" title="Перейти">Волжский</a></li>
+        
+            <li><a href="http://www.voroneg-citystar.ru" title="Перейти">Воронеж</a></li>
+        
+            <li><a href="http://realtyekaterinburg.ru" title="Перейти">Екатеринбург</a></li>
+        
+            <li><a href="http://www.zlatoust-citystar.ru" title="Перейти">Златоуст</a></li>
+        
+            <li><a href="http://ivanovo-realty.citystar.ru" title="Перейти">Иваново</a></li>
+        
+            <li><a href="http://realty.izhevsk-citystar.ru" title="Перейти">Ижевск</a></li>
+        
+            <li><a href="http://www.irkutsk-citystar.ru" title="Перейти">Иркутск</a></li>
+        
+            <li><a href="http://realty.kazan-citystar.ru" title="Перейти">Казань</a></li>
+        
+            <li><a href="http://realty.kaliningrad-citystar.ru" title="Перейти">Калининград</a></li>
+        
+            <li><a href="http://realty.kaluga-citystar.ru" title="Перейти">Калуга</a></li>
+        
+            <li><a href="http://realty.kemerovo-citystar.ru" title="Перейти">Кемерово</a></li>
+        
+            <li><a href="http://realty.kirov-citystar.ru" title="Перейти">Киров</a></li>
+        
+            <li><a href="http://kostroma-realty.citystar.ru" title="Перейти">Кострома</a></li>
+        
+            <li><a href="http://realty.krasnodar-citystar.ru" title="Перейти">Краснодар</a></li>
+        
+            <li><a href="http://realty.krasnoyarsk-citystar.ru" title="Перейти">Красноярск</a></li>
+        
+            <li><a href="http://realty.kurgan-citystar.ru" title="Перейти">Курган</a></li>
+        
+            <li><a href="http://realty.kursk-citystar.ru" title="Перейти">Курск</a></li>
+        
+            <li><a href="http://realty.lipetsk-citystar.ru" title="Перейти">Липецк</a></li>
+        
+            <li><a href="http://realty.magnitogorsk-citystar.ru" title="Перейти">Магнитогорск</a></li>
+        
+            <li><a href="http://realty.makhachkala-citystar.ru" title="Перейти">Махачкала</a></li>
+        
+            <li><a href="http://www.miass-citystar.ru" title="Перейти">Миасс</a></li>
+        
+            <li><a href="http://realty.moskva-citystar.ru" title="Перейти">Москва</a></li>
+        
+            <li><a href="http://www.naberejnye-chelny-citystar.ru" title="Перейти">Набережные Челны</a></li>
+        
+            <li><a href="http://realty.nizhnevartovsk-citystar.ru" title="Перейти">Нижневартовск</a></li>
+        
+            <li><a href="http://www.n-novgorod-citystar.ru" title="Перейти">Нижний Новгород</a></li>
+        
+            <li><a href="http://www.ntagil-citystar.ru" title="Перейти">Нижний Тагил</a></li>
+        
+            <li><a href="http://www.novokuzneck-citystar.ru" title="Перейти">Новокузнецк</a></li>
+        
+            <li><a href="http://realty.novosibirsk-citystar.ru" title="Перейти">Новосибирск</a></li>
+        
+            <li><a href="http://omsk-realty.citystar.ru" title="Перейти">Омск</a></li>
+        
+            <li><a href="http://realty.orel-citystar.ru" title="Перейти">Орел</a></li>
+        
+            <li><a href="http://orenburg-realty.citystar.ru" title="Перейти">Оренбург</a></li>
+        
+            <li><a href="http://www.penza-citystar.ru" title="Перейти">Пенза</a></li>
+        
+            <li><a href="http://realty.perm-citystar.ru" title="Перейти">Пермь</a></li>
+        
+            <li><a href="http://realty.rostov-na-donu-citystar.ru" title="Перейти">Ростов-на-Дону</a></li>
+        
+            <li><a href="http://ryazan-realty.citystar.ru" title="Перейти">Рязань</a></li>
+        
+            <li><a href="http://www.samara-citystar.ru" title="Перейти">Самара</a></li>
+        
+            <li><a href="http://www.spb-citystar.ru" title="Перейти">Санкт-Петербург</a></li>
+        
+            <li><a href="http://realty.saratov-citystar.ru" title="Перейти">Саратов</a></li>
+        
+            <li><a href="http://realty.sibay-citytar.ru" title="Перейти">Сибай</a></li>
+        
+            <li><a href="http://realty.smolensk-citystar.ru" title="Перейти">Смоленск</a></li>
+        
+            <li><a href="http://www.sochi-citystar.ru" title="Перейти">Сочи</a></li>
+        
+            <li><a href="http://realty.stavropol-citystar.ru" title="Перейти">Ставрополь</a></li>
+        
+            <li><a href="http://realty.surgut-citystar.ru" title="Перейти">Сургут</a></li>
+        
+            <li><a href="http://tverv-realty.citystar.ru" title="Перейти">Тверь</a></li>
+        
+            <li><a href="http://www.tolyati-citystar.ru" title="Перейти">Тольятти</a></li>
+        
+            <li><a href="http://realty.tomsk-citystar.ru" title="Перейти">Томск</a></li>
+        
+            <li><a href="http://realty.tula-citystar.ru" title="Перейти">Тула</a></li>
+        
+            <li><a href="http://tumen-realty.citystar.ru" title="Перейти">Тюмень</a></li>
+        
+            <li><a href="http://realty.ulan-ude-citystar.ru" title="Перейти">Улан-Удэ</a></li>
+        
+            <li><a href="http://realty.ulyanovsk-citystar.ru" title="Перейти">Ульяновск</a></li>
+        
+            <li><a href="http://ufa-realty.citystar.ru" title="Перейти">Уфа</a></li>
+        
+            <li><a href="http://www.habarovsk-citystar.ru" title="Перейти">Хабаровск</a></li>
+        
+            <li><a href="http://khanty-mansiysk-realty.citystar.ru" title="Перейти">Ханты-Мансийск</a></li>
+        
+            <li><a href="http://realty.himki-citystar.ru" title="Перейти">Химки</a></li>
+        
+            <li><a href="http://www.chebarkul-citystar.ru" title="Перейти">Чебаркуль</a></li>
+        
+            <li><a href="http://cheboksary-realty.citystar.ru" title="Перейти">Чебоксары</a></li>
+        
+            <li><a href="http://realty.citystar74.ru" title="Перейти">Челябинск</a></li>
+        
+            <li><a href="http://realty.cherepovez-citystar.ru" title="Перейти">Череповец</a></li>
+        
+            <li><a href="http://realty.chita-citystar.ru" title="Перейти">Чита</a></li>
+        
+            <li><a href="http://realty.yaroslavl-citystar.ru" title="Перейти">Ярославль</a></li>
+        
+</ul>

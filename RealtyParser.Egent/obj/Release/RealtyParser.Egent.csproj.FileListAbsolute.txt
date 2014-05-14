@@ -40,3 +40,4 @@ D:\Projects\RealtyParser\RealtyParser.Egent\bin\Release\HtmlAgilityPack.xml
 D:\Projects\RealtyParser\RealtyParser.Egent\bin\Release\System.Data.SQLite.xml
 D:\Projects\RealtyParser\RealtyParser.Egent\obj\Release\RealtyParser.Egent.dll
 D:\Projects\RealtyParser\RealtyParser.Egent\obj\Release\RealtyParser.Egent.pdb
+D:\Projects\RealtyParser\RealtyParser.Egent\obj\Release\RealtyParser.Egent.csprojResolveAssemblyReference.cache

@@ -12,17 +12,19 @@ namespace RealtyParser
         public int Compare(Resource x, Resource y)
         {
             int value = ObjectComparer.Compare(x, y, Mapping);
-            return value != 0 ? value : PublicationComparer.Compare(x.ToString(), y.ToString());
+            if (value != 0) return value;
+            value = PublicationComparer.Compare(x.ToString(), y.ToString());
+            return value != 0 ? value : string.CompareOrdinal(x.ToString(), y.ToString());
         }
 
         public bool Equals(Resource x, Resource y)
         {
-            return PublicationComparer.Equals(x.ToString(), y.ToString()) && ObjectComparer.Equals(x, y, Mapping);
+            return Compare(x,y)==0;
         }
 
         public int GetHashCode(Resource obj)
         {
-            return PublicationComparer.GetHashCode(obj.ToString()) ^ ObjectComparer.GetHashCode(obj, Mapping);
+            return ToString().GetHashCode();
         }
     }
 }
