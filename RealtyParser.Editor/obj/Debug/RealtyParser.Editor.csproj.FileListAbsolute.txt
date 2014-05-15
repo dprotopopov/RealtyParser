@@ -1,0 +1,1 @@
+D:\Projects\RealtyParser\RealtyParser.Editor\bin\Debug\RealtyParser.sqlite3

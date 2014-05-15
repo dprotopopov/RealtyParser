@@ -13,6 +13,7 @@ using RealtyParser.Kvadrat66;
 using RealtyParser.Mirkvartir;
 using RealtyParser.NetAgenta;
 using RealtyParser.Rosrealt;
+using RealtyParser.Russianrealty;
 using RealtyParser.Sdamka;
 using RealtyParser.Upn;
 using RealtyParser.Uralstudent;
@@ -45,6 +46,7 @@ namespace RealtyParser.Editor.Children
                     new UralstudentParser(),
                     new CitystarParser(),
                     new GdeetotdomParser(),
+                    new RussianrealtyParser(),
                 }.Select(item => new KeyValuePair<string, IParsingModule>(item.ModuleClassname, item))
                     .Cast<object>().ToArray());
             propertyGridControlParseRequest.SelectedObject = new ParseRequest();

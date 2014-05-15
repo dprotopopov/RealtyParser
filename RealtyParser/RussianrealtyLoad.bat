@@ -1,0 +1,9 @@
+rem sqlite3 RealtyParser.sqlite3 < RussianrealtyAction.sql
+rem sqlite3 RealtyParser.sqlite3 < RussianrealtyRubric.sql
+rem sqlite3 RealtyParser.sqlite3 < RussianrealtyActionMapping.sql
+rem sqlite3 RealtyParser.sqlite3 < RussianrealtyRubricMapping.sql
+rem sqlite3 RealtyParser.sqlite3 < RussianrealtyRegion.sql
+rem sqlite3 RealtyParser.sqlite3 < RussianrealtyRegionMapping1.sql
+rem sqlite3 RealtyParser.sqlite3 < RussianrealtyRegionMapping1Delete.sql
+rem sqlite3 RealtyParser.sqlite3 < RussianrealtyRegionMapping2.sql
+rem sqlite3 RealtyParser.sqlite3 < RussianrealtyRegionDelete.sql

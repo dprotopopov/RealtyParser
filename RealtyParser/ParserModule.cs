@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.Composition;
 using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
@@ -22,8 +21,6 @@ using Uri = MyLibrary.Types.Uri;
 
 namespace RealtyParser
 {
-    [Export(typeof (IParsingModule))]
-    [ExportMetadata("Name", "ParserModule")]
     public class ParserModule : IParsingModule, IValueable, ILastError
     {
         public ParserModule()
@@ -74,7 +71,24 @@ namespace RealtyParser
             Debug.WriteLine("request.ActionId -> {0}", request.ActionId);
             Debug.WriteLine(string.Format("request.LastPublicationId -> '{0}'", request.LastPublicationId));
             Debug.WriteLine("-------------------------------------------------------------------");
-
+            Debug.WriteLine(string.Empty);
+            Debug.WriteLine("!!!!!!!!!!!!!!!!!!!!!!   ВНИМАНИЮ ТЕСТИРОВЩИКОВ  !!!!!!!!!!!!!!!!!!!!!!!!!!!");
+            Debug.WriteLine("Наличие сообщений в логе отладки и трассировки не является признаком ошибки");
+            Debug.WriteLine("Ошибка – это несоответствие программы требованиям");
+            Debug.WriteLine("Тестирование – проверка соответствия программы требованиям");
+            Debug.WriteLine("Непонимание технологий и техник, используемых в программе, не является ошибкой");
+            Debug.WriteLine("В случае ошибки, то есть несоответствия программы требованиям, предоставить,");
+            Debug.WriteLine("для исправления ошибки, информацию о параметрах, при которых осуществлялся запуск,");
+            Debug.WriteLine("чтобы можно было воспроизвести ошибку, и описание в чём заключается ошибка");
+            Debug.WriteLine("Так же желательно приложить лог отладки программы на момент ошибки");
+            Debug.WriteLine("Например:");
+            Debug.WriteLine("Запускалось с параметрами сайт=www..., RegionId=..., RubricId=..., ActionId=..");
+            Debug.WriteLine("на экран выдалось сообщение ... об ..., программа не вернула результаты");
+            Debug.WriteLine("Например:");
+            Debug.WriteLine("Запускалось с параметрами сайт=www..., RegionId=..., RubricId=..., ActionId=..");
+            Debug.WriteLine("в результатах отсутствует поле ... для объявления ... по адресу http://....");
+            Debug.WriteLine("!!!!!!!!!!!!!!!!!!!!!!   ВНИМАНИЮ ТЕСТИРОВЩИКОВ  !!!!!!!!!!!!!!!!!!!!!!!!!!!");
+            Debug.WriteLine(string.Empty);
 
             var requestId = new RequestProperties
             {
@@ -92,11 +106,13 @@ namespace RealtyParser
             ResourceComparer = new ResourceComparer {PublicationComparer = PublicationComparer, Mapping = Mapping};
             ReturnFieldInfos = Database.GetReturnFieldInfos(requestId.Site);
             LookupCrawler.Method = SiteProperties.LookupMethod.ToString();
-            LookupCrawler.Encoding = SiteProperties.Encoding.ToString();
-            LookupCrawler.Compression = SiteProperties.CompressionClassName.ToString();
-            PublicationCrawler.Method = "GET";
-            PublicationCrawler.Encoding = SiteProperties.Encoding.ToString();
-            PublicationCrawler.Compression = SiteProperties.CompressionClassName.ToString();
+            LookupCrawler.Encoding = SiteProperties.LookupEncoding.ToString();
+            LookupCrawler.Compression = SiteProperties.LookupCompression.ToString();
+            LookupCrawler.Edition = (int)MyDatabase.Database.ConvertTo<long>(SiteProperties.LookupEdition);
+            PublicationCrawler.Method = SiteProperties.PublicationMethod.ToString();
+            PublicationCrawler.Encoding = SiteProperties.PublicationEncoding.ToString();
+            PublicationCrawler.Compression = SiteProperties.PublicationCompression.ToString();
+            PublicationCrawler.Edition = (int)MyDatabase.Database.ConvertTo<long>(SiteProperties.PublicationEdition);
 
             var loggingDays = MyDatabase.Database.ConvertTo<long>(SiteProperties.LoggingDays);
             if (loggingDays > 0)

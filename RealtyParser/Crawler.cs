@@ -10,10 +10,12 @@ using System.Threading.Tasks;
 using System.Web;
 using HtmlAgilityPack;
 using MyLibrary.Trace;
+using MyParser;
 using MyParser.Compression;
 using RealtyParser.Collections;
 using RT.Crawler;
 using TidyManaged;
+using ICrawler = RT.Crawler.ICrawler;
 
 namespace RealtyParser
 {
@@ -125,24 +127,28 @@ namespace RealtyParser
                 if (memoryStream != null)
                 {
                     var memoryStreams = new StackListQueue<MemoryStream> {memoryStream};
-                    if (ProgressCallback != null) ProgressCallback(++current, ++total);
+                    if ((Edition & (int) DocumentEdition.Tided) != 0)
+                    {
+                        if (ProgressCallback != null) ProgressCallback(++current, ++total);
 
-                    Debug.WriteLine("Run Tydy.Document");
-                    memoryStreams.First().Seek(0, SeekOrigin.Begin);
-                    Document tidy = Document.FromStream(memoryStreams.First());
+                        memoryStreams.First().Seek(0, SeekOrigin.Begin);
+                        Document tidy = Document.FromStream(memoryStreams.First());
 
-                    tidy.ForceOutput = true;
-                    tidy.PreserveEntities = true;
-                    tidy.InputCharacterEncoding = EncodingType.Raw;
-                    tidy.OutputCharacterEncoding = EncodingType.Raw;
-                    tidy.CharacterEncoding = EncodingType.Raw;
-                    tidy.ShowWarnings = false;
-                    tidy.Quiet = true;
-                    tidy.OutputXhtml = true;
-                    tidy.CleanAndRepair();
+                        tidy.ForceOutput = true;
+                        tidy.PreserveEntities = true;
+                        tidy.InputCharacterEncoding = EncodingType.Raw;
+                        tidy.OutputCharacterEncoding = EncodingType.Raw;
+                        tidy.CharacterEncoding = EncodingType.Raw;
+                        tidy.ShowWarnings = false;
+                        tidy.Quiet = true;
+                        tidy.OutputXhtml = true;
+                        tidy.CleanAndRepair();
 
-                    memoryStreams.Add(new MemoryStream());
-                    tidy.Save(memoryStreams.Last());
+                        memoryStreams.Add(new MemoryStream());
+                        tidy.Save(memoryStreams.Last());
+                    }
+                    if ((Edition & (int) DocumentEdition.Original) == 0)
+                        memoryStreams.Dequeue();
 
                     if (ProgressCallback != null) ProgressCallback(++current, ++total);
 

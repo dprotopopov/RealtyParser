@@ -280,6 +280,9 @@
     <Content Include="UralstudentParser.sqlite3">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="RussianrealtyParser.sqlite3">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -336,6 +339,10 @@
     <ProjectReference Include="..\RealtyParser.Rosrealt\RealtyParser.Rosrealt.csproj">
       <Project>{57de8459-4895-490b-a412-e9b7b6f0441b}</Project>
       <Name>RealtyParser.Rosrealt</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RealtyParser.Russianrealty\RealtyParser.Russianrealty.csproj">
+      <Project>{e1f6a8c1-6cb0-4995-8fa9-a3ec3a1ff94e}</Project>
+      <Name>RealtyParser.Russianrealty</Name>
     </ProjectReference>
     <ProjectReference Include="..\RealtyParser.Sdamka\RealtyParser.Sdamka.csproj">
       <Project>{44be67de-5b57-4295-83ac-c0bab86c0564}</Project>

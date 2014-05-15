@@ -59,14 +59,10 @@ namespace RealtyParser
             Debug.Assert(webPublication.AdditionalInfo.RealtyAdditionalInfo != null);
             Debug.Assert(webPublication.Contact != null);
 
-            foreach (
-                PropertyInfo propertyInfo in
-                    returnFields.GetType()
-                        .GetProperties()
-                        .Where(propertyInfo => !returnFields.ContainsKey(propertyInfo.Name)))
-            {
-                Debug.WriteLine(string.Format("No data for property {0}", propertyInfo.Name));
-            }
+            Debug.WriteLine(string.Join(Environment.NewLine, returnFields.GetType()
+                .GetProperties()
+                .Where(propertyInfo => !returnFields.ContainsKey(propertyInfo.Name))
+                .Select(propertyInfo => string.Format("No data for property {0}", propertyInfo.Name))));
 
             var stackListQueue = new StackListQueue<KeyValuePair<object, string>>
             {
@@ -130,7 +126,7 @@ namespace RealtyParser
                     propertyInfo.SetValue(webPublication, (long) 0);
                 }
             }
-
+#if DEBUG
             foreach (var pair in stackListQueue)
             {
                 foreach (PropertyInfo propertyInfo in pair.Key.GetType().GetProperties())
@@ -151,7 +147,7 @@ namespace RealtyParser
                     }
                 }
             }
-
+#endif
             Debug.Assert(webPublication != null);
             Debug.Assert(webPublication.AdditionalInfo != null);
             Debug.Assert(webPublication.AdditionalInfo.RealtyAdditionalInfo != null);
@@ -296,7 +292,7 @@ namespace RealtyParser
             });
 
             Debug.WriteLine("values {0}", values);
-            Parallel.ForEach(new[] { new[] { "Rubric", "Action" }, new[] { "Region", "Rubric" } }, tables =>
+            Parallel.ForEach(new[] {new[] {"Rubric", "Action"}, new[] {"Region", "Rubric"}}, tables =>
             {
                 IEnumerable<string> enumerable = tables.Select(t => mappedId[t].ToString());
                 try
