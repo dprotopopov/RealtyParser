@@ -258,6 +258,9 @@
     <Content Include="GdeetotdomParser.sqlite3">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="MailParser.sqlite3">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -327,6 +330,10 @@
     <ProjectReference Include="..\RealtyParser.Kvadrat66\RealtyParser.Kvadrat66.csproj">
       <Project>{d541e173-598e-4f7f-8d18-9190dcd8135f}</Project>
       <Name>RealtyParser.Kvadrat66</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RealtyParser.Mail\RealtyParser.Mail.csproj">
+      <Project>{b2a1180b-c35d-43ab-893f-ccd722fb6294}</Project>
+      <Name>RealtyParser.Mail</Name>
     </ProjectReference>
     <ProjectReference Include="..\RealtyParser.Mirkvartir\RealtyParser.Mirkvartir.csproj">
       <Project>{c67274ba-03f8-44a7-8146-f745a6f662d5}</Project>

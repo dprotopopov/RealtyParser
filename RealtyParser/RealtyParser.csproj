@@ -121,40 +121,30 @@
     <Compile Include="SiteProperties.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="MirkvartirParser.sqlite3">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    <Content Include="MirkvartirParser.sqlite3" />
     <None Include="App.config" />
-    <Content Include="BeBossParser.sqlite3">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="BnParser.sqlite3">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="EgentParser.sqlite3">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="NetAgentaParser.sqlite3">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    <Content Include="BeBossParser.sqlite3" />
+    <Content Include="BnParser.sqlite3" />
+    <Content Include="EgentParser.sqlite3" />
+    <Content Include="NetAgentaParser.sqlite3" />
+    <Content Include="Arenda66Parser.sqlite3" />
+    <Content Include="CitystarParser.sqlite3" />
+    <Content Include="GdeetotdomParser.sqlite3" />
+    <Content Include="Kvadrat66Parser.sqlite3" />
     <None Include="packages.config" />
     <Content Include="libtidy.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Include="RealtyParser.snk" />
-    <Content Include="RealtyParser.sqlite3">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="RosrealtParser.sqlite3">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    <Content Include="RealtyParser.sqlite3" />
+    <Content Include="RosrealtParser.sqlite3" />
     <Content Include="RealtyParserMerge.bat">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <None Include="Алгоритм.doc" />
-    <None Include="Структура базы данных.docx" />
-    <None Include="Техническое задание на разработку парсера v10.pdf" />
-    <None Include="Техническое задание на разработку парсера v4.pdf" />
+    <Content Include="UralstudentParser.sqlite3" />
+    <Content Include="UpnParser.sqlite3" />
+    <Content Include="SdamkaParser.sqlite3" />
+    <Content Include="RussianrealtyParser.sqlite3" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\MyLibrary\MyDatabase\MyDatabase.csproj">

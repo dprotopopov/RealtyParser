@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.listBoxControlDll = new DevExpress.XtraEditors.ListBoxControl();
+            this.listBoxParserModule = new DevExpress.XtraEditors.ListBoxControl();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.xtraTabControl1 = new DevExpress.XtraTab.XtraTabControl();
             this.xtraTabPage1 = new DevExpress.XtraTab.XtraTabPage();
@@ -65,7 +65,7 @@
             // 
             // splitContainer1.Panel1
             // 
-            this.splitContainer1.Panel1.Controls.Add(this.listBoxControlDll);
+            this.splitContainer1.Panel1.Controls.Add(this.listBoxParserModule);
             // 
             // splitContainer1.Panel2
             // 
@@ -74,14 +74,14 @@
             this.splitContainer1.SplitterDistance = 302;
             this.splitContainer1.TabIndex = 0;
             // 
-            // listBoxControlDll
+            // listBoxParserModule
             // 
-            this.listBoxControlDll.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.listBoxControlDll.ItemHeight = 16;
-            this.listBoxControlDll.Location = new System.Drawing.Point(0, 0);
-            this.listBoxControlDll.Name = "listBoxControlDll";
-            this.listBoxControlDll.Size = new System.Drawing.Size(302, 467);
-            this.listBoxControlDll.TabIndex = 1;
+            this.listBoxParserModule.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.listBoxParserModule.ItemHeight = 16;
+            this.listBoxParserModule.Location = new System.Drawing.Point(0, 0);
+            this.listBoxParserModule.Name = "listBoxParserModule";
+            this.listBoxParserModule.Size = new System.Drawing.Size(302, 467);
+            this.listBoxParserModule.TabIndex = 1;
             // 
             // splitContainer2
             // 
@@ -204,7 +204,7 @@
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.SplitContainer splitContainer2;
         private DevExpress.XtraVerticalGrid.PropertyGridControl propertyGridControlBind;
-        private DevExpress.XtraEditors.ListBoxControl listBoxControlDll;
+        private DevExpress.XtraEditors.ListBoxControl listBoxParserModule;
         private DevExpress.XtraTab.XtraTabControl xtraTabControl1;
         private DevExpress.XtraTab.XtraTabPage xtraTabPage1;
         private DevExpress.XtraEditors.ListBoxControl listBoxControlKeysActions;

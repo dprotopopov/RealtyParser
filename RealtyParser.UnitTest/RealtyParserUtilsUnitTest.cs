@@ -20,7 +20,7 @@ namespace RealtyParser.UnitTest
             var document = new HtmlDocument();
             document.Load("TestInvokeNodeProperty.html");
             HtmlNode node = document.DocumentNode.SelectSingleNode("//a");
-            string innerText = Parser.InvokeNodeProperty(node, "InnerText");
+            string innerText = MyParser.Parser.InvokeNodeProperty(node, "InnerText");
             Assert.AreEqual(innerText, "Hello");
         }
 
@@ -30,7 +30,7 @@ namespace RealtyParser.UnitTest
             var document = new HtmlDocument();
             document.Load("TestInvokeNodeProperty.html");
             HtmlNode node = document.DocumentNode.SelectSingleNode("//a[@href]");
-            string hrefValue = Parser.AttributeValue(node, "href");
+            string hrefValue = MyParser.Parser.AttributeValue(node, "href");
             Assert.AreEqual(hrefValue, "http://protopopov.ru");
         }
 
@@ -44,18 +44,6 @@ namespace RealtyParser.UnitTest
                 {@"Rubric[1]", "2"}
             };
             Assert.AreEqual(Transformation.ParseTemplate(template, args), "Region=1&Rubric=2&Action=");
-        }
-
-        [TestMethod]
-        public async void TestWebRequestHtmlDocument()
-        {
-            var uri = new Uri("http://rbc.ru");
-            Crawler.Method = "GET";
-            Crawler.Encoding = "utf-8";
-            Crawler.Compression = "NoCompression";
-            IEnumerable<HtmlDocument> documents = await Crawler.WebRequestHtmlDocument(uri);
-            Assert.IsNotNull(documents);
-            Assert.IsFalse(string.IsNullOrWhiteSpace(documents.First().DocumentNode.InnerText));
         }
     }
 }

@@ -32,7 +32,7 @@
             this.listBoxSources = new System.Windows.Forms.ListBox();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.propertyGridControlBind = new DevExpress.XtraVerticalGrid.PropertyGridControl();
-            this.listBoxDll = new System.Windows.Forms.ListBox();
+            this.listBoxParserModule = new System.Windows.Forms.ListBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -80,7 +80,7 @@
             // 
             // splitContainer2.Panel1
             // 
-            this.splitContainer2.Panel1.Controls.Add(this.listBoxDll);
+            this.splitContainer2.Panel1.Controls.Add(this.listBoxParserModule);
             // 
             // splitContainer2.Panel2
             // 
@@ -97,15 +97,15 @@
             this.propertyGridControlBind.Size = new System.Drawing.Size(322, 353);
             this.propertyGridControlBind.TabIndex = 1;
             // 
-            // listBoxDll
+            // listBoxParserModule
             // 
-            this.listBoxDll.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.listBoxDll.FormattingEnabled = true;
-            this.listBoxDll.ItemHeight = 16;
-            this.listBoxDll.Location = new System.Drawing.Point(0, 0);
-            this.listBoxDll.Name = "listBoxDll";
-            this.listBoxDll.Size = new System.Drawing.Size(322, 198);
-            this.listBoxDll.TabIndex = 1;
+            this.listBoxParserModule.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.listBoxParserModule.FormattingEnabled = true;
+            this.listBoxParserModule.ItemHeight = 16;
+            this.listBoxParserModule.Location = new System.Drawing.Point(0, 0);
+            this.listBoxParserModule.Name = "listBoxParserModule";
+            this.listBoxParserModule.Size = new System.Drawing.Size(322, 198);
+            this.listBoxParserModule.TabIndex = 1;
             // 
             // SourcesForm
             // 
@@ -134,6 +134,6 @@
         private System.Windows.Forms.ListBox listBoxSources;
         private System.Windows.Forms.SplitContainer splitContainer2;
         private DevExpress.XtraVerticalGrid.PropertyGridControl propertyGridControlBind;
-        private System.Windows.Forms.ListBox listBoxDll;
+        private System.Windows.Forms.ListBox listBoxParserModule;
     }
 }

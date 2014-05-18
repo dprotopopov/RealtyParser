@@ -1,8 +1,8 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using MyLibrary;
 using MyLibrary.Attribute;
 using MyLibrary.Comparer;
@@ -17,26 +17,24 @@ namespace RealtyParser
             Template = template;
             ObjectComparer = new ObjectComparer();
             Converter = new Converter();
-            foreach (
-                Match match in
-                    str.Split(',')
-                        .Select(s => s.Trim())
-                        .Where(s => !string.IsNullOrWhiteSpace(s))
-                        .Select(s => Regex.Match(s, StructurePattern))
-                        .Where(match => !string.IsNullOrWhiteSpace(match.Groups["key"].Value)))
-                try
-                {
-                    PropertyInfo propertyInfo = GetType()
-                        .GetProperty(match.Groups["key"].Value,
-                            BindingFlags.Public | BindingFlags.DeclaredOnly | BindingFlags.Instance);
-                    propertyInfo.SetValue(this,
-                        Converter.Convert(match.Groups["value"].Value, propertyInfo.PropertyType), null);
-                }
-                catch (Exception exception)
-                {
-                    Debug.WriteLine(exception.ToString());
-                    Add(match.Groups["key"].Value, match.Groups["value"].Value);
-                }
+            Parallel.ForEach(
+                str.Split(',')
+                    .Select(s => s.Trim())
+                    .Where(String.IsNotNullAndNotEmpty)
+                    .Select(s => Regex.Match(s, StructurePattern))
+                    .Where(match => !string.IsNullOrWhiteSpace(match.Groups["key"].Value)), match =>
+                    {
+                        PropertyInfo propertyInfo = GetType()
+                            .GetProperty(match.Groups["key"].Value,
+                                BindingFlags.Public | BindingFlags.DeclaredOnly | BindingFlags.Instance);
+                        object value = (propertyInfo == null)
+                            ? null
+                            : Converter.Convert(match.Groups["value"].Value, propertyInfo.PropertyType);
+                        if (propertyInfo == null || value == null)
+                            lock (this) Add(match.Groups["key"].Value, match.Groups["value"].Value);
+                        else
+                            lock (this) propertyInfo.SetValue(this, value, null);
+                    });
         }
 
         private string Template { get; set; }

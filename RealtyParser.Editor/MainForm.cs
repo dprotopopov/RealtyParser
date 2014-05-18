@@ -1,13 +1,50 @@
 ﻿using System;
+using System.Collections.Generic;
 using DevExpress.XtraBars;
 using DevExpress.XtraBars.Ribbon;
+using RealtyParser.Arenda66;
+using RealtyParser.BeBoss;
+using RealtyParser.Bn;
+using RealtyParser.Citystar;
+using RealtyParser.Collections;
 using RealtyParser.Editor.Children;
+using RealtyParser.Egent;
 using RealtyParser.Forms;
+using RealtyParser.Gdeetotdom;
+using RealtyParser.Kvadrat66;
+using RealtyParser.Mail;
+using RealtyParser.Mirkvartir;
+using RealtyParser.NetAgenta;
+using RealtyParser.Rosrealt;
+using RealtyParser.Russianrealty;
+using RealtyParser.Sdamka;
+using RealtyParser.Upn;
+using RealtyParser.Uralstudent;
 
 namespace RealtyParser.Editor
 {
     public partial class MainForm : RibbonForm
     {
+        public static readonly IEnumerable<ParserModule> ParserModules = new StackListQueue<ParserModule>
+        {
+            new ParserModule(),
+            new RosrealtParser(),
+            new MirkvartirParser(),
+            new EgentParser(),
+            new NetAgentaParser(),
+            new BnParser(),
+            new BeBossParser(),
+            new Arenda66Parser(),
+            new UpnParser(),
+            new Kvadrat66Parser(),
+            new SdamkaParser(),
+            new UralstudentParser(),
+            new CitystarParser(),
+            new GdeetotdomParser(),
+            new RussianrealtyParser(),
+            new MailParser(),
+        };
+
         private readonly AboutForm _aboutForm;
         private readonly BuilderForm _builderForm;
         private readonly HapForm _hapForm;

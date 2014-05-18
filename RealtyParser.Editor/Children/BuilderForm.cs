@@ -36,7 +36,9 @@ namespace RealtyParser.Editor.Children
             Mapping sites = Database.GetMapping("Site");
             repositoryItemComboBoxSite.Items.AddRange(sites.ToArray());
             IEnumerable<object> mapping = Database.GetList("Mapping", "TableName");
+            IEnumerable<object> fielding = Database.GetList("Fielding", "FieldName");
             repositoryItemComboBoxTableName.Items.AddRange(mapping.ToArray());
+            repositoryItemComboBoxFieldName.Items.AddRange(fielding.ToArray());
             object[] methods =
             {
                 typeof (Builder).GetMethod("BuildGridItems", new Type[] {}),
@@ -44,6 +46,7 @@ namespace RealtyParser.Editor.Children
                 typeof (Builder).GetMethod("BuildMapping", new Type[] {}),
                 typeof (Builder).GetMethod("RefreshGridItems", new Type[] {}),
                 typeof (Builder).GetMethod("DownloadTable", new Type[] {}),
+                typeof (Builder).GetMethod("DownloadTableField", new Type[] {}),
                 typeof (Builder).GetMethod("ExecuteNonQuery", new Type[] {})
             };
             repositoryItemComboBoxMethodInfo.Items.AddRange(methods);

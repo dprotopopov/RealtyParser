@@ -12,6 +12,7 @@ copy /v /y RealtyParser.sqlite3 UralstudentParser.sqlite3
 copy /v /y RealtyParser.sqlite3 CitystarParser.sqlite3
 copy /v /y RealtyParser.sqlite3 GdeetotdomParser.sqlite3
 copy /v /y RealtyParser.sqlite3 RussianrealtyParser.sqlite3
+copy /v /y RealtyParser.sqlite3 MailParser.sqlite3
 
 sqlite3 RosrealtParser.sqlite3 < RosrealtVacuum.sql
 sqlite3 MirkvartirParser.sqlite3 < MirkvartirVacuum.sql
@@ -27,6 +28,7 @@ sqlite3 UralstudentParser.sqlite3 < UralstudentVacuum.sql
 sqlite3 CitystarParser.sqlite3 < CitystarVacuum.sql
 sqlite3 GdeetotdomParser.sqlite3 < GdeetotdomVacuum.sql
 sqlite3 RussianrealtyParser.sqlite3 < RussianrealtyVacuum.sql
+sqlite3 MailParser.sqlite3 < MailVacuum.sql
 
 copy /v /y RosrealtParser.sqlite3 ..\RealtyParser.Rosrealt\RosrealtParser.sqlite3
 copy /v /y MirkvartirParser.sqlite3 ..\RealtyParser.Mirkvartir\MirkvartirParser.sqlite3
@@ -42,6 +44,7 @@ copy /v /y UralstudentParser.sqlite3 ..\RealtyParser.Uralstudent\UralstudentPars
 copy /v /y CitystarParser.sqlite3 ..\RealtyParser.Citystar\CitystarParser.sqlite3
 copy /v /y GdeetotdomParser.sqlite3 ..\RealtyParser.Gdeetotdom\GdeetotdomParser.sqlite3
 copy /v /y RussianrealtyParser.sqlite3 ..\RealtyParser.Russianrealty\RussianrealtyParser.sqlite3
+copy /v /y MailParser.sqlite3 ..\RealtyParser.Mail\MailParser.sqlite3
 
 copy /v /y RealtyParser.sqlite3 ..\RealtyParser.Editor\RealtyParser.sqlite3
 copy /v /y RosrealtParser.sqlite3 ..\RealtyParser.Editor\RosrealtParser.sqlite3
@@ -58,3 +61,4 @@ copy /v /y UralstudentParser.sqlite3 ..\RealtyParser.Editor\UralstudentParser.sq
 copy /v /y CitystarParser.sqlite3 ..\RealtyParser.Editor\CitystarParser.sqlite3
 copy /v /y GdeetotdomParser.sqlite3 ..\RealtyParser.Editor\GdeetotdomParser.sqlite3
 copy /v /y RussianrealtyParser.sqlite3 ..\RealtyParser.Editor\RussianrealtyParser.sqlite3
+copy /v /y MailParser.sqlite3 ..\RealtyParser.Editor\MailParser.sqlite3

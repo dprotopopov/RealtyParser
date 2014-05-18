@@ -1,4 +1,5 @@
 BEGIN;
+DELETE FROM SiteTableBuilderMapping WHERE SiteId<>9;
 DELETE FROM SiteBuilderMapping WHERE SiteId<>9;
 DELETE FROM SiteReturnFieldMapping WHERE SiteId<>9;
 DELETE FROM SiteRubricActionMapping WHERE SiteId<>9;

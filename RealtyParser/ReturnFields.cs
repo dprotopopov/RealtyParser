@@ -8,10 +8,15 @@ namespace RealtyParser
     /// <summary>
     ///     Вспомогательный класс
     ///     Используется для доступа к значениям словаря по ключу
-    ///     используется для храниния результатов разбора одной страницы на поля
+    ///     используется для хранения результатов разбора одной страницы на поля
     /// </summary>
     public class ReturnFields : MyParser.ReturnFields, IValueable
     {
+        public ReturnFields(MyParser.ReturnFields buildReturnFields)
+            : base(buildReturnFields)
+        {
+        }
+
         [Value]
         public new IEnumerable<string> PublicationId
         {

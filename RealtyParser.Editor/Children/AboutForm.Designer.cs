@@ -30,7 +30,7 @@
         {
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.propertyGridControl1 = new DevExpress.XtraVerticalGrid.PropertyGridControl();
-            this.listBoxDll = new System.Windows.Forms.ListBox();
+            this.listBoxParserModule = new System.Windows.Forms.ListBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -46,7 +46,7 @@
             // 
             // splitContainer1.Panel1
             // 
-            this.splitContainer1.Panel1.Controls.Add(this.listBoxDll);
+            this.splitContainer1.Panel1.Controls.Add(this.listBoxParserModule);
             // 
             // splitContainer1.Panel2
             // 
@@ -63,16 +63,16 @@
             this.propertyGridControl1.Size = new System.Drawing.Size(550, 455);
             this.propertyGridControl1.TabIndex = 1;
             // 
-            // listBoxDll
+            // listBoxParserModule
             // 
-            this.listBoxDll.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.listBoxDll.FormattingEnabled = true;
-            this.listBoxDll.ItemHeight = 16;
-            this.listBoxDll.Location = new System.Drawing.Point(0, 0);
-            this.listBoxDll.Name = "listBoxDll";
-            this.listBoxDll.Size = new System.Drawing.Size(276, 455);
-            this.listBoxDll.TabIndex = 0;
-            this.listBoxDll.SelectedValueChanged += new System.EventHandler(this.listBoxDll_SelectedValueChanged);
+            this.listBoxParserModule.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.listBoxParserModule.FormattingEnabled = true;
+            this.listBoxParserModule.ItemHeight = 16;
+            this.listBoxParserModule.Location = new System.Drawing.Point(0, 0);
+            this.listBoxParserModule.Name = "listBoxParserModule";
+            this.listBoxParserModule.Size = new System.Drawing.Size(276, 455);
+            this.listBoxParserModule.TabIndex = 0;
+            this.listBoxParserModule.SelectedValueChanged += new System.EventHandler(this.listBoxDll_SelectedValueChanged);
             // 
             // AboutForm
             // 
@@ -94,7 +94,7 @@
         #endregion
 
         private System.Windows.Forms.SplitContainer splitContainer1;
-        private System.Windows.Forms.ListBox listBoxDll;
+        private System.Windows.Forms.ListBox listBoxParserModule;
         private DevExpress.XtraVerticalGrid.PropertyGridControl propertyGridControl1;
 
 

@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
-using HtmlAgilityPack;
 using MyLibrary;
 using MyLibrary.LastError;
 using MyParser.Comparer;
@@ -17,6 +17,7 @@ using RT.ParsingLibs.Models;
 using RT.ParsingLibs.Requests;
 using RT.ParsingLibs.Responses;
 using Boolean = MyLibrary.Types.Boolean;
+using String = MyLibrary.Types.String;
 using Uri = MyLibrary.Types.Uri;
 
 namespace RealtyParser
@@ -108,26 +109,30 @@ namespace RealtyParser
             LookupCrawler.Method = SiteProperties.LookupMethod.ToString();
             LookupCrawler.Encoding = SiteProperties.LookupEncoding.ToString();
             LookupCrawler.Compression = SiteProperties.LookupCompression.ToString();
-            LookupCrawler.Edition = (int)MyDatabase.Database.ConvertTo<long>(SiteProperties.LookupEdition);
+            LookupCrawler.Edition = (int) MyDatabase.Database.ConvertTo<long>(SiteProperties.LookupEdition);
             PublicationCrawler.Method = SiteProperties.PublicationMethod.ToString();
             PublicationCrawler.Encoding = SiteProperties.PublicationEncoding.ToString();
             PublicationCrawler.Compression = SiteProperties.PublicationCompression.ToString();
-            PublicationCrawler.Edition = (int)MyDatabase.Database.ConvertTo<long>(SiteProperties.PublicationEdition);
+            PublicationCrawler.Edition = (int) MyDatabase.Database.ConvertTo<long>(SiteProperties.PublicationEdition);
 
             var loggingDays = MyDatabase.Database.ConvertTo<long>(SiteProperties.LoggingDays);
             if (loggingDays > 0)
+            {
+                Database.Wait(Database.Connection);
                 Database.Delete(
                     new Logging
                     {
                         SiteId = SiteProperties.SiteId,
                         RequestTimestamp = DateTime.Now.AddDays(1 - loggingDays).ToString("yyyy-MM-dd 00:00:00")
                     }, "<");
+                Database.Release(Database.Connection);
+            }
 
             var lastResources = new StackListQueue<Resource>(
                 (string.IsNullOrWhiteSpace(request.LastPublicationId) ? string.Empty : request.LastPublicationId).Split(
                     '&')
                     .Select(s => s.Trim())
-                    .Where(s => !string.IsNullOrWhiteSpace(s))
+                    .Where(String.IsNotNullAndNotEmpty)
                     .Where(s => PublicationComparer.IsValid(s))
                     .Select(
                         s =>
@@ -291,12 +296,11 @@ namespace RealtyParser
                                     };
                                     Uri.Default = builder.Uri;
 
-                                    IEnumerable<HtmlDocument> documents =
+                                    IEnumerable<MemoryStream> documents =
                                         await
-                                            LookupCrawler.WebRequestHtmlDocument(builder.Uri);
-                                    Thread.Sleep(0);
+                                            LookupCrawler.WebRequest(builder.Uri);
                                     ReturnFields returnFields = Parser.BuildReturnFields(documents,
-                                        urlValues, returnFieldInfos);
+                                        urlValues, returnFieldInfos.ToList());
                                     returnFields.Add(urlValues);
                                     int linkCount = returnFields.PublicationLink.Count();
 
@@ -373,18 +377,18 @@ namespace RealtyParser
                                             };
                                             Uri.Default = builder1.Uri;
 
-                                            IEnumerable<HtmlDocument> htmlDocuments =
+                                            IEnumerable<MemoryStream> streams =
                                                 await
-                                                    PublicationCrawler.WebRequestHtmlDocument(builder1.Uri);
+                                                    PublicationCrawler.WebRequest(builder1.Uri);
                                             Thread.Sleep(0);
-                                            ReturnFields fields = Parser.BuildReturnFields(htmlDocuments,
-                                                values, ReturnFieldInfos);
+                                            ReturnFields fields = Parser.BuildReturnFields(streams,
+                                                values, ReturnFieldInfos.ToList());
                                             var values1 = new Values(fields) {values};
                                             IEnumerable<Resource> list =
                                                 Transformation.ParseTemplate(
                                                     SiteProperties.ResourceTemplate.ToString(),
                                                     values1)
-                                                    .Where(s => !string.IsNullOrWhiteSpace(s))
+                                                    .Where(String.IsNotNullAndNotEmpty)
                                                     .Where(s => PublicationComparer.IsValid(s))
                                                     .Select(
                                                         s =>
@@ -492,6 +496,8 @@ namespace RealtyParser
                                 r => ObjectComparer.Equals(r, item, Mapping))));
 
                 if (loggingDays > 0)
+                {
+                    Database.Wait(Database.Connection);
                     Database.InsertOrReplace(
                         resources.Select(
                             r =>
@@ -501,6 +507,8 @@ namespace RealtyParser
                                     RequestTimestamp = DateTime.Now.ToString(CultureInfo.InvariantCulture),
                                     ResponceResource = r.ToString()
                                 }));
+                    Database.Release(Database.Connection);
+                }
                 try
                 {
                     if (lastResourceDictionary.Any())
@@ -634,12 +642,12 @@ namespace RealtyParser
                             Url = new StackListQueue<string> {builder.Uri.ToString()}
                         };
                         Uri.Default = builder.Uri;
-                        IEnumerable<HtmlDocument> documents =
+                        IEnumerable<MemoryStream> streams =
                             await
-                                PublicationCrawler.WebRequestHtmlDocument(builder.Uri);
+                                PublicationCrawler.WebRequest(builder.Uri);
                         Thread.Sleep(0);
-                        ReturnFields returnFields = Parser.BuildReturnFields(documents,
-                            urlValues, ReturnFieldInfos);
+                        ReturnFields returnFields = Parser.BuildReturnFields(streams,
+                            urlValues, ReturnFieldInfos.ToList());
                         publications.Add(Parser.CreateWebPublication(returnFields, requestId));
                     }
                     catch (Exception exception)

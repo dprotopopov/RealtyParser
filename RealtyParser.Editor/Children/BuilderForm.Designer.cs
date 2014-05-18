@@ -43,6 +43,8 @@
             this.SiteMinLevel = new DevExpress.XtraVerticalGrid.Rows.EditorRow();
             this.textBoxCommandText = new System.Windows.Forms.TextBox();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
+            this.repositoryItemComboBoxFieldName = new DevExpress.XtraEditors.Repository.RepositoryItemComboBox();
+            this.row = new DevExpress.XtraVerticalGrid.Rows.EditorRow();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -52,6 +54,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemComboBoxTableName)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemComboBoxMethodInfo)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemComboBoxLevel)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemComboBoxFieldName)).BeginInit();
             this.SuspendLayout();
             // 
             // splitContainer1
@@ -69,7 +72,7 @@
             // 
             this.splitContainer1.Panel2.Controls.Add(this.textBoxCommandText);
             this.splitContainer1.Size = new System.Drawing.Size(905, 519);
-            this.splitContainer1.SplitterDistance = 154;
+            this.splitContainer1.SplitterDistance = 192;
             this.splitContainer1.TabIndex = 0;
             // 
             // propertyGridControlWorkspace
@@ -83,7 +86,8 @@
             this.repositoryItemComboBoxSite,
             this.repositoryItemComboBoxTableName,
             this.repositoryItemComboBoxMethodInfo,
-            this.repositoryItemComboBoxLevel});
+            this.repositoryItemComboBoxLevel,
+            this.repositoryItemComboBoxFieldName});
             this.propertyGridControlWorkspace.RowHeaderWidth = 33;
             this.propertyGridControlWorkspace.Rows.AddRange(new DevExpress.XtraVerticalGrid.Rows.BaseRow[] {
             this.Site,
@@ -92,8 +96,9 @@
             this.MaxLevel,
             this.MinLevel,
             this.SiteMaxLevel,
-            this.SiteMinLevel});
-            this.propertyGridControlWorkspace.Size = new System.Drawing.Size(905, 154);
+            this.SiteMinLevel,
+            this.row});
+            this.propertyGridControlWorkspace.Size = new System.Drawing.Size(905, 192);
             this.propertyGridControlWorkspace.TabIndex = 0;
             // 
             // repositoryItemComboBoxSite
@@ -180,12 +185,26 @@
             this.textBoxCommandText.Multiline = true;
             this.textBoxCommandText.Name = "textBoxCommandText";
             this.textBoxCommandText.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.textBoxCommandText.Size = new System.Drawing.Size(905, 361);
+            this.textBoxCommandText.Size = new System.Drawing.Size(905, 323);
             this.textBoxCommandText.TabIndex = 0;
             // 
             // saveFileDialog1
             // 
             this.saveFileDialog1.DefaultExt = "sql";
+            // 
+            // repositoryItemComboBoxFieldName
+            // 
+            this.repositoryItemComboBoxFieldName.AutoHeight = false;
+            this.repositoryItemComboBoxFieldName.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.repositoryItemComboBoxFieldName.Name = "repositoryItemComboBoxFieldName";
+            // 
+            // row
+            // 
+            this.row.Name = "row";
+            this.row.Properties.Caption = "FieldName";
+            this.row.Properties.FieldName = "FieldName";
+            this.row.Properties.RowEdit = this.repositoryItemComboBoxFieldName;
             // 
             // BuilderForm
             // 
@@ -205,6 +224,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemComboBoxTableName)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemComboBoxMethodInfo)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemComboBoxLevel)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemComboBoxFieldName)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -226,5 +246,7 @@
         private DevExpress.XtraVerticalGrid.Rows.EditorRow MinLevel;
         private DevExpress.XtraVerticalGrid.Rows.EditorRow SiteMaxLevel;
         private DevExpress.XtraVerticalGrid.Rows.EditorRow SiteMinLevel;
+        private DevExpress.XtraEditors.Repository.RepositoryItemComboBox repositoryItemComboBoxFieldName;
+        private DevExpress.XtraVerticalGrid.Rows.EditorRow row;
     }
 }

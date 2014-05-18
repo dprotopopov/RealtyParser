@@ -122,7 +122,7 @@ namespace RealtyParser
             return new Values(this);
         }
 
-        public List<ReturnFieldInfo> ToList()
+        public IEnumerable<ReturnFieldInfo> ToList()
         {
             var list = new StackListQueue<ReturnFieldInfo>();
             foreach (var value in Values)

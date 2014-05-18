@@ -50,7 +50,7 @@
             this.listBoxEmail = new System.Windows.Forms.ListBox();
             this.splitContainer4 = new System.Windows.Forms.SplitContainer();
             this.propertyGridControlParseRequest = new DevExpress.XtraVerticalGrid.PropertyGridControl();
-            this.listBoxDll = new System.Windows.Forms.ListBox();
+            this.listBoxParserModule = new System.Windows.Forms.ListBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -319,7 +319,7 @@
             // 
             // splitContainer4.Panel1
             // 
-            this.splitContainer4.Panel1.Controls.Add(this.listBoxDll);
+            this.splitContainer4.Panel1.Controls.Add(this.listBoxParserModule);
             // 
             // splitContainer4.Panel2
             // 
@@ -336,15 +336,15 @@
             this.propertyGridControlParseRequest.Size = new System.Drawing.Size(276, 396);
             this.propertyGridControlParseRequest.TabIndex = 1;
             // 
-            // listBoxDll
+            // listBoxParserModule
             // 
-            this.listBoxDll.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.listBoxDll.FormattingEnabled = true;
-            this.listBoxDll.ItemHeight = 16;
-            this.listBoxDll.Location = new System.Drawing.Point(0, 0);
-            this.listBoxDll.Name = "listBoxDll";
-            this.listBoxDll.Size = new System.Drawing.Size(276, 178);
-            this.listBoxDll.TabIndex = 1;
+            this.listBoxParserModule.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.listBoxParserModule.FormattingEnabled = true;
+            this.listBoxParserModule.ItemHeight = 16;
+            this.listBoxParserModule.Location = new System.Drawing.Point(0, 0);
+            this.listBoxParserModule.Name = "listBoxParserModule";
+            this.listBoxParserModule.Size = new System.Drawing.Size(276, 178);
+            this.listBoxParserModule.TabIndex = 1;
             // 
             // ResultForm
             // 
@@ -412,6 +412,6 @@
         private System.Windows.Forms.ListBox listBoxEmail;
         private System.Windows.Forms.SplitContainer splitContainer4;
         private DevExpress.XtraVerticalGrid.PropertyGridControl propertyGridControlParseRequest;
-        private System.Windows.Forms.ListBox listBoxDll;
+        private System.Windows.Forms.ListBox listBoxParserModule;
     }
 }

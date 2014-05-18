@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using HtmlAgilityPack;
 using MyLibrary;
@@ -85,24 +85,14 @@ namespace RealtyParser
                     PropertyInfo returnPropertyInfo = returnFields.GetType().GetProperty(propertyFullName);
                     if (returnPropertyInfo == null) continue;
                     Type propertyType = propertyInfo.PropertyType;
-                    Type returnPropertyType = returnPropertyInfo.PropertyType;
-                    try
-                    {
-                        List<string> list =
-                            new MyLibrary.Collections.StackListQueue<string>(
-                                (IEnumerable<string>) returnPropertyInfo.GetValue(returnFields, null));
-                        object value = Converter.Convert(list, propertyType);
-                        propertyInfo.SetValue(pair.Key, value);
-                        Debug.WriteLine("Assign data for property {0} from {1}", propertyInfo.Name, propertyFullName);
-                    }
-                    catch (Exception exception)
-                    {
-                        Debug.WriteLine(exception.ToString());
-                        Debug.WriteLine("Try assign {0}->{1}", propertyFullName, propertyName);
-                        Debug.WriteLine("Try convert {0}{1}->{2}{3}", returnPropertyType.Name,
-                            (returnPropertyType.IsArray ? " As Array" : string.Empty), propertyType.Name,
-                            (propertyType.IsArray ? " As Array" : string.Empty));
-                    }
+                    object returnValue = returnPropertyInfo.GetValue(returnFields, null);
+                    if (returnValue == null) continue;
+                    List<string> list =
+                        new MyLibrary.Collections.StackListQueue<string>(
+                            (IEnumerable<string>) returnValue);
+                    object value = Converter.Convert(list, propertyType);
+                    if (value == null) continue;
+                    propertyInfo.SetValue(pair.Key, value);
                 }
             }
 
@@ -161,70 +151,10 @@ namespace RealtyParser
         /// <summary>
         ///     Поиск и формирование значений возвращаемых полей загруженного с сайта объявления
         /// </summary>
-        public ReturnFields BuildReturnFields(IEnumerable<HtmlDocument> parentDocuments, Values parentValues,
-            ReturnFieldInfos returnFieldInfos)
+        public ReturnFields BuildReturnFields(IEnumerable<MemoryStream> streams, Values parents,
+            IEnumerable<ReturnFieldInfo> returnFieldInfos)
         {
-            Debug.WriteLine("Begin {0}::{1}", GetType().Name, MethodBase.GetCurrentMethod().Name);
-            var returnFields = new ReturnFields();
-            long current = 0;
-            long total = returnFieldInfos.ToList().Count*(parentDocuments.Count() + 1);
-            Parallel.ForEach(returnFieldInfos.ToList(), returnFieldInfo =>
-            {
-                var agregated = new Values();
-                Parallel.ForEach(parentDocuments, document =>
-                {
-                    var values = new Values(parentValues);
-                    IEnumerable<string> xpaths =
-                        Transformation.ParseTemplate(returnFieldInfo.ReturnFieldXpathTemplate.ToString(),
-                            parentValues);
-
-                    foreach (string xpath in xpaths) Debug.WriteLine(xpath);
-
-                    foreach (
-                        HtmlNode htmlNode in
-                            xpaths.Select(xpath => document.DocumentNode.SelectNodes(xpath))
-                                .Where(nodes => nodes != null)
-                                .SelectMany(nodes => nodes))
-                        values.Add(BuildValues(returnFieldInfo.ReturnFieldResultTemplate.ToString(), htmlNode));
-
-                    lock (agregated)
-                        foreach (var pair in values)
-                            if (!agregated.ContainsKey((pair.Key))) agregated.Add(pair.Key, pair.Value);
-                            else if (agregated[pair.Key].Count() < pair.Value.Count())
-                                agregated[pair.Key] = pair.Value;
-
-                    if (ProgressCallback != null) ProgressCallback(++current, total);
-                });
-
-
-                var regex = new Regex(returnFieldInfo.ReturnFieldRegexPattern.ToString(),
-                    RegexOptions.IgnoreCase | RegexOptions.Singleline);
-                IEnumerable<string> list =
-                    Transformation.ParseTemplate(returnFieldInfo.ReturnFieldResultTemplate.ToString(), agregated)
-                        .SelectMany(
-                            replace =>
-                                (from Match match in
-                                    Regex.Matches(replace,
-                                        returnFieldInfo.ReturnFieldRegexPattern.ToString())
-                                    select match.Value.Trim()))
-                        .Select(
-                            input => regex.Replace(input, returnFieldInfo.ReturnFieldRegexReplacement.ToString()).Trim())
-                        .Where(value => !string.IsNullOrWhiteSpace(value));
-                if (string.IsNullOrEmpty(returnFieldInfo.JoinSeparator.ToString()))
-                    lock (returnFields)
-                        returnFields.Add(returnFieldInfo.ReturnFieldId.ToString(), list);
-                else
-                    lock (returnFields)
-                        returnFields.Add(returnFieldInfo.ReturnFieldId.ToString(),
-                            string.Join(returnFieldInfo.JoinSeparator.ToString(), list));
-
-                Debug.WriteLine("{0}:{1}", returnFieldInfo.ReturnFieldId, string.Join(Environment.NewLine, list));
-                if (ProgressCallback != null) ProgressCallback(++current, total);
-            });
-
-            if (CompliteCallback != null) CompliteCallback();
-            Debug.WriteLine("End {0}::{1}", GetType().Name, MethodBase.GetCurrentMethod().Name);
-            return returnFields;
+            return new ReturnFields(base.BuildReturnFields(streams, parents, returnFieldInfos));
         }
 
         /// <summary>
@@ -295,22 +225,11 @@ namespace RealtyParser
             Parallel.ForEach(new[] {new[] {"Rubric", "Action"}, new[] {"Region", "Rubric"}}, tables =>
             {
                 IEnumerable<string> enumerable = tables.Select(t => mappedId[t].ToString());
-                try
-                {
-                    Database.Wait(Database.Connection);
-                    lock (values)
-                        values.Add(string.Join(string.Empty, tables),
-                            Database.GetScalar(enumerable, tables, requestId.Site).ToString());
-                }
-                catch (Exception exception)
-                {
-                    Debug.WriteLine(exception);
-                    LastError = exception;
-                }
-                finally
-                {
-                    Database.Release(Database.Connection);
-                }
+                Database.Wait(Database.Connection);
+                object value = Database.GetScalar(enumerable, tables, requestId.Site);
+                Database.Release(Database.Connection);
+                if (value != null)
+                    lock (values) values.Add(string.Join(string.Empty, tables), value.ToString());
                 IEnumerable<List<string>> parents =
                     tables.Select(t => new StackListQueue<string>(mappedId[t].ToString().Split(SplitChar)));
                 Parallel.ForEach(from i in Enumerable.Range(0, parents.First().Count())
@@ -323,23 +242,14 @@ namespace RealtyParser
                                     parents.ElementAt(index)
                                         .GetRange(0, Math.Min(v + 1, parents.ElementAt(index).Count()))),
                                 new String(SplitChar, parents.ElementAt(index).Count() - v - 1)));
-                        try
-                        {
-                            Database.Wait(Database.Connection);
-                            lock (values)
-                                values.Add(
-                                    string.Format("{0}[{1},{2}]", string.Join(string.Empty, tables), pair[0], pair[1]),
-                                    Database.GetScalar(list, tables, requestId.Site).ToString());
-                        }
-                        catch (Exception exception)
-                        {
-                            Debug.WriteLine(exception);
-                            LastError = exception;
-                        }
-                        finally
-                        {
-                            Database.Release(Database.Connection);
-                        }
+                        Database.Wait(Database.Connection);
+                        object value2 = Database.GetScalar(list, tables, requestId.Site);
+                        Database.Release(Database.Connection);
+                        if (value2 == null) return;
+                        lock (values)
+                            values.Add(
+                                string.Format("{0}[{1},{2}]", string.Join(string.Empty, tables), pair[0], pair[1]),
+                                value2.ToString());
                     });
             });
 

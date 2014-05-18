@@ -8,7 +8,6 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
-using HtmlAgilityPack;
 using MyLibrary.Trace;
 using MyParser;
 using MyParser.Compression;
@@ -36,24 +35,23 @@ namespace RealtyParser
         /// <summary>
         ///     Запрос к сайту с использованием RT.LookupCrawler
         /// </summary>
-        public async Task<IEnumerable<HtmlDocument>> WebRequestHtmlDocument(Uri uri, bool async = true)
+        public async Task<IEnumerable<MemoryStream>> WebRequest(Uri uri, bool async = true)
         {
             Debug.WriteLine("Begin {0}::{1}", GetType().Name, MethodBase.GetCurrentMethod().Name);
             Debug.WriteLine(uri.ToString());
             long current = 0;
             long total = 1;
-            var collection = new StackListQueue<HtmlDocument>();
+            var memoryStreams = new StackListQueue<MemoryStream>();
             try
             {
                 ICompression compression = CompressionManager.CreateCompression(Compression);
                 Encoding encoder = System.Text.Encoding.GetEncoding(Encoding);
 
-                MemoryStream memoryStream = null;
-                for (int i = 0; i < 3 && memoryStream == null; i++)
+                for (int i = 0; i < 3 && !memoryStreams.Any(); i++)
                     try
                     {
                         ICrawler crawler = new WebCrawler();
-                        var httpWebRequest = (HttpWebRequest) WebRequest.Create(uri);
+                        var httpWebRequest = (HttpWebRequest) System.Net.WebRequest.Create(uri);
                         httpWebRequest.CookieContainer = new CookieContainer();
                         httpWebRequest.AutomaticDecompression = DecompressionMethods.None;
                         httpWebRequest.Referer = @"http://yandex.ru";
@@ -94,21 +92,17 @@ namespace RealtyParser
                             httpWebRequest.ContentType = string.Format(@"text/html; charset={0}", Encoding);
                         }
 
-                        WebResponse responce;
-                        if (async)
-                        {
-                            responce = await crawler.GetResponse(httpWebRequest);
-                        }
-                        else
-                        {
-                            responce = httpWebRequest.GetResponse();
-                        }
+                        WebResponse responce = async
+                            ? await crawler.GetResponse(httpWebRequest)
+                            : httpWebRequest.GetResponse();
+
                         var decompressedStream = new MemoryStream();
                         Stream responceStream = responce.GetResponseStream();
                         compression.Decompress(responceStream, decompressedStream);
                         decompressedStream.Seek(0, SeekOrigin.Begin);
                         var decodedReader = new StreamReader(decompressedStream, encoder);
-                        memoryStream = new MemoryStream(System.Text.Encoding.Default.GetBytes(decodedReader.ReadToEnd()));
+                        memoryStreams.Add(
+                            new MemoryStream(System.Text.Encoding.Default.GetBytes(decodedReader.ReadToEnd())));
                     }
                     catch (WebException exception)
                     {
@@ -124,9 +118,8 @@ namespace RealtyParser
 
                 if (ProgressCallback != null) ProgressCallback(++current, ++total);
 
-                if (memoryStream != null)
+                if (memoryStreams.Any())
                 {
-                    var memoryStreams = new StackListQueue<MemoryStream> {memoryStream};
                     if ((Edition & (int) DocumentEdition.Tided) != 0)
                     {
                         if (ProgressCallback != null) ProgressCallback(++current, ++total);
@@ -152,13 +145,6 @@ namespace RealtyParser
 
                     if (ProgressCallback != null) ProgressCallback(++current, ++total);
 
-                    foreach (MemoryStream stream in memoryStreams)
-                    {
-                        stream.Seek(0, SeekOrigin.Begin);
-                        var edition = new HtmlDocument();
-                        edition.Load(stream, System.Text.Encoding.Default);
-                        collection.Add(edition);
-                    }
                     if (ProgressCallback != null) ProgressCallback(++current, total);
                 }
             }
@@ -168,7 +154,7 @@ namespace RealtyParser
             }
             if (CompliteCallback != null) CompliteCallback();
             Debug.WriteLine("End {0}::{1}", GetType().Name, MethodBase.GetCurrentMethod().Name);
-            return collection;
+            return memoryStreams;
         }
     }
 }

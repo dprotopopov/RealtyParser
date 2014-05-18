@@ -49,6 +49,14 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RealtyParser.Gdeetotdom", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RealtyParser.Russianrealty", "RealtyParser.Russianrealty\RealtyParser.Russianrealty.csproj", "{E1F6A8C1-6CB0-4995-8FA9-A3EC3A1FF94E}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{CBFF7DDD-307F-4356-935F-95011056E8C0}"
+	ProjectSection(SolutionItems) = preProject
+		ILMerge.exe = ILMerge.exe
+		Техническое_задание_на_разработку_парсера_v10.pdf = Техническое_задание_на_разработку_парсера_v10.pdf
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RealtyParser.Mail", "RealtyParser.Mail\RealtyParser.Mail.csproj", "{B2A1180B-C35D-43AB-893F-CCD722FB6294}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -289,6 +297,16 @@ Global
 		{E1F6A8C1-6CB0-4995-8FA9-A3EC3A1FF94E}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{E1F6A8C1-6CB0-4995-8FA9-A3EC3A1FF94E}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{E1F6A8C1-6CB0-4995-8FA9-A3EC3A1FF94E}.Release|x86.ActiveCfg = Release|Any CPU
+		{B2A1180B-C35D-43AB-893F-CCD722FB6294}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B2A1180B-C35D-43AB-893F-CCD722FB6294}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B2A1180B-C35D-43AB-893F-CCD722FB6294}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{B2A1180B-C35D-43AB-893F-CCD722FB6294}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{B2A1180B-C35D-43AB-893F-CCD722FB6294}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{B2A1180B-C35D-43AB-893F-CCD722FB6294}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B2A1180B-C35D-43AB-893F-CCD722FB6294}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B2A1180B-C35D-43AB-893F-CCD722FB6294}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{B2A1180B-C35D-43AB-893F-CCD722FB6294}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{B2A1180B-C35D-43AB-893F-CCD722FB6294}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,4 +1,5 @@
 ﻿// compile with: /reference:HtmlAgilityPack=HtmlAgilityPack.dll
+
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -70,9 +71,9 @@ namespace RealtyParser.Editor.Children
                 Crawler.Encoding = _workspace.Encoding;
                 Crawler.Compression = _workspace.Compression;
                 Crawler.Request = _workspace.Request;
-                IEnumerable<HtmlDocument> documents =
+                IEnumerable<MemoryStream> documents =
                     await
-                        Crawler.WebRequestHtmlDocument(builder.Uri);
+                        Crawler.WebRequest(builder.Uri);
 
                 listBoxDocument.Items.AddRange(documents.Cast<object>().ToArray());
 //                webBrowser1.Navigate(_workspace.Url);
@@ -91,11 +92,21 @@ namespace RealtyParser.Editor.Children
             textBox1.Clear();
             try
             {
-                var document = (HtmlDocument) listBoxDocument.SelectedItem;
-
-                textBox1.Text = document.DocumentNode.OuterHtml;
-                HtmlNodeCollection nodes = document.DocumentNode.SelectNodes(_workspace.Xpath);
-                listBoxNode.Items.AddRange(nodes.Cast<object>().ToArray());
+                var stream = (MemoryStream) listBoxDocument.SelectedItem;
+                stream.Seek(0, SeekOrigin.Begin);
+                if (!string.IsNullOrEmpty(_workspace.Xpath))
+                {
+                    var document = new HtmlDocument();
+                    document.Load(stream, System.Text.Encoding.Default);
+                    textBox1.Text = document.DocumentNode.OuterHtml;
+                    HtmlNodeCollection nodes = document.DocumentNode.SelectNodes(_workspace.Xpath);
+                    listBoxNode.Items.AddRange(nodes.Cast<object>().ToArray());
+                }
+                else
+                {
+                    using (var sr = new StreamReader(stream))
+                        textBox1.Text = sr.ReadToEnd();
+                }
             }
             catch (Exception exception)
             {

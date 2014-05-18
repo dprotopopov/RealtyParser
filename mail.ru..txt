@@ -1,0 +1,1251 @@
+http://realty.mail.ru
+
+16	mail.ru	http://realty.mail.ru	GET	GET	/searching{{RegionPath}}{{ActionPath}}{{Rubric[1]}}{{Rubric[3]}}?page={{Page}}&ex_item[4][{{Region[3]}}]={{Region[3]}}{{flats_count}}&sort=date&sort_direct=desc	NULL	{{PublicationLink}}	[PublicationDatetime:##{{PublicationDatetime}}##,PublicationId:{{PublicationId}},Action:{{Action}},Rubric:{{Rubric}},Region:{{Region}}]	NULL	NULL	30	OnlyDatetimeComparer	NoCompression	NoCompression	utf-8	utf-8	20	0	0	1	1	1	MailParser
+
+16	PublicationId	/	{{Url}}	(http(s)?:\/\/)?(\D[^\/]+\/)*(\d+).*	$4	NULL
+16	PublicationDatetime	//section[contains(@class,"offer-card")]//div[contains(@class,"data")]/text()	{{InnerText}}	\D*(\d+\D\w+\D\d+(\D+\d+:\d+)?).*	$1	NULL
+16	WebPublicationPublicationId	/	{{Url}}	(http(s)?:\/\/)?(\D[^\/]+\/)*(\d+).*	$4	NULL
+16	WebPublicationModifyDate	//section[contains(@class,"offer-card")]//div[contains(@class,"data")]/text()	{{InnerText}}	\D*(\d+\D\w+\D\d+(\D+\d+:\d+)?).*	$1	NULL
+16	WebPublicationUrl	/	{{Url}}	.*	$&	NULL
+16	WebPublicationSite	/	{{Url}}	((http(s)?:\/\/)?[^\/\?]+).*	$1	NULL
+16	WebPublicationContactAuthor	//section[contains(@class,"offer-card")]//ul[contains(@class,"contact")]//a[contains(@class,"title")]	{{InnerText}}	\s*(\S+)\s*	$1	 
+16	WebPublicationContactAuthorUrl	//section[contains(@class,"offer-card")]//ul[contains(@class,"contact")]//a[contains(@class,"title")]	{{href}}	.*	$&	NULL
+16	WebPublicationContactPhone	//section[contains(@class,"offer-card")]//ul[contains(@class,"contact")]//div[contains(@class,"phone")]	{{InnerText}}	.*	$&	NULL
+16	WebPublicationPhotos	//section[contains(@class,"offer-card")]//ul[contains(@class,"gallery")]//div[contains(@class,"pic")]//a[@style]	{{style}}	url\([^\)]+\);	$1	NULL
+16	WebPublicationAdditionalInfoRealtyAdditionalInfoAppointmentOfRoom	//section[contains(@class,"offer-card")]//h1	{{InnerText}}	\s*(\S+)\s*	$1	 
+16	WebPublicationAdditionalInfoRealtyAdditionalInfoRealEstateType	//section[contains(@class,"offer-card")]//div[contains(@class,"info")]//span[contains(@class,"type")]	{{InnerText}}	\s*(\S+)\s*	$1	 
+16	WebPublicationAdditionalInfoRealtyAdditionalInfoCostAll	//section[contains(@class,"offer-card")]//div[contains(@class,"info")]//span[contains(@class,"price")]//b	{{InnerText}}	\D*(\d+)\D*	$1	NULL
+16	WebPublicationAdditionalInfoRealtyAdditionalInfoAddress	//section[contains(@class,"offer-card")]//div[contains(@class,"info")]//span[contains(@class,"description")]	{{InnerText}}	\s*(\S+)\s*	$1	 
+16	WebPublicationAdditionalInfoRealtyAdditionalInfoTotalSpace	//section[contains(@class,"offer-card")]//div[contains(@class,"info")]//th[contains(.,'Общая площадь')]/following-sibling::td[1]	{{InnerText}}	\A\D*(\d+).*	$1	NULL
+16	WebPublicationAdditionalInfoRealtyAdditionalInfoLivingSpace	//section[contains(@class,"offer-card")]//div[contains(@class,"info")]//th[contains(.,'Жилая площадь')]/following-sibling::td[1]	{{InnerText}}	\A\D*(\d+).*	$1	NULL
+16	WebPublicationAdditionalInfoRealtyAdditionalInfoKitchenSpace	//section[contains(@class,"offer-card")]//div[contains(@class,"info")]//th[contains(.,'Площадь кухни')]/following-sibling::td[1]	{{InnerText}}	\A\D*(\d+).*	$1	NULL
+16	WebPublicationAdditionalInfoRealtyAdditionalInfoRoomNumber	//section[contains(@class,"offer-card")]//div[contains(@class,"info")]//th[contains(.,'Количество комнат')]/following-sibling::td[1]	{{InnerText}}	\A\D*(\d+).*	$1	NULL
+16	WebPublicationAdditionalInfoRealtyAdditionalInfoFloor	//section[contains(@class,"offer-card")]//div[contains(@class,"info")]//th[contains(.,'Этаж') and not(contains(.,'Этажность'))]/following-sibling::td[1]	{{InnerText}}	\A\D*(\d+).*	$1	NULL
+16	WebPublicationAdditionalInfoRealtyAdditionalInfoFloorNumber	//section[contains(@class,"offer-card")]//div[contains(@class,"info")]//th[contains(.,'Этажность')]/following-sibling::td[1]	{{InnerText}}	\A\D*(\d+).*	$1	NULL
+16	WebPublicationAdditionalInfoRealtyAdditionalInfoWallМaterial	//section[contains(@class,"offer-card")]//div[contains(@class,"info")]//th[contains(.,'Тип дома')]/following-sibling::td[1]	{{InnerText}}	\s*(\S+)\s*	$1	 
+16	WebPublicationDescription	//section[contains(@class,"offer-card")]//div[contains(@class,"text")]	{{InnerText}}	\s*(\S+)\s*	$1	 
+16	WebPublicationAdditionalInfoRealtyAdditionalInfoDistrict	//section[contains(@class,"offer-card")]//div[contains(@class,"info")]//span[contains(@class,"description")]	{{InnerText}}	\s*(\S+)\s*	$1	 
+16	PublicationLink	//ul[@class="offers_list"]//li[contains(@class,"item")]//div[contains(@class,"content")]/a	{{href}}	.*	$&	NULL
+
+http://realty.mail.ru/searching/msk/sale/living/secondary_flat/?page=&ex_item[4][]=&flats_count[3]=3&sort=date&sort_direct=desc
+
+<a href="#" onclick="searchResults.refreshPage({ sort: 'date', sort_direct: 'desc' });return false;">
+                                    дате<i></i>
+                                </a>
+
+
+<div class="offer-card__text">
+    Новостройка. Качественный косметический ремонт. На кухне плита, мойка. Комнаты раздельные. Интернет. сур в плитке. Застекленная лоджия. Окна пвх. Развитая инфраструктура. приличных
+</div>
+
+<div class="offer-card__info">
+        <span class="offer-card__info__price">
+                            <b>40 000</b>
+            
+            руб.
+            
+                                                / мес
+                                    </span>
+                <span class="offer-card__info__type">Квартира</span>
+        <span class="offer-card__info__description">
+                            м. Юго-Западная, 23 минут транспортом                    </span>
+        <div class="offer-card__info__advanced">
+            <table class="offer-card__table">
+                <tbody>
+                                                    <tr>
+                        <th><span><i>Этажность</i></span></th>
+                        <td>16</td>
+                    </tr>
+                                    <tr>
+                        <th><span><i>Тип дома</i></span></th>
+                        <td>Кирпичный</td>
+                    </tr>
+                                    <tr>
+                        <th><span><i>Жилая площадь</i></span></th>
+                        <td>50</td>
+                    </tr>
+                                    <tr>
+                        <th><span><i>Этаж</i></span></th>
+                        <td>13</td>
+                    </tr>
+                                    <tr>
+                        <th><span><i>Количество комнат</i></span></th>
+                        <td>3</td>
+                    </tr>
+                                    <tr>
+                        <th><span><i>Площадь кухни</i></span></th>
+                        <td>12</td>
+                    </tr>
+                                    <tr>
+                        <th><span><i>Общая площадь</i></span></th>
+                        <td>85</td>
+                    </tr>
+                                </tbody>
+            </table>
+                    </div>
+                                    <ul class="offer-card__info__links offer-card__info__links_hide">
+            
+        </ul>
+    </div>
+
+<div class="offer-card__preview slides js-gallery">
+        <ul class="content-tabs clearfix">
+            <li class="content-tabs__item active">
+                                    <a href="#">Фото</a> 3
+                            </li>
+        </ul>
+        <div class="offer-card__preview__pic js-photo" style="height: 280px;">
+                            <a href="#" class="image-zoom js-prev_img js-showbig " style="visibility: visible; background-image: url(http://filapp1.imgsmail.ru/pic?url=http%3A%2F%2Fimg.pre.realty.mail.ru%2Fblocks%2Fsources%2F2014%2F05%2F97%2F82%2Fed%2F00001946920304399733.jpg&amp;mw=440&amp;mh=280&amp;croped=1&amp;sig=61c3074d0ace5c29dfb161671c16cee6); height: 280px;"></a>
+                    </div>
+            </div>
+
+<ul class="offer-card__contact clearfix">
+    <li class="offer-card__contact__item offer-card__contact__item_1 clearfix">
+        <a class="offer-card__contact__pic" href="/company/194692.html">
+                            <img width="50" height="50" alt="Портал AFY.Ru" src="http://img.pre.realty.mail.ru/clients/194692.gif">
+                    </a>
+                    <a class="offer-card__contact__title" href="/company/194692.html">Портал AFY.Ru</a>
+                            <a href="#partn" class="label__orange">Партнер</a>
+            </li>
+    <li class="offer-card__contact__item offer-card__contact__item_2 clearfix">
+        <div class="offer-card__contact__phone">+7 (495) 212-93-92</div>
+        <div class="offer-card__contact__man"><i>Скажите, что нашли это объявление на Недвижимости Mail.Ru</i></div>
+    </li>
+    <li class="offer-card__contact__item offer-card__contact__item_3 clearfix">
+        <ul class="offer-card__contact__links">
+            <li><a class="link link__call_me user_callback" href="#"><i></i>Запрос звонка</a></li>
+            <li><a class="link link__views user_request" href="#"><i></i>На просмотр</a></li>
+        </ul>
+        <a href="#" class="button button-color1 button-height3 button-font-size3 button-font-bold button-spacing3" data-href="http://zingaya.com/widget/f645099003cf4309ed89feea80d411ce" onclick="zyngya_open(this,&quot;to:74952129392;toHash:74d96a2979adfbf8a71ca6956f61ec6c0659857b&quot;); return false">Позвонить</a>
+    </li>
+</ul>
+
+<div class="offer-card__data">
+    Источник: <a href="/company/194692.html">Портал AFY.Ru</a> |
+    Добавлено 19 февраля 2014
+</div>
+
+
+<section class="offer-card clearfix">
+
+    <script src="/js/basic.js" type="application/javascript"></script>
+<script src="/js/jquery.compTools.js" type="application/javascript"></script>
+<script src="/js/types.String.js" type="application/javascript"></script>
+<script src="/js/types.String.Url.js" type="application/javascript"></script>
+<script src="/js/jquery.Shares.js" type="application/javascript"></script>
+<div class="offer-card__likes">
+    <div class="s-sharelist js-shares_all">
+        <a class="s-share s-share_my js-shares_all_btn" title="Опубликовать в Моем Мире" href="#">
+            <span class="s-share__button"></span>
+            <span class="s-share__count js-shares_cnt" style="display: none;">0</span>
+        </a>
+        <a class="s-share s-share_ok js-shares_all_btn" title="Опубликовать в Одноклассниках" href="#">
+            <span class="s-share__button"></span>
+            <span class="s-share__count js-shares_cnt" style="display: none;">0</span>
+        </a>
+        <a class="s-share s-share_vk js-shares_all_btn" title="Опубликовать ВКонтакте" href="#">
+            <span class="s-share__button"></span>
+            <span class="s-share__count js-shares_cnt" style="display: none;">0</span>
+        </a>
+        <a class="s-share s-share_fb js-shares_all_btn" title="Опубликовать в Facebook" href="#">
+            <span class="s-share__button"></span>
+            <span class="s-share__count js-shares_cnt" style="display: none;">0</span>
+        </a>
+    </div>
+    <script>
+        (function ($) {
+            "use strict";
+                var jShares = $('.js-shares_all');
+//            var sTweet = jShares.data('twshare');
+            jShares.initShareBtns({
+                urlTypeParam: 'social',
+                shareParams: {
+                    Title: '2 комн. квартира, ул. Георгиевская, 5',
+                    Description: '2 комн. квартира, ул. Георгиевская, 5 - продажа: Москва г, Георгиевская улица 5, 2 комн, общ. пл. 64, жил. пл. 39, комнаты 39, кухня 14, 2/17 этаж, окна двор/улица, сур, 2 балкона, отличный ремонт, П',
+                    Image: ''
+                },
+                getCntOnInit: true,
+                cssSels: {Btns: '.js-shares_all_btn'},
+                Counters: {
+                    vk: '',
+                    fb: '',
+                    my: '',
+                    ok: ''
+                }
+            });
+        })(jQuery);
+    </script>
+</div>
+
+<h1>
+            2-комн. квартира, ул. Георгиевская, 5
+    </h1>
+<div class="offer-card__data">
+    Источник: <a href="/company/194692.html">Портал AFY.Ru</a> |
+    Добавлено 19 февраля 2014
+</div>
+<div class="clearfix">
+    <div class="offer-card__preview slides js-gallery">
+        <ul class="content-tabs clearfix">
+            <li class="content-tabs__item active">
+                                    <span>Фото</span>
+                            </li>
+        </ul>
+        <div class="offer-card__preview__pic js-photo">
+                            <img src="/img/card_no_photo.jpg">
+                    </div>
+            </div>
+
+    <script src="/js/js.gllryinit.js"></script>
+
+    <div class="offer-card__info">
+        <span class="offer-card__info__price">
+                            <b>8 650 000</b>
+            
+            руб.
+            
+                    </span>
+                    <!-- start: sberbank -->
+            <div class="sber-promo">
+                <div class="sber-shadow">
+                    <a href="http://r.mail.ru/n130878141" class="sber-teaser" title="Ипотека от Сбербанка" target="_blank" onclick="logclick(1946920303896496, 'sberbank_click');return true;"></a>
+                    <div class="sber-inner" style="cursor: pointer;" onclick="window.location.href='http://r.mail.ru/n130878141';return true;">
+                        <div class="sber-teaser-short">
+                            <div class="sber-payment">
+                                <h2>Платеж по кредиту в месяц</h2>
+                                <div class="sber-digs">51 246 </div>
+                                <div class="sber-digs-small">руб.</div>
+                                <div class="br"></div>
+                            </div>
+                            <div class="sber-note">При условии первоначального взноса в размере 50% и сроке кредитования 360 месяцев.</div>
+                            <a href="http://r.mail.ru/n130878141" title="www.sberbank.ru" class="sber-link" target="_blank" onclick="logclick(1946920303896496, 'sberbank_click');return true;"></a>
+                        </div>
+                        <div class="sber-info">Сбербанк России. Генеральная лицензия на осуществление банковских операций №1481 от 08.08.2012</div>
+                    </div>
+                </div>
+                <img src="http://ad.adriver.ru/cgi-bin/rle.cgi?sid=1&amp;bt=55&amp;ad=281252&amp;pid=1563834&amp;bid=3205065&amp;bn=3205065&amp;rnd=1400391004" style="position: absolute;left:-9999px;top:-9999px;width: 1px;height:1px;">
+                <!-- rb 4867454 -->
+                <img src="http://rs.mail.ru/d4867454.gif?r=1360693832" style="width:0;height:0;position:absolute;" alt="">
+            </div>
+            <!-- end: sberbank -->
+            <script type="text/javascript">
+                logclick('1946920303896496', 'sberbank_view');
+            </script>
+            <br>
+                <span class="offer-card__info__type">Квартира</span>
+        <span class="offer-card__info__description">
+                            Западный адм. окр.., 20 минут транспортом                    </span>
+        <div class="offer-card__info__advanced">
+            <table class="offer-card__table">
+                <tbody>
+                                                    <tr>
+                        <th><span><i>Этажность</i></span></th>
+                        <td>17</td>
+                    </tr>
+                                    <tr>
+                        <th><span><i>Тип дома</i></span></th>
+                        <td>Панельный</td>
+                    </tr>
+                                    <tr>
+                        <th><span><i>Жилая площадь</i></span></th>
+                        <td>39</td>
+                    </tr>
+                                    <tr>
+                        <th><span><i>Этаж</i></span></th>
+                        <td>2</td>
+                    </tr>
+                                    <tr>
+                        <th><span><i>Количество комнат</i></span></th>
+                        <td>2</td>
+                    </tr>
+                                    <tr>
+                        <th><span><i>Площадь кухни</i></span></th>
+                        <td>14</td>
+                    </tr>
+                                    <tr>
+                        <th><span><i>Общая площадь</i></span></th>
+                        <td>64</td>
+                    </tr>
+                                </tbody>
+            </table>
+                    </div>
+                                    <ul class="offer-card__info__links offer-card__info__links_hide">
+            
+        </ul>
+    </div>
+</div>
+<div class="offer-card__text">
+    Москва г, Георгиевская улица 5, 2 комн, общ. пл. 64, жил. пл. 39, комнаты 39, кухня 14, 2/17 этаж, окна двор/улица, сур, 2 балкона, отличный ремонт, Продам квартиру 2-к квартира 64 м на 2 этаже 17-этажного панельного дома Продам двухкомнатную квартиру распашонку, 64 м2, два больших балкона, две просторные светлые комнаты, кухня 13,8 м2, эркер, вокруг лес, садик во дворе дома, школа в 5 минутах, магазины Дикси, Пятерочка, Перекресток, Летуаль, Якитория в шаговой доступности, детская и взрослая поликлиника. в квартире качественый ремонт (для себя), собственность в марте. Метро в 2014 году, метро Румянцево, до м. Юго-западной 10 мин маршрутка или городские автобусы. Торг. 8. 906. 074. 21. 77.
+</div>
+
+    <h2>Контакты</h2>
+<ul class="offer-card__contact clearfix">
+    <li class="offer-card__contact__item offer-card__contact__item_1 clearfix">
+        <a class="offer-card__contact__pic" href="/company/194692.html">
+                            <img width="50" height="50" alt="Портал AFY.Ru" src="http://img.pre.realty.mail.ru/clients/194692.gif">
+                    </a>
+                    <a class="offer-card__contact__title" href="/company/194692.html">Портал AFY.Ru</a>
+                            <a href="#partn" class="label__orange">Партнер</a>
+            </li>
+    <li class="offer-card__contact__item offer-card__contact__item_2 clearfix">
+        <div class="offer-card__contact__phone">+7 (495) 212-93-92</div>
+        <div class="offer-card__contact__man"><i>Скажите, что нашли это объявление на Недвижимости Mail.Ru</i></div>
+    </li>
+    <li class="offer-card__contact__item offer-card__contact__item_3 clearfix">
+        <ul class="offer-card__contact__links">
+            <li><a class="link link__call_me user_callback" href="#"><i></i>Запрос звонка</a></li>
+            <li><a class="link link__views user_request" href="#"><i></i>На просмотр</a></li>
+        </ul>
+        <a href="#" class="button button-color1 button-height3 button-font-size3 button-font-bold button-spacing3" data-href="http://zingaya.com/widget/f645099003cf4309ed89feea80d411ce" onclick="zyngya_open(this,&quot;to:74952129392;toHash:74d96a2979adfbf8a71ca6956f61ec6c0659857b&quot;); return false">Позвонить</a>
+    </li>
+</ul>
+                                                                                                                                                                            
+
+        
+                                                    <!--noindex-->
+                <section class="adv_list adv_list__tile adv_list__tile__type2 mb10px">
+                    <div class="adv_list__tabs clearfix">
+                    </div>                    <ul class="clearfix">
+                                                    <li>
+                                <a href="/click/10102.html?place=soffer&amp;tariff_id=&amp;sid=9880af327312fcef54c4a592196ab99f" class="adv_list__link clearfix nv_click_d4910484" target="_blank">
+                                    <img width="60px" height="60px" class="adv_list__image" src="http://img.pre.realty.mail.ru/sources/showcase/69/6b/07/10102.jpg">
+                                <span class="adv_list__description">
+                                    <i>ЖК "Долина Сетунь" - дом Премиум-класса в СЗАО! Панорамные окна, высокие потолки.</i>
+                                    <b>8 (495) 925-47-47</b>
+                                </span>
+                                </a>
+                            </li>
+                                                    <li>
+                                <a href="/click/10116.html?place=soffer&amp;tariff_id=&amp;sid=9880af327312fcef54c4a592196ab99f" class="adv_list__link clearfix nv_click_d4910484" target="_blank">
+                                    <img width="60px" height="60px" class="adv_list__image" src="http://img.pre.realty.mail.ru/sources/showcase/c4/5a/e6/10116.jpg">
+                                <span class="adv_list__description">
+                                    <i>ЖК «Виноградный». Квартиры premium-класса. Безопасность и экология!</i>
+                                    <b>8 (495) 228-00-10</b>
+                                </span>
+                                </a>
+                            </li>
+                                            </ul>
+                    <div class="adv_list__tabs clearfix">
+                    </div>                </section>
+            <!--/noindex-->
+                            <!-- end: adv list -->
+
+            <img src="http://rs.mail.ru/d4910484.gif?r=566185087" style="width:0;height:0;position:absolute;" alt="">
+        <img src="/img/__utm.gif?block_msk_showcase&amp;r=285731565" style="width:0;height:0;position:absolute;" alt="">
+    
+            <div class="offer-card__map">
+
+            <a href="http://realty.mail.ru/map/msk/sale/living/secondary_flat/?page=1&amp;sort=date&amp;sort_direct=desc&amp;view=list&amp;per_page=20&amp;geo_region%5B0%5D=602058&amp;geo_region%5B1%5D=1059918&amp;geo_region%5B2%5D=2041038&amp;centerLt=55.739101&amp;centerLn=37.8414&amp;zoom=14&amp;block_uid=1946920303896496" class="link link__view_maps" target="_blank"><i></i>Воспользоваться поиском по карте</a>
+        <h2>На карте</h2>
+
+        <div class="offer-card__map__inner">
+            <div id="map_canvas" style="position: absolute; width: 100%; height: 100%; display: block; overflow: hidden;"><div style="position: absolute; top: 0px; left: 0px; width: 0px; height: 0px; -webkit-transform: translate(0px, 0px); cursor: url(http://maps.mail.ru/api/2.1/i/can_drag_new.cur), move;"><div layer="null" lid="ref-layer" style="position: absolute; top: 0px; left: 0px; z-index: 10; display: none;"></div><div layer="vector" class="base-vector" style="position: absolute; top: 0px; left: 0px; z-index: 150;"><div><svg is="[object Object]" version="1.1" width="1760" height="700" viewBox="-440 -175 1760 700" style="display: block; position: absolute; left: -440px; top: -175px;"><g is="[object Object]"></g></svg></div></div><div layer="marker" lid="base-markers" style="position: absolute; top: 0px; left: 0px; z-index: 200;"><div class="mrm-marker-point" title="2 комн. квартира" style="z-index: 3; cursor: pointer; left: 432px; top: 115px;" data-unclick="true"><img class="mrm-base-marker" src="http://maps.mail.ru/api/2.1/i/Iv3_marker_base.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -14.5px; width: 29px; height: 39px;"></div><div class="mrm-marker-point" title="Конкорд, автостоянка: Молодёжная, вл8" style="z-index: 3; cursor: pointer; left: 458px; top: 48px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/6.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Вешняки-57, автостоянка: Реутовская, 9а" style="z-index: 3; cursor: pointer; left: 421px; top: 103px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/6.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Автостоянка №59: Кетчерская, 9а" style="z-index: 3; cursor: pointer; left: 388px; top: 60px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/6.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Кат, автостоянка: Кетчерская, 15Б" style="z-index: 3; cursor: pointer; left: 402px; top: 66px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/6.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Автостоянка на Кетчерской, 9Б: Кетчерская, 9Б" style="z-index: 3; cursor: pointer; left: 380px; top: 65px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/6.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Альфа образование, сеть центров медицинских комиссий: Суздальская, 18г" style="z-index: 3; cursor: pointer; left: 490px; top: 96px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/8.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Гимназия №1925 с дошкольным отделением: Новокосинская, 13а" style="z-index: 3; cursor: pointer; left: 495px; top: 152px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/8.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Средняя общеобразовательная школа №1200 с углубленным изучением английского языка: Суздальская, 24Б" style="z-index: 3; cursor: pointer; left: 535px; top: 84px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/8.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Средняя общеобразовательная школа №6, г. Реутов: Юбилейный проспект, 15а" style="z-index: 3; cursor: pointer; left: 520px; top: 15px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/8.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Средняя общеобразовательная школа №1927 с дошкольным отделением: Салтыковская, 13а" style="z-index: 3; cursor: pointer; left: 556px; top: 143px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/8.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Средняя общеобразовательная школа №1389 с углубленным изучением английского языка, с дошкольным отделением: Кетчерская, 8а" style="z-index: 3; cursor: pointer; left: 339px; top: 77px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/8.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Средняя общеобразовательная школа №1028: Жемчуговой аллея, 7" style="z-index: 3; cursor: pointer; left: 350px; top: 177px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/8.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Средняя общеобразовательная школа №634: Кетчерская, 10а" style="z-index: 3; cursor: pointer; left: 352px; top: 80px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/8.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Средняя общеобразовательная школа №781: Вешняковская, 2а" style="z-index: 3; cursor: pointer; left: 304px; top: 138px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/8.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Средняя общеобразовательная школа №892, Школа здоровья: Реутовская, 2а" style="z-index: 3; cursor: pointer; left: 382px; top: 95px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/8.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Эко-образование, учебный центр: Сталеваров, 30" style="z-index: 3; cursor: pointer; left: 401px; top: -9px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/8.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Средняя общеобразовательная школа №1924: Новокосинская, 13Б" style="z-index: 3; cursor: pointer; left: 490px; top: 146px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/8.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Средняя общеобразовательная школа №404, Школа здоровья: Реутовская, 16а" style="z-index: 3; cursor: pointer; left: 404px; top: 160px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/8.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Средняя общеобразовательная школа №1914: Суздальская, 12в" style="z-index: 3; cursor: pointer; left: 484px; top: 117px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/8.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Средняя общеобразовательная школа №1351 с углубленным изучением информатики: Суздальская, 22Б" style="z-index: 3; cursor: pointer; left: 525px; top: 92px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/8.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Познание-XXI век, средняя общеобразовательная школа: Новокосинская, 15 к7" style="z-index: 3; cursor: pointer; left: 499px; top: 111px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/8.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Образование. Спорт. Реабилитация., региональная детско-юношеская общественная организация: Вешняковская, 14 к2" style="z-index: 3; cursor: pointer; left: 356px; top: 182px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/8.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Гимназия №1925 с дошкольным отделением: Суздальская, 10а" style="z-index: 3; cursor: pointer; left: 473px; top: 146px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/8.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Гимназия №1925 с дошкольным отделением: Новокосинская, 9а" style="z-index: 3; cursor: pointer; left: 495px; top: 179px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/8.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Средняя общеобразовательная школа №1927 с дошкольным отделением: Новокосинская, 14Б" style="z-index: 3; cursor: pointer; left: 541px; top: 139px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/8.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Банкомат, Банк Петрокоммерц, ОАО: Кетчерская, 9" style="z-index: 3; cursor: pointer; left: 390px; top: 55px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/2.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Банкомат, Банк Петрокоммерц, ОАО: Новокосинская, 10 к2" style="z-index: 3; cursor: pointer; left: 520px; top: 165px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/2.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="А5, сеть аптек: Носовихинское шоссе, 9" style="z-index: 3; cursor: pointer; left: 542px; top: 49px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/4.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Аптека, ГБУ Здравоохранения, №29: Суздальская, 20а" style="z-index: 3; cursor: pointer; left: 489px; top: 76px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/4.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Столичные аптеки, ОАО, №4/118: Молостовых, 21" style="z-index: 3; cursor: pointer; left: 380px; top: -1px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/4.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="АСНА, сеть аптек: Новокосинская, 12 к2" style="z-index: 3; cursor: pointer; left: 515px; top: 147px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/4.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Формула здоровья, сеть аптек: Вешняковская, 17а" style="z-index: 3; cursor: pointer; left: 372px; top: 161px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/4.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Онфарм, сеть аптек: Салтыковская, 7 к1" style="z-index: 3; cursor: pointer; left: 539px; top: 158px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/4.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Лекрус, сеть аптек: Старый Гай, 9" style="z-index: 3; cursor: pointer; left: 359px; top: 133px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/4.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Мицар-Н, сеть аптек: Старый Гай, 8Б" style="z-index: 3; cursor: pointer; left: 348px; top: 103px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/4.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Нео-Фарм, сеть аптек: Суздальская, 30/2" style="z-index: 3; cursor: pointer; left: 560px; top: 68px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/4.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Доктор Столетов, сеть аптек: Старый Гай, 8Б" style="z-index: 3; cursor: pointer; left: 348px; top: 103px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/4.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="03, сеть аптек: Молостовых, 19 к1" style="z-index: 3; cursor: pointer; left: 384px; top: -12px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/4.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Аптека, ООО ВешФарм: Вешняковская, 12а" style="z-index: 3; cursor: pointer; left: 349px; top: 160px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/4.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Vita Line+, аптека: Новокосинская, 11 к2" style="z-index: 3; cursor: pointer; left: 499px; top: 164px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/4.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Аптека, ООО Глория: Октября, 5а" style="z-index: 3; cursor: pointer; left: 502px; top: 3px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/4.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Фармир, аптека: Вешняковская, 12Б" style="z-index: 3; cursor: pointer; left: 341px; top: 160px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/4.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Роза, аптека: Кетчерская, вл1д ст2" style="z-index: 3; cursor: pointer; left: 305px; top: 65px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/4.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Аптека, ООО Виктолин: Юбилейный проспект, 2Б" style="z-index: 3; cursor: pointer; left: 499px; top: 53px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/4.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="ГорЗдрав, сеть аптек: Салтыковская, 7а" style="z-index: 3; cursor: pointer; left: 549px; top: 172px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/4.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Аптека, ООО Кедр: Носовихинское шоссе, 9а" style="z-index: 3; cursor: pointer; left: 547px; top: 39px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/4.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Река здоровья, аптека: Вешняковская, 2" style="z-index: 3; cursor: pointer; left: 308px; top: 131px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/4.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="ПостРИК, ООО, сеть аптек: Юбилейный проспект, 7" style="z-index: 3; cursor: pointer; left: 500px; top: 30px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/4.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Амадея, аптека: Новокосинская, 22" style="z-index: 3; cursor: pointer; left: 546px; top: 106px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/4.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Медицина для Вас, аптека, район Крылатское: Новокосинская, 22" style="z-index: 3; cursor: pointer; left: 546px; top: 106px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/4.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="ВиваФарм, ООО, аптека: Новокосинская, 19" style="z-index: 3; cursor: pointer; left: 530px; top: 104px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/4.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Апельсин, сеть аптек: Новокосинская, 13 к2" style="z-index: 3; cursor: pointer; left: 504px; top: 139px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/4.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Димарус, аптека: Реутовская, 10г" style="z-index: 3; cursor: pointer; left: 382px; top: 126px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/4.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Метраном, аптечный пункт: Новокосинская, 17 к7" style="z-index: 3; cursor: pointer; left: 504px; top: 107px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/4.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Аптека, ООО Фармик: Суздальская, 26а" style="z-index: 3; cursor: pointer; left: 538px; top: 73px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/4.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Аптека, ООО Арника: Новокосинская, 10 к2" style="z-index: 3; cursor: pointer; left: 520px; top: 165px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/4.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="А5, сеть аптек: Суздальская, 12а" style="z-index: 3; cursor: pointer; left: 462px; top: 126px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/4.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Аптека, ООО Авиафарм: Вешняковская, 23" style="z-index: 3; cursor: pointer; left: 386px; top: 197px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/4.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Мёбиус, ООО, аптека: Реутовская, 10г" style="z-index: 3; cursor: pointer; left: 382px; top: 126px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/4.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Аптека, ООО Альфа-фарма: Старый Гай, 7а" style="z-index: 3; cursor: pointer; left: 366px; top: 125px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/4.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Аптека, ООО Городецкий хлеб: Салтыковская, 15Б" style="z-index: 3; cursor: pointer; left: 565px; top: 126px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/4.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Столичные аптеки, ОАО, №4/103: Вешняковская, 17в" style="z-index: 3; cursor: pointer; left: 382px; top: 162px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/4.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="А5, сеть аптек: Фрязевская, 9 к1" style="z-index: 3; cursor: pointer; left: 321px; top: 41px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/4.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Лекрус, сеть аптек: Реутовская, 10в" style="z-index: 3; cursor: pointer; left: 388px; top: 127px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/4.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Почтовое отделение №143965, г. Реутов: Октября, 3" style="z-index: 3; cursor: pointer; left: 484px; top: 14px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/10.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Почтовое отделение №111673: Суздальская, 16а" style="z-index: 3; cursor: pointer; left: 471px; top: 92px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/10.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Почтовое отделение №111539: Реутовская, 10д" style="z-index: 3; cursor: pointer; left: 377px; top: 126px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/10.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Почтовое отделение №111402: Старый Гай, 8Б" style="z-index: 3; cursor: pointer; left: 348px; top: 103px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/10.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Баскет Боулинг, развлекательный центр: Новокосинская, 8 к2" style="z-index: 3; cursor: pointer; left: 519px; top: 174px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/1.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Чайхана Бухара, ресторан восточной кухни: Носовихинское шоссе, 4" style="z-index: 3; cursor: pointer; left: 517px; top: 51px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/1.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Санта-Барбара, кафе-ресторан: Суздальская, 26а" style="z-index: 3; cursor: pointer; left: 538px; top: 73px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/1.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Остап Бендер, пивной ресторан: Носовихинское шоссе, 4" style="z-index: 3; cursor: pointer; left: 517px; top: 51px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/1.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Kogo Fragola, ресторан: Суздальская, 12а" style="z-index: 3; cursor: pointer; left: 462px; top: 126px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/1.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Пит-Стоп, ресторан-бильярдная: Вешняковская, 17Б" style="z-index: 3; cursor: pointer; left: 377px; top: 162px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/1.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Саксония, ресторан: Дзержинского, 1" style="z-index: 3; cursor: pointer; left: 470px; top: -10px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/1.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Brygger, ресторан: Носовихинское шоссе, 7" style="z-index: 3; cursor: pointer; left: 534px; top: 49px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/1.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Шанс, ресторан: МКАД 3 км, вл1а/3" style="z-index: 3; cursor: pointer; left: 461px; top: -18px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/1.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Якитория, сеть суши-ресторанов: Носовихинское шоссе, 7" style="z-index: 3; cursor: pointer; left: 534px; top: 49px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/1.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Шик и Блеск, караоке-клуб: Носовихинское шоссе, 4" style="z-index: 3; cursor: pointer; left: 517px; top: 51px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/1.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Такуми Сан, суши-бар: Новокосинская, 22" style="z-index: 3; cursor: pointer; left: 546px; top: 106px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/1.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Тамаси, кафе японской кухни: Новокосинская, 14а" style="z-index: 3; cursor: pointer; left: 522px; top: 130px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/1.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Детский сад №1009: Кетчерская, 8Б" style="z-index: 3; cursor: pointer; left: 333px; top: 90px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/13.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Гимназия №1925 с дошкольным отделением: Суздальская, 10а" style="z-index: 3; cursor: pointer; left: 473px; top: 146px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/13.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Детский сад №2053: Новокосинская, 25" style="z-index: 3; cursor: pointer; left: 546px; top: 84px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/13.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Детский сад №2052, комбинированного вида: Суздальская, 18а" style="z-index: 3; cursor: pointer; left: 483px; top: 88px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/13.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Детский сад №2343, центр развития ребенка: Новокосинская, 15Б" style="z-index: 3; cursor: pointer; left: 496px; top: 116px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/13.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Детский сад №1290, комбинированного вида: Фрязевская, 11а" style="z-index: 3; cursor: pointer; left: 333px; top: 23px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/13.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Детский сад №1527: Реутовская, 2Б" style="z-index: 3; cursor: pointer; left: 385px; top: 104px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/13.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Детский сад №876: Реутовская, 24а" style="z-index: 3; cursor: pointer; left: 386px; top: 175px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/13.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Детский сад №2092, комбинированного вида: Суздальская, 22а" style="z-index: 3; cursor: pointer; left: 511px; top: 89px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/13.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Средняя общеобразовательная школа №1389 с углубленным изучением английского языка, с дошкольным отделением: Кетчерская, 6а" style="z-index: 3; cursor: pointer; left: 326px; top: 79px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/13.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Гимназия №1926 с дошкольным отделением: Николая Старостина, 13а" style="z-index: 3; cursor: pointer; left: 527px; top: 187px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/13.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Детский сад №1896, комбинированного вида: Старый Гай, 12а" style="z-index: 3; cursor: pointer; left: 346px; top: 118px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/13.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Детский сад №2340, компенсирующего вида: Салтыковская, 5Б" style="z-index: 3; cursor: pointer; left: 538px; top: 171px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/13.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Детский сад №2321, центр развития ребенка: Новокосинская, 17Б" style="z-index: 3; cursor: pointer; left: 509px; top: 105px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/13.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Гимназия №1048, Новокосино, с дошкольным отделением: Городецкая, 10а" style="z-index: 3; cursor: pointer; left: 570px; top: 120px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/13.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Детский сад №1039, центр развития ребенка: Кетчерская, 6Б" style="z-index: 3; cursor: pointer; left: 331px; top: 85px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/13.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Детский сад №886: Вешняковская, 4Б" style="z-index: 3; cursor: pointer; left: 297px; top: 149px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/13.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Детский сад №759: Вешняковская, 6а" style="z-index: 3; cursor: pointer; left: 331px; top: 149px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/13.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Детский сад №17, Журавлик: Октября, 4" style="z-index: 3; cursor: pointer; left: 494px; top: 16px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/13.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Детский сад №1528: Реутовская, 12а" style="z-index: 3; cursor: pointer; left: 391px; top: 144px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/13.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Средняя общеобразовательная школа №402: Косинская, 4а" style="z-index: 3; cursor: pointer; left: 378px; top: 240px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/13.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Детский сад №762: Вешняковская, 3а" style="z-index: 3; cursor: pointer; left: 312px; top: 110px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/13.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Средняя общеобразовательная школа №1927 с дошкольным отделением: Новокосинская, 14Б" style="z-index: 3; cursor: pointer; left: 541px; top: 139px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/13.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Монетка, сеть универсамов: Суздальская, 30/2" style="z-index: 3; cursor: pointer; left: 560px; top: 68px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/12.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Белорусские продукты, сеть магазинов: Суздальская, 2/3" style="z-index: 3; cursor: pointer; left: 471px; top: 191px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/12.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Анна и К, продуктовый магазин: Вешняковская, 17Б" style="z-index: 3; cursor: pointer; left: 377px; top: 162px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/12.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Вальсар, ЗАО, гастроном: Новокосинская, 15а ст1" style="z-index: 3; cursor: pointer; left: 508px; top: 130px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/12.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Продукты, магазин, ООО Драм: Новокосинская, 14 к3" style="z-index: 3; cursor: pointer; left: 532px; top: 129px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/12.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Ариадна ком, продуктовый магазин: Кетчерская, 4Б ст1" style="z-index: 3; cursor: pointer; left: 310px; top: 81px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/12.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Продуктовый магазин, ООО Виктория М: Суздальская, 12 к1" style="z-index: 3; cursor: pointer; left: 465px; top: 118px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/12.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Холидэй Трейд, продовольственный магазин: Новокосинская, 11 к1" style="z-index: 3; cursor: pointer; left: 506px; top: 160px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/12.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Анис-2, ООО, продуктовый магазин: Вешняковская, 12Б" style="z-index: 3; cursor: pointer; left: 341px; top: 160px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/12.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Продукты, магазин, ЗАО Димарус: Реутовская, 10г" style="z-index: 3; cursor: pointer; left: 382px; top: 126px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/12.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Продуктовый магазин, ИП Липко Г.В.: Новокосинская, 8 к1" style="z-index: 3; cursor: pointer; left: 512px; top: 177px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/12.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Свой Чик, продуктовый магазин: Юбилейный проспект, 8" style="z-index: 3; cursor: pointer; left: 527px; top: 34px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/12.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Продукты, магазин, ООО ЗиТ: Юбилейный проспект, 3в" style="z-index: 3; cursor: pointer; left: 495px; top: 43px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/12.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Кипр, продуктовый магазин: Старый Гай, 8а" style="z-index: 3; cursor: pointer; left: 353px; top: 103px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/12.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Продукты, магазин, ООО Старый лес: Старый Гай, 8а" style="z-index: 3; cursor: pointer; left: 353px; top: 103px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/12.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Жемчужинка, продуктовый магазин: Вешняковская, 12Б" style="z-index: 3; cursor: pointer; left: 341px; top: 160px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/12.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Продуктовый магазин, ООО Партнер КГ: Новокосинская, 17 к7" style="z-index: 3; cursor: pointer; left: 504px; top: 107px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/12.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Магазин продуктов, ООО Копилка: Молодёжная, 1" style="z-index: 3; cursor: pointer; left: 463px; top: 25px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/12.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Белорусский фермер, продуктовый магазин: Суздальская, 26а" style="z-index: 3; cursor: pointer; left: 538px; top: 73px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/12.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Магазин продуктов, ИП Ионова Е.В.: Новокосинская, 13 к2" style="z-index: 3; cursor: pointer; left: 504px; top: 139px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/12.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Элитон, продуктовый магазин: Реутовская, 10Б" style="z-index: 3; cursor: pointer; left: 395px; top: 127px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/12.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Юниор, продовольственный магазин: Суздальская, 22 к1" style="z-index: 3; cursor: pointer; left: 507px; top: 77px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/12.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Продуктовый магазин, ИП Черкасова Т.Н.: Суздальская, 26а" style="z-index: 3; cursor: pointer; left: 538px; top: 73px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/12.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Продуктовый магазин, ООО Зик и Ко: Вешняковская, 12ж" style="z-index: 3; cursor: pointer; left: 309px; top: 160px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/12.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Монетка, сеть универсамов: Октября, 5а" style="z-index: 3; cursor: pointer; left: 502px; top: 3px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/12.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Кристина, продуктовый магазин: Суздальская, 16 к1" style="z-index: 3; cursor: pointer; left: 470px; top: 103px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/12.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Витамакс, продуктовый магазин: Новокосинская, 11 к2" style="z-index: 3; cursor: pointer; left: 499px; top: 164px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/12.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Продуктовый магазин, ООО Тюкуль: Вешняковская, 12а" style="z-index: 3; cursor: pointer; left: 349px; top: 160px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/12.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Продуктовый магазин, ЗАО Анар+: Вешняковская, 23" style="z-index: 3; cursor: pointer; left: 386px; top: 197px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/12.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Меркурий, ООО, продовольственный магазин: Новокосинская, 8 к1" style="z-index: 3; cursor: pointer; left: 512px; top: 177px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/12.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Продукты, магазин, ООО Бали: Новокосинская, 8 к1" style="z-index: 3; cursor: pointer; left: 512px; top: 177px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/12.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Магазин продуктов, ИП Родованиская И.Р.: Октября, 2а" style="z-index: 3; cursor: pointer; left: 474px; top: 11px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/12.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Магазин продуктов, ООО Робигар: Юбилейный проспект, 9а" style="z-index: 3; cursor: pointer; left: 506px; top: 25px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/12.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Магазин продуктов, ООО Городецкий хлеб: Салтыковская, 15Б" style="z-index: 3; cursor: pointer; left: 565px; top: 126px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/12.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Продукты, магазин, ООО На Южной+: Октября, 3" style="z-index: 3; cursor: pointer; left: 484px; top: 14px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/12.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Продукты, магазин, ООО Рапан: Суздальская, 10 к2" style="z-index: 3; cursor: pointer; left: 469px; top: 138px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/12.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Продуктовый магазин, ИП Авеян А.П.: Суздальская, 18г" style="z-index: 3; cursor: pointer; left: 490px; top: 96px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/12.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Монастырский хлеб, продуктовый магазин: Суздальская, 26а" style="z-index: 3; cursor: pointer; left: 538px; top: 73px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/12.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Делор-ЛГ, продуктовый магазин: Реутовская, 10г" style="z-index: 3; cursor: pointer; left: 382px; top: 126px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/12.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Продуктовый магазин, ИП Фролов А.В.: Суздальская, 12 к4" style="z-index: 3; cursor: pointer; left: 482px; top: 128px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/12.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Продукты, магазин, ИП Милованова С.Г.: Новокосинская, 9 к3" style="z-index: 3; cursor: pointer; left: 489px; top: 175px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/12.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Радуга, продуктовый магазин: Новокосинская, 12 к2" style="z-index: 3; cursor: pointer; left: 515px; top: 147px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/12.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Продуктовый магазин, ИП Горцева В.А.: Старый Гай, 8г" style="z-index: 3; cursor: pointer; left: 340px; top: 103px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/12.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Продуктовый магазин, ООО Мегаторг Фудс: Старый Гай, 8д" style="z-index: 3; cursor: pointer; left: 338px; top: 103px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/12.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Флагман, продовольственный магазин: Николая Старостина, 17" style="z-index: 3; cursor: pointer; left: 542px; top: 196px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/12.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Продукты, магазин, ООО ЗиТ: Молодёжная, 2а" style="z-index: 3; cursor: pointer; left: 473px; top: 42px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/12.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Сеть салонов красоты Александра Тодчука: Новокосинская, 9 к1" style="z-index: 3; cursor: pointer; left: 505px; top: 176px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/7.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Салон красоты, ИП Пачезерцева С.В.: Суздальская, 26 к2" style="z-index: 3; cursor: pointer; left: 548px; top: 71px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/7.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Парадиз, салон красоты: Реутовская, 10Б" style="z-index: 3; cursor: pointer; left: 395px; top: 127px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/7.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="E.style, салон красоты, ИП Чуланова И.В.: Вешняковская, 12Б" style="z-index: 3; cursor: pointer; left: 341px; top: 160px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/7.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Тревизо, салон красоты: Новокосинская, 14 к4" style="z-index: 3; cursor: pointer; left: 537px; top: 128px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/7.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="У Дианы, салон красоты: Новокосинская, 8 к1" style="z-index: 3; cursor: pointer; left: 512px; top: 177px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/7.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Кипр, салон красоты, ИП Просолов Е.В.: Старый Гай, 8а" style="z-index: 3; cursor: pointer; left: 353px; top: 103px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/7.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Ромео, имидж-студия: Николая Старостина, 11" style="z-index: 3; cursor: pointer; left: 513px; top: 193px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/7.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Грация, сеть салонов красоты: Новокосинская, 11 к1" style="z-index: 3; cursor: pointer; left: 506px; top: 160px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/7.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Софи, салон красоты: Новокосинская, 17 к7" style="z-index: 3; cursor: pointer; left: 504px; top: 107px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/7.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Фея, салон красоты, район Новокосино: Новокосинская, 15 к7" style="z-index: 3; cursor: pointer; left: 499px; top: 111px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/7.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Арнелла, салон красоты: Вешняковская, 12в" style="z-index: 3; cursor: pointer; left: 337px; top: 160px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/7.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Фантазия, салон красоты, ООО Профкосм: Новокосинская, 23" style="z-index: 3; cursor: pointer; left: 543px; top: 93px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/7.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Виринея, салон-парикмахерская: Юбилейный проспект, 8" style="z-index: 3; cursor: pointer; left: 527px; top: 34px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/7.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Салон-парикмахерская, ООО Эко-сервис: Вешняковская, 12в" style="z-index: 3; cursor: pointer; left: 337px; top: 160px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/7.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Гузеев-Ж, салон красоты: Вешняковская, 2" style="z-index: 3; cursor: pointer; left: 308px; top: 131px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/7.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Ника, сеть центров красоты: Носовихинское шоссе, 11" style="z-index: 3; cursor: pointer; left: 550px; top: 45px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/7.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Лана, салон красоты, ИП Гаевская Т.Н.: Жемчуговой аллея, 5 к4" style="z-index: 3; cursor: pointer; left: 339px; top: 185px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/7.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Morie-Salon, центр красоты: Новокосинская, 12 к2" style="z-index: 3; cursor: pointer; left: 515px; top: 147px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/7.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Веларт, медицинский центр: Суздальская, 12 к4" style="z-index: 3; cursor: pointer; left: 482px; top: 128px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/7.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Студия красоты, ООО Юниор: Суздальская, 22 к2" style="z-index: 3; cursor: pointer; left: 512px; top: 77px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/7.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Жар птица, сеть салонов красоты: Суздальская, 10 к1" style="z-index: 3; cursor: pointer; left: 462px; top: 137px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/7.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Дива, салон красоты, ООО Городецкий хлеб: Салтыковская, 15Б" style="z-index: 3; cursor: pointer; left: 565px; top: 126px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/7.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Салон-парикмахерская, ИП Ляхова Л.К.: Кетчерская, вл1д ст2" style="z-index: 3; cursor: pointer; left: 305px; top: 65px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/7.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Каштан, парикмахерская, ИП Сыркина И.М.: Новокосинская, 28" style="z-index: 3; cursor: pointer; left: 563px; top: 91px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/7.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Шок Шоколад, студия красоты: Суздальская, 10 к2" style="z-index: 3; cursor: pointer; left: 469px; top: 138px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/7.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Салон авто красоты, автомойка: Вешняковская, 6/8" style="z-index: 3; cursor: pointer; left: 340px; top: 145px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/7.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Территория красоты: Новокосинская, 24 к1" style="z-index: 3; cursor: pointer; left: 552px; top: 101px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/7.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Ариадна ком, многопрофильный центр: Кетчерская, 4Б ст1" style="z-index: 3; cursor: pointer; left: 310px; top: 81px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/7.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Кудряшка, эконом-парикмахерская: Суздальская, 8 к1" style="z-index: 3; cursor: pointer; left: 464px; top: 149px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/7.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Салон авто красоты, автосервис: Вешняковская, 6/8" style="z-index: 3; cursor: pointer; left: 340px; top: 145px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/7.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Самая Самая, сеть салонов-парикмахерских: Юбилейный проспект, 8" style="z-index: 3; cursor: pointer; left: 527px; top: 34px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/7.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Парикмахерская эконом-класса, ИП Наумов С.А.: Вешняковская, 12ж" style="z-index: 3; cursor: pointer; left: 309px; top: 160px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/7.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Рай, SPA-центр: Новокосинская, 11 к2" style="z-index: 3; cursor: pointer; left: 499px; top: 164px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/7.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Шайн, салон-парикмахерская: Новокосинская, 14 к7" style="z-index: 3; cursor: pointer; left: 527px; top: 124px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/7.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Салон-парикмахерская, ИП Федорова И.С.: Молостовых, 19 к1" style="z-index: 3; cursor: pointer; left: 384px; top: -12px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/7.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="MANDARIN, салон-парикмахерская: Суздальская, 12а" style="z-index: 3; cursor: pointer; left: 462px; top: 126px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/7.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Ева Силуэт, студия коррекции фигуры и косметологии: Новокосинская, 13 к3" style="z-index: 3; cursor: pointer; left: 499px; top: 137px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/7.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="У Дианы, салон красоты: Новокосинская, 19" style="z-index: 3; cursor: pointer; left: 530px; top: 104px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/7.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Каприз, сеть центров красоты: Вешняковская, 12а" style="z-index: 3; cursor: pointer; left: 349px; top: 160px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/7.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Но-ко, салон красоты эконом-класса: Суздальская, 16Б" style="z-index: 3; cursor: pointer; left: 475px; top: 100px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/7.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Ираида, ООО, парикмахерская: Вешняковская, 17Б" style="z-index: 3; cursor: pointer; left: 377px; top: 162px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/7.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Салон-парикмахерская, ИП Гизятулина С.К.: Николая Старостина, 5" style="z-index: 3; cursor: pointer; left: 485px; top: 191px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/7.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Парикмахерская, ООО Авангард-1: Новокосинская, 6 к2" style="z-index: 3; cursor: pointer; left: 528px; top: 177px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/7.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Котби, ООО, парикмахерская: Фрязевская, 11 к1" style="z-index: 3; cursor: pointer; left: 329px; top: 38px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/7.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Парикмахерская, ИП Колосов Ю.Ю.: Николая Старостина, 7" style="z-index: 3; cursor: pointer; left: 491px; top: 193px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/7.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Арпина, эконом-парикмахерская: Новокосинская, 10 к2" style="z-index: 3; cursor: pointer; left: 520px; top: 165px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/7.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Салон авто красоты, страховая компания: Вешняковская, 6/8" style="z-index: 3; cursor: pointer; left: 340px; top: 145px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/7.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="Вера, парикмахерская: Реутовская, 10г" style="z-index: 3; cursor: pointer; left: 382px; top: 126px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/7.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div><div class="mrm-marker-point" title="ЛИКА, салон красоты, ИП Согомунян Л.С.: Суздальская, 12 к4" style="z-index: 3; cursor: pointer; left: 482px; top: 128px;" data-unclick="true"><img class="mrm-base-marker" src="/img/map-icons/7.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: -15px; width: 30px; height: 30px;"></div></div><div layer="base" lid="6TYtULOXwi8Zk3d3" zoom="13" unselectable="on" class="mrm-nearestnmrm-noselect" style="position: absolute; top: 0px; left: 0px; z-index: 10; visibility: visible;"><img src="http://t6maps.mail.ru/tiles/scheme/13/2561/4957.png" style="position: absolute; border: 0px; top: -17px; left: 405px; display: block;"><img src="http://t4maps.mail.ru/tiles/scheme/13/2560/4956.png" style="position: absolute; border: 0px; top: -273px; left: 149px; display: block;"><img src="http://t5maps.mail.ru/tiles/scheme/13/2561/4956.png" style="position: absolute; border: 0px; top: -17px; left: 149px; display: block;"><img src="http://t6maps.mail.ru/tiles/scheme/13/2562/4956.png" style="position: absolute; border: 0px; top: 239px; left: 149px; display: block;"><img src="http://t5maps.mail.ru/tiles/scheme/13/2560/4957.png" style="position: absolute; border: 0px; top: -273px; left: 405px; display: block;"><img src="http://t0maps.mail.ru/tiles/scheme/13/2562/4957.png" style="position: absolute; border: 0px; top: 239px; left: 405px; display: block;"><img src="http://t6maps.mail.ru/tiles/scheme/13/2560/4958.png" style="position: absolute; border: 0px; top: -273px; left: 661px; display: block;"><img src="http://t0maps.mail.ru/tiles/scheme/13/2561/4958.png" style="position: absolute; border: 0px; top: -17px; left: 661px; display: block;"><img src="http://t1maps.mail.ru/tiles/scheme/13/2562/4958.png" style="position: absolute; border: 0px; top: 239px; left: 661px; display: block;"><img src="http://t3maps.mail.ru/tiles/scheme/13/2560/4955.png" style="position: absolute; border: 0px; top: -273px; left: -107px; display: block;"><img src="http://t4maps.mail.ru/tiles/scheme/13/2561/4955.png" style="position: absolute; border: 0px; top: -17px; left: -107px; display: block;"><img src="http://t5maps.mail.ru/tiles/scheme/13/2562/4955.png" style="position: absolute; border: 0px; top: 239px; left: -107px; display: block;"><img src="http://t0maps.mail.ru/tiles/scheme/13/2560/4959.png" style="position: absolute; border: 0px; top: -273px; left: 917px; display: block;"><img src="http://t1maps.mail.ru/tiles/scheme/13/2561/4959.png" style="position: absolute; border: 0px; top: -17px; left: 917px; display: block;"><img src="http://t2maps.mail.ru/tiles/scheme/13/2562/4959.png" style="position: absolute; border: 0px; top: 239px; left: 917px; display: block;"></div></div><div class="mrmc mrmc-copyright" style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 9px; line-height: normal; font-family: Tahoma; padding: 0px 1px 1px 0px; position: absolute; z-index: 1000; right: 90px; bottom: 0px;">©&nbsp;Collins&nbsp;Bartholomew&nbsp;2012, ©&nbsp;Геоцентр-Консалтинг&nbsp;2012</div><div class="mrmc mrmc-logo" style="position: absolute; z-index: 1000; right: 0px; bottom: 0px;"><a target="_blank" href="//maps.mail.ru/"><img src="http://maps.mail.ru/api/2.1/i/logo.gif" width="90" height="21" alt="Карты@Mail.Ru"></a></div><div class="mrmc mrmc-scaleline" style="visibility: visible; position: absolute; z-index: 1000; left: 10px; bottom: 5px;"><div style="width: 74.03768325949045px;"><em>800 м</em><span></span><span class="mrmc-sl"></span><span class="mrmc-sr"></span></div></div></div>
+
+<div class="none">
+    <div class="page_map__group_marker"></div>
+    <div class="page_map__block_marker"></div>
+
+</div>
+<div id="map_overlay" class="page_map__box__map__overlay not_selectable" style="display:none">
+    <div><img src="/img/loader_2.gif"> <span class="text">Загрузка данных</span></div>
+</div>
+<link href="/css/map.css?1.23" rel="stylesheet">
+
+    <script src="/js/MailRuMapsWrapper.js?7"></script>
+    <script>var wrapper = new MailRuMapsWrapper();</script>
+
+<script src="/js/spin.min.js"></script>
+<script src="/js/jquery.spin.js"></script>
+<script src="/js/dgis.js"></script>
+<script src="/js/searchMap.js?12"></script>
+<script>
+    // init at first with minimum - 480px
+    $('.map_content').height(600);
+    searchMap.setMapCentre('37.8414', '55.739101', 14);
+    searchMap.setSearchParams({
+        isZoomControl: 0,
+        isViewtypeControl: 0,
+        isBaloonCondensed: 1,
+        isRefreshEnabled: 0,
+        host: window.location.protocol + '//' + window.location.host+'/',
+        region: 'msk',
+        bargain_type: 'sale',
+        block_subtypes: '9',
+        params: {"page":1,"sort":"date","sort_direct":"ASC","view":"list","per_page":50,"geo_region":["602058","1059918","2041038"],"latitude":[55.718101,55.760101],"longitude":[37.8204,37.8624]},
+    });
+    $(document).ready(function(){
+        searchMap.load(wrapper, 'map_canvas', function() {
+                            //                searchMap.refreshMarkers();
+            
+                            searchMap.addPoint({
+                    id: 1946920303896496,
+                    title: '2 комн. квартира',
+                    lon: '37.8414',
+                    lat: '55.739101'
+                });
+            
+            /***** Запрос данных о том, что есть рядом, у 2Гис ***/
+
+            var markers = [];
+            searchMap.dgisClickHandler = function (marker) {
+                wrapper.closeBaloon();
+                var title_parts = marker.title.split(': ', 2);
+                wrapper.showBaloon({
+                    uid: marker.id,
+                    marker: marker,
+                    content: '<b>'+title_parts[0]+'</b><br>'+title_parts[1],
+                    size: {
+                        width: 310,
+                        height: 400
+                    }
+                });
+            };
+            function showCategory(categoryId) {
+                var icon;
+                if (categoryId == '0') {
+                    for (categoryId in markers) {
+                        icon = $('.js-objects-around-link[data-category-id="'+categoryId+'"]').attr('data-icon-url');
+                        $.each(markers[categoryId], function () {
+                            searchMap.addPoint({
+                                id: 'dgis_'+categoryId+'_'+this.id,
+                                title: this.name + ': ' + this.address,
+                                lon: this.lon,
+                                lat: this.lat,
+                                icon: {
+                                    url: icon,
+                                    size: {
+                                        width: 30,
+                                        height: 30
+                                    }
+                                }
+                            });
+                        });
+                    }
+                    return true;
+                } else {
+                    if (!markers[categoryId] || (markers[categoryId].length == 0))
+                        return false;
+                    icon = $('.js-objects-around-link[data-category-id="'+categoryId+'"]').attr('data-icon-url');
+                    $.each(markers[categoryId], function () {
+                        searchMap.addPoint({
+                            id: 'dgis_'+categoryId+'_'+this.id,
+                            title: this.name + ': ' + this.address,
+                            lon: this.lon,
+                            lat: this.lat,
+                            icon: {
+                                url: icon,
+                                size: {
+                                    width: 30,
+                                    height: 30
+                                }
+                            }
+                        });
+                    });
+                    return true;
+                }
+            }
+            function hideCategory(categoryId) {
+                if (categoryId == '0') {
+                    for (categoryId in markers) {
+                        $.each(markers[categoryId], function () {
+                            searchMap.deletePoint('dgis_'+categoryId+'_'+this.id);
+                        });
+                    }
+                    return true;
+                } else {
+                    if (!markers[categoryId] || (markers[categoryId].length == 0))
+                        return false;
+                    $.each(markers[categoryId], function () {
+                        searchMap.deletePoint('dgis_'+categoryId+'_'+this.id);
+                    });
+                    return true;
+                }
+            }
+            var client = new DGisClient();
+
+            client.init();
+            $('body').on('click', '.js-objects-around-link a', function () {
+                var disabled = $(this).hasClass('disabled');
+                var category_id = $(this).parent().attr('data-category-id');
+                if (category_id == '0') {
+                    $('.js-objects-around-link a').addClass('disabled');
+                }
+                if (!disabled) {
+                    if (hideCategory(category_id)) {
+                        $(this).addClass('disabled');
+                    }
+                } else {
+                    if (category_id != '0') {
+                        var $allCategoriesButton = $('.js-objects-around-link[data-category-id="0"] a');
+                        if (!$allCategoriesButton.hasClass('disabled')) {
+                            if (hideCategory('0')) {
+                                $allCategoriesButton.addClass('disabled');
+                            }
+                        }
+                    }
+                    if (showCategory(category_id)) {
+                        $(this).removeClass('disabled');
+                    }
+                }
+                return false;
+            });
+            var total_objects = 0;
+            var searches_left = $('.offer-card__map__links .js-objects-around-link').length;
+            $('.offer-card__map__links .js-objects-around-link').each(function () {
+                var $liObject = $(this);
+                var categoryId = $liObject.attr('data-category-id');
+                if (categoryId == '0') {
+                    searches_left--;
+                    return;
+                }
+
+                var searchText = $liObject.find('a').text();
+                $liObject.find('i').spin('realty');
+
+                markers[categoryId] = [];
+
+                client.search(searchText, {
+                    lon: '37.8414',
+                    lat: '55.739101'
+                }, function (json) {
+                    if (json.result) {
+                        markers[categoryId] = json.result;
+                        showCategory(categoryId);
+                    }
+                    var objectsFound = parseInt(json.total) || 0;
+                    if (objectsFound > 0) {
+                        $liObject.find('i').spin(false).text(objectsFound);
+                    } else {
+                        $liObject.hide();
+                    }
+                    total_objects += objectsFound;
+                    searches_left--;
+                    if (searches_left == 0) {
+                        if (total_objects == 0) {
+                            $('.js-objects-around-block').slideUp();
+                        }
+                    }
+                });
+            });
+
+            /********************/
+
+        });
+    });
+</script>
+
+
+        </div>
+    </div>
+
+    <div class="offer-card__map__links">
+        <h3 class="title">Рядом (в радиусе 1.5 км)</h3>
+        <ul class="clearfix">
+            <li class="js-objects-around-link" data-category-id="0"><a href="#">Все</a> <i></i></li>
+            <li class="js-objects-around-link" data-category-id="6" data-icon-url="/img/map-icons/6.png" data-icon-selected-url="/img/map-icons/6s.png"><a href="#" class="disabled">Парковка</a> <i>5</i></li>
+            <li class="js-objects-around-link" data-category-id="1" data-icon-url="/img/map-icons/1.png" data-icon-selected-url="/img/map-icons/1s.png"><a href="#" class="disabled">Ресторан</a> <i>13</i></li>
+            <li class="js-objects-around-link" data-category-id="12" data-icon-url="/img/map-icons/12.png" data-icon-selected-url="/img/map-icons/12s.png"><a href="#" class="disabled">Магазин</a> <i>46</i></li>
+            <li class="js-objects-around-link" data-category-id="13" data-icon-url="/img/map-icons/13.png" data-icon-selected-url="/img/map-icons/13s.png"><a href="#" class="disabled">Детский сад</a> <i>23</i></li>
+            <li class="js-objects-around-link" data-category-id="8" data-icon-url="/img/map-icons/8.png" data-icon-selected-url="/img/map-icons/8s.png"><a href="#" class="disabled">Образование</a> <i>20</i></li>
+            <li class="js-objects-around-link" data-category-id="4" data-icon-url="/img/map-icons/4.png" data-icon-selected-url="/img/map-icons/4s.png"><a href="#" class="disabled">Аптека</a> <i>37</i></li>
+            <!--<li class="js-objects-around-link" data-category-id="5" data-icon-url="/img/map-icons/5.png" data-icon-selected-url="/img/map-icons/5s.png" ><a href="#" class="disabled">Парк</a> <i>-</i></li>-->
+            <li class="js-objects-around-link" data-category-id="3" data-icon-url="/img/map-icons/3.png" data-icon-selected-url="/img/map-icons/3s.png" style="display: none;"><a href="#" class="disabled">Кинотеатр</a> <i><div class="spinner" role="progressbar" style="position: relative; width: 0px; z-index: 2000000000; left: -4px; top: 2px;"><div style="position: absolute; top: -1px; opacity: 0.25; -webkit-animation: opacity-54-25-0-5 1s linear infinite;"><div style="position: absolute; width: 3px; height: 3px; background-color: rgb(0, 0, 0); -webkit-box-shadow: rgba(0, 0, 0, 0.0980392) 0px 0px 1px; -webkit-transform-origin: 0% 50%; -webkit-transform: rotate(0deg) translate(3px, 0px); border-top-left-radius: 1px; border-top-right-radius: 1px; border-bottom-right-radius: 1px; border-bottom-left-radius: 1px; background-position: initial initial; background-repeat: initial initial;"></div></div><div style="position: absolute; top: -1px; opacity: 0.25; -webkit-animation: opacity-54-25-1-5 1s linear infinite;"><div style="position: absolute; width: 3px; height: 3px; background-color: rgb(0, 0, 0); -webkit-box-shadow: rgba(0, 0, 0, 0.0980392) 0px 0px 1px; -webkit-transform-origin: 0% 50%; -webkit-transform: rotate(72deg) translate(3px, 0px); border-top-left-radius: 1px; border-top-right-radius: 1px; border-bottom-right-radius: 1px; border-bottom-left-radius: 1px; background-position: initial initial; background-repeat: initial initial;"></div></div><div style="position: absolute; top: -1px; opacity: 0.25; -webkit-animation: opacity-54-25-2-5 1s linear infinite;"><div style="position: absolute; width: 3px; height: 3px; background-color: rgb(0, 0, 0); -webkit-box-shadow: rgba(0, 0, 0, 0.0980392) 0px 0px 1px; -webkit-transform-origin: 0% 50%; -webkit-transform: rotate(144deg) translate(3px, 0px); border-top-left-radius: 1px; border-top-right-radius: 1px; border-bottom-right-radius: 1px; border-bottom-left-radius: 1px; background-position: initial initial; background-repeat: initial initial;"></div></div><div style="position: absolute; top: -1px; opacity: 0.25; -webkit-animation: opacity-54-25-3-5 1s linear infinite;"><div style="position: absolute; width: 3px; height: 3px; background-color: rgb(0, 0, 0); -webkit-box-shadow: rgba(0, 0, 0, 0.0980392) 0px 0px 1px; -webkit-transform-origin: 0% 50%; -webkit-transform: rotate(216deg) translate(3px, 0px); border-top-left-radius: 1px; border-top-right-radius: 1px; border-bottom-right-radius: 1px; border-bottom-left-radius: 1px; background-position: initial initial; background-repeat: initial initial;"></div></div><div style="position: absolute; top: -1px; opacity: 0.25; -webkit-animation: opacity-54-25-4-5 1s linear infinite;"><div style="position: absolute; width: 3px; height: 3px; background-color: rgb(0, 0, 0); -webkit-box-shadow: rgba(0, 0, 0, 0.0980392) 0px 0px 1px; -webkit-transform-origin: 0% 50%; -webkit-transform: rotate(288deg) translate(3px, 0px); border-top-left-radius: 1px; border-top-right-radius: 1px; border-bottom-right-radius: 1px; border-bottom-left-radius: 1px; background-position: initial initial; background-repeat: initial initial;"></div></div></div>-</i></li>
+            <li class="js-objects-around-link" data-category-id="11" data-icon-url="/img/map-icons/11.png" data-icon-selected-url="/img/map-icons/11s.png" style="display: none;"><a href="#" class="disabled">Театр</a> <i><div class="spinner" role="progressbar" style="position: relative; width: 0px; z-index: 2000000000; left: -4px; top: 2px;"><div style="position: absolute; top: -1px; opacity: 0.25; -webkit-animation: opacity-54-25-0-5 1s linear infinite;"><div style="position: absolute; width: 3px; height: 3px; background-color: rgb(0, 0, 0); -webkit-box-shadow: rgba(0, 0, 0, 0.0980392) 0px 0px 1px; -webkit-transform-origin: 0% 50%; -webkit-transform: rotate(0deg) translate(3px, 0px); border-top-left-radius: 1px; border-top-right-radius: 1px; border-bottom-right-radius: 1px; border-bottom-left-radius: 1px; background-position: initial initial; background-repeat: initial initial;"></div></div><div style="position: absolute; top: -1px; opacity: 0.25; -webkit-animation: opacity-54-25-1-5 1s linear infinite;"><div style="position: absolute; width: 3px; height: 3px; background-color: rgb(0, 0, 0); -webkit-box-shadow: rgba(0, 0, 0, 0.0980392) 0px 0px 1px; -webkit-transform-origin: 0% 50%; -webkit-transform: rotate(72deg) translate(3px, 0px); border-top-left-radius: 1px; border-top-right-radius: 1px; border-bottom-right-radius: 1px; border-bottom-left-radius: 1px; background-position: initial initial; background-repeat: initial initial;"></div></div><div style="position: absolute; top: -1px; opacity: 0.25; -webkit-animation: opacity-54-25-2-5 1s linear infinite;"><div style="position: absolute; width: 3px; height: 3px; background-color: rgb(0, 0, 0); -webkit-box-shadow: rgba(0, 0, 0, 0.0980392) 0px 0px 1px; -webkit-transform-origin: 0% 50%; -webkit-transform: rotate(144deg) translate(3px, 0px); border-top-left-radius: 1px; border-top-right-radius: 1px; border-bottom-right-radius: 1px; border-bottom-left-radius: 1px; background-position: initial initial; background-repeat: initial initial;"></div></div><div style="position: absolute; top: -1px; opacity: 0.25; -webkit-animation: opacity-54-25-3-5 1s linear infinite;"><div style="position: absolute; width: 3px; height: 3px; background-color: rgb(0, 0, 0); -webkit-box-shadow: rgba(0, 0, 0, 0.0980392) 0px 0px 1px; -webkit-transform-origin: 0% 50%; -webkit-transform: rotate(216deg) translate(3px, 0px); border-top-left-radius: 1px; border-top-right-radius: 1px; border-bottom-right-radius: 1px; border-bottom-left-radius: 1px; background-position: initial initial; background-repeat: initial initial;"></div></div><div style="position: absolute; top: -1px; opacity: 0.25; -webkit-animation: opacity-54-25-4-5 1s linear infinite;"><div style="position: absolute; width: 3px; height: 3px; background-color: rgb(0, 0, 0); -webkit-box-shadow: rgba(0, 0, 0, 0.0980392) 0px 0px 1px; -webkit-transform-origin: 0% 50%; -webkit-transform: rotate(288deg) translate(3px, 0px); border-top-left-radius: 1px; border-top-right-radius: 1px; border-bottom-right-radius: 1px; border-bottom-left-radius: 1px; background-position: initial initial; background-repeat: initial initial;"></div></div></div>-</i></li>
+            <li class="js-objects-around-link" data-category-id="2" data-icon-url="/img/map-icons/2.png" data-icon-selected-url="/img/map-icons/2s.png"><a href="#" class="disabled">Банк, банкомат</a> <i>2</i></li>
+            <li class="js-objects-around-link" data-category-id="14" data-icon-url="/img/map-icons/14.png" data-icon-selected-url="/img/map-icons/14s.png" style="display: none;"><a href="#" class="disabled">ЖЭУ, ЖКХ</a> <i><div class="spinner" role="progressbar" style="position: relative; width: 0px; z-index: 2000000000; left: -4px; top: 2px;"><div style="position: absolute; top: -1px; opacity: 0.25; -webkit-animation: opacity-54-25-0-5 1s linear infinite;"><div style="position: absolute; width: 3px; height: 3px; background-color: rgb(0, 0, 0); -webkit-box-shadow: rgba(0, 0, 0, 0.0980392) 0px 0px 1px; -webkit-transform-origin: 0% 50%; -webkit-transform: rotate(0deg) translate(3px, 0px); border-top-left-radius: 1px; border-top-right-radius: 1px; border-bottom-right-radius: 1px; border-bottom-left-radius: 1px; background-position: initial initial; background-repeat: initial initial;"></div></div><div style="position: absolute; top: -1px; opacity: 0.25; -webkit-animation: opacity-54-25-1-5 1s linear infinite;"><div style="position: absolute; width: 3px; height: 3px; background-color: rgb(0, 0, 0); -webkit-box-shadow: rgba(0, 0, 0, 0.0980392) 0px 0px 1px; -webkit-transform-origin: 0% 50%; -webkit-transform: rotate(72deg) translate(3px, 0px); border-top-left-radius: 1px; border-top-right-radius: 1px; border-bottom-right-radius: 1px; border-bottom-left-radius: 1px; background-position: initial initial; background-repeat: initial initial;"></div></div><div style="position: absolute; top: -1px; opacity: 0.25; -webkit-animation: opacity-54-25-2-5 1s linear infinite;"><div style="position: absolute; width: 3px; height: 3px; background-color: rgb(0, 0, 0); -webkit-box-shadow: rgba(0, 0, 0, 0.0980392) 0px 0px 1px; -webkit-transform-origin: 0% 50%; -webkit-transform: rotate(144deg) translate(3px, 0px); border-top-left-radius: 1px; border-top-right-radius: 1px; border-bottom-right-radius: 1px; border-bottom-left-radius: 1px; background-position: initial initial; background-repeat: initial initial;"></div></div><div style="position: absolute; top: -1px; opacity: 0.25; -webkit-animation: opacity-54-25-3-5 1s linear infinite;"><div style="position: absolute; width: 3px; height: 3px; background-color: rgb(0, 0, 0); -webkit-box-shadow: rgba(0, 0, 0, 0.0980392) 0px 0px 1px; -webkit-transform-origin: 0% 50%; -webkit-transform: rotate(216deg) translate(3px, 0px); border-top-left-radius: 1px; border-top-right-radius: 1px; border-bottom-right-radius: 1px; border-bottom-left-radius: 1px; background-position: initial initial; background-repeat: initial initial;"></div></div><div style="position: absolute; top: -1px; opacity: 0.25; -webkit-animation: opacity-54-25-4-5 1s linear infinite;"><div style="position: absolute; width: 3px; height: 3px; background-color: rgb(0, 0, 0); -webkit-box-shadow: rgba(0, 0, 0, 0.0980392) 0px 0px 1px; -webkit-transform-origin: 0% 50%; -webkit-transform: rotate(288deg) translate(3px, 0px); border-top-left-radius: 1px; border-top-right-radius: 1px; border-bottom-right-radius: 1px; border-bottom-left-radius: 1px; background-position: initial initial; background-repeat: initial initial;"></div></div></div>-</i></li>
+            <li class="js-objects-around-link" data-category-id="10" data-icon-url="/img/map-icons/10.png" data-icon-selected-url="/img/map-icons/10s.png"><a href="#" class="disabled">Почта</a> <i>4</i></li>
+            <li class="js-objects-around-link" data-category-id="7" data-icon-url="/img/map-icons/7.png" data-icon-selected-url="/img/map-icons/7s.png"><a href="#" class="disabled">Салон красоты</a> <i>59</i></li>
+        </ul>
+    </div>
+    <br>
+
+
+
+    <section class="adv_list adv_list__tile">
+            <h2><span>Другие предложения по продаже недвижимости</span></h2>
+    <ul class="clearfix">
+                    <li><a target="_blank" href="/living-for-sale/ru-mos-moskva-2room/">Продажа 2-комнатных квартир в Москве</a></li>
+                    <li><a target="_blank" href="/living-for-sale/ru-mos-moskva-metro-jugo-zapadnaja-2room/">Продажа 2-комнатных квартир, станция метро Юго-Западная</a></li>
+                    <li><a target="_blank" href="/living-for-sale/moskva-zao-2room/">Продажа 2-комнатных квартир, Западный административный округ</a></li>
+            </ul>
+
+    </section>
+
+
+
+                        
+                        
+                        
+                        
+    </section>
+
+<ul class="offers_list">
+                    
+                        
+                                    
+        <li class="offers_list__item clearfix ">
+				<div class="offers_list__preview" id="block_images_1946920303896496">
+					<a href="http://realty.mail.ru/offer/ru-mos-moskva/1946920303896496.html" target="_blank">
+                                                                                            <img src="http://maps.mail.ru/tiles/tally?lat=55.739101&amp;lon=37.841400&amp;z=13&amp;w=130&amp;h=130">
+                                    <div title="2-комн. квартира, ул. Георгиевская, 5" style="z-index: 3; left: 65px; top: 65px;" data-unclick="true">
+                                        <img title="Двухкомнатная квартира, ул. Георгиевская, 5, Россия " alt="Двухкомнатная квартира, ул. Георгиевская, 5, Россия " src="//maps.mail.ru/api/2.1/i/Iv3_marker_base.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: 50px; top: 27px; width: 29px; height: 39px;">
+                                    </div>
+                                                        
+                    </a>
+                                        <a href="#" style="z-index: 1000;" onclick="return false;" class="label__orange">Партнер</a>                </div>
+            <div id="map_canvas_1946920303896496" style="display: none;" class="offers_list__preview"></div>
+
+            <div class="offers_list__info">
+                <span class="offers_list__info__price"><b>8 650 000</b> руб.</span>
+                                            </div>
+            <div class="offers_list__content">
+                <a href="http://realty.mail.ru/offer/ru-mos-moskva/1946920303896496.html" target="_blank" class="offers_list__content__address" alt="Двухкомнатная квартира, ул. Георгиевская, 5, Россия ">
+                                            2-комн. квартира, ул. Георгиевская, 5
+                                    </a>
+
+                
+                                            <i class="offers_list__content__description"> м Юго-Западная, 20 минут транспортом</i>
+                    
+                
+                <div class="offers_list__content__text">
+                    <div class="offers_list__content__text__size">
+                        <span>Площадь <b>64,00 м2</b></span>                        <span>Жилая <b>39,00 м2</b></span>                        <span>Кухня <b>14,00 м2</b></span>                    </div>
+                    <p>Москва г, Георгиевская улица 5, 2 комн, общ. пл. 64, жил. пл. 39, комнаты 39, кухня 14, 2/17 этаж, окна двор/улица, сур, 2 балкона, отличный ремонт, Продам квартиру 2-к квартира 64 м на 2 этаже 17-этажного панельного дома Продам двухкомнатную квартиру распашонку, 64 м2, два больших балкона, две просторные светлые комнаты, кухня 13,8 м2, эркер, вокруг лес, садик во дворе дома, школа в 5 минутах, магазины Дикси, Пятерочка, Перекресток, Летуаль, Якитория в шаговой доступности, детская и взрослая поликлиника. в квартире качественый ремонт (для себя), собственность в марте. Метро в 2014 году, метро Румянцево, до м. Юго-западной 10 мин маршрутка или городские автобусы. Торг. 8. 906. 074. 21. 77.</p>
+                </div>
+                <ul class="offers_list__content__links">
+                                                                            <li><a class="link link__violation blockComplaintButton" data-id="1946920303896496" href="#"><i></i>Пожаловаться</a></li>
+                </ul>
+            </div>
+        </li>
+                                                                        
+                                    
+        <li class="offers_list__item clearfix ">
+				<div class="offers_list__preview" id="block_images_1946920303883120">
+					<a href="http://realty.mail.ru/offer/ru-mos-moskva/1946920303883120.html" target="_blank">
+                                                                                            <img src="http://maps.mail.ru/tiles/tally?lat=55.590996&amp;lon=37.374367&amp;z=13&amp;w=130&amp;h=130">
+                                    <div title="Продажа 1-комн. квартиры, ул. Георгиевская, 1" style="z-index: 3; left: 65px; top: 65px;" data-unclick="true">
+                                        <img title="Продажа однокомнатной квартиры, ул. Георгиевская, 1, Россия " alt="Продажа однокомнатной квартиры, ул. Георгиевская, 1, Россия " src="//maps.mail.ru/api/2.1/i/Iv3_marker_base.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: 50px; top: 27px; width: 29px; height: 39px;">
+                                    </div>
+                                                        
+                    </a>
+                                        <a href="#" style="z-index: 1000;" onclick="return false;" class="label__orange">Партнер</a>                </div>
+            <div id="map_canvas_1946920303883120" style="display: none;" class="offers_list__preview"></div>
+
+            <div class="offers_list__info">
+                <span class="offers_list__info__price"><b>4 580 000</b> руб.</span>
+                                            </div>
+            <div class="offers_list__content">
+                <a href="http://realty.mail.ru/offer/ru-mos-moskva/1946920303883120.html" target="_blank" class="offers_list__content__address" alt="Продажа однокомнатной квартиры, ул. Георгиевская, 1, Россия ">
+                                            Продажа 1-комн. квартиры, ул. Георгиевская, 1
+                                    </a>
+
+                
+                                            <i class="offers_list__content__description"> м Юго-Западная, 20 минут транспортом</i>
+                    
+                
+                <div class="offers_list__content__text">
+                    <div class="offers_list__content__text__size">
+                        <span>Площадь <b>39,00 м2</b></span>                        <span>Жилая <b>20,00 м2</b></span>                        <span>Кухня <b>8,00 м2</b></span>                    </div>
+                    <p>Москва г, Георгиевская улица 1, 1 комн, общ. пл. 39, жил. пл. 20, комнаты 20, кухня 8, 12/17 этаж, окна улица, сус, балкон, без отделки, Новая Москва, Град Московский, (Киевское шоссе 10 км, ) Хороший подьезд, Прекрасная природа, Развитая инфраструктура, Квартира без отделки. от собственника. ключи уже на руках, лицевой счет в ук открыт (все первоначальные платежи и квартплата в ук проплачены). хорошие окна (3-й стеклопакет), батареи (можно не менять). по инфраструктуре: всё активно развивается: школы, садики, магазины, автобусы - всё отлично работает. ожидаем в след. году открытия метро в Саларьево (5 км). прямо рядом с домом: школа, поликлиника, лес, Дом сдан и заселен 1,5 года назад, Прекрасное расположение много места для парковки, окна выходят на лесной массив, преимущество - дом расположен прямо возле леса при развитой инфраструктуре нет шума и прекрасный воздух, Продаю по переуступке- собственность конец февраля начало марта. 8. 906. 074. 21. 77.</p>
+                </div>
+                <ul class="offers_list__content__links">
+                                                                            <li><a class="link link__violation blockComplaintButton" data-id="1946920303883120" href="#"><i></i>Пожаловаться</a></li>
+                </ul>
+            </div>
+        </li>
+                            
+                                    
+        <li class="offers_list__item clearfix ">
+				<div class="offers_list__preview" id="block_images_230000232437">
+					<a href="http://realty.mail.ru/offer/ru-mos-moskva/230000232437.html" target="_blank">
+                                                                                        <img class="filed_img" height="130" width="130" title="Продается однокомнатная квартира, ул. Георгиевская, д. 3" alt="Продается однокомнатная квартира, ул. Георгиевская, д. 3" src="http://filapp1.imgsmail.ru/pic?url=http%3A%2F%2Fimg.pre.realty.mail.ru%2Fblocks%2Fsources%2F2014%2F05%2F09%2Fde%2F66%2F00000000230000232437.jpg&amp;mw=130&amp;mh=130&amp;croped=1&amp;sig=b56bfb45f7e68dab57324b4f9db2c478">
+                        
+                    </a>
+                                            <div class="slides__count">
+                            <span class="slides__count__total">14 фото</span>
+                            <span class="slides__count__current">14 фото</span>
+                        </div>
+                                        <a href="#" style="z-index: 1000;" onclick="return false;" class="label__orange">Партнер</a>                </div>
+            <div id="map_canvas_230000232437" style="display: none;" class="offers_list__preview"></div>
+
+            <div class="offers_list__info">
+                <span class="offers_list__info__price"><b>4 500 000</b> руб.</span>
+                                            </div>
+            <div class="offers_list__content">
+                <a href="http://realty.mail.ru/offer/ru-mos-moskva/230000232437.html" target="_blank" class="offers_list__content__address" alt="Продается однокомнатная квартира, ул. Георгиевская, д. 3">
+                                            Продается 1-комн. квартира, ул. Георгиевская, д. 3
+                                    </a>
+
+                
+                                            <i class="offers_list__content__description"> м Юго-Западная, 15 минут транспортом</i>
+                    
+                
+                <div class="offers_list__content__text">
+                    <div class="offers_list__content__text__size">
+                        <span>Площадь <b>38,00 м2</b></span>                        <span>Жилая <b>20,00 м2</b></span>                        <span>Кухня <b>8,00 м2</b></span>                    </div>
+                    <p>Лот вт-0259016, новая Москва, отличный ремонт, дом находится у леса, новый р-он, развитая инф-ра, 1 собственник не прописан,</p>
+                </div>
+                <ul class="offers_list__content__links">
+                                                                                <li>
+                            <a class="link link__view_maps" href="#" data-href="http://realty.mail.ru/offer/ru-mos-moskva/230000232437.html" onclick="toggleMap('230000232437', 'Продается 1-комн. квартира, ул. Георгиевская, д. 3', '55.590996', '37.374367', 'mail', '13', this); return false;">
+                                <i></i>Показать на карте
+                            </a></li>
+                                        <li><a class="link link__violation blockComplaintButton" data-id="230000232437" href="#"><i></i>Пожаловаться</a></li>
+                </ul>
+            </div>
+        </li>
+                            
+                                    
+        <li class="offers_list__item clearfix ">
+				<div class="offers_list__preview" id="block_images_230000228143">
+					<a href="http://realty.mail.ru/offer/ru-mos-moskva/230000228143.html" target="_blank">
+                                                                                        <img class="filed_img" height="130" width="130" title="Продаю трехкомнатную квартиру, ул. Георгиевская, д. 7" alt="Продаю трехкомнатную квартиру, ул. Георгиевская, д. 7" src="http://filapp1.imgsmail.ru/pic?url=http%3A%2F%2Fimg.pre.realty.mail.ru%2Fblocks%2Fsources%2F2014%2F04%2F96%2F3d%2Ff4%2F00000000230000228143.jpg&amp;mw=130&amp;mh=130&amp;croped=1&amp;sig=8e16163bb251c1b35508c835c2b52c5f">
+                        
+                    </a>
+                                            <div class="slides__count">
+                            <span class="slides__count__total">21 фото</span>
+                            <span class="slides__count__current">21 фото</span>
+                        </div>
+                                        <a href="#" style="z-index: 1000;" onclick="return false;" class="label__orange">Партнер</a>                </div>
+            <div id="map_canvas_230000228143" style="display: none;" class="offers_list__preview"></div>
+
+            <div class="offers_list__info">
+                <span class="offers_list__info__price"><b>10 000 000</b> руб.</span>
+                                            </div>
+            <div class="offers_list__content">
+                <a href="http://realty.mail.ru/offer/ru-mos-moskva/230000228143.html" target="_blank" class="offers_list__content__address" alt="Продаю трехкомнатную квартиру, ул. Георгиевская, д. 7">
+                                            Продаю 3-комн. квартиру, ул. Георгиевская, д. 7
+                                    </a>
+
+                
+                                            <i class="offers_list__content__description"> м Юго-Западная, 15 минут транспортом</i>
+                    
+                
+                <div class="offers_list__content__text">
+                    <div class="offers_list__content__text__size">
+                        <span>Площадь <b>78,00 м2</b></span>                        <span>Жилая <b>46,00 м2</b></span>                        <span>Кухня <b>13,00 м2</b></span>                    </div>
+                    <p>Лот вт-0258744, квартира с евроремонтом, никто не жил, собственность, окна на парк, комнаты изолированные, свободная продажа, юридически свободна! +7(926)694-4471.</p>
+                </div>
+                <ul class="offers_list__content__links">
+                                                                                <li>
+                            <a class="link link__view_maps" href="#" data-href="http://realty.mail.ru/offer/ru-mos-moskva/230000228143.html" onclick="toggleMap('230000228143', 'Продаю 3-комн. квартиру, ул. Георгиевская, д. 7', '55.590996', '37.374367', 'mail', '13', this); return false;">
+                                <i></i>Показать на карте
+                            </a></li>
+                                        <li><a class="link link__violation blockComplaintButton" data-id="230000228143" href="#"><i></i>Пожаловаться</a></li>
+                </ul>
+            </div>
+        </li>
+                            
+                                    
+        <li class="offers_list__item clearfix ">
+				<div class="offers_list__preview" id="block_images_230000229164">
+					<a href="http://realty.mail.ru/offer/ru-mos-moskva/230000229164.html" target="_blank">
+                                                                                        <img class="filed_img" height="130" width="130" title="Продажа двухкомнатной квартиры, ул. Георгиевская, д. 5" alt="Продажа двухкомнатной квартиры, ул. Георгиевская, д. 5" src="http://filapp1.imgsmail.ru/pic?url=http%3A%2F%2Fimg.pre.realty.mail.ru%2Fblocks%2Fsources%2F2014%2F05%2F4a%2Fa5%2F61%2F00000000230000229164.jpg&amp;mw=130&amp;mh=130&amp;croped=1&amp;sig=e9adeb21a98b415245de2bb58360dc36">
+                        
+                    </a>
+                                            <div class="slides__count">
+                            <span class="slides__count__total">5 фото</span>
+                            <span class="slides__count__current">5 фото</span>
+                        </div>
+                                        <a href="#" style="z-index: 1000;" onclick="return false;" class="label__orange">Партнер</a>                </div>
+            <div id="map_canvas_230000229164" style="display: none;" class="offers_list__preview"></div>
+
+            <div class="offers_list__info">
+                <span class="offers_list__info__price"><b>7 000 000</b> руб.</span>
+                <i class="offers_list__info__status">ипотека</i>                            </div>
+            <div class="offers_list__content">
+                <a href="http://realty.mail.ru/offer/ru-mos-moskva/230000229164.html" target="_blank" class="offers_list__content__address" alt="Продажа двухкомнатной квартиры, ул. Георгиевская, д. 5">
+                                            Продажа 2-комн. квартиры, ул. Георгиевская, д. 5
+                                    </a>
+
+                
+                                            <i class="offers_list__content__description"> м Юго-Западная, 15 минут транспортом</i>
+                    
+                
+                <div class="offers_list__content__text">
+                    <div class="offers_list__content__text__size">
+                        <span>Площадь <b>52,00 м2</b></span>                        <span>Жилая <b>30,00 м2</b></span>                        <span>Кухня <b>9,00 м2</b></span>                    </div>
+                    <p>Лот вт-0259232, Квартира в собственности, с ремонтом. Прямая продажа никто не зарегистрирован. Град Московский - новый микрорайон в экологически чистом месте Новой Москвы, в окружении федерального леса с развитой инфраструктурой в шаговой доступности магазины, дет. сад, школа, поликлиника. В 2015 году планируется открытие станции метро Румянцево и Саларьево. Содействие в получении специальных условий и преференций по ипотеке.</p>
+                </div>
+                <ul class="offers_list__content__links">
+                                                                                <li>
+                            <a class="link link__view_maps" href="#" data-href="http://realty.mail.ru/offer/ru-mos-moskva/230000229164.html" onclick="toggleMap('230000229164', 'Продажа 2-комн. квартиры, ул. Георгиевская, д. 5', '55.590996', '37.374367', 'mail', '13', this); return false;">
+                                <i></i>Показать на карте
+                            </a></li>
+                                        <li><a class="link link__violation blockComplaintButton" data-id="230000229164" href="#"><i></i>Пожаловаться</a></li>
+                </ul>
+            </div>
+        </li>
+                            
+                                    
+        <li class="offers_list__item clearfix ">
+				<div class="offers_list__preview" id="block_images_10062847235422568616">
+					<a href="http://realty.mail.ru/offer/ru-mos-moskva/10062847235422568616.html" target="_blank">
+                                                                                        <img class="filed_img" height="130" width="130" title="Продажа однокомнатной квартиры, г. Московский, Москва, город Московский, 3 микрорайон, д.6" alt="Продажа однокомнатной квартиры, г. Московский, Москва, город Московский, 3 микрорайон, д.6" src="http://filapp1.imgsmail.ru/pic?url=http%3A%2F%2Fimg.pre.realty.mail.ru%2Fblocks%2Fsources%2F2014%2F04%2F43%2F8a%2F1f%2F10062847235422568616.jpg&amp;mw=130&amp;mh=130&amp;croped=1&amp;sig=d88dcbec5e9a20f48cf4023dba0c942d">
+                        
+                    </a>
+                                            <div class="slides__count slides__count_left">
+                            <span class="slides__count__total">5 фото</span>
+                            <span class="slides__count__current">5 фото</span>
+                        </div>
+                                                        </div>
+            <div id="map_canvas_10062847235422568616" style="display: none;" class="offers_list__preview"></div>
+
+            <div class="offers_list__info">
+                <span class="offers_list__info__price"><b>6 000 000</b> руб.</span>
+                <i class="offers_list__info__status">ипотека</i>                            </div>
+            <div class="offers_list__content">
+                <a href="http://realty.mail.ru/offer/ru-mos-moskva/10062847235422568616.html" target="_blank" class="offers_list__content__address" alt="Продажа однокомнатной квартиры, г. Московский, Москва, город Московский, 3 микрорайон, д.6">
+                                            Продажа 1-комн. квартиры, г. Московский, Москва, город Московский, 3 микрорайон, д.6
+                                    </a>
+
+                
+                                            <i class="offers_list__content__description"> м Юго-Западная, 15 минут транспортом</i>
+                    
+                
+                <div class="offers_list__content__text">
+                    <div class="offers_list__content__text__size">
+                        <span>Площадь <b>12,00 м2</b></span>                        <span>Жилая <b>18,00 м2</b></span>                        <span>Кухня <b>10,00 м2</b></span>                    </div>
+                    <p>Продается 1-комнатная квартира в г. Москва, Новомосковский административный округ, город Московский, микрорайон 3, дом 6, общей площадью 42 кв. м. : кухня 10. 1, жилая площадь 18, санузел совместный, 14 этаж 17-этажного каркасно-кирпичного дома, пластиковые окна во двор, общая металлическая дверь на 4 соседей, наличие 1 грузового и 1 пассаж. лифта. Квартира в собственности, сделан ремонт, бронированная дверь. Право собственности с 2011 года. Торг возможен. 
+
+Примечание: 1-комнатная переделана в 2-х комнатную (кухня перенесена в холл). Есть возможность установить кухонный гарнитур по плану БТИ.</p>
+                </div>
+                <ul class="offers_list__content__links">
+                                                                                <li>
+                            <a class="link link__view_maps" href="#" data-href="http://realty.mail.ru/offer/ru-mos-moskva/10062847235422568616.html" onclick="toggleMap('10062847235422568616', 'Продажа 1-комн. квартиры, г. Московский, Москва, город Московский, 3 микрорайон, д.6', '55.597382', '37.343384', 'mail', '13', this); return false;">
+                                <i></i>Показать на карте
+                            </a></li>
+                                        <li><a class="link link__violation blockComplaintButton" data-id="10062847235422568616" href="#"><i></i>Пожаловаться</a></li>
+                </ul>
+            </div>
+        </li>
+                            
+                                    
+        <li class="offers_list__item clearfix ">
+				<div class="offers_list__preview" id="block_images_10033910985385447149">
+					<a href="http://realty.mail.ru/offer/ru-mos-moskva/10033910985385447149.html" target="_blank">
+                                                                                            <img src="http://maps.mail.ru/tiles/tally?lat=55.750000&amp;lon=37.599998&amp;z=13&amp;w=130&amp;h=130">
+                                    <div title="Продам 1-комн. квартиру, г. Московский" style="z-index: 3; left: 65px; top: 65px;" data-unclick="true">
+                                        <img title="Продам однокомнатную квартиру, г. Московский" alt="Продам однокомнатную квартиру, г. Московский" src="//maps.mail.ru/api/2.1/i/Iv3_marker_base.png" style="position: absolute; top: auto; right: auto; bottom: 0px; left: 50px; top: 27px; width: 29px; height: 39px;">
+                                    </div>
+                                                        
+                    </a>
+                                                        </div>
+            <div id="map_canvas_10033910985385447149" style="display: none;" class="offers_list__preview"></div>
+
+            <div class="offers_list__info">
+                <span class="offers_list__info__price"><b>4 800 000</b> руб.</span>
+                                            </div>
+            <div class="offers_list__content">
+                <a href="http://realty.mail.ru/offer/ru-mos-moskva/10033910985385447149.html" target="_blank" class="offers_list__content__address" alt="Продам однокомнатную квартиру, г. Московский">
+                                            Продам 1-комн. квартиру, г. Московский
+                                    </a>
+
+                
+                                            <i class="offers_list__content__description"> </i>
+                    
+                
+                <div class="offers_list__content__text">
+                    <div class="offers_list__content__text__size">
+                        <span>Площадь <b>32,00 м2</b></span>                        <span>Жилая <b>15,00 м2</b></span>                        <span>Кухня <b>8,00 м2</b></span>                    </div>
+                    <p>Продам 1-комнатную квартиру в новой Москве, город Московский. Чистый подъезд, интернет, кондиционер, место на парковке возле дома. Торг при осмотре.</p>
+                </div>
+                <ul class="offers_list__content__links">
+                                                                            <li><a class="link link__violation blockComplaintButton" data-id="10033910985385447149" href="#"><i></i>Пожаловаться</a></li>
+                </ul>
+            </div>
+        </li>
+            </ul>
+
+16	mail.ru	http://realty.mail.ru	GET	GET	/searching{{RegionPath}}{{ActionPath}}{{Rubric[1]}}{{Rubric[3]}}?page={{Page}}&ex_item[4][{{Region[3]}}]={{Region[3]}}{{flats_count}}	NULL	{{PublicationLink}}	[PublicationDatetime:##{{PublicationDatetime}}##,PublicationId:{{PublicationId}},Action:{{Action}},Rubric:{{Rubric}},Region:{{Region}}]	NULL	NULL	30	DatetimeFirstIdSecondComparer	NoCompression	NoCompression	utf-8	utf-8	20	0	0	0	1	1	MailParser
+
+16	GET	utf-8	NoCompression	Region	http://realty.mail.ru/geo/selection/?type={{Option}}&geo_id={{Value||1}}		\\\	\\\	\{{InnerText}}\{{InnerText}}\{{value}}	
+\\\(\s*["'](\d+)["']\s*,\s*["']country["']\s*,\s*["']([^"']+)["']\s*\)\\\(\s*["'](\d+)["']\s*,\s*["']state["']\s*,\s*["']([^"']+)["']\s*\)\\value=.?["']*(\d+).?["'][^\>]*\>([^\<]+)\<.?\/label	$1	{{InnerText}}	
+\\\(\s*["'](\d+)["']\s*,\s*["']country["']\s*,\s*["']([^"']+)["']\s*\)\\\(\s*["'](\d+)["']\s*,\s*["']state["']\s*,\s*["']([^"']+)["']\s*\)\\value=.?["']*(\d+).?["'][^\>]*\>([^\<]+)\<.?\/label	$2	\{{countries}}\{{states}}\{{cities}}	\!\!\!
+countries states cities
+
+16	GET	utf-8	NoCompression	Rubric	\http://realty.mail.ru/living-for-sale/ru-mos-moskva/\http://realty.mail.ru/living-for-sale/ru-mos-moskva/\http://realty.mail.ru{{type2}}-for-sale{{link}}/		
+\//div[@id="projectSubMenuItem_sale"]//nav[@class="header__userline__menu__type2"]//a[contains(@href,'-for-sale')]\//div[@id="projectSubMenuItem_sale"]//nav[@class="header__userline__menu__type2"]//a[contains(@href,'{{type2}}-for-sale')]\//input[@name="types"]	
+\//div[@id="projectSubMenuItem_sale"]//nav[@class="header__userline__menu__type2"]//a[contains(@href,'-for-sale')]\//div[@id="projectSubMenuItem_sale"]//nav[@class="header__userline__menu__type2"]//a[contains(@href,'{{type2}}-for-sale')]\//input[@name="types"]/../text()	
+\{{href}}\{{href}}\/{{value}}	\\(\/\w+)-for-sale\/\\\{\{type2\}\}-for-sale(\/[^\/]+)\/\\(.*)	$1	{{InnerText}}	\s*\S*\s*	$&	\{{type2}}\{{link}}\{{type}}	\!\!
+
+
+/2/ru-len-sankt-peterburg/	
+
+
+16	\2\/ru-mos-moskva\	Москва и Московская область	\2\\	2	NULL	/msk	NULL	NULL	NULL
+16	\2\/ru-len-sankt-peterburg\	Санкт-Петербург и Ленинградская область	\2\\	2	NULL	/spb	NULL	NULL	NULL
+
+
+2F 73 65 61 72 63 68 69 6E 67 2F 6B 69 72 6F 76 2F 73 61 6C 65 2F 6C 69 76 69 6E 67 2F 73 65 63 6F 6E 64 61 72 79 5F 66 6C 61 74 2F 3F 66 6C 61 74 73 5F 63 6F 75 6E 74 5B 33 5D 3D 33 26 65 78 5F 69 74 65 6D 5B 34 5D 5B 35 31 38 39 33 34 5D 3D 35 31 38 39 33 34 20 
+/searching/kirov/sale/living/secondary_flat/?flats_count[3]=3&ex_item[4][518934]=518934 
+
+http://realty.mail.ru/living-for-sale/ru-mos-moskva/
+
+\\"eng_alias\\":\\"(\w+)\\"
+
+<nav class="header__userline__menu__type2">
+                    <ul class="clearfix">
+                                                    <li class="">
+                                <a href="http://realty.mail.ru/living-for-sale/ru-mos-moskva/" class="nv_click_d4809993">
+                                    Квартиры, комнаты
+                                </a>
+                            </li>
+                                                    <li class="">
+                                <a href="http://realty.mail.ru/country-for-sale/ru-mos-moskva/" class="nv_click_d4809996">
+                                    Дома, участки
+                                </a>
+                            </li>
+                                                    <li class="">
+                                <a href="http://realty.mail.ru/commercial-for-sale/ru-mos-moskva/" class="nv_click_d4913331">
+                                    Коммерческая недвижимость
+                                </a>
+                            </li>
+                                                    <li class="">
+                                <a href="http://realty.mail.ru/realty-for-sale/foreign/" class="nv_click_d4913338">
+                                    За рубежом
+                                </a>
+                            </li>
+                                            </ul>
+                </nav>
+
+
+<form id="search_form" method="get">
+    <input type="hidden" name="view" value="list">
+
+    
+    
+            <aside class="parametrical_listing section-types">
+            <h4>Тип</h4>
+                        <ul>
+                                    <li>
+                        <label>
+                            <input value="secondary_flat" name="types" class="type-of-type" type="checkbox">Квартира
+                        </label>
+                    </li>
+                                    <li>
+                        <label>
+                            <input value="flat" name="types" class="type-of-type" type="checkbox">Квартира в новостройке
+                        </label>
+                    </li>
+                                    <li>
+                        <label>
+                            <input value="room" name="types" class="type-of-type" type="checkbox">Комната
+                        </label>
+                    </li>
+                                    <li>
+                        <label>
+                            <input value="new_building" name="types" class="type-of-type" type="checkbox">Новостройка
+                        </label>
+                    </li>
+                
+            </ul>
+        </aside>
+    
+            <aside class="parametrical_listing section-rooms">
+            <h4>Количество комнат</h4>
+            <ul class="parametrical_listing_line">
+                <li><label><input value="1" class="nv_click_d4911620" name="flats_count" type="checkbox">1</label></li>
+                <li><label><input value="2" class="nv_click_d4911620" name="flats_count" type="checkbox">2</label></li>
+                <li><label><input value="3" class="nv_click_d4911620" name="flats_count" type="checkbox">3</label></li>
+                <li><label><input value="4" class="nv_click_d4911620" name="flats_count" type="checkbox">4+</label></li>
+            </ul>
+        </aside>
+
+            
+                                                                                                
+                                                                                                                                                                
+                                                                                                                                                        
+                                                                                                            
+                                    <aside class="parametrical_listing parametrical_listing__margin_bottom_18px">
+                    <h4>Регион</h4>
+                    <a href="#" onclick="detailedSearchForm.selectGeo('2', 'states'); return false;">
+                                                    Московская область                                            </a>
+                </aside>
+                    
+
+        
+
+            
+                                                            
+                <aside class="parametrical_listing section-geo">
+                    <h4>Москва</h4>
+                                            <ul class="parametrical_listing_add">
+                                                    <li>
+                                                                                                                                        
+
+                                <a onclick="detailedSearchForm.selectGeo('1059918', 'subways'); return false;" href="#" class="link link__add-position2">
+                                                                    <i></i>
+                                    Станция метро
+                                </a>
+                                <ul class="listing_tags selected-geo-objects-160 clearfix none">
+                                </ul>
+                            </li>
+                                                                                <li>
+                                                                                                                                        
+
+                                <a onclick="detailedSearchForm.selectGeo('1059918', 'streets'); return false;" href="#" class="link link__add-position2">
+                                                                    <i></i>
+                                    Улица
+                                </a>
+                                <ul class="listing_tags selected-geo-objects-70 clearfix none">
+                                </ul>
+                            </li>
+                                                                                <li>
+                                                                                                                                        
+
+                                <a onclick="detailedSearchForm.selectGeo('1059918', 'regions'); return false;" href="#" class="link link__add-position2">
+                                                                    <i></i>
+                                    Район города
+                                </a>
+                                <ul class="listing_tags selected-geo-objects-163 clearfix none">
+                                </ul>
+                            </li>
+                                                                                <li>
+                                                                                                                                        
+
+                                <a onclick="detailedSearchForm.selectGeo('1059918', 'districts'); return false;" href="#" class="link link__add-position2">
+                                                                    <i></i>
+                                    Административный округ
+                                </a>
+                                <ul class="listing_tags selected-geo-objects-162 clearfix none">
+                                </ul>
+                            </li>
+                                                                            </ul>
+                                    </aside>
+                
+                                                                                                
+                <aside class="parametrical_listing section-geo">
+                    <h4>Новая Москва </h4>
+                                            <ul class="parametrical_listing_add">
+                                                    <li>
+                                                                                                                                        
+
+                                <a onclick="detailedSearchForm.selectGeo('2041038', 'cities'); return false;" href="#" class="link link__add-position2">
+                                                                    <i></i>
+                                    Город
+                                </a>
+                                <ul class="listing_tags selected-geo-objects-4 clearfix none">
+                                </ul>
+                            </li>
+                                                                            </ul>
+                                    </aside>
+                
+                                                                                                
+                <aside class="parametrical_listing section-geo">
+                    <h4>Московская обл</h4>
+                                            <ul class="parametrical_listing_add">
+                                                    <li>
+                                                                                                                                        
+
+                                <a onclick="detailedSearchForm.selectGeo('602058', 'cities'); return false;" href="#" class="link link__add-position2">
+                                                                    <i></i>
+                                    Город
+                                </a>
+                                <ul class="listing_tags selected-geo-objects-4 clearfix none">
+                                </ul>
+                            </li>
+                                                                                <li>
+                                                                                                                                        
+
+                                <a onclick="detailedSearchForm.selectGeo('602058', 'highways'); return false;" href="#" class="link link__add-position2">
+                                                                    <i></i>
+                                    Шоссе
+                                </a>
+                                <ul class="listing_tags selected-geo-objects-161 clearfix none">
+                                </ul>
+                            </li>
+                                                                            </ul>
+                                    </aside>
+                
+                                
+    <aside class="parametrical_numeral_listing parametrical_numeral_listing__type2 clearfix section-price">
+        <h4><b>Цена</b><span>, руб.</span></h4>
+        <input type="text" value="0" class="user_form__input_text parametrical_numeral_listing__left_value js-inputMinPrice parametrical_numeral_listing__left_value" name="price_from">
+        <input type="text" value="5500000000" class="user_form__input_text parametrical_numeral_listing__right_value js-inputMaxPrice parametrical_numeral_listing__right_value" name="price_to">
+        <div id="sliderPrice" v1="" v0="0" r1="5500000000" r0="0" bargainid="0" class="slider-price-dispersion parametrical_numeral_listing__scrollbar ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all sliderPrice">
+                        <a href="#" class="ui-slider-handle ui-state-default ui-corner-all" style="left: 0%;"></a>
+            <a href="#" class="ui-slider-handle ui-state-default ui-corner-all" style="left: 100%;"></a>
+        <div class="ui-slider-range ui-widget-header" style="left: 0%; width: 100%;"></div></div>
+        <span class="parametrical_numeral_listing__min_value">0</span>
+        <span class="parametrical_numeral_listing__max_value">5 500 000 000</span>
+    </aside>    
+        
+    
+
+                            <aside class="parametrical_listing section-additional">
+                        <h4>Дополнительно</h4>
+                        <ul>
+                                <li><label><input name="is_mortgage" value="1" type="checkbox">В ипотеку</label></li>
+                        </ul>
+                </aside>
+            
+            
+    <aside class="parametrical_listing parametrical_listing__input additional-parameters">
+        <h4>Площадь<span>, м2</span></h4>
+        <ul>
+            <li class="parametrical_listing__input_form clearfix section-common-area">
+                                    <span class="parametrical_listing__input_form__name">Общая</span>
+                                <span class="parametrical_listing__input_form__forms">
+                                    <span class="parametrical_listing__input_form__from">от<input name="area_from" type="text"></span>
+                    <span class="parametrical_listing__input_form__to">до<input name="area_to" type="text"></span>
+                                </span>
+            </li>
+                            <li class="parametrical_listing__input_form clearfix section-living-area">
+                                            <span class="parametrical_listing__input_form__name">Жилая</span>
+                                        <span class="parametrical_listing__input_form__forms">
+                        <span class="parametrical_listing__input_form__from">от<input name="living_from" type="text"></span>
+                        <span class="parametrical_listing__input_form__to">до<input name="living_to" type="text"></span>
+                    </span>
+                </li>
+                
+                                    <li class="parametrical_listing__input_form clearfix section-kitchen-area">
+                        <span class="parametrical_listing__input_form__name">Кухня</span>
+                        <span class="parametrical_listing__input_form__forms">
+                            <span class="parametrical_listing__input_form__from">от<input name="kitchen_from" type="text"></span>
+                            <span class="parametrical_listing__input_form__to">до<input name="kitchen_to" type="text"></span>
+                        </span>
+                    </li>
+                                    </ul>
+    </aside>
+        
+        <aside class="parametrical_listing parametrical_listing__input section-nfloor none additional-parameters">
+        <h4>Этажность</h4>
+        <ul>
+            <li class="parametrical_listing__input_form">
+                <span>
+                    <span class="parametrical_listing__input_form__from">от<input name="nfloor_from" type="text"></span>
+                    <span class="parametrical_listing__input_form__to">до<input name="nfloor_to" type="text"></span>
+                </span>
+            </li>
+        </ul>
+    </aside>
+        
+    <aside class="parametrical_listing parametrical_listing__input parametrical_listing__margin-right section-floor none additional-parameters">
+        <h4>Этаж</h4>
+        <ul class="parametrical_listing_line">
+            <li><label><input name="floor_not_first" type="checkbox">Не первый</label></li>
+            
+                                </ul>
+    </aside>
+            
+    
+        <br>
+    
+            <aside class="parametrical_listing parametrical_listing_submit">
+            <a href="#" onclick="detailedSearchForm.submit(); return false;" class="button orange_button3"><s></s>Найти</a>
+        <a href="#" onclick="detailedSearchForm.reset(); return false;" class="button grey_button3"><s></s>Сбросить все параметры</a>
+                    </aside>
+    
+    </form>
+2F 67 65 6F 2F 73 65 6C 65 63 74 69 6F 6E 2F 20 
+http://realty.mail.ru/geo/selection/?instance=state&geo_id=2 
+
+2F 67 65 6F 2F 73 65 6C 65 63 74 69 6F 6E 57 69 6E 64 6F 77 50 61 67 65 2F 20 
+http://realty.mail.ru/geo/selectionWindowPage/?parentInstance=geoSelection&instance=cities&geo_id=2
+ 
+70 61 72 65 6E 74 49 6E 73 74 61 6E 63 65 3D 67 65 6F 53 65 6C 65 63 74 69 6F 6E 26 69 6E 73 74 61 6E 63 65 3D 73 74 61 74 65 73 26 6C 6F 61 64 5F 73 63 72 69 70 74 3D 74 72 75 65 26 73 65 6C 65 63 74 69 6F 6E 3D 6E 75 6C 6C 26 74 79 70 65 3D 73 74 61 74 65 73 26 67 65 6F 5F 69 64 3D 32 
+parentInstance=geoSelection&instance=states&load_script=true&selection=null&type=states&geo_id=2
+70 61 72 65 6E 74 49 6E 73 74 61 6E 63 65 3D 67 65 6F 53 65 6C 65 63 74 69 6F 6E 26 69 6E 73 74 61 6E 63 65 3D 63 69 74 69 65 73 26 6C 6F 61 64 5F 73 63 72 69 70 74 3D 66 61 6C 73 65 26 73 65 6C 65 63 74 69 6F 6E 3D 6E 75 6C 6C 26 74 79 70 65 3D 63 69 74 69 65 73 26 67 65 6F 5F 69 64 3D 34 39 33 30 31 32 
+parentInstance=geoSelection&instance=cities&load_script=false&selection=null&type=cities&geo_id=493012
+
+2F 73 65 61 72 63 68 69 6E 67 2F 6B 69 72 6F 76 2F 73 61 6C 65 2F 6C 69 76 69 6E 67 2F 73 65 63 6F 6E 64 61 72 79 5F 66 6C 61 74 2F 3F 66 6C 61 74 73 5F 63 6F 75 6E 74 5B 33 5D 3D 33 26 65 78 5F 69 74 65 6D 5B 34 5D 5B 35 31 38 39 33 34 5D 3D 35 31 38 39 33 34 20 
+/searching/kirov/sale/living/secondary_flat/?flats_count[3]=3&ex_item[4][518934]=518934 
+
+
+<ul>
+                                    <li>
+                        <label>
+                            <input value="cottage" name="types" class="type-of-type" type="checkbox">Коттедж
+                        </label>
+                    </li>
+                                    <li>
+                        <label>
+                            <input value="house" name="types" class="type-of-type" type="checkbox">Дача / Дом
+                        </label>
+                    </li>
+                                    <li>
+                        <label>
+                            <input value="townhouse" name="types" class="type-of-type" type="checkbox">Таунхаус
+                        </label>
+                    </li>
+                                    <li>
+                        <label>
+                            <input value="country_plot" name="types" class="type-of-type" type="checkbox">Участок
+                        </label>
+                    </li>
+                                    <li>
+                        <label>
+                            <input value="cottage_village" name="types" class="type-of-type" type="checkbox">Коттеджный посёлок
+                        </label>
+                    </li>
+                                    <li>
+                        <label>
+                            <input value="country_other" name="types" class="type-of-type" type="checkbox">Другое
+                        </label>
+                    </li>
+                
+            </ul>
+
+<ul>
+                                    <li>
+                        <label>
+                            <input value="secondary_flat" name="types" class="type-of-type" type="checkbox">Квартира
+                        </label>
+                    </li>
+                                    <li>
+                        <label>
+                            <input value="flat" name="types" class="type-of-type" type="checkbox">Квартира в новостройке
+                        </label>
+                    </li>
+                                    <li>
+                        <label>
+                            <input value="room" name="types" class="type-of-type" type="checkbox">Комната
+                        </label>
+                    </li>
+                
+            </ul>
+
+<nav class="header__userline__menu">
+            <ul class="clearfix">
+                                                                                                    <li id="projectMenuItem_sale" class="dropdown dropdown__simple active" dropdown="sale" onclick="_gaq.push(['_trackEvent', 'Search', 'Submit', 'Facemenu']);">
+                        <a href="http://realty.mail.ru/living-for-sale/ru-len-sankt-peterburg/" class="nv_click_d4809948">Продажа</a>
+                    </li>
+                                                        <li id="projectMenuItem_rent" class="dropdown dropdown__simple" dropdown="rent" onclick="_gaq.push(['_trackEvent', 'Search', 'Submit', 'Facemenu']);">
+                        <a href="http://realty.mail.ru/living-to-rent/ru-len-sankt-peterburg/" class="nv_click_d4809968">Аренда</a>
+                    </li>
+                                                        <li id="projectMenuItem_news" class=" ">
+                        <a href="http://realty.mail.ru/content/" class="nv_click_d4809974">Новости и статьи</a>
+                    </li>
+                
+                <li id="projectMenuItem_events" class="dropdown dropdown__simple header__userline__menu__item " dropdown="remont">
+                    <a href="http://realty.mail.ru/remont/" class="nv_click_d4809981">Ремонт</a>
+                </li>
+            </ul>
+        </nav>
+
+
+<nav class="header__userline__menu__type2">
+                    <ul class="clearfix">
+                                                    <li class="">
+                                <a href="http://realty.mail.ru/living-for-sale/ru-len-sankt-peterburg/" class="nv_click_d4809993">
+                                    Квартиры, комнаты
+                                </a>
+                            </li>
+                                                    <li class="">
+                                <a href="http://realty.mail.ru/country-for-sale/ru-len-sankt-peterburg/" class="nv_click_d4809996">
+                                    Дома, участки
+                                </a>
+                            </li>
+                                                    <li class="">
+                                <a href="http://realty.mail.ru/commercial-for-sale/ru-len-sankt-peterburg/" class="nv_click_d4913331">
+                                    Коммерческая недвижимость
+                                </a>
+                            </li>
+                                                    <li class="">
+                                <a href="http://realty.mail.ru/realty-for-sale/foreign/" class="nv_click_d4913338">
+                                    За рубежом
+                                </a>
+                            </li>
+                                            </ul>
+                </nav>
