@@ -104,12 +104,13 @@ namespace RealtyParser
                         memoryStreams.Add(
                             new MemoryStream(System.Text.Encoding.Default.GetBytes(decodedReader.ReadToEnd())));
                     }
-                    catch (WebException exception)
+                    catch (AggregateException)
                     {
-                        Debug.WriteLine(exception.ToString());
-                        Debug.WriteLine(exception.Message);
-                        Debug.WriteLine(exception.InnerException.ToString());
-                        Debug.WriteLine(exception.InnerException.InnerException.ToString());
+                        throw;
+                    }
+                    catch (WebException)
+                    {
+                        throw;
                     }
                     catch (Exception exception)
                     {
@@ -147,6 +148,10 @@ namespace RealtyParser
 
                     if (ProgressCallback != null) ProgressCallback(++current, total);
                 }
+            }
+            catch (AggregateException exception)
+            {
+                Debug.WriteLine(exception.ToString());
             }
             catch (WebException exception)
             {

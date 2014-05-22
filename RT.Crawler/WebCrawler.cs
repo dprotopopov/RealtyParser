@@ -17,21 +17,10 @@ namespace RT.Crawler
         public async Task<WebResponse> GetResponse(WebRequest request)
         {
             OnUriLogger(new UriEventArgs(request.RequestUri)); //залогируем запрос 
-            try
-            {
-                return await Task.Factory.FromAsync(
-                    request.BeginGetResponse,
-                    asyncResult => request.EndGetResponse(asyncResult),
-                    null);
-            }
-            catch (WebException wex)
-            {
-                return null;
-            }
-            catch (Exception exception)
-            {
-                return null;
-            }
+            return await Task<WebResponse>.Factory.FromAsync(
+                request.BeginGetResponse,
+                request.EndGetResponse,
+                null);
         }
 
         #region Helper Methods

@@ -72,8 +72,7 @@ namespace RealtyParser.Editor.Children
                 Crawler.Compression = _workspace.Compression;
                 Crawler.Request = _workspace.Request;
                 IEnumerable<MemoryStream> documents =
-                    await
-                        Crawler.WebRequest(builder.Uri);
+                    await Crawler.WebRequest(builder.Uri);
 
                 listBoxDocument.Items.AddRange(documents.Cast<object>().ToArray());
 //                webBrowser1.Navigate(_workspace.Url);

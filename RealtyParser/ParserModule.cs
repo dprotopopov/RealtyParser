@@ -272,6 +272,7 @@ namespace RealtyParser
                             };
                             pageValues.Add("Page-1", (pageId - 1).ToString(CultureInfo.InvariantCulture));
                             pageValues.Add("Page||1", pageId.ToString(CultureInfo.InvariantCulture));
+                            if (pageId > 1) pageValues.Add("&p=Page-1", string.Format("&p={0}", pageId - 1));
 
                             Debug.WriteLine(pageValues.ToString());
                             IEnumerable<string> urls =
@@ -297,17 +298,21 @@ namespace RealtyParser
                                     Uri.Default = builder.Uri;
 
                                     IEnumerable<MemoryStream> documents =
-                                        await
-                                            LookupCrawler.WebRequest(builder.Uri);
+                                        await LookupCrawler.WebRequest(builder.Uri);
+
+                                    if (!documents.Any())
+                                        throw new EndOfSearchDetectedException();
+                                    
                                     ReturnFields returnFields = Parser.BuildReturnFields(documents,
                                         urlValues, returnFieldInfos.ToList());
-                                    returnFields.Add(urlValues);
-                                    int linkCount = returnFields.PublicationLink.Count();
 
-                                    if (linkCount == 0)
+                                    if (!returnFields.PublicationLink.Any())
                                         throw new EndOfSearchDetectedException();
 
+                                    returnFields.Add(urlValues);
+                                    int linkCount = returnFields.PublicationLink.Count();
                                     Debug.WriteLine("linkCount = " + linkCount);
+
                                     var returnValues = new Values(returnFields);
                                     IEnumerable<Link> links =
                                         Transformation.ParseTemplate(SiteProperties.PublicationTemplate.ToString(),
@@ -378,8 +383,7 @@ namespace RealtyParser
                                             Uri.Default = builder1.Uri;
 
                                             IEnumerable<MemoryStream> streams =
-                                                await
-                                                    PublicationCrawler.WebRequest(builder1.Uri);
+                                                await PublicationCrawler.WebRequest(builder1.Uri);
                                             Thread.Sleep(0);
                                             ReturnFields fields = Parser.BuildReturnFields(streams,
                                                 values, ReturnFieldInfos.ToList());
@@ -643,8 +647,7 @@ namespace RealtyParser
                         };
                         Uri.Default = builder.Uri;
                         IEnumerable<MemoryStream> streams =
-                            await
-                                PublicationCrawler.WebRequest(builder.Uri);
+                            await PublicationCrawler.WebRequest(builder.Uri);
                         Thread.Sleep(0);
                         ReturnFields returnFields = Parser.BuildReturnFields(streams,
                             urlValues, ReturnFieldInfos.ToList());
