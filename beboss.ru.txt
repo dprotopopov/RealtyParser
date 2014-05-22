@@ -1,3 +1,32 @@
+7	\/office	Офисы	\	1	NULL	NULL	NULL	NULL	NULL
+7	\/retail	Торговая недвижимость	\	1	NULL	NULL	NULL	NULL	NULL
+7	\/stock	Склады и логистические центры	\	1	NULL	NULL	NULL	NULL	NULL
+7	\/industry	Производственные помещения	\	1	NULL	NULL	NULL	NULL	NULL
+7	\/spec	Помещения спец. назначения	\	1	NULL	NULL	NULL	NULL	NULL
+7	\/land	Земля	\	1	NULL	NULL	NULL	NULL	NULL
+
+
+7	1404	\/office
+7	1405	\/industry
+7	1405	\/stock
+7	1405	\/spec
+7	1406	\/retail
+7	1407	\/land
+
+1403	Коммерческая	1382	2	1	NULL	NULL	NULL	NULL	NULL	NULL	NULL	NULL
+1404	Офисы	1403	3	0	NULL	NULL	NULL	NULL	NULL	NULL	NULL	NULL
+1405	Производственно-складское помещение	1403	3	0	NULL	NULL	NULL	NULL	NULL	NULL	NULL	NULL
+1406	Торговая площадь	1403	3	0	NULL	NULL	NULL	NULL	NULL	NULL	NULL	NULL
+1407	Земля	1403	3	0	NULL	NULL	NULL	NULL	NULL	NULL	NULL	NULL
+
+
+[PublicationDatetime:##20.05.2014 13:06:00##,PublicationId:102296,Action:\/sell,Rubric:\/industry,Region:\http://www.beboss.ru/kn/perm]&[PublicationDatetime:##20.05.2014 14:35:00##,PublicationId:118636,Action:\/sell,Rubric:\/spec,Region:\http://www.beboss.ru/kn/perm]&[PublicationDatetime:##21.05.2014 12:57:00##,PublicationId:72478,Action:\/sell,Rubric:\/stock,Region:\http://www.beboss.ru/kn/perm]
+
+[PublicationDatetime:##20.05.2013 13:06:00##,PublicationId:102296,Action:\/sell,Rubric:\/industry,Region:\http://www.beboss.ru/kn/perm]&[PublicationDatetime:##20.05.2013 14:35:00##,PublicationId:118636,Action:\/sell,Rubric:\/spec,Region:\http://www.beboss.ru/kn/perm]&[PublicationDatetime:##21.05.2013 12:57:00##,PublicationId:72478,Action:\/sell,Rubric:\/stock,Region:\http://www.beboss.ru/kn/perm]
+
+
+7	beboss.ru	http://beboss.ru	GET	GET	{{Region}}{{Rubric}}{{Action}}?page={{Page}}	NULL	{{PublicationLink}}	[PublicationDatetime:##{{PublicationDatetime}}##,PublicationId:{{PublicationId}},Action:{{Action}},Rubric:{{Rubric}},Region:{{Region}}]	NULL	NULL	30	DatetimeFirstIdSecondComparer	NoCompression	NoCompression	utf-8	utf-8	20	0	0	0	3	3	BeBossParser
+
 7	PublicationLink	//div[@class='obj-info']/p[@class='title']/a[@href]	{{href}}	.*	$&	NULL
 7	PublicationId	//div[contains(@class,'content')]//p[contains(.,'Объявление №')]	{{InnerText}}	\D*(\d+)\D*	$1	NULL
 7	PublicationDatetime	//div[contains(@class,'content')]//span[contains(.,'Обновлено')]	{{InnerText}}	\D*(\d+\D+\d+\D+\d+)\D+(\d+\D+\d+)\s*.*	$1 $2	NULL

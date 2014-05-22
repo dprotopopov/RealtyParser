@@ -1,5 +1,49 @@
 egent.ru
 
+4	egent.ru	http://egent.ru	GET	GET	{{Region}}{{RubricAction}}?is_searching=1{{&p=Page-1}}{{RubricQuery}}{{ActionQuery}}	NULL	{{PublicationLink}}	[PublicationDatetime:##{{PublicationDatetime}}##,PublicationId:{{PublicationId}},Action:{{Action}},Rubric:{{Rubric}},Region:{{Region}}]	NULL	NULL	30	DatetimeFirstIdSecondComparer	NoCompression	NoCompression	windows-1251	windows-1251	20	0	1	0	3	3	EgentParser
+
+
+4	1382	3	/kvartira-dolgosrochno/
+4	1383	3	/kvartira-dolgosrochno/
+4	1384	3	/kvartira-dolgosrochno/
+4	1385	3	/komnata-dolgosrochno/
+4	1386	3	/kvartira/1kom/
+4	1387	3	/kvartira/2kom/
+4	1388	3	/kvartira/3kom/
+4	1389	3	/kvartira/4kom/
+4	1390	3	/kvartira/4kom/
+4	1399	3	/doma-dolgosrochno/
+4	1400	3	/doma-dolgosrochno/
+4	1403	3	/comercial/
+4	1404	3	/comercial/ofis/
+4	1405	3	/comercial/sklad/
+4	1406	3	/comercial/pomeshenie/
+4	1407	3	/comercial/uchastok/
+4	1382	5	/kvartira-sutki/
+4	1383	5	/kvartira-sutki/
+4	1384	5	/kvartira-sutki/
+4	1385	5	/komnata-sutki/
+4	1386	5	/search.html
+4	1387	5	/search.html
+4	1388	5	/search.html
+4	1389	5	/search.html
+4	1390	5	/search.html
+4	1382	4	/search.html
+4	1383	4	/search.html
+4	1384	4	/search.html
+4	1385	4	/search.html
+4	1386	4	/search.html
+4	1387	4	/search.html
+4	1388	4	/search.html
+4	1389	4	/search.html
+4	1390	4	/search.html
+
+
+
+http://kaliningrad.egent.ru/kvartira/3kom/?p=0&r1=0&r2=0&r3=1&r4=0&sd=1&sn=0&opt1=0&opt2=0&opt3=0&is_searching=1
+http://kaliningrad.egent.ru/search.html?p=0&r1=0&r2=0&r3=1&r4=0&sd=1&sn=0&opt1=0&opt2=0&opt3=0&is_searching=1
+http://kaliningrad.egent.ru/search.html?sd=1&sn=0&r1=0&r2=0&r3=1&r4=0&opt1=0&opt2=0&opt3=0&is_searching=1&price_ot=0&price_do=0
+
 http://www.egent.ru/citylist-utf.txt
 http://www.egent.ru/ajax/get_regions/
 
