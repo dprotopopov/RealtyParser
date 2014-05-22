@@ -1,7 +1,11 @@
 http://realty.moskva-citystar.ru
 
 
-13	PublicationLink	//div[@class='adv-list']//table[@class="table"]//td[@class="address"]/a	{{href}}	.*	$&	NULL
+13	citystar.ru	http://citystar.ru	GET	GET	{{Region}}/realty{{RubricAction}}/?p={{Page}}{{RubricQuery}}	NULL	{{Region}}{{PublicationLink}}	[PublicationDatetime:##{{PublicationDatetime}}##,PublicationId:{{PublicationId}},Action:{{Action}},Rubric:{{Rubric}},Region:{{Region}}]	NULL	NULL	30	DatetimeFirstIdSecondComparer	NoCompression	NoCompression	utf-8	utf-8	20	0	1	0	3	3	CitystarParser
+
+//div[@class='adv-list']//table[@class="table"]//tr//td[@class="address" or @class="description" or @class="image"]//a[@href]
+
+13	PublicationLink	//div[@class='adv-list']//table[@class="table"]//td[@class="address" or @class="description" or @class="image"][//a][1]//a[1]	{{href}}	.*	$&	NULL
 13	PublicationId	//div[@class='adv-list']//table[@class="table"]//td[@class="notebook-column"]/input	{{value}}	.*	$&	NULL
 13	PublicationDatetime	//div[@class='adv-list']//table[@class="table"]//td[@class="date"]/text()	{{InnerText}}	.*	$&	NULL
 13	WebPublicationPublicationId	//div[@class="adv-view"]//div[@class="adv-number"]	{{InnerText}}	\D*(\d+).*	$1	NULL
@@ -17,7 +21,7 @@ http://realty.moskva-citystar.ru
 13	WebPublicationAdditionalInfoRealtyAdditionalInfoCostPerMeter	//div[@class="adv-view"]//div[@class="adv-main-data"]//span[contains(.,'р./м2')]/strong	{{InnerText}}	\D*(\d+)\D*	$1	NULL
 13	WebPublicationAdditionalInfoRealtyAdditionalInfoFloor	//div[@class="adv-view"]//div[@class="adv-main-data"]//td[contains(.,'Этаж')]/following-sibling::td[1]	{{InnerText}}	\D*(\d+)\s*\/\D*(\d+).*	$1	NULL
 13	WebPublicationAdditionalInfoRealtyAdditionalInfoFloorNumber	//div[@class="adv-view"]//div[@class="adv-main-data"]//td[contains(.,'Этаж')]/following-sibling::td[1]	{{InnerText}}	\D*(\d+)\s*\/\D*(\d+).*	$2	NULL
-13	WebPublicationAdditionalInfoRealtyAdditionalInfoAddress	//div[@class="adv-view"]//div[@class="adv-main-data"]//td[contains(.,'Район') or contains(.,'Адрес')]/following-sibling::td[1]	{{InnerText}}	\s*(\S+)\s*	$1	 
+13	WebPublicationAdditionalInfoRealtyAdditionalInfoAddress	//div[@class="bread-crumb"]//a[contains(.,"Недвижимость в")]|//div[@class="adv-view"]//div[@class="adv-main-data"]//td[contains(.,'Район') or contains(.,'Адрес')]/following-sibling::td[1]	{{InnerText}}	(Недвижимость\sв)?\s*(\S+)\s*	$2	 
 13	WebPublicationAdditionalInfoRealtyAdditionalInfoDistrict	//div[@class="adv-view"]//div[@class="adv-main-data"]//td[contains(.,'Район')]/following-sibling::td[1]	{{InnerText}}	\s*(\S+)\s*	$1	 
 13	WebPublicationAdditionalInfoRealtyAdditionalInfoWallМaterial	//div[@class="adv-view"]//div[@class="adv-main-data"]//td[contains(.,'Материал стен')]/following-sibling::td[1]	{{InnerText}}	\s*(\S+)\s*	$1	 
 13	WebPublicationAdditionalInfoRealtyAdditionalInfoViewFromProperty	//div[@class="adv-view"]//div[@class="adv-main-data"]//tr[contains(.,'Куда выходят окна')]/following-sibling::tr[1]	{{InnerText}}	\s*(\S+)\s*	$1	 
@@ -30,6 +34,17 @@ http://realty.moskva-citystar.ru
 13	WebPublicationContactAuthor	//div[@class="adv-contact-data"]//div[@class="agency"]//div[@class="name"]/a	{{InnerText}}	\s*(\S+)\s*	$1	 
 13	WebPublicationAdditionalInfoRealtyAdditionalInfoLandSpace	//div[@class="adv-view"]//div[@class="adv-main-data"]//td[contains(.,'Площадь')]/following-sibling::td[1]	{{InnerText}}	\A\D*(\d*).*	$1	NULL
 13	WebPublicationContactAuthorUrl	//div[@class="adv-contact-data"]//div[@class="name"]/a	{{onclick}}	go\("([^"]+)"\)	$1	NULL
+
+//div[@class='adv-list']//table[@class="table"]//td[@class="address" or @class="description"]/a
+
+<div class="bread-crumb">
+    
+                    <span class="bread-crumb-link"><a class="common-link-visited" href="/">Недвижимость в Екатеринбурге</a></span>
+                 &nbsp;»&nbsp; 
+                    <span class="bread-crumb-link"><a class="common-link-visited" href="/realty/prodazha-kvartir/">Продажа квартир в Екатеринбурге</a></span>
+                &nbsp;»&nbsp;
+</div>
+
 
 
 <a href="javascript:void(0)" onclick="go(&quot;/party68631&quot;)">CENTURY 21 Street Realty </a>

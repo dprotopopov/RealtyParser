@@ -228,6 +228,8 @@ namespace RealtyParser
 
                 var dictionary = new Dictionary<Resource, KeyValuePair<Link, Values>>(ResourceComparer);
                 var resources = new SortedStackListQueue<Resource> {Comparer = ResourceComparer};
+                bool available = false;
+
                 foreach (RequestProperties mappedId in includeList)
                 {
                     var mappedLevel = new RequestProperties
@@ -244,9 +246,9 @@ namespace RealtyParser
                         let propertyLock = SiteProperties.GetType().GetProperty(string.Format("{0}Lock", name))
                         let enumerable = property.GetValue(siteValues, null) as IEnumerable<string>
                         let value = MyDatabase.Database.ConvertTo<long>(propertyLock.GetValue(SiteProperties, null))
-                        where !enumerable.Any() && value != 0
-                        select enumerable).Any())
-                        throw new NotAvailableDetectedException();
+                        select !enumerable.Any() && value != 0).Aggregate(Boolean.Or)) continue;
+
+                    available = true;
 
                     var requestProperties = new RequestProperties(mappedId, Mapping);
                     var currentResources = new StackListQueue<Resource>();
@@ -267,7 +269,8 @@ namespace RealtyParser
                                     new StackListQueue<string>
                                     {
                                         string.Format("{0}",
-                                            (pageId - 1)*MyDatabase.Database.ConvertTo<long>(SiteProperties.PageSize))
+                                            (pageId - 1)*
+                                            MyDatabase.Database.ConvertTo<long>(SiteProperties.PageSize))
                                     }
                             };
                             pageValues.Add("Page-1", (pageId - 1).ToString(CultureInfo.InvariantCulture));
@@ -278,7 +281,8 @@ namespace RealtyParser
                             IEnumerable<string> urls =
                                 Transformation.ParseTemplate(SiteProperties.LookupTemplate.ToString(), pageValues);
                             IEnumerable<string> reqs =
-                                Transformation.ParseTemplate(SiteProperties.LookupRequestTemplate.ToString(), pageValues);
+                                Transformation.ParseTemplate(SiteProperties.LookupRequestTemplate.ToString(),
+                                    pageValues);
                             for (int index = 0; index < pageValues.MaxCount; index++)
                             {
                                 Debug.WriteLine(urls.ElementAt(index) + ":" + reqs.ElementAt(index));
@@ -302,7 +306,7 @@ namespace RealtyParser
 
                                     if (!documents.Any())
                                         throw new EndOfSearchDetectedException();
-                                    
+
                                     ReturnFields returnFields = Parser.BuildReturnFields(documents,
                                         urlValues, returnFieldInfos.ToList());
 
@@ -319,7 +323,8 @@ namespace RealtyParser
                                             returnValues)
                                             .ToList()
                                             .GetRange(0, linkCount)
-                                            .Select(s => new Link(s));
+                                            .Select(s => new Link(Uri.Combine(builder.Uri.ToString(),
+                                                s).ToString()));
                                     Debug.WriteLine("links.Count = " + links.Count());
 
                                     foreach (var pair in siteValues.Where(pair => pair.Value.Any()))
@@ -360,7 +365,8 @@ namespace RealtyParser
                                                     })) continue;
 
                                             dictionary.Add(resource,
-                                                new KeyValuePair<Link, Values>(links.ElementAt(i), returnValues.Slice(i)));
+                                                new KeyValuePair<Link, Values>(links.ElementAt(i),
+                                                    returnValues.Slice(i)));
                                             Debug.WriteLine("Enqueue " + resource + " " +
                                                             PublicationComparer.GetType().Name);
                                             currentResources.Enqueue(resource);
@@ -378,9 +384,9 @@ namespace RealtyParser
                                                 };
                                             var values = new Values(returnValues.Slice(i))
                                             {
-                                                Url = new StackListQueue<string> {builder1.Uri.ToString()},
+                                                Url = new StackListQueue<string>(builder1.Uri.ToString()),
                                             };
-                                            Uri.Default = builder1.Uri;
+                                            Uri.Default = builder.Uri;
 
                                             IEnumerable<MemoryStream> streams =
                                                 await PublicationCrawler.WebRequest(builder1.Uri);
@@ -396,7 +402,8 @@ namespace RealtyParser
                                                     .Where(s => PublicationComparer.IsValid(s))
                                                     .Select(
                                                         s =>
-                                                            new Resource(s, SiteProperties.ResourceTemplate.ToString())
+                                                            new Resource(s,
+                                                                SiteProperties.ResourceTemplate.ToString())
                                                             {
                                                                 Transformation = Transformation
                                                             });
@@ -490,6 +497,8 @@ namespace RealtyParser
                     resources.AddRangeExcept(currentResources);
                     Debug.WriteLine("resources.Count = " + resources.Count());
                 }
+
+                if (!available) throw new NotAvailableDetectedException();
 
                 var nextResources = new StackListQueue<Resource>(lastResources) {resources};
                 nextResources = new StackListQueue<Resource>(nextResources.Select(
@@ -643,7 +652,7 @@ namespace RealtyParser
                         };
                         var urlValues = new Values(dictionary[resource].Value)
                         {
-                            Url = new StackListQueue<string> {builder.Uri.ToString()}
+                            Url = new StackListQueue<string>(builder.Uri.ToString())
                         };
                         Uri.Default = builder.Uri;
                         IEnumerable<MemoryStream> streams =
