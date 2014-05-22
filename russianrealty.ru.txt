@@ -1,6 +1,7 @@
 http://www.russianrealty.ru
 
-15	russianrealty.ru	http://russianrealty.ru	GET	GET	/tools/api/search/?a={{Action}}&p={{Rubric[1]}}&t={{Rubric[2]}}&c={{Region[1]}}&r={{Region[2]}}&d={{Region[3]}}&l={{Region[4]}}&_l={{PageSize}}&_p={{Page}}&z=DATEADD&zt=DESC{{rtn}}	NULL	{{PublicationLink}}	[PublicationDatetime:##{{PublicationDatetime}}##,PublicationId:{{PublicationId}},Action:{{Action}},Rubric:{{Rubric}},Region:{{Region}}]	NULL	NULL	30	DatetimeFirstIdSecondComparer	NoCompression	GZipStream	windows-1251	20	0	0	0	RussianrealtyParser
+15	russianrealty.ru	http://russianrealty.ru	GET	GET	
+/tools/api/search/?a={{Action[1]}}&pp={{Action[2]}}&p={{Rubric[1]}}&t={{Rubric[2]}}&c={{Region[1]}}&r={{Region[2]}}&d={{Region[3]}}&l={{Region[4]}}&_l={{PageSize}}&_p={{Page}}&z=DATEADD&zt=DESC{{rtn}}	NULL	{{PublicationLink}}	[PublicationDatetime:##{{PublicationDatetime}}##,PublicationId:{{PublicationId}},Action:{{Action}},Rubric:{{Rubric}},Region:{{Region}}]	NULL	NULL	30	DatetimeFirstIdSecondComparer	NoCompression	NoCompression	windows-1251	windows-1251	20	0	0	0	1	1	RussianrealtyParser
 
 15	PublicationId	/	{{Url}}	\D*(\d+).*	$1	NULL
 15	PublicationDatetime	(//article//div[@class="item-status"]//time)[last()]	{{InnerText}}	\D*(\d+\D\d+\D\d+(\D+\d+:\d+)?).*	$1	NULL
