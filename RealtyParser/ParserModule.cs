@@ -327,7 +327,12 @@ namespace RealtyParser
                                                 s).ToString()));
                                     Debug.WriteLine("links.Count = " + links.Count());
 
-                                    foreach (var pair in siteValues.Where(pair => pair.Value.Any()))
+                                    Debug.WriteLine(string.Join(Environment.NewLine,
+                                        siteValues.Where(pair => pair.Value == null).Select(pair => pair.Key)));
+                                    foreach (
+                                        var pair in
+                                            siteValues.Where(pair => pair.Value != null).Where(pair => pair.Value.Any())
+                                        )
                                     {
                                         returnValues.Add(pair.Key,
                                             Enumerable.Repeat(pair.Value.First(), linkCount).ToList());
