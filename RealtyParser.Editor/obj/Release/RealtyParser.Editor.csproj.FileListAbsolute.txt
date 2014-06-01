@@ -1,1 +1,0 @@
-D:\Projects\RealtyParser\RealtyParser.Editor\bin\Release\RealtyParserEditor.exe.config
