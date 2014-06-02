@@ -1,4 +1,4 @@
-﻿using MyLibrary.Attribute;
+﻿using MyLibrary.Attributes;
 
 namespace RealtyParser.Collections
 {

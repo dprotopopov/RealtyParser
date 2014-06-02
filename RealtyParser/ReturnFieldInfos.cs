@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using MyLibrary.Attribute;
+using MyLibrary.Attributes;
 using MyLibrary.Types;
 using RealtyParser.Collections;
 

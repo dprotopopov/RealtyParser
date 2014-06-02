@@ -1,6 +1,5 @@
-﻿using System;
-using System.Reflection;
-using MyLibrary.Attribute;
+﻿using System.Reflection;
+using MyLibrary.Attributes;
 using MyParser;
 
 namespace RealtyParser

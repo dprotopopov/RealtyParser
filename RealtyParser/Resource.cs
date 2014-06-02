@@ -4,7 +4,7 @@ using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using MyLibrary;
-using MyLibrary.Attribute;
+using MyLibrary.Attributes;
 using MyLibrary.Comparer;
 using String = MyLibrary.Types.String;
 
