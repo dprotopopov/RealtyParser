@@ -1,8 +1,9 @@
 http://www.russianrealty.ru
 
 15	russianrealty.ru	http://russianrealty.ru	GET	GET	
-/tools/api/search/?a={{Action[1]}}&pp={{Action[2]}}&p={{Rubric[1]}}&t={{Rubric[2]}}&c={{Region[1]}}&r={{Region[2]}}&d={{Region[3]}}&l={{Region[4]}}&_l={{PageSize}}&_p={{Page}}&z=DATEADD&zt=DESC{{rtn}}	NULL	{{PublicationLink}}	[PublicationDatetime:##{{PublicationDatetime}}##,PublicationId:{{PublicationId}},Action:{{Action}},Rubric:{{Rubric}},Region:{{Region}}]	NULL	NULL	30	DatetimeFirstIdSecondComparer	NoCompression	NoCompression	windows-1251	windows-1251	20	0	0	0	1	1	RussianrealtyParser
+/tools/api/search/?a={{Action[1]}}&pp={{Action[2]}}&p={{Rubric[1]}}&t={{Rubric[2]}}&c={{Region[1]}}&r={{Region[2]}}&d={{Region[3]}}&l={{Region[4]}}&_l=50&_p={{Page}}&z=DATEADD&zt=DESC{{rtn}}	NULL	{{PublicationLink}}	[PublicationDatetime:##{{PublicationDatetime}}##,PublicationId:{{PublicationId}},Action:{{Action}},Rubric:{{Rubric}},Region:{{Region}}]	NULL	NULL	30	DatetimeFirstIdSecondComparer	NoCompression	NoCompression	windows-1251	windows-1251	20	0	0	0	1	1	RussianrealtyParser
 
+15	PublicationLink		{{InnerText}}	(https?\:\/\/[a-zA-Z0-9\.\/\?\:@\-_=#]+)	$1	NULL
 15	PublicationId	/	{{Url}}	\D*(\d+).*	$1	NULL
 15	PublicationDatetime	(//article//div[@class="item-status"]//time)[last()]	{{InnerText}}	\D*(\d+\D\d+\D\d+(\D+\d+:\d+)?).*	$1	NULL
 15	WebPublicationPublicationId	/	{{Url}}	\D*(\d+).*	$1	NULL
@@ -12,23 +13,28 @@ http://www.russianrealty.ru
 15	WebPublicationAdditionalInfoRealtyAdditionalInfoDistrict	//article//p[contains(.,'Ближайшая ст. метро:')]/text()[2]	{{InnerText}}	\s*(\S+)\s*	$1	 
 15	WebPublicationAdditionalInfoRealtyAdditionalInfoCostAll	//article//header//h3/text()[contains(.,'руб.')]	{{InnerText}}	\D*(\d+)\D*	$1	NULL
 15	WebPublicationAdditionalInfoRealtyAdditionalInfoCostPerMeter	//article//header//h3/span[contains(.,'р./м?')]	{{InnerText}}	\D*(\d+)\D*	$1	NULL
-15	WebPublicationAdditionalInfoRealtyAdditionalInfoTotalSpace	//article//table[contains(.,'Общая')][contains(.,'Жилая')][contains(.,'Кухня')]/tbody/tr[1]/td[1]	{{InnerText}}	\A\D*(\d*).*	$1	NULL
-15	WebPublicationAdditionalInfoRealtyAdditionalInfoLivingSpace	//article//table[contains(.,'Общая')][contains(.,'Жилая')][contains(.,'Кухня')]/tbody/tr[1]/td[2]	{{InnerText}}	\A\D*(\d*).*	$1	NULL
-15	WebPublicationAdditionalInfoRealtyAdditionalInfoKitchenSpace	//article//table[contains(.,'Общая')][contains(.,'Жилая')][contains(.,'Кухня')]/tbody/tr[1]/td[3]	{{InnerText}}	\A\D*(\d*).*	$1	NULL
-15	WebPublicationAdditionalInfoRealtyAdditionalInfoFloor	//article//div[@class="article-body"]//p/text()[contains(.,' этаж')]	{{InnerText}}	\A\D*(\d+)\D*(\d+)?.*	$1	NULL
-15	WebPublicationAdditionalInfoRealtyAdditionalInfoFloorNumber	//article//div[@class="article-body"]//p/text()[contains(.,' этаж')]	{{InnerText}}	\A\D*(\d+)\D*(\d+)?.*	$2	NULL
 15	WebPublicationAdditionalInfoRealtyAdditionalInfoFurnish	//article//div[@class="article-body"]//ul//li[contains(.,'Ремонт:')]	{{InnerText}}	([^:]*:)?\s*(\S+)\s*	$2	 
 15	WebPublicationAdditionalInfoRealtyAdditionalInfoWc	//article//div[@class="article-body"]//ul//li[contains(.,'Санузел:')]	{{InnerText}}	([^:]*:)?\s*(\S+)\s*	$2	 
 15	WebPublicationAdditionalInfoRealtyAdditionalInfoIsLoggia	//article//div[@class="article-body"]//ul//li[contains(.,'Балкон:')]	{{InnerText}}	([^:]*:)?\s*(\S+)\s*	$2	 
 15	WebPublicationPhotos	//article//div[@class="article-body"]//ul[@class="list-gallery"]//a[@href]	{{href}}	.*	$&	NULL
 15	WebPublicationAdditionalInfoRealtyAdditionalInfoAppointmentOfRoom	//article//header//h1	{{InnerText}}	\s*(\S+)\s*	$1	 
-15	PublicationLink	/	{{InnerText}}	"(http:\/\/[\w\.\/-]+)"	$1	NULL
 15	WebPublicationUrl	/	{{Url}}	.*	$&	NULL
 15	WebPublicationSite	/	{{Url}}	((http(s)?:\/\/)?[^\/\?]+).*	$1	NULL
-15	WebPublicationContactContactName	//article//label[contains(.,'Контакт:')]/following-sibling::span[1]	{{InnerText}}	\s*(\S+)\s*	$1	 
-15	WebPublicationContactPhone	//article//label[contains(.,'Телефон:')]/following-sibling::span[1]	{{InnerText}}	.*	$&	NULL
+15	WebPublicationContactContactName	//article//div[contains(.,'Контакт:')]/strong	{{InnerText}}	\s*(\S+)\s*	$1	 
+15	WebPublicationContactPhone	//article//div[contains(.,'Телефон')]/strong	{{InnerText}}	.*	$&	NULL
+15	WebPublicationAdditionalInfoRealtyAdditionalInfoTotalSpace	//article//table[contains(.,'Общая')]/tbody/tr[1]/td[1]	{{InnerText}}	\A\D*(\d*).*	$1	NULL
+15	WebPublicationAdditionalInfoRealtyAdditionalInfoLivingSpace	//article//table[contains(.,'Жилая')]/tbody/tr[1]/td[2]	{{InnerText}}	\A\D*(\d*).*	$1	NULL
+15	WebPublicationAdditionalInfoRealtyAdditionalInfoKitchenSpace	//article//table[contains(.,'Кухня')]/tbody/tr[1]/td[3]	{{InnerText}}	\A\D*(\d*).*	$1	NULL
+15	WebPublicationAdditionalInfoRealtyAdditionalInfoFloor	//article//div[@class="article-body"]//p/text()[contains(.,' этаж')]	{{InnerText}}	\A\D*(\d+)\D*(\d+)?.*	$1	NULL
+15	WebPublicationAdditionalInfoRealtyAdditionalInfoFloorNumber	//article//div[@class="article-body"]//p/text()[contains(.,' этаж')]	{{InnerText}}	\A\D*(\d+)\D*(\d+)?.*	$2	NULL
 
 15	GET	utf-8	NoCompression	Region	\/tools/api/searchform/?w=init&id=l.\http://www.russianrealty.ru/tools/api/searchform/?w=change&id={{Option[-1]}}.{{Value}}		/	/	{{InnerText}}	"\{\{Option\}\}\.(\d+)":"([^"]+)"	$1	{{InnerText}}	"\{\{Option\}\}\.(\d+)":"([^"]+)"	$2	\{{c}}\{{r}}\{{d}}\{{l}}	\!\!\?\!
+
+http://russianrealty.ru/tools/api/search/?a=100&pp=&p=100&t=&c=1&r=67&d=&l=905&_l=&_p=&z=DATEADD&zt=DESC&rt=2&n=0
+http://russianrealty.ru/tools/api/searchform/?w=init&id=l.905
+
+
+http://www.russianrealty.ru/tools/api/search/?a=100&pp=&p=100&t=&c=1&r=67&d=&l=905&z=DATEADD&zt=DESC&rt=2&n=0&_l=50&_p=
 
 CLICK HERE TO COMPARE
 

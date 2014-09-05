@@ -35,6 +35,7 @@ http://realty.moskva-citystar.ru
 13	WebPublicationAdditionalInfoRealtyAdditionalInfoLandSpace	//div[@class="adv-view"]//div[@class="adv-main-data"]//td[contains(.,'Площадь')]/following-sibling::td[1]	{{InnerText}}	\A\D*(\d*).*	$1	NULL
 13	WebPublicationContactAuthorUrl	//div[@class="adv-contact-data"]//div[@class="name"]/a	{{onclick}}	go\("([^"]+)"\)	$1	NULL
 
+
 //div[@class='adv-list']//table[@class="table"]//td[@class="address" or @class="description"]/a
 
 <div class="bread-crumb">

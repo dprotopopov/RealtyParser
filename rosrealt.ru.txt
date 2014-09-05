@@ -1,33 +1,31 @@
 ﻿rosrealt.ru
-http://rosrealt.ru
-GET
-/poisk.php?Sdelka={{ActionId}}&Type_realty={{RubricId[1]}}&Kind_realty={{RubricId[2]}}&Region={{RegionId[1]}}&City={{RegionId[2]}}&Sort=0
-/poisk.php?Sdelka={{ActionId}}&Type_realty={{RubricId[1]}}&Kind_realty={{RubricId[2]}}&Region={{RegionId[1]}}&City={{RegionId[2]}}&Sort=0
-{{PublicationId}}
-//*[@id="frm"]/table[2]/tbody/tr/td/h3/a {{HrefValue}} .*
-//*[@id="frm"]/table/tbody/tr/td/h3/a {{HrefValue}} .*
-/html/body/table/tbody/tr/td/table[3]/tbody/tr[1]/td[2]/table
-OnlyDigitsDecimalComparer
 
-{{HrefValue}} .*
-{{HrefValue}} .*
+2	rosrealt.ru	http://rosrealt.ru	GET	GET	/poisk.php?Sdelka={{Action}}&Type_realty={{Rubric[1]}}&Kind_realty={{Rubric[2]}}&Room={{Rubric[3]}}&Region={{Region[1]}}&City={{Region[2]}}&District={{Region[3]}}&page={{Page}}&Sort=0	NULL	{{PublicationLink}}	[PublicationDatetime:##{{PublicationDatetime}}##,PublicationId:{{PublicationId}},Action:{{Action}},Rubric:{{Rubric}},Region:{{Region}}]	NULL	NULL	30	DatetimeFirstIdSecondComparer	NoCompression	NoCompression	windows-1251	windows-1251	20	0	0	0	3	3	RosrealtParser
 
-WebPublicationActionId /html/body/table/tbody/tr/td/table[3]/tbody/tr[1]/td[2]/table/tbody/tr/td[2]/table[2]/tbody/tr/td[7]/p[3] {{InnerText}} .*
-WebPublicationAdditionalInfoRealtyAdditionalInfoAddress /html/body/table/tbody/tr/td/table[3]/tbody/tr[1]/td[2]/table/tbody/tr/td[2]/table[2]/tbody/tr/td[1] {{InnerText}} .*
-WebPublicationAdditionalInfoRealtyAdditionalInfoAppointmentOfRoom /html/body/table/tbody/tr/td/table[3]/tbody/tr[1]/td[2]/table/tbody/tr/td[2]/table[2]/tbody/tr/td[4] {{InnerText}} .*
-WebPublicationAdditionalInfoRealtyAdditionalInfoCostAll /html/body/table/tbody/tr/td/table[3]/tbody/tr[1]/td[2]/table/tbody/tr/td[2]/table[2]/tbody/tr/td[7] {{InnerText}} .*
-WebPublicationContactAuthor /html/body/table/tbody/tr/td/table[3]/tbody/tr[1]/td[2]/table/tbody/tr/td[2]/table[2]/tbody/tr/td[10]/p[2] {{InnerText}} .*
-WebPublicationContactAuthorUrl /html/body/table/tbody/tr/td/table[3]/tbody/tr[1]/td[2]/table/tbody/tr/td[2]/table[2]/tbody/tr/td[10]/p[2]/a http://rosrealt.ru{{HrefValue}} .*
-WebPublicationContactContactName /html/body/table/tbody/tr/td/table[3]/tbody/tr[1]/td[2]/table/tbody/tr/td[2]/table[2]/tbody/tr/td[10]/p[3]/b {{InnerText}} w+( \w+)*
-WebPublicationContactEmail /html/body/table/tbody/tr/td/table[3]/tbody/tr[1]/td[2]/table/tbody/tr/td[2]/table[2]/tbody/tr/td[10]/p[4]/noindex/a http://rosrealt.ru{{HrefValue}} .*
-WebPublicationContactIcq
-WebPublicationContactPhone /html/body/table/tbody/tr/td/table[3]/tbody/tr[1]/td[2]/table/tbody/tr/td[2]/table[2]/tbody/tr/td[10]/p[3]/b {{InnerText}} (\+)?\d+([()+- ]+\d+)*
-WebPublication.ContactSkype 
-WebPublicationDescription /html/body/table/tbody/tr/td/table[3]/tbody/tr[1]/td[2]/table/tbody/tr/td[2]/table[3]/tbody/tr/td/p[1] {{InnerText}} .*
-WebPublicationModifyDate /html/body/table/tbody/tr/td/table[3]/tbody/tr[1]/td[2]/table/tbody/tr/td[2]/table[1]/tbody/tr/td[2]/p[3]/text() {{InnerText}} .*
-WebPublicationPhotos /html/body/table/tbody/tr/td/table[3]/tbody/tr[1]/td[2]/table/tbody/tr/td[2]/table[1]/tbody/tr/td[1]/a {{HrefValue}} .*
-WebPublicationPublicationId /html/body/table/tbody/tr/td/table[3]/tbody/tr[1]/td[2]/table/tbody/tr/td[2]/table[1]/tbody/tr/td[2]/p[2]/text() {{InnerText}} \d+
-WebPublicationRegionId
+
+2	WebPublicationActionId	//p[contains(text(),'Условия сделки')]/..//p[@class='obj_profile']/a/b	{{InnerText}}	.*	$&	NULL
+2	WebPublicationAdditionalInfoRealtyAdditionalInfoAddress	(//p[contains(text(),'Месторасположение')]/..//p[@class='obj_profile'])	{{InnerText}} 	\s*(\S+)\s*	$1	 
+2	WebPublicationAdditionalInfoRealtyAdditionalInfoAppointmentOfRoom	(//p[contains(text(),'Параметры')]/..//p[@class='obj_profile'])	{{InnerText}}	\s*(\S+)\s*	$1	 
+2	WebPublicationAdditionalInfoRealtyAdditionalInfoCostAll	(//table//table//table//table//b[contains(text(),'руб.')])[1]	{{InnerText}}	\D*(\d+)\D*	$1	NULL
+2	WebPublicationContactAuthor	(//p[contains(text(),'Автор объявления')]/..//p[@class='obj_profile'])[1]	{{InnerText}}	\s*(\S+)\s*	$1	 
+2	WebPublicationContactAuthorUrl	(//p[contains(text(),'Автор объявления')]/..//p[@class='obj_profile'])[1]/a[@href]	{{href}}	.*	$&	NULL
+2	WebPublicationContactContactName	//p[contains(text(),'Контактная информация')]/b	{{InnerText}}	[^.-[\w-[\d]]]*([\w-[\d]]+)[^.-[\w-[\d]]]*	$1	 
+2	WebPublicationContactEmail	//b[contains(text(),'Отправить сообщение автору этого объявления')]/..//a[@href]	{{href}}	.*	$&	NULL
+2	WebPublicationContactPhone	//p[contains(text(),'Контактная информация')]/b	{{InnerText}}	\d+([+\s\(\)-]+\d+)*	$&	NULL
+2	WebPublicationDescription	(//table//table//table//table//td[@width='100%']//p[not(@class="obj_profile")])	{{InnerText}}	\s*(\S+)\s*	$1	 
+2	WebPublicationModifyDate	//b[contains(text(),'Обновлено')]/../text()	{{InnerText}}	.*	$&	NULL
+2	WebPublicationPhotos	//a[contains(@href,'img.rosrealt.ru')]	{{href}}	.*	$&	NULL
+2	WebPublicationPublicationId	//b[contains(text(),'Номер объявления')]/../text()	{{InnerText}}	.*	$&	NULL
+2	WebPublicationAdditionalInfoRealtyAdditionalInfoTotalSpace	(//table//table//table//table//b[contains(text(),'кв.м.')])[1]	{{InnerText}}	\D*(\d+).*	$1	NULL
+2	WebPublicationAdditionalInfoRealtyAdditionalInfoDistrict	(//td/a/b)[1]	{{InnerText}}	\s*(\S+)\s*	$1	 
+2	PublicationId	//table[@width='100%']/preceding-sibling::p[1][@class='leftp']/following-sibling::table[@width='100%']//h3/a[@href]	{{href}}	\D*(\d+)\D*	$1	NULL
+2	PublicationLink	//table[@width='100%']/preceding-sibling::p[1][@class='leftp']/following-sibling::table[@width='100%']//h3/a[@href]	{{href}}	.*	$&	NULL
+2	PublicationDatetime	//table[@width='100%']/preceding-sibling::p[1][@class='leftp']	{{InnerText}}	.*	$&	NULL
+2	WebPublicationUrl	/	{{Url}}	.*	$&	NULL
+2	WebPublicationSite	/	{{Url}}	((http(s)?:\/\/)?[^\/\?]+).*	$1	NULL
+
+
+3	Subdomain	/	{{Url}}	(http(s)?:\/\/)?([^\.]+\.)mirkvartir\.ru.*	$3	NULL
 
 
 <select name="Kind_realty" id="Kind_realty" class="forma2" style="width:155px" onchange="document.getElementById('frm').submit()"><option value="0"> - Любой тип -</option><option value="1">Новостройка</option><option value="2" selected="">Вторичка</option><option value="5">Комната</option></select>

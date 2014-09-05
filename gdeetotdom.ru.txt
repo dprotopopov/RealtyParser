@@ -4,19 +4,6 @@ http://www.gdeetotdom.ru
 
 [PublicationDatetime:##{{PublicationDatetime}}##,Action:{{Action}},Rubric:{{Rubric}},Region:{{Region}}]
 
-в System.Linq.Enumerable.Count[TSource](IEnumerable`1 source)
-   в MyLibrary.Collections.DictionaryOfListOfString.ToString() в d:\Projects\MyLibrary\MyLibrary\Collections\DictionaryOfListOfString.cs:строка 87
-   в System.Text.StringBuilder.AppendFormat(IFormatProvider provider, String format, Object[] args)
-   в System.String.Format(IFormatProvider provider, String format, Object[] args)
-   в System.Diagnostics.Debug.WriteLine(String format, Object[] args)
-   в RealtyParser.Parser.BuildValues(RequestProperties requestId, RequestProperties mappedId, RequestProperties mappedLevel) в d:\Projects\RealtyParser\RealtyParser\Parser.cs:строка 349
-   в RealtyParser.ParserModule.<Result>d__a8.MoveNext() в d:\Projects\RealtyParser\RealtyParser\ParserModule.cs:строка 219
---- Конец трассировка стека из предыдущего расположения, где возникло исключение ---
-   в System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
-   в System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
-   в System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()
-   в RealtyParser.Editor.Children.ResultForm.<Execute>d__3.MoveNext() в d:\Projects\RealtyParser\RealtyParser.Editor\Children\ResultForm.cs:строка 84
-
 http://gdeetotdom.ru/living/search/?page=&td=1&roomset[]=r3&regions[]=1232535&advt=3&rtype=2
 
 http://www.gdeetotdom.ru/living/search/?rid=1232535&cid=100&advt=2&td=2&rtype=1&realtyStrict=1&ptx=1&adv=1
@@ -30,7 +17,7 @@ sort_by=19&sort_order=desc
 14	\снять	Снять	\	1	NULL	NULL	NULL	&td=2	NULL
 14	\Посуточная аренда	Посуточная аренда	\	1	NULL	NULL	NULL	&td=2	NULL
 
-14	gdeetotdom.ru	http://gdeetotdom.ru	GET	http://{{RegionDomain}}gdeetotdom.ru{{RubricPath}}/search/?page={{Page}}{{ActionQuery}}{{RubricQuery}}{{roomset}}&regions[]={{Region}}&advt={{Rubric[2]}}&rtype={{Rubric[1]}}	NULL	{{PublicationLink}}	[PublicationId:{{PublicationId}},Action:{{Action}},Rubric:{{Rubric}},Region:{{Region}}]	NULL	NULL	30	IdComparer	NoCompression	utf-8	20	0	0	0	GdeetotdomParser
+14	gdeetotdom.ru	http://gdeetotdom.ru	GET	GET	http://{{RegionDomain}}gdeetotdom.ru{{RubricPath}}/search/?page={{Page}}{{ActionQuery}}{{RubricQuery}}{{roomset}}&regions[]={{Region}}&advt={{Rubric[2]}}&rtype={{Rubric[1]}}&sort_by=19&sort_order=desc	NULL	{{PublicationLink}}	[PublicationDatetime:##{{PublicationDatetime}}##,PublicationId:{{PublicationId}},Action:{{Action}},Rubric:{{Rubric}},Region:{{Region}}]	NULL	NULL	30	OnlyDatetimeComparer	NoCompression	NoCompression	utf-8	utf-8	20	0	0	1	3	3	GdeetotdomParser
 
 
 14	\100\100001	Московская область	\100\	2	NULL	NULL	NULL	NULL	NULL

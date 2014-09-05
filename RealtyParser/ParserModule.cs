@@ -77,7 +77,6 @@ namespace RealtyParser
             Debug.WriteLine("Наличие сообщений в логе отладки и трассировки не является признаком ошибки");
             Debug.WriteLine("Ошибка – это несоответствие программы требованиям");
             Debug.WriteLine("Тестирование – проверка соответствия программы требованиям");
-            Debug.WriteLine("Непонимание технологий и техник, используемых в программе, не является ошибкой");
             Debug.WriteLine("В случае ошибки, то есть несоответствия программы требованиям, предоставить,");
             Debug.WriteLine("для исправления ошибки, информацию о параметрах, при которых осуществлялся запуск,");
             Debug.WriteLine("чтобы можно было воспроизвести ошибку, и описание в чём заключается ошибка");
@@ -484,10 +483,6 @@ namespace RealtyParser
                                     .FirstOrDefault(),
                                 lastResourceDictionary[requestProperties]) < 0)
                                 throw new EndOfSearchDetectedException();
-                            Debug.WriteLine("currentResources.First() = " + currentResources.First());
-                            Debug.WriteLine("currentResources.Last() = " + currentResources.Last());
-                            Debug.WriteLine("lastResourceDictionary[requestProperties] = " +
-                                            lastResourceDictionary[requestProperties]);
                         }
                     }
                     catch (EndOfSearchDetectedException exception)
@@ -529,7 +524,7 @@ namespace RealtyParser
                 }
                 try
                 {
-                    if (lastResourceDictionary.Any())
+                    if (lastResourceDictionary.Any() && loggingDays == 0)
                     {
                         //Одним из условий работы парсера является требование к оптимизации алгоритма
                         //получения новых объявлений, т.е. необходимо делать минимальное количество запросов
@@ -598,6 +593,7 @@ namespace RealtyParser
                         //При первом вызове метода парсера из DLL не известно о IdRes объявления внутри ресурса, поэтому он
                         //передает значение NULL. В этом случае парсер должен выбрать самое последнее объявление и
                         //вернуть его IdRes ресурса.
+                        Debug.WriteLine("Remove {0} items", (resources.Count - 1));
                         resources.RemoveRange(0, resources.Count - 1);
                     }
 
@@ -607,6 +603,7 @@ namespace RealtyParser
                                                                   resourceDictionary[pair.Key].Last(),
                                                                   pair.Value)).Aggregate(Boolean.And))
                     {
+                        Debug.WriteLine("Remove all items");
                         resources.Clear();
                     }
 
@@ -621,6 +618,8 @@ namespace RealtyParser
                         //Если IdRes не найден, то парсер возвращает последнии CountAD
                         //объявлений (такая ситуация может получится, если размещенное объявление к следующей
                         //итерации будет удалено на ресурсе)
+                        Debug.WriteLine("Remove {0} items",
+                            (int) (resources.Count - MyDatabase.Database.ConvertTo<long>(SiteProperties.CountAd)));
                         resources.RemoveRange(0,
                             (int) (resources.Count - MyDatabase.Database.ConvertTo<long>(SiteProperties.CountAd)));
                     }
@@ -631,7 +630,18 @@ namespace RealtyParser
                                                                   resourceDictionary[pair.Key].First(), pair.Value))
                             .Aggregate(Boolean.And))
                     {
+                        Debug.WriteLine("Remove first item");
                         resources.Dequeue();
+                    }
+
+                    if (lastResourceDictionary.Any() && loggingDays > 0
+                        && lastResourceDictionary.All(pair => Database.Exists(new Logging
+                        {
+                            SiteId = SiteProperties.SiteId,
+                            ResponceResource = pair.Value.ToString()
+                        })))
+                    {
+                        responseLevel = Math.Max(resources.Any() ? 4 : 3, responseLevel);
                     }
                 }
                 catch (Exception exception)
@@ -639,6 +649,7 @@ namespace RealtyParser
                     Debug.WriteLine(exception.ToString());
                     LastError = exception;
                 }
+                Debug.WriteLine("resources.Count = " + resources.Count());
                 var publications = new StackListQueue<WebPublication>();
                 foreach (Resource resource in resources)
                 {

@@ -3,5 +3,7 @@ rem sqlite3 RealtyParser.sqlite3 < BnRubric.sql
 rem sqlite3 RealtyParser.sqlite3 < BnActionMapping.sql
 rem sqlite3 RealtyParser.sqlite3 < BnRubricMapping.sql
 rem sqlite3 RealtyParser.sqlite3 < BnRegion.sql
-rem sqlite3 RealtyParser.sqlite3 < BnRegionMapping.sql
+rem sqlite3 RealtyParser.sqlite3 < BnRegionPath.sql
+rem sqlite3 RealtyParser.sqlite3 < BnRegionMapping1.sql
+rem sqlite3 RealtyParser.sqlite3 < BnRegionMapping2.sql
 rem sqlite3 RealtyParser.sqlite3 < BnRegionDelete.sql

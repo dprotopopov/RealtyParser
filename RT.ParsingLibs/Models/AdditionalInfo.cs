@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.ComponentModel;
+using System.Linq;
 using System.Reflection;
 using System.Text;
 
@@ -12,7 +13,13 @@ namespace RT.ParsingLibs.Models
         /// <summary>
         /// Дополнительная информация для рубрики "Недвижимость"
         /// </summary>
+        [Description("Дополнительная информация для рубрики \"Недвижимость\"")]
         public RealtyAdditionalInfo RealtyAdditionalInfo { get; set; }
+        /// <summary>
+        /// Дополнительная информация для рубрики "Транспортные средства"
+        /// </summary>
+        [Description("Дополнительная информация для рубрики \"Транспортные средства\"")]
+        public AutomotoAdditionalInfo AutomotoAdditionalInfo { get; set; }
 
         /// <summary>
         /// Преобразовать в строку

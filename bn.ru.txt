@@ -17,9 +17,59 @@ sort=address
 
 http://www.bn.ru/moskva/sale/city/flats/?sort=address&sortorder=ASC&price%5Bfrom%5D=&price%5Bto%5D=&square_total%5Bfrom%5D=&square_total%5Bto%5D=&square_living%5Bfrom%5D=&square_living%5Bto%5D=&square_kitchen%5Bfrom%5D=&square_kitchen%5Bto%5D=&floor%5Bfrom%5D=&floor%5Bto%5D=&date_create=2&firm_name=&description=&text=
 
-6	bn.ru	http://bn.ru	GET	{{Region}}{{Action}}{{Rubric}}/?start={{PageStart}}{{rooms}}&result_tpl=table&date_create=1&print_page=1	NULL	{{PublicationLink}}	[PublicationDatetime:##{{PublicationDatetime}}##,PublicationId:{{PublicationId}},Action:{{Action}},Rubric:{{Rubric}},Region:{{Region}}]	NULL	NULL	30	DatetimeFirstIdSecondComparer	NoCompression	windows-1251	50	0	0	1	BnParser
+6	bn.ru	http://bn.ru	GET	GET	{{RegionPath}}{{Action}}{{Rubric}}/?start={{PageStart}}{{rooms}}&area_id%5B%5D={{Region[2]||0}}&city_id%5B%5D={{Region[3]||0}}&place_id%5B%5D={{Region[4]||0}}&district_id%5B%5D={{Region[5]||0}}&result_tpl=table&date_create=1&print_page=1	NULL	{{PublicationLink}}	[PublicationId:{{PublicationId}},Action:{{Action}},Rubric:{{Rubric}},Region:{{Region}}]	NULL	NULL	30	NoComparer	NoCompression	NoCompression	windows-1251	windows-1251	50	0	0	1	3	3	BnParser
 
-6	bn.ru	http://bn.ru	GET	NoCompression	http://bn.ru{{Region}}{{Action}}{{Rubric}}/?start={{PageStart}}{{rooms}}&result_tpl=table&print_page=1	{{PublicationLink}}	[PublicationDatetime:##{{PublicationDatetime}}##,PublicationId:{{PublicationId}},Action:{{Action}},Rubric:{{Rubric}},Region:{{Region}}]	NULL	NULL	30	DatetimeFirstIdSecondComparer	windows-1251	50	0	BnParser
+
+6	Region	GET	windows-1251	NoCompression	3	http://www.bn.ru/portal		//div[@class='new_regions']//a[@href]	//div[@class='new_regions']//a[@href]	{{href}}	.*	$&	{{InnerText}}	.*	$&	\{{Region}}	\!
+6	Rubric	GET	windows-1251	NoCompression	3	http://www.bn.ru/moskva/		//select[@name='type']/option[@value]	//select[@name='type']/option[@value]	/{{value}}	.*	$&	{{NextSibling.InnerText}}	.*	$&	\{{Rubric}}	\!
+6	Action	GET	windows-1251	NoCompression	3	http://www.bn.ru/moskva/		//ul[@class='tabs']/li[@action]	//ul[@class='tabs']/li[@action]	{{action}}	.*	$&	{{InnerText}}	.*	$&	\{{Action}}	\!
+
+
+6	Region	Path	GET	windows-1251	NoCompression	1	http://www.bn.ru/ajax/geo/list/		//a[@class="next_geo"][contains(@onclick,'getGeoList({{Key[1]}})')]	{{onclick}}	[^\']*\'([^\']*)'[^\']*	/$1/	
+
+http://www.bn.ru/bashkortostan/
+http://www.bn.ru/ajax/geo/init/bashkortostan
+http://www.bn.ru/ajax/geo/title/2
+http://www.bn.ru/ajax/geo/list/2
+
+
+http://www.bn.ru/sverdlovskaya-oblast/
+http://www.bn.ru/ajax/geo/init/sverdlovskaya-oblast
+http://www.bn.ru/ajax/geo/title/66
+http://www.bn.ru/ajax/geo/list/66;0/sale/city/flats/ 
+
+6	Region	GET	windows-1251	NoCompression	3	http://www.bn.ru/portal		//div[@class='new_regions']//a[@href]	//div[@class='new_regions']//a[@href]	{{href}}	.*	$&	{{InnerText}}	.*	$&	\{{Region}}	\!
+6	Rubric	GET	windows-1251	NoCompression	3	http://www.bn.ru/moskva/		//select[@name='type']/option[@value]	//select[@name='type']/option[@value]	/{{value}}	.*	$&	{{NextSibling.InnerText}}	.*	$&	\{{Rubric}}	\!
+6	Action	GET	windows-1251	NoCompression	3	http://www.bn.ru/moskva/		//ul[@class='tabs']/li[@action]	//ul[@class='tabs']/li[@action]	{{action}}	.*	$&	{{InnerText}}	.*	$&	\{{Action}}	\!
+
+\http://www.bn.ru/sverdlovskaya-oblast/ajax/geo/list
+
+6	Region	GET	windows-1251	NoCompression	3	
+\http://www.bn.ru/ajax/geo/list/\http://www.bn.ru/ajax/geo/list/{{region_id}}\http://www.bn.ru/ajax/geo/list/{{region_id}};{{area_id}}/sale/city/flats/\http://www.bn.ru/ajax/geo/list/{{region_id}};{{area_id}}/sale/city/flats/\http://www.bn.ru/ajax/geo/list/{{region_id}};{{area_id}};{{city_id}}/sale/city/flats/\http://www.bn.ru/ajax/geo/list/{{region_id}};{{area_id}};{{city_id}};{{place_id}}/sale/city/flats/
+		
+\//a[@class="next_geo"][@onclick]\//input[@region_id="{{region_id}}"][not(@area_id="0") or @city_id="1"][@place_id="0"][@district_id="0"]\//input[@region_id="{{region_id}}"][@area_id="{{area_id}}"][@place_id="0"][@district_id="0"]\//input[@region_id="{{region_id}}"][@area_id="{{area_id}}"][@city_id="{{city_id}}"][@district_id="0"]\//input[@region_id="{{region_id}}"][@area_id="{{area_id}}"][@city_id="{{city_id}}"][@place_id="{{place_id}}"]
+
+\//a[@class="next_geo"][@onclick]\//input[@region_id="{{region_id}}"][not(@area_id="0") or @city_id="1"][@place_id="0"][@district_id="0"]/following-sibling::a[@class="next_geo"]\//input[@region_id="{{region_id}}"][@area_id="{{area_id}}"][@place_id="0"][@district_id="0"]/following-sibling::a[@class="next_geo"]\//input[@region_id="{{region_id}}"][@area_id="{{area_id}}"][@city_id="{{city_id}}"][@district_id="0"]/following-sibling::a[@class="next_geo"]\//input[@region_id="{{region_id}}"][@area_id="{{area_id}}"][@city_id="{{city_id}}"][@place_id="{{place_id}}"]/following-sibling::a[@class="next_geo"]
+
+\{{onclick}}\{{area_id}}\{{city_id}}\{{place_id}}\{{district_id}}	\D*(\d+)\D*	$1	{{InnerText}}	.*	$&	\{{region_id}}\{{area_id}}\{{city_id}}\{{place_id}}\{{district_id}}	\!\!\!\!\!
+
+http://www.bn.ru/sverdlovskaya-oblast/sale/city/flats/?rooms[]=1&area_id%5B%5D=0&city_id%5B%5D=1&place_id%5B%5D=8&district_id%5B%5D=0&result_tpl=table&date_create=1&print_page=1
+http://www.bn.ru/sverdlovskaya-oblast/sale/city/flats/?sort=address&sortorder=ASC&price%5Bfrom%5D=&price%5Bto%5D=&rooms%5B%5D=1&square_total%5Bfrom%5D=&square_total%5Bto%5D=&square_living%5Bfrom%5D=&square_living%5Bto%5D=&square_kitchen%5Bfrom%5D=&square_kitchen%5Bto%5D=&floor%5Bfrom%5D=&floor%5Bto%5D=&date_create=0&firm_name=&description=&text=&area_id%5B%5D=0&city_id%5B%5D=1&place_id%5B%5D=8&district_id%5B%5D=0
+
+Http: Request, GET /ajax/geo/list/66;0;1/sale/city/flats/ 
+
+http://www.bn.ru/ajax/geo/list/
+<a class="next_geo" onclick="getGeoList(42); setGeoID('kemerovskaya-oblast')">Кемеровская область</a>
+
+<input type="checkbox" name="select_geo[]" region_id="66" area_id="0" city_id="24" place_id="0" district_id="0" onclick="change_select(this)">
+
+
+<p><input type="checkbox" name="select_geo[]" region_id="66" area_id="5" city_id="0" place_id="0" district_id="0" onclick="change_select(this)">
+<a class="remove_select" geo_id="" onclick="change_select(this)"></a><a class="next_geo" onclick="getGeoList('66;5')">Ачитский район</a></p>
+
+URI: /ajax/geo/init/bashkortostan
+
+URI: /clmap/481062?page-url=http%3A%2F%2Fwww.bn.ru%2Fbashkortostan%2F&pointer-click=rn%3A98953723%3Ax%3A42849%3Ay%3A26699%3At%3A545%3Ap%3ANAAA%7D1A2A&browser-info=rqnl%3A1%3Ast%3A1409703981
 
 6	PublicationLink	//table//p/a[1][@href]	{{href}}	.*	$&
 6	PublicationId	/	{{Url}}	(http(s)?:\/\/)?([^\/]*)(\/\D+)*\/(\d+).*	$5

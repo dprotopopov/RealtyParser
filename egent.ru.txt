@@ -197,37 +197,52 @@ NULL	NULL	NULL	NULL	NULL	NULL	NULL	NULL	NULL	NULL	NULL	NULL	NULL	NULL
 
 4	egent.ru	http://egent.ru	GET	NoCompression	{{Region}}{{Rubric}}?p={{Page}}	{{PublicationLink}}	[PublicationDatetime:##{{PublicationDatetime}}##,PublicationId:{{PublicationId}},Action:{{Action}},Rubric:{{Rubric}},Region:{{Region}}]	NULL	NULL	30	DatetimeFirstIdSecondComparer	windows-1251	EgentParser
 
-4	WebPublicationPublicationId	//div[@class='item detail']//div[@class='header']/div[contains(.,'№')]	{{InnerText}}	\D*(\d+)\D*	$1
-4	WebPublicationAdditionalInfoRealtyAdditionalInfoDistrict	//div[@class='item detail']//div[@class='adres']/a[@class='metrourl']	{{InnerText}}	.*	$&
-
-4	PublicationLink	//div[@class='header']/a[@href]	{{href}}	.*	$&
-4	PublicationId	//div[@class='ne']//div[@class='header']/small	{{InnerText}}	\D*(\d+)\D*	$1
-4	PublicationDatetime	//div[@class='item detail']//div[contains(.,'Актуально')]	{{InnerText}}	[^\>]+\s*Актуально:\s*(\d+)\s+(\w+)\s+(\d+)\s*.*	$1 $2 $3
-4	WebPublicationModifyDate	//div[@class='item detail']//div[contains(.,'Актуально')]	{{InnerText}}	[^\>]+\s*Актуально:\s*(\d+)\s+(\w+)\s+(\d+)\s*.*	$1 $2 $3
-
-4	WebPublicationUrl	/	{{Url}}	.*	$&
-4	WebPublicationSite	/	{{Url}}	((http(s)?:\/\/)?[^\/\?]+).*	$1
-4	WebPublicationDescription	//div[@class='item detail']//div[@class='desc']	{{InnerText}}	.*	$&
-4	WebPublicationContactContactName	//div[@class='userinfo']/div[@class='user']/span[@rel]	{{InnerText}}	.*	$&
-4	WebPublicationContactAuthor	//div[@class='item detail']//div[@class='user']	{{InnerText}}	.*	$&
-4	WebPublicationContactAuthorUrl	//div[@class='item detail']//div[@class='user']/span[@rel]	{{rel}}	.*	http://egent.ru$&
-4	WebPublicationContactPhone	//div[contains(@class,'userinfo')]/span	{{InnerText}}	.*	$&
-4	WebPublicationPhotos	//div[@id='mycarousel']//img[@src]	{{src}}	.*	http://egent.ru$&
-
-4	WebPublicationAdditionalInfoRealtyAdditionalInfoAddress	//div[@class='item detail']//div[@class='adres']/a	{{InnerText}}	.*	$&
-4	WebPublicationAdditionalInfoRealtyAdditionalInfoCostAll	//div[@class='item detail']//div[@class='price']/strong	{{InnerText}}	\D*(\d+)\D*	$1
-4	WebPublicationAdditionalInfoRealtyAdditionalInfoTotalSpace	//div[@class='item detail']//span[contains(.,'Общая площадь')]	{{InnerText}}	(\s*Общая площадь\:\s*(\d+)\s*м(\<sup\>2\<\/sup\>)?\s*(\<br\>)?)?(\s*Жилая площадь\:\s*(\d+)\s*м(\<sup\>2\<\/sup\>)?\s*(\<br\>)?)?(\s*Площадь кухни\:\s*(\d+)\s*м(\<sup\>2\<\/sup\>)?\s*(\<br\>)?)?	$2
-4	WebPublicationAdditionalInfoRealtyAdditionalInfoLivingSpace	//div[@class='item detail']//span[contains(.,'Жилая площадь')]	{{InnerText}}	(\s*Общая площадь\:\s*(\d+)\s*м(\<sup\>2\<\/sup\>)?\s*(\<br\>)?)?(\s*Жилая площадь\:\s*(\d+)\s*м(\<sup\>2\<\/sup\>)?\s*(\<br\>)?)?(\s*Площадь кухни\:\s*(\d+)\s*м(\<sup\>2\<\/sup\>)?\s*(\<br\>)?)?	$6
-4	WebPublicationAdditionalInfoRealtyAdditionalInfoKitchenSpace	//div[@class='item detail']//span[contains(.,'Площадь кухни')]	{{InnerText}}	(\s*Общая площадь\:\s*(\d+)\s*м(\<sup\>2\<\/sup\>)?\s*(\<br\>)?)?(\s*Жилая площадь\:\s*(\d+)\s*м(\<sup\>2\<\/sup\>)?\s*(\<br\>)?)?(\s*Площадь кухни\:\s*(\d+)\s*м(\<sup\>2\<\/sup\>)?\s*(\<br\>)?)?	$10
-
-4	WebPublicationAdditionalInfoRealtyAdditionalInfoFloorNumber	//div[@class='item detail']//span[contains(text(),'Этаж')]	{{InnerText}}	\D*(\d*)\S*\s*\/\s*(\d*)\S*\s*.*	$1
-4	WebPublicationAdditionalInfoRealtyAdditionalInfoFloor	//div[@class='item detail']//span[contains(.,'Этаж')]	{{InnerText}}	\D*(\d*)\S*\s*\/\s*(\d*)\S*\s*.*	$2
-
-4	WebPublicationAdditionalInfoRealtyAdditionalInfoAppointmentOfRoom //h1[@class='item_title']	{{InnerText}}	.*	$&
+4	PublicationLink	//div[@class='ne']//a[@class='item_link'][@href]	{{href}}	.*	$&	NULL
+4	PublicationId	//div[@class='item'][1]//tr[1]//td[1]//span[contains(.,'№')]	{{InnerText}}	\D*(\d+)\D*	$1	NULL
+4	PublicationDatetime	//div[@class='item'][1]//tr[1]//td[2]//div/text()[1]	{{InnerText}}	\D*(\d+\s+\w+\s+\d+)?.*	$1	NULL
+4	WebPublicationPublicationId	//div[@class='item'][1]//tr[1]//td[1]//span[contains(.,'№')]	{{InnerText}}	\D*(\d+)\D*	$1	NULL
+4	WebPublicationModifyDate	//div[@class='item'][1]//tr[1]//td[2]//div/text()[1]	{{InnerText}}	\D*(\d+\s+\w+\s+\d+)?.*	$1	NULL
+4	WebPublicationUrl	/	{{Url}}	.*	$&	NULL
+4	WebPublicationSite	/	{{Url}}	((http(s)?:\/\/)?[^\/\?]+).*	$1	NULL
+4	WebPublicationDescription	//div[contains(@class,'tabs-item')][@id='t3']	{{InnerText}}	\s*(\S+)\s*	$1	 
+4	WebPublicationContactContactName	//div[contains(@class,'tabs-item')][@id='t1']//div[@class='user-contacts']/span	{{InnerText}}	\s*(\S+)\s*	$1	 
+4	WebPublicationContactAuthor	//div[contains(@class,'tabs-item')][@id='t1']//div[@class='user-contacts']	{{InnerText}}	\s*(\S+)\s*	$1	 
+4	WebPublicationPhotos	//div[@class='item'][1]//tr[2]//img[@src]	{{src}}	.*	$&	NULL
+4	WebPublicationAdditionalInfoRealtyAdditionalInfoAddress	//div[@class='item'][1]//div[@class='adres']	{{InnerText}}	\s*(\S+)\s*	$1	 
+4	WebPublicationAdditionalInfoRealtyAdditionalInfoDistrict	//div[@class='item'][1]//div[@class='adres']//a	{{InnerText}}	\s*(\S+)\s*	$1	 
+4	WebPublicationAdditionalInfoRealtyAdditionalInfoCostAll	//div[contains(@class,'tabs-item')][@id='t1']//div[@class='price']/text()	{{InnerText}}	\D*(\d+)\D*	$1	NULL
+4	WebPublicationAdditionalInfoRealtyAdditionalInfoTotalSpace	//div[contains(@class,'tabs-item')][@id='t1']//strong[1]	{{InnerText}}	(\s*Общая площадь:\s*(\d+)\s*м(\<sup\>2\<\/sup\>)?\s*(\<br\>)?)?(\s*Жилая площадь:\s*(\d+)\s*м(\<sup\>2\<\/sup\>)?\s*(\<br\>)?)?(\s*Площадь кухни:\s*(\d+)\s*м(\<sup\>2\<\/sup\>)?\s*(\<br\>)?)?	$2	NULL
+4	WebPublicationAdditionalInfoRealtyAdditionalInfoLivingSpace	//div[contains(@class,'tabs-item')][@id='t1']//strong[2]	{{InnerText}}	(\s*Общая площадь:\s*(\d+)\s*м(\<sup\>2\<\/sup\>)?\s*(\<br\>)?)?(\s*Жилая площадь:\s*(\d+)\s*м(\<sup\>2\<\/sup\>)?\s*(\<br\>)?)?(\s*Площадь кухни:\s*(\d+)\s*м(\<sup\>2\<\/sup\>)?\s*(\<br\>)?)?	$6	NULL
+4	WebPublicationAdditionalInfoRealtyAdditionalInfoKitchenSpace	//div[contains(@class,'tabs-item')][@id='t1']//strong[3]	{{InnerText}}	(\s*Общая площадь:\s*(\d+)\s*м(\<sup\>2\<\/sup\>)?\s*(\<br\>)?)?(\s*Жилая площадь:\s*(\d+)\s*м(\<sup\>2\<\/sup\>)?\s*(\<br\>)?)?(\s*Площадь кухни:\s*(\d+)\s*м(\<sup\>2\<\/sup\>)?\s*(\<br\>)?)?	$10	NULL
+4	WebPublicationAdditionalInfoRealtyAdditionalInfoAppointmentOfRoom	//div[@class='item'][1]//h1[@class='item_title']	{{InnerText}}	\s*(\S+)\s*	$1	 
 
 (\s*Общая площадь:\s*(\d+)\s*м(\<sup\>2\<\/sup\>)?\s*(\<br\>)?)?(\s*Жилая площадь:\s*(\d+)\s*м(\<sup\>2\<\/sup\>)?\s*(\<br\>)?)?(\s*Площадь кухни:\s*(\d+)\s*м(\<sup\>2\<\/sup\>)?\s*(\<br\>)?)?
 
 <h1 class="item_title">Сдается 1 ком. квартира,  м. Марьино</h1>
+
+
+4	PublicationLink	//div[@class='ne']//a[@class='item_link'][@href]	{{href}}	.*	$&	NULL
+4	PublicationId	//div[@class='ne']//td[2]/div/text()[contains(.,'№')]	{{InnerText}}	\D*(\d+)\D*	$1	NULL
+4	PublicationDatetime	//div[contains(@class,'item detail')]//div[contains(.,'Актуально')]	{{InnerText}}	(\s*(краткосрочно|долгосрочно|посуточно|по часам)\s*(\<br\>)?)*(\s*Сдается с:\s*(\d+\s+\w+\s+\d+)\s*(\<br\>)?)?(\s*Актуально:\s*(\d+\s+\w+\s+\d+)\s*(\<br\>)?)?.*	$8	NULL
+4	WebPublicationModifyDate	//div[contains(@class,'item detail')]//div[contains(.,'Актуально')]	{{InnerText}}	(\s*(краткосрочно|долгосрочно|посуточно|по часам)\s*(\<br\>)?)*(\s*Сдается с:\s*(\d+\s+\w+\s+\d+)\s*(\<br\>)?)?(\s*Актуально:\s*(\d+\s+\w+\s+\d+)\s*(\<br\>)?)?.*	$8	NULL
+4	WebPublicationUrl	/	{{Url}}	.*	$&	NULL
+4	WebPublicationSite	/	{{Url}}	((http(s)?:\/\/)?[^\/\?]+).*	$1	NULL
+4	WebPublicationDescription	//div[contains(@class,'item detail')]//div[@class='desc']	{{InnerText}}	\s*(\S+)\s*	$1	 
+4	WebPublicationContactContactName	//div[contains(@class,'item detail')]//div[@class='user']/span[@rel]	{{InnerText}}	\s*(\S+)\s*	$1	 
+4	WebPublicationContactAuthor	//div[contains(@class,'item detail')]//div[@class='user']	{{InnerText}}	\s*(\S+)\s*	$1	 
+4	WebPublicationContactAuthorUrl	//div[contains(@class,'item detail')]//div[@class='user']/span[@rel]	{{rel}}	.*	$&	NULL
+4	WebPublicationContactPhone	//div[contains(@class,'userinfo')]/span	{{InnerText}}	.*	$&	NULL
+4	WebPublicationPhotos	//div[@id='mycarousel']/ul/li/img[@src]	{{src}}	.*	$&	NULL
+4	WebPublicationAdditionalInfoRealtyAdditionalInfoAddress	//div[contains(@class,'item detail')]//div[@class='adres']/a	{{InnerText}}	\s*(\S+)\s*	$1	 
+4	WebPublicationAdditionalInfoRealtyAdditionalInfoCostAll	//div[contains(@class,'item detail')]//div[@class='price']/strong	{{InnerText}}	\D*(\d+)\D*	$1	NULL
+4	WebPublicationAdditionalInfoRealtyAdditionalInfoTotalSpace	//div[contains(@class,'item detail')]//span[contains(.,'Общая площадь')]	{{InnerText}}	(\s*Общая площадь:\s*(\d+)\s*м(\<sup\>2\<\/sup\>)?\s*(\<br\>)?)?(\s*Жилая площадь:\s*(\d+)\s*м(\<sup\>2\<\/sup\>)?\s*(\<br\>)?)?(\s*Площадь кухни:\s*(\d+)\s*м(\<sup\>2\<\/sup\>)?\s*(\<br\>)?)?	$2	NULL
+4	WebPublicationAdditionalInfoRealtyAdditionalInfoFloorNumber	//div[contains(@class,'item detail')]//span[contains(.,'Этаж')]	{{InnerText}}	\D*(\d*)\S*\s*\/\s*(\d*)\S*\s*.*	$2	NULL
+4	WebPublicationAdditionalInfoRealtyAdditionalInfoFloor	//div[contains(@class,'item detail')]//span[contains(.,'Этаж')]	{{InnerText}}	\D*(\d*)\S*\s*\/\s*(\d*)\S*\s*.*	$1	NULL
+4	WebPublicationAdditionalInfoRealtyAdditionalInfoLivingSpace	//div[contains(@class,'item detail')]//span[contains(.,'Жилая площадь')]	{{InnerText}}	(\s*Общая площадь:\s*(\d+)\s*м(\<sup\>2\<\/sup\>)?\s*(\<br\>)?)?(\s*Жилая площадь:\s*(\d+)\s*м(\<sup\>2\<\/sup\>)?\s*(\<br\>)?)?(\s*Площадь кухни:\s*(\d+)\s*м(\<sup\>2\<\/sup\>)?\s*(\<br\>)?)?	$6	NULL
+4	WebPublicationAdditionalInfoRealtyAdditionalInfoKitchenSpace	//div[contains(@class,'item detail')]//span[contains(.,'Площадь кухни')]	{{InnerText}}	(\s*Общая площадь:\s*(\d+)\s*м(\<sup\>2\<\/sup\>)?\s*(\<br\>)?)?(\s*Жилая площадь:\s*(\d+)\s*м(\<sup\>2\<\/sup\>)?\s*(\<br\>)?)?(\s*Площадь кухни:\s*(\d+)\s*м(\<sup\>2\<\/sup\>)?\s*(\<br\>)?)?	$10	NULL
+4	WebPublicationAdditionalInfoRealtyAdditionalInfoAppointmentOfRoom	//h1[@class='item_title']	{{InnerText}}	\s*(\S+)\s*	$1	 
+4	WebPublicationPublicationId	//div[contains(@class,'item detail')]//div[@class='header']/div[contains(.,'№')]	{{InnerText}}	\D*(\d+)\D*	$1	NULL
+4	WebPublicationAdditionalInfoRealtyAdditionalInfoDistrict	//div[contains(@class,'item detail')]//div[@class='adres']/a[@class='metrourl']	{{InnerText}}	\s*(\S+)\s*	$1	 
 
 <span class="gray">Этаж/этажность: 3/5</span>
 <span class="gray">

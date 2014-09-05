@@ -183,7 +183,10 @@ namespace RealtyParser
                 values.Add(string.Format("{0}", table),
                     parents[Math.Min(MyDatabase.Database.ConvertTo<long>(mappedLevel[table]), parents.Length - 1)]);
                 for (int i = 0; i < parents.Count(); i++)
+                {
                     values.Add(string.Format("{0}[{1}]", table, i), parents[Math.Min(i, parents.Length - 1)]);
+                    values.Add(string.Format("{0}[{1}]||0", table, i), string.IsNullOrEmpty(parents[Math.Min(i, parents.Length - 1)]) ? "0" : parents[Math.Min(i, parents.Length - 1)]);
+                }
 
                 Collections.Properties fields = null;
                 try
