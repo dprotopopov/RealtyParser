@@ -115,6 +115,11 @@
     </PropertyGroup>
     <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
   </Target>
+  <PropertyGroup>
+    <PostBuildEvent>rem Create a single .dll that combines the all subassemblies.
+"$(SolutionDir)ILMerge.exe" /out:"$(SolutionDir)AllInOne\$(TargetName).dll"  "My*.dll" "EntityFramework*.dll" "ICSharpCode*.dll" "System*.dll" "TidyManaged.dll" "HtmlAgilityPack.dll" "RealtyParser*.dll" /target:library /targetplatform:v4,C:\Windows\Microsoft.NET\Framework64\v4.0.30319 /wildcards /zeroPeKind
+exit 0</PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
